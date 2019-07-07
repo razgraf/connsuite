@@ -1,0 +1,154 @@
+@import "../../../config/Config";
+
+.Button{
+
+  & > .container{
+    padding: 12px 30px;
+    min-height: calc(44px - 2 * 12px);
+    border-radius: 22px;
+    min-width: calc(100px - 2 * 30px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover, &:active, &:focus{
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    & > .icon{
+      width: 20px;
+      margin-right: 10px;
+      margin-left: -10px;
+      line-height: 0.2;
+      i{
+        font-size: 14pt;
+      }
+    }
+    & > .label{
+      p{
+        font-size: 12pt;
+        font-weight: 400;
+        font-family: $fontSecondary;
+      }
+    }
+  }
+
+
+  &[data-style="default"]{
+    & > .container{
+      background: $colorPrimary;
+      transition: background 0.2s;
+      & > .icon i, & > .label p{
+        color: #ffffff;
+      }
+
+      &:hover, &:active, &:focus{
+        background: darken($colorPrimary, 7%);
+        transition: background 0.2s;
+      }
+
+    }
+  }
+  &[data-style="outline"]{
+    & > .container{
+      background: #ffffff;
+      border: 1px solid $colorPrimary;
+      transition: background 0.2s;
+      & > .icon i, & > .label p{
+        color: $colorPrimary;
+        transition: color 0.2s;
+      }
+
+      &:hover, &:active, &:focus{
+        background: $colorPrimary;
+        border: 1px solid $colorPrimary;
+        transition: background 0.2s;
+        & > .icon i, & > .label p{
+          color: #fff;
+          transition: color 0.2s;
+        }
+      }
+
+    }
+  }
+
+  &[data-style="glow"]{
+    & > .container{
+      background: $colorPrimary;
+      transition: background 0.2s;
+      box-shadow: 0 8px 30px -10px rgba($colorPrimary, 0.6);
+      & > .icon i, & > .label p{
+        color: #ffffff;
+      }
+
+      &:hover, &:active, &:focus{
+        background: darken($colorPrimary, 7%);
+        transition: background 0.2s;
+      }
+
+    }
+  }
+
+
+  &[data-style="white_default"]{
+    & > .container{
+      background: #ffffff;
+      transition: background 0.2s;
+      & > .icon i, & > .label p{
+        transition: color 0.2s;
+        color: $colorPrimary;
+      }
+
+      &:hover, &:active, &:focus{
+        background: #e8e8e8;
+        transition: background 0.2s;
+        & > .icon i, & > .label p{
+          transition: color 0.2s;
+          color: darken($colorPrimary, 10%);
+        }
+      }
+
+    }
+  }
+
+
+  &[data-style="mini_default"]{
+    & > .container{
+      background: $colorPrimary;
+      transition: background 0.2s;
+
+
+      padding: 8px 12px;
+      min-height: calc(36px - 2 * 8px);
+      border-radius: 16px;
+      min-width: calc(50px - 2 * 12px);
+
+      & > .icon {
+        margin-left: -6px;
+        margin-right: 6px;
+        i{
+          font-size: 12pt;
+        }
+
+      }
+      & > .label p{
+        font-size: 11pt;
+      }
+
+      & > .icon i, & > .label p{
+        color: #ffffff;
+      }
+
+      &:hover, &:active, &:focus{
+        background: darken($colorPrimary, 7%);
+        transition: background 0.2s;
+      }
+    }
+  }
+
+
+
+}

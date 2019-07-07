@@ -1,0 +1,28 @@
+@import "../../../../config/Config";
+
+.SideBarElement{
+  width: calc(100% - 2* 10px);
+  padding: 10px;
+  & > .container{
+    width: calc(#{$sizeSideBarWidth} - 20px - 2px);
+    height: calc(#{$sizeSideBarWidth} - 20px - 2px);
+    border-radius:calc((#{$sizeSideBarWidth} - 20px)/2);
+    border: 1px solid #fafafa;
+    background: #ffffff;
+    box-shadow: 0 4px 15px -6px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s, background 0.2s;
+    & > .icon{
+      i{
+        color: $colorSecondary;
+      }
+    }
+    &:hover{
+      box-shadow: 0 12px 20px -8px rgba(0,0,0,0.14);
+      transition: box-shadow 0.2s, background 0.2s;
+    }
+  }
+}

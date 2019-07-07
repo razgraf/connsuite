@@ -1,0 +1,16 @@
+@import "../../../config/Config";
+
+.SideBar{
+  height: 100%;
+  min-height: 100vh;
+  width: $sizeSideBarWidth;
+  position: relative;
+
+  & > .container{
+    height: 100vh;
+    position: fixed;
+    padding-top: calc(#{$sizeNavHeight} + 10px);
+    box-shadow: 3px 0 4px 0 rgba(0,0,0,0.03);
+
+  }
+}

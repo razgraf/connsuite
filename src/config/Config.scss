@@ -1,0 +1,149 @@
+/*
+ * Project values
+ */
+
+
+$colorPrimary : #04BEFE;
+$colorSecondary : #4481eb;
+$colorBackground : #f3f8fa;
+
+$sizeCanvasMaxWidth : 1200px;
+$sizeNavHeight : 80px;
+$sizeCanvasPaddingDashboard : 30px;
+$sizeCanvasPaddingMobile : 30px;
+$sizeSideBarWidth : 80px;
+
+$fontPrimary : 'Quicksand', 'Source Sans Pro', sans-serif;
+$fontSecondary : 'Source Sans Pro', sans-serif;
+
+
+$zIndexNav : 100;
+
+
+$borderRadiusNetworkCard : 24px;
+
+
+/*
+ * Styles
+ */
+
+.Page{
+  width: 100%;
+  background: $colorBackground;
+  min-height: 100vh;
+  & > .container{
+    width: 100%;
+    max-width: $sizeCanvasMaxWidth;
+    min-height: 100%;
+    margin: 0 auto;
+    background: #ffffff;
+    display: flex;
+    flex-direction: row;
+
+
+    /** & > SideBar **/
+    & > .content{
+      flex: 1;
+      padding: calc(#{$sizeNavHeight} + 15px) $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard;
+    }
+
+  }
+}
+
+
+@mixin button_default($background : $colorPrimary, $backgroundHover : darken($colorSecondary, 10%), $color : #ffffff, $colorHover: #ffffff, $transition : 0.2s){
+  & > .container{
+    background: $background;
+    transition: background $transition;
+    & > .icon i, & > .label p{
+      color: $color;
+      transition: color $transition;
+    }
+
+    &:hover, &:active, &:focus{
+      background:$backgroundHover;
+      transition: background $transition;
+
+      & > .icon i, & > .label p{
+        color: $colorHover;
+        transition: color $transition;
+      }
+    }
+
+  }
+}
+
+
+/*
+ * Van Normalizer
+ */
+
+html {
+  background: $colorBackground;
+  overflow-x: hidden;
+  p, h1, h2, h3, h4, h5 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+* {
+  font-family: $fontSecondary;
+}
+
+
+
+
+
+
+/**
+ * Colors
+ */
+
+
+
+
+$colorTable_Blue1 : #04BEFE;
+$colorTable_Blue2 : #03A0DC;
+$colorTable_Purple1 : #7F00FF;
+$colorTable_Purple2 : #E100FF;
+$colorTable_Red1 : #F44336;
+$colorTable_Green1 : #4CAF50;
+$colorTable_Yellow1 : #FFEB3B;
+$colorTable_Orange1 : #FF9800;
+
+
+
+
+
+@mixin gradient($primary : $colorPrimary, $secondary : $colorSecondary, $angle : -25deg){
+  background: $primary;
+  background: linear-gradient($angle, $primary , $secondary);
+  background: -webkit-linear-gradient($angle, $primary , $secondary);
+  background: -moz-linear-gradient($angle, $primary , $secondary);
+  background: -o-linear-gradient($angle, $primary , $secondary);
+}
+
+
+/**
+ * Sizes
+ */
+
+$col-lg-extended : 1100px;
+$col-lg : 992px;
+$col-md: 768px;
+$col-sm : 500px;
+
+
+$tablet-big: "all and (max-width : #{$col-lg-extended}) and (min-width : #{$col-lg  + 1})";
+$tablet : "all and (max-width : #{$col-lg}) and (min-width : #{$col-md  + 1})";
+$mobile-big: "all and (max-width : #{$col-md}) and (min-width : #{$col-sm  + 1})";
+$mobile : "all and (max-width : #{$col-sm})";
+
+$top-tablet-big : "all and (max-width : #{$col-lg-extended})";
+$top-tablet : "all and (max-width : #{$col-lg})";
+$top-mobile-big: "all and (max-width : #{$col-md})";
+$bottom-mobile-big: "all and (min-width : #{$col-md + 1})";
+$top-mobile : "all and (max-width : #{$col-sm})";
+
+
