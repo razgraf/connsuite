@@ -9,18 +9,19 @@
     & > .content{
       z-index: 1;
       position: absolute;
-      width: 100%;
-      height: 100%;
+      width: calc(100% - 2 * 1px);
+      height: calc(100% - 2 * 1px);
       background: #ffffff;
       border-radius: $borderRadiusNetworkCard;
-      border: 1px solid #eee;
-      box-shadow: 0 6px 20px -5px rgba(0,0,0,0.1);
+      border: 1px solid #f5f5f5;
+      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.05);
       display: flex;
       flex-direction: column;
+      transition: box-shadow 1s;
 
       & > .header{
-        width: calc(100% - 2 * #{$borderRadiusNetworkCard});
-        padding: $borderRadiusNetworkCard;
+        width: calc(100% - 30px);
+        padding: 20px 20px 10px 10px;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -61,7 +62,7 @@
         }
       }
       & > .footer{
-        padding: $borderRadiusNetworkCard;
+        padding: 10px 0 20px 0;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -84,17 +85,17 @@
       bottom: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.7);
       border-radius: $borderRadiusNetworkCard;
+      background: rgba(0,0,0,0.7);
       cursor: pointer;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.2s;
 
       & > .content{
-        width: calc(100% - 2 * #{$borderRadiusNetworkCard});
-        height: calc(100% - 2 * #{$borderRadiusNetworkCard});
-        padding: $borderRadiusNetworkCard;
+        width: calc(100% - 2 * calc(#{$borderRadiusNetworkCard} + 0px));
+        height: calc(100% - 2 * calc(#{$borderRadiusNetworkCard} + 0px));
+        padding: calc(#{$borderRadiusNetworkCard} + 0px);
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -139,7 +140,7 @@
             }
           }
           & > .view{
-            @include button_default(#fff, #f5f5f5, $colorSecondary, darken($colorSecondary, 10%), 0.1s);
+            @include button_default($colorSecondary);
 
           }
 
@@ -182,16 +183,17 @@
     & > .title{
       margin-bottom: 3px;
       p{
-        font-size: 12pt;
-        font-weight: 500;
+        letter-spacing: -0.05em;
+        font-size: 14pt;
+        font-weight: 400;
         font-family: $fontPrimary;
-        color: #222;
+        color: #111;
       }
     }
     & > .description{
       p{
         font-size: 11pt;
-        color: #888888;
+        color: #aaa;
 
       }
     }

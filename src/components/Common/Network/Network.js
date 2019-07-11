@@ -3,18 +3,21 @@
  */
 import React, {Component} from 'react';
 import styles from './Network.module.scss';
-import PropTypes from "prop-types";
 import {Helper} from "../../../config/Util";
 import Icon from "../Icon/Icon";
 import {Button, ButtonType} from "../Button/Button";
+import {connect} from "react-redux";
+import Config from "../../../config/Config";
+import NetworkModel from "../../../model/NetworkModel";
+import PropTypes from "prop-types";
+
 
 
 
 class Network extends Component{
 
     static propTypes ={
-        title :  PropTypes.string.isRequired,
-        icon : PropTypes.string.isRequired,
+        network: PropTypes.instanceOf(NetworkModel)
     };
 
 
@@ -31,11 +34,11 @@ class Network extends Component{
                         </div>
                         <div className={styles.main}>
                             <div className={styles.icon}>
-                                <img alt={this.props.title} src={this.props.icon} />
+                                <img alt={this.props.network.title} src={this.props.network.icon.source} />
                             </div>
                         </div>
                         <div className={styles.footer}>
-                            <p>View Details</p>
+                            <p>Get Details</p>
                         </div>
                     </div>
                     <div className={styles.overlay}>
@@ -43,7 +46,7 @@ class Network extends Component{
                             <div className={styles.actions}>
                                 <div className={styles.link}>
                                     <Icon icon source={"link"} className={styles.icon}/>
-                                    <p>Visit this networks</p>
+                                    <p>Visit this network</p>
                                 </div>
 
                                 <Button
@@ -51,9 +54,9 @@ class Network extends Component{
                                         style : styles,
                                         className : "view"
                                     }}
-                                    title={"View Details"}
+                                    title={"Get Details"}
                                     type={ButtonType.DEFAULT}
-                                    onClick={(e)=>{ console.log("Open Cover"); }}
+                                    onClick={(e)=>{ this.props.onViewNetworkClick(this.props.network)}}
                                 />
                             </div>
                         </div>
@@ -65,10 +68,10 @@ class Network extends Component{
 
 
                 <div className={styles.info}>
-                    <div className={styles.title}><p>{this.props.title}</p></div>
+                    <div className={styles.title}><p>{this.props.network.title}</p></div>
                     {
-                        !Helper.isEmpty(this.props.description) ?
-                            <div className={styles.description}><p>{this.props.description}</p></div> : null
+                        !Helper.isEmpty(this.props.network.username) ?
+                            <div className={styles.description}><p>{this.props.network.username}</p></div> : null
                     }
                 </div>
             </div>
@@ -76,6 +79,16 @@ class Network extends Component{
     }
 
 
+
+
 }
 
-export default Network;
+export default connect(
+    null,
+    (dispatch) => {
+        return{
+            onViewNetworkClick : (network) => {return dispatch({type : Config.REDUX_ACTION_CONTROLLER_COVER_NETWORK_CHOOSE, payload : {network : network}})}
+        }
+    }
+
+)(Network);

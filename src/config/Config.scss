@@ -5,7 +5,8 @@
 
 $colorPrimary : #04BEFE;
 $colorSecondary : #4481eb;
-$colorBackground : #f3f8fa;
+$colorBackground : #fafafa;//#f3f8fa;
+
 
 $sizeCanvasMaxWidth : 1200px;
 $sizeNavHeight : 80px;
@@ -18,10 +19,11 @@ $fontSecondary : 'Source Sans Pro', sans-serif;
 
 
 $zIndexNav : 100;
+$zIndexOverlay : 80;
+$zIndexCover : 90;
 
 
-$borderRadiusNetworkCard : 24px;
-
+$borderRadiusNetworkCard : 26px;
 
 /*
  * Styles
@@ -40,6 +42,9 @@ $borderRadiusNetworkCard : 24px;
     display: flex;
     flex-direction: row;
 
+    border-left: 1px solid #f5f5f5;
+    border-right: 1px solid #f5f5f5;
+
 
     /** & > SideBar **/
     & > .content{
@@ -51,7 +56,7 @@ $borderRadiusNetworkCard : 24px;
 }
 
 
-@mixin button_default($background : $colorPrimary, $backgroundHover : darken($colorSecondary, 10%), $color : #ffffff, $colorHover: #ffffff, $transition : 0.2s){
+@mixin button_default($background : $colorPrimary,  $color : #ffffff, $backgroundHover : darken($colorSecondary, 10%), $colorHover: #ffffff, $transition : 0.2s){
   & > .container{
     background: $background;
     transition: background $transition;
@@ -128,7 +133,7 @@ $colorTable_Orange1 : #FF9800;
 /**
  * Sizes
  */
-
+$col-canvas : $sizeCanvasMaxWidth;
 $col-lg-extended : 1100px;
 $col-lg : 992px;
 $col-md: 768px;
@@ -140,6 +145,8 @@ $tablet : "all and (max-width : #{$col-lg}) and (min-width : #{$col-md  + 1})";
 $mobile-big: "all and (max-width : #{$col-md}) and (min-width : #{$col-sm  + 1})";
 $mobile : "all and (max-width : #{$col-sm})";
 
+
+$top-canvas-big : "all and (max-width : #{$col-canvas})";
 $top-tablet-big : "all and (max-width : #{$col-lg-extended})";
 $top-tablet : "all and (max-width : #{$col-lg})";
 $top-mobile-big: "all and (max-width : #{$col-md})";

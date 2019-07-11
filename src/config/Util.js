@@ -40,7 +40,7 @@ class Helper {
      * @param {Boolean} shouldNullify
      * @returns {*|String|int}
      */
-    static getValue(object, key, shouldNullify = false){
+    static getValue(key, object, shouldNullify = false){
         if(Helper.isDataSetInObject(key, object)) {
             let value = object[key];
             if(shouldNullify) object[key]  = null;
@@ -57,7 +57,7 @@ class Helper {
      * @returns {*|Object}
      */
 
-    static getObject(object, key,shouldNullify = false){
+    static getObject(key, object,shouldNullify = false){
         if(Helper.isObjectSetInObject(key,object)){
             let value = object[key];
             if(shouldNullify) object[key]  = null;
@@ -73,7 +73,7 @@ class Helper {
      * @param {Boolean} shouldNullify
      * @returns {*|Array}
      */
-    static getArray(object, key,shouldNullify = false){
+    static getArray(key, object,shouldNullify = false){
         if(this.isArraySetInObject(key,object)){
             let value = object[key];
             if(shouldNullify) object[key]  = null;

@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import styles from './SectionHeader.module.scss';
 import {Helper} from "../../../config/Util";
 import PropTypes from 'prop-types';
-import {Button, ButtonType} from "../Button/Button";
+import {Button} from "../Button/Button";
 
 class SectionHeader extends Component{
 
@@ -21,7 +21,7 @@ class SectionHeader extends Component{
                     onClick : PropTypes.func.isRequired
                 }
             )),
-        actions : PropTypes.arrayOf(Button),
+        actions : PropTypes.arrayOf(PropTypes.shape),
     };
 
     render() {
@@ -50,7 +50,7 @@ class SectionHeader extends Component{
                         {
                             Helper.isEmpty(this.props.actions) ? null:
                                 this.props.actions.map(
-                                    (element,index)=> <Button key={index} {...element} />
+                                    (element,index) => <Button key={index} {...element} />
                                 )
                         }
                     </div>

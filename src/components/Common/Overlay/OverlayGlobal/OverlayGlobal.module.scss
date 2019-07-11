@@ -1,0 +1,45 @@
+@import "../../../../config/Config";
+
+.Overlay{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: $zIndexOverlay;
+
+
+
+  & > .container{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+  }
+
+  @keyframes overlay-open {  from{ opacity: 0; }  to{ opacity: 1; } }
+  @keyframes overlay-close {  from{ opacity: 1; }  to{ opacity: 0; } }
+
+  &[data-visible="true"]{
+    pointer-events: all;
+    animation-name: overlay-open;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+
+  }
+  &[data-visible="false"]{
+    animation-name: overlay-close;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    pointer-events: none;
+  }
+  &[data-visible="init"]{
+    opacity: 0;
+    pointer-events: none;
+  }
+}
