@@ -3,27 +3,36 @@
  */
 import React, {Component} from 'react';
 import styles from './Network.module.scss';
-import {Helper} from "../../../config/Util";
 import Icon from "../Icon/Icon";
 import {Button, ButtonType} from "../Button/Button";
 import {connect} from "react-redux";
 import Config from "../../../config/Config";
-import NetworkModel from "../../../model/NetworkModel";
 import PropTypes from "prop-types";
+import {Helper} from "../../../config/Util";
+import NetworkModel from "../../../model/NetworkModel";
 
 
 
 
 class Network extends Component{
 
-    static propTypes ={
-        network: PropTypes.instanceOf(NetworkModel)
+    static propTypes = {
+        network : NetworkModel.propTypes,
+        viewonly : PropTypes.bool
+    };
+    static defaultProps = {
+        network : NetworkModel.defaultProps,
     };
 
 
+
+
+
     render() {
+        let viewonly = this.props.hasOwnProperty("viewonly");
+
         return(
-            <div className={styles.Network}>
+            <div className={styles.Network} data-viewonly={viewonly}>
                 <div className={styles.container}>
 
                     <div className={styles.content}>
@@ -33,52 +42,51 @@ class Network extends Component{
                             </div>
                         </div>
                         <div className={styles.main}>
-                            <div className={styles.icon}>
-                                <img alt={this.props.network.title} src={this.props.network.icon.source} />
-                            </div>
+                            <Icon className={styles.icon}
+                                  image
+                                  alt={this.props.network.title}
+                                  source={this.props.network.icon.source}
+                            />
                         </div>
                         <div className={styles.footer}>
-                            <p>Get Details</p>
+                            <p>{!viewonly ? "Get Details" : "" }</p>
                         </div>
                     </div>
-                    <div className={styles.overlay}>
-                        <div className={styles.content}>
-                            <div className={styles.actions}>
-                                <div className={styles.link}>
-                                    <Icon icon source={"link"} className={styles.icon}/>
-                                    <p>Visit this network</p>
-                                </div>
+                    {!viewonly
+                        ? <div className={styles.overlay}>
+                            <div className={styles.content}>
+                                <div className={styles.actions}>
+                                    <div className={styles.link}>
+                                        <Icon icon source={"link"} className={styles.icon}/>
+                                        <p>Visit this network</p>
+                                    </div>
 
-                                <Button
-                                    custom={{
-                                        style : styles,
-                                        className : "view"
-                                    }}
-                                    title={"Get Details"}
-                                    type={ButtonType.DEFAULT}
-                                    onClick={(e)=>{ this.props.onViewNetworkClick(this.props.network)}}
-                                />
+                                    <Button
+                                        custom={{
+                                            style: styles,
+                                            className: "view"
+                                        }}
+                                        title={"Get Details"}
+                                        type={ButtonType.DEFAULT}
+                                        onClick={(e) => {
+                                            this.props.onViewNetworkClick(this.props.network)
+                                        }}
+                                    />
+                                </div>
                             </div>
                         </div>
-
-
-                    </div>
+                        : null
+                    }
                 </div>
-
 
 
                 <div className={styles.info}>
                     <div className={styles.title}><p>{this.props.network.title}</p></div>
-                    {
-                        !Helper.isEmpty(this.props.network.username) ?
-                            <div className={styles.description}><p>{this.props.network.username}</p></div> : null
-                    }
+                    <div className={styles.description}><p>{this.props.network.username}</p></div>
                 </div>
             </div>
         )
     }
-
-
 
 
 }

@@ -5,7 +5,7 @@
 
 $colorPrimary : #04BEFE;
 $colorSecondary : #4481eb;
-$colorBackground : #fafafa;//#f3f8fa;
+$colorBackground : #f3f8fa; //#fafafa;
 
 
 $sizeCanvasMaxWidth : 1200px;
@@ -14,89 +14,17 @@ $sizeCanvasPaddingDashboard : 30px;
 $sizeCanvasPaddingMobile : 30px;
 $sizeSideBarWidth : 80px;
 
-$fontPrimary : 'Quicksand', 'Source Sans Pro', sans-serif;
-$fontSecondary : 'Source Sans Pro', sans-serif;
+$fontPrimary : 'Quicksand',  'Montserrat', sans-serif;
+$fontSecondary : 'Montserrat', sans-serif;
 
 
 $zIndexNav : 100;
 $zIndexOverlay : 80;
 $zIndexCover : 90;
+$zIndexSideBar : 10;
 
 
 $borderRadiusNetworkCard : 26px;
-
-/*
- * Styles
- */
-
-.Page{
-  width: 100%;
-  background: $colorBackground;
-  min-height: 100vh;
-  & > .container{
-    width: 100%;
-    max-width: $sizeCanvasMaxWidth;
-    min-height: 100%;
-    margin: 0 auto;
-    background: #ffffff;
-    display: flex;
-    flex-direction: row;
-
-    border-left: 1px solid #f5f5f5;
-    border-right: 1px solid #f5f5f5;
-
-
-    /** & > SideBar **/
-    & > .content{
-      flex: 1;
-      padding: calc(#{$sizeNavHeight} + 15px) $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard;
-    }
-
-  }
-}
-
-
-@mixin button_default($background : $colorPrimary,  $color : #ffffff, $backgroundHover : darken($colorSecondary, 10%), $colorHover: #ffffff, $transition : 0.2s){
-  & > .container{
-    background: $background;
-    transition: background $transition;
-    & > .icon i, & > .label p{
-      color: $color;
-      transition: color $transition;
-    }
-
-    &:hover, &:active, &:focus{
-      background:$backgroundHover;
-      transition: background $transition;
-
-      & > .icon i, & > .label p{
-        color: $colorHover;
-        transition: color $transition;
-      }
-    }
-
-  }
-}
-
-
-/*
- * Van Normalizer
- */
-
-html {
-  background: $colorBackground;
-  overflow-x: hidden;
-  p, h1, h2, h3, h4, h5 {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-}
-
-* {
-  font-family: $fontSecondary;
-}
-
-
 
 
 
@@ -117,6 +45,11 @@ $colorTable_Green1 : #4CAF50;
 $colorTable_Yellow1 : #FFEB3B;
 $colorTable_Orange1 : #FF9800;
 
+
+$colorTable_GrayBlue_Black : #40474f;
+$colorTable_GrayBlue_Dark : #8B9AAC;
+$colorTable_GrayBlue_Light : #e4e8f0;
+$colorTable_GrayBlue_DarkText : $colorTable_GrayBlue_Dark;
 
 
 
@@ -152,5 +85,173 @@ $top-tablet : "all and (max-width : #{$col-lg})";
 $top-mobile-big: "all and (max-width : #{$col-md})";
 $bottom-mobile-big: "all and (min-width : #{$col-md + 1})";
 $top-mobile : "all and (max-width : #{$col-sm})";
+
+
+
+
+
+
+
+
+/*
+ * Styles
+ */
+
+.Page{
+  order: 2;
+  width: 100%;
+  background: $colorBackground;
+  min-height: 100vh;
+  & > .container{
+    width: calc(100% - 2 * 1px);
+    max-width: calc(#{$sizeCanvasMaxWidth} - 2 * 1px);
+    min-height: 100%;
+    margin: 0 auto;
+    background: #ffffff;
+    display: flex;
+    flex-direction: row;
+    border-left: 1px solid #f5f5f5;
+    border-right: 1px solid #f5f5f5;
+
+
+    /** & > SideBar **/
+    & > .content{
+      flex: 1;
+      padding: calc(#{$sizeNavHeight} + 15px) $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard;
+    }
+
+  }
+
+  &[data-nav-fixed="true"]{
+
+    & > .container{
+      & > .content{
+
+      }
+    }
+
+    & + nav{
+      position: absolute !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+
+@mixin button_default($background : $colorPrimary,  $color : #ffffff, $backgroundHover : darken($background, 10%), $colorHover: $color, $transition : 0.2s){
+  & > .container{
+    background: $background;
+    transition: background $transition;
+    & > .icon i, & > .label p{
+      color: $color;
+      transition: color $transition;
+    }
+
+    &:hover, &:active, &:focus{
+      background:$backgroundHover;
+      transition: background $transition;
+
+      & > .icon i, & > .label p{
+        color: $colorHover;
+        transition: color $transition;
+      }
+    }
+
+  }
+}
+
+
+@mixin button_outline($outline : $colorPrimary,  $color : $colorPrimary, $outlineHover : darken($outline, 10%), $colorHover: #ffffff, $background : transparent, $backgroundHover : $outlineHover, $transition : 0.2s){
+  & > .container{
+    background: $background;
+    border: 1px solid $outline;
+    transition: background $transition, border $transition;
+    & > .icon i, & > .label p{
+      color: $color;
+      transition: color $transition;
+    }
+
+    &:hover, &:active, &:focus{
+      border: 1px solid $outlineHover;
+      background:$backgroundHover;
+      transition: background $transition, border $transition;
+
+      & > .icon i, & > .label p{
+        color: $colorHover;
+        transition: color $transition;
+      }
+    }
+
+  }
+}
+
+
+@mixin button_default_gray(){
+  @include button_default($colorTable_GrayBlue_Light, $colorTable_GrayBlue_DarkText, darken($colorTable_GrayBlue_Light, 6%), darken($colorTable_GrayBlue_DarkText,5%) );
+}
+
+@mixin button_outline_gray(){
+  @include button_outline($colorTable_GrayBlue_Light, $colorTable_GrayBlue_DarkText, darken($colorTable_GrayBlue_Light, 6%), darken($colorTable_GrayBlue_DarkText,5%) );
+}
+
+
+
+
+/*
+ * Van Normalizer
+ */
+
+html {
+  background: $colorBackground;
+  overflow-x: hidden;
+  p, h1, h2, h3, h4, h5 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  a{
+    -webkit-appearance: none;
+    text-decoration: none;
+
+    &:link {
+      text-decoration: none;
+    }
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+
+  * {
+    font-family: $fontSecondary;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  i{
+    line-height: 1.4 !important;
+  }
+
+}
+
+@keyframes fade-in {
+  from {opacity: 0} to{opacity: 1}
+}
+@mixin fade-in($duration : 0.2s){
+  animation-name: fade-in;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-duration: $duration;
+}
+
+@mixin ellipsis{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
 
 

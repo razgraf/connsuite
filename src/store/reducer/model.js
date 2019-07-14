@@ -8,7 +8,7 @@ import NetworkModel from "../../model/NetworkModel";
 
 
 const coverInitial = {
-    network : new NetworkModel(null),
+    network : new NetworkModel({}),
 };
 
 const cover = (state = coverInitial, action) => {

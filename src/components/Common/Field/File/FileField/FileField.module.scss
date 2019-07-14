@@ -1,0 +1,35 @@
+@import "../../../../../config/Config";
+
+
+.FileField{
+
+  & > .content {
+
+    & > input {
+      display: none;
+    }
+    & > p{
+      flex: 1;
+      font-size: 11pt;
+      font-weight: 300;
+      color: #111;
+      &:empty{
+        &:after{
+          content : 'e.g. my_network.png';
+          color: darken($colorTable_GrayBlue_Light, 30%);
+          font-size: 11pt;
+          font-weight: 300;
+          font-style: normal;
+          opacity: 0.6;
+        }
+
+      }
+    }
+
+    & > .buttonUpload {
+      @include button_outline_gray;
+    }
+  }
+
+}
+

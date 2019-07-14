@@ -3,9 +3,9 @@
 .Button{
 
   & > .container{
-    padding: 12px 30px;
-    min-height: calc(44px - 2 * 12px);
-    border-radius: 22px;
+    padding: 10px 30px;
+    min-height: calc(48px - 2 * 12px);
+    border-radius: 40px;
     min-width: calc(100px - 2 * 30px);
     display: flex;
     justify-content: center;
@@ -22,22 +22,48 @@
       width: 20px;
       margin-right: 10px;
       margin-left: -10px;
-      line-height: 0.2;
+      line-height: 0.2 !important;
       i{
-        font-size: 14pt;
+        font-size: 13pt;
       }
     }
     & > .label{
       p{
-        font-size: 11pt;
-        font-weight: 400;
+        font-size: 10pt;
+        font-weight: 500;
         font-family: $fontSecondary;
       }
     }
   }
 
 
-  &[data-style="default"]{
+  &[data-mini="true"]{
+    & > .container{
+      padding: 6px 10px;
+      min-height: calc(36px - 2 * 8px);
+      border-radius: 30px;
+      min-width: calc(50px - 2 * 12px);
+
+      & > .icon {
+        margin-left: -6px;
+        margin-right: 6px;
+        i{
+          font-size: 12pt;
+        }
+
+      }
+
+      & > .label p{
+        font-size: 9pt;
+      }
+
+
+    }
+  }
+
+
+
+  &[data-style="default"],&[data-style="mini_default"]{
     & > .container{
       background: $colorPrimary;
       transition: background 0.2s;
@@ -52,7 +78,7 @@
 
     }
   }
-  &[data-style="outline"]{
+  &[data-style="outline"],&[data-style="mini_outline"]{
     & > .container{
       background: #ffffff;
       border: 1px solid $colorPrimary;
@@ -74,7 +100,6 @@
 
     }
   }
-
   &[data-style="glow"]{
     & > .container{
       background: $colorPrimary;
@@ -114,40 +139,6 @@
     }
   }
 
-
-  &[data-style="mini_default"]{
-    & > .container{
-      background: $colorPrimary;
-      transition: background 0.2s;
-
-
-      padding: 8px 12px;
-      min-height: calc(36px - 2 * 8px);
-      border-radius: 16px;
-      min-width: calc(50px - 2 * 12px);
-
-      & > .icon {
-        margin-left: -6px;
-        margin-right: 6px;
-        i{
-          font-size: 12pt;
-        }
-
-      }
-      & > .label p{
-        font-size: 11pt;
-      }
-
-      & > .icon i, & > .label p{
-        color: #ffffff;
-      }
-
-      &:hover, &:active, &:focus{
-        background: darken($colorPrimary, 7%);
-        transition: background 0.2s;
-      }
-    }
-  }
 
 
 

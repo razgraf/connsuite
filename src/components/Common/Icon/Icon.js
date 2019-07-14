@@ -8,9 +8,10 @@ import PropTypes from "prop-types";
 const Icon = (props) => {
 
     const className =  Helper.isEmpty(props.className) ? "icon image" : props.className;
+    const source = !Helper.isEmpty(props.source) ? props.source : props.placeholder;
 
-    if(props.hasOwnProperty("image")) return <div className={className}><img alt={""} src={props.source}/></div>;
-    if(props.hasOwnProperty("icon")) return <div className={className}><i className={"material-icons"}>{props.source}</i></div>;
+    if(props.hasOwnProperty("image")) return <div className={className}><img  nopin="nopin" alt={props.alt} src={source}/></div>;
+    if(props.hasOwnProperty("icon")) return <div className={className}><i className={props.round ? "material-icons-round" : props.outline ? "material-icons-outlined" :  "material-icons"}>{props.source}</i></div>;
 
     return <div className={className}><span>Icon-less</span></div>
 };
@@ -19,7 +20,16 @@ Icon.propTypes = {
     icon : PropTypes.any,
     image : PropTypes.any,
     source : PropTypes.any,
-    className : PropTypes.string
+    className : PropTypes.string,
+    alt : PropTypes.string,
+    round : PropTypes.any,
+    outline : PropTypes.any,
+    placeholder : PropTypes.string
+};
+
+Icon.defaultProps = {
+    alt : "",
+    placeholder : require("../../../assets/images/networks/normal/icon_default.png")
 };
 
 export default Icon;

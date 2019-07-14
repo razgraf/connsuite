@@ -3,18 +3,41 @@
  */
 import React, {Component} from 'react';
 import styles from './NavUser.module.scss';
+import {Link, withRouter} from 'react-router-dom';
+import Config from "../../../config/Config";
+import {Helper} from "../../../config/Util";
+import Icon from "../../Common/Icon/Icon";
 
 class NavUser extends Component{
-
     render(){
+
+
+       let page = Config.getPageByRoute(this.props.location.pathname);
+       let withName = !Helper.isEmpty(page) && !Helper.isEmpty(page.depth) && page.depth  > 1;
+
+
         return(
             <nav className={styles.NavUser}>
                 <div className={styles.container}>
-                    <div className={styles.logo}>
-                        <img alt={"Logo"} src={require("../../../assets/images/logo.png")}/>
-                    </div>
+                    <Link to={Config.ROUTE_PAGE_DASHBOARD} className={styles.logo} data-back={withName}>
+                        <Icon image className={styles.default} source={require("../../../assets/images/logo.png")} alt={"Logo"} />
+                        {
+                            withName
+                                ? <Icon icon className={styles.back} source={"arrow_back"} alt={"Back"} />
+                                : null
+                        }
+                    </Link>
 
-                    <div className={styles.content}/>
+                    <div className={styles.content}>
+                        {
+                            withName
+                                ? <div className={styles.title}>
+                                    <Icon icon round className={styles.icon} source={"keyboard_arrow_right"} />
+                                    <p>{page.title}</p>
+                                </div>
+                                : null
+                        }
+                    </div>
 
                     <div className={styles.account}>
                         <div className={styles.container}>
@@ -43,4 +66,4 @@ class NavUser extends Component{
     }
 }
 
-export default NavUser;
+export default withRouter(NavUser);

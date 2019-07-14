@@ -1,0 +1,151 @@
+@import "../../../../config/Config";
+
+
+.FieldLabel{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+
+  & > .label{
+    position: relative;
+    z-index: 5;
+    label{
+      font-family: $fontSecondary;
+      color: $colorTable_GrayBlue_DarkText;
+      font-size: 13pt;
+      font-weight: 300;
+    }
+  }
+  & > .help{
+    padding-left: 10px;
+    position: relative;
+    z-index: 6;
+    & > .indicator{
+      z-index: 7;
+      height: 20px;
+      width: 20px;
+      border-radius: 10px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: $colorTable_GrayBlue_Light;
+      transition: background 0.2s;
+
+      cursor: pointer;
+      order: 1;
+
+
+
+      & > p{
+        font-size: 11pt;
+        font-weight: 600;
+        text-align: center;
+        color: darken($colorTable_GrayBlue_DarkText, 10%);
+        user-select: none;
+      }
+
+      &:hover, &:active, &:focus{
+        background: darken($colorTable_GrayBlue_Light,10%);
+        transition: background 0.15s;
+
+
+        & + .content{
+          opacity: 1;
+          transition: background 0.15s;
+          pointer-events: all;
+        }
+
+      }
+
+    }
+
+    & > .content{
+      z-index: 8;
+      order: 2;
+      position: absolute;
+      top: 28px;
+      margin-left: -5px;
+      background: $colorTable_GrayBlue_Black;
+      padding: 15px;
+      border-radius: 4px;
+      width: calc(230px - 2 * 15px);
+      max-height: 300px;
+      overflow-y: auto;
+      opacity: 0;
+      transition: background 0.15s;
+      pointer-events: none;
+
+      &> p{
+        color: #ffffff;
+        text-align: left;
+        font-size: 9pt;
+        font-weight: 400;
+        user-select: none;
+      }
+    }
+
+
+  }
+
+  &[data-force="top"]{
+    & > .help{
+      & > .content{
+        top: initial;
+        left: initial;
+        right: initial;
+        bottom: 28px;
+      }
+    }
+  }
+  &[data-force="bottom"]{
+    & > .help{
+      & > .content{
+        bottom: initial;
+        left: initial;
+        right: initial;
+        top: 28px;
+      }
+    }
+  }
+  &[data-force="left"]{
+    & > .help{
+      & > .content{
+        bottom: initial;
+        left: initial;
+        right: 28px;
+        top: 0;
+      }
+    }
+  }
+  &[data-force="right"]{
+    & > .help{
+      & > .content{
+        bottom: initial;
+        right: initial;
+        left: 43px;
+        top: 0;
+      }
+    }
+  }
+
+  &[data-warn="true"]{
+    & > .label{
+      label{
+        color: $colorTable_Red1;
+      }
+    }
+    & > .help{
+      & > .indicator{
+        background: $colorTable_Red1;
+        p{
+          color: #fff;
+        }
+      }
+    }
+  }
+
+}

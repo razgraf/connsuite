@@ -1,21 +1,56 @@
 /**
  * Created by @VanSoftware on 2019-07-04.
  */
+import cx from 'classnames';
 
 class Helper {
 
 
+    /**
+     * The purpose of this functionality is to extend the styling received from the
+     * default CSS module with a dynamic styling. Due to the dynamic generation of
+     * class names, we wouldn't have been able to do this with pure css.
+     * This way, when we now expect dynamic styling, we test it and merge it using
+     * cx() from the classnames package
+     *
+     *
+     * @param {Object} primary - the primary style module
+     * @param {Object} dynamic - the dynamic style module, the overrider
+     * @param {string} className - the primary className
+     * @param {string} dynamicClassName - the dynamic className, the overrider
+     * @return {*}
+     */
+
+    static dynamicClass ( primary, dynamic, className, dynamicClassName = className){
+        const style = primary[className];
+        if(Helper.isEmpty(dynamic) || Helper.isEmpty(dynamic[dynamicClassName])) return style;
+        return cx(style, dynamic[dynamicClassName]);
+    }
+
+
+
+    /**
+     *
+     *
+     *
+     *
+     *  DATA INTEGRITY
+     *
+     *
+     */
+
+
     static isEmpty = (value) => {
         try {
-            if (value === undefined || typeof value === 'undefined' || value === null) return true; //first check if value is defined and !null
+            if (value === undefined || typeof value === 'undefined' || value === null) return true; //first isValid if value is defined and !null
 
             //case : object
             if (typeof value === 'object') {
-                for(let key in value) if(key !== undefined) return false; //check if the object has any values
+                for(let key in value) if(key !== undefined) return false; //isValid if the object has any values
             }
             //case : array
             else if ( value.constructor === Array) {
-                if (value.length !== 0) return false;  //check if the array has positive length
+                if (value.length !== 0) return false;  //isValid if the array has positive length
             }
             //case : string/number
             else {
@@ -37,14 +72,11 @@ class Helper {
      *
      * @param {Object} object
      * @param {String|int}key
-     * @param {Boolean} shouldNullify
      * @returns {*|String|int}
      */
-    static getValue(key, object, shouldNullify = false){
+    static getValue(key, object){
         if(Helper.isDataSetInObject(key, object)) {
-            let value = object[key];
-            if(shouldNullify) object[key]  = null;
-            return value;
+            return object[key];
         }
         return null;
     };
@@ -53,15 +85,12 @@ class Helper {
      *
      * @param {Object} object
      * @param {String|int}key
-     * @param {Boolean} shouldNullify
      * @returns {*|Object}
      */
 
-    static getObject(key, object,shouldNullify = false){
+    static getObject(key, object){
         if(Helper.isObjectSetInObject(key,object)){
-            let value = object[key];
-            if(shouldNullify) object[key]  = null;
-            return value;
+            return object[key];
         }
         return null;
     };
@@ -70,14 +99,11 @@ class Helper {
      *
      * @param {Object} object
      * @param {String|int}key
-     * @param {Boolean} shouldNullify
      * @returns {*|Array}
      */
-    static getArray(key, object,shouldNullify = false){
+    static getArray(key, object){
         if(this.isArraySetInObject(key,object)){
-            let value = object[key];
-            if(shouldNullify) object[key]  = null;
-            return value;
+            return object[key];
         }
         return null;
     };
@@ -97,6 +123,8 @@ class Helper {
         }
         return result;
     };
+
+
     static isDataSetInObject(key, object){
         if(object === null || object === undefined || object.length === 0) return false;
         if(!object.hasOwnProperty(key)) return false;

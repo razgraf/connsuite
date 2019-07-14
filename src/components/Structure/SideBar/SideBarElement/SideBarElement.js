@@ -3,18 +3,33 @@
  */
 import React, {Component} from 'react';
 import styles from './SideBarElement.module.scss';
+import {NavLink} from "react-router-dom";
+import Icon from "../../../Common/Icon/Icon";
+import Config from "../../../../config/Config";
+import {Helper} from "../../../../config/Util";
 
 class SideBarElement extends Component {
 
     render() {
+
+        let page = Config.getPageByRoute(this.props.route);
+        if( Helper.isEmpty(page) || Helper.isEmpty(page.icon) ||  Helper.isEmpty(page.title)) return null;
+
+
+
         return(
-            <div className={styles.SideBarElement}>
-                <div className={styles.container}>
-                    <div className={styles.icon}>
-                        <i className={"material-icons"}>{this.props.icon}</i>
+            <NavLink className={styles.SideBarElement} activeClassName={styles.active} to={page.route}>
+                <div className={styles.inner}>
+                    <div className={styles.container}>
+                        <Icon icon round className={styles.icon} source={page.icon}/>
+                    </div>
+                    <div className={styles.tooltip}>
+                        <div className={styles.container}>
+                            <p>{page.title}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </NavLink>
         )
     }
 

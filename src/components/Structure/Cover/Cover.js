@@ -4,11 +4,12 @@
 
 import React, {Component} from 'react';
 import styles from './Cover.module.scss'
+import cx from 'classnames';
 import {connect} from "react-redux";
 import Config from "../../../config/Config";
 import OverlayIndividual from "../../Common/Overlay/OverlayIndividual/OverlayIndividual";
 import Icon from "../../Common/Icon/Icon";
-import Network from "../../Common/Network/Network";
+import Emoji from "../../Common/Emoji/Emoji";
 import NetworkModel from "../../../model/NetworkModel";
 
 class Cover extends Component{
@@ -16,7 +17,7 @@ class Cover extends Component{
 
     static defaultProps = {
         network : new NetworkModel(null),
-    }
+    };
 
 
     render() {
@@ -29,7 +30,7 @@ class Cover extends Component{
                             <section>
                                 <div className={styles.header}>
                                     <div className={styles.title}>
-                                        <p>Network</p>
+                                        <p>Network Details</p>
                                     </div>
                                 </div>
                                 <div className={styles.card}>
@@ -39,8 +40,53 @@ class Cover extends Component{
                                             <div className={styles.title}><p>{this.props.network.title}</p></div>
                                             <div className={styles.description}><p>@{this.props.network.username}</p></div>
                                         </div>
-                                        <div className={styles.actions}></div>
+                                        <div className={styles.actions}>
+                                            <div className={cx(styles.action, styles.statistic)}>
+                                                <Icon icon round source={"multiline_chart"} className={"icon"}/>
+                                            </div>
+                                            <div className={cx(styles.action, styles.view)}>
+                                                <Icon icon round source={"arrow_forward"} className={"icon"}/>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div className={styles.header}>
+                                    <div className={styles.title}>
+                                        <p>Description</p>
+                                    </div>
+                                </div>
+                                <div className={styles.content}>
+                                    <div className={styles.description}>
+                                        <p>Hi <Emoji symbol={"👋"}/>! You can also find me on {this.props.network.title}.</p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div className={styles.header}>
+                                    <div className={styles.title}>
+                                        <p>Actions</p>
+                                    </div>
+                                </div>
+                                <div className={styles.content}>
+                                    <div className={styles.actions}>
+                                        <div className={styles.action}>
+                                            <Icon icon round className={styles.icon} source={"share"} />
+                                            <div className={styles.title}><p>Share:  <span className={styles.share}>connsuite.com/razgraf/{this.props.network.identifier}</span></p></div>
+                                        </div>
+                                        <div className={styles.action}>
+                                            <Icon icon round className={styles.icon} source={"edit"} />
+                                            <div className={styles.title}><p>Edit network</p></div>
+                                        </div>
+                                        <div className={styles.action}>
+                                            <Icon icon round className={styles.icon} source={"remove_circle_outline"} />
+                                            <div className={styles.title}><p>Remove network</p></div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </section>
                         </div>

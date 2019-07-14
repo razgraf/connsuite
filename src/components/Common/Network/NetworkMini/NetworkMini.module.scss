@@ -1,0 +1,94 @@
+@import "../../../../config/Config";
+
+
+.NetworkMini{
+  grid-column: span 1;
+  width: 60px;
+  height: 60px;
+  &[data-viewonly="true"]{
+    pointer-events:none;
+    & > .container{
+      cursor: default;
+    }
+  }
+  &[data-active="true"]{
+    & > .container {
+      border: 1px solid $colorSecondary;
+      &:after {
+        background: $colorSecondary;
+        opacity: 1;
+        transition: opacity 0.2s, border 0.2s;
+      }
+      &:hover{
+        &:after{
+          background: $colorSecondary;
+        }
+      }
+    }
+  }
+
+
+  & > .container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    background: #ffffff;
+    box-shadow: 0 0 5px 1px rgba(0,0,0,0.05);
+    transform: translateY(0);
+    transition : box-shadow 0.2s, transform 0.2s, background 0.2s;
+    will-change: transform;
+    cursor: pointer;
+    border: 1px solid transparent;
+
+    & > .content {
+      width: calc(100% - 2 * 10px);
+      height: calc(100% - 2 * 10px);
+      padding: 10px;
+      position: relative;
+      & > .icon{
+        width: 100%;
+        height: 100%;
+        & > img{
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          user-select: none;
+          border: none;
+          outline: 0;
+
+          @include fade-in();
+
+        }
+      }
+    }
+
+    &:after{
+      content : ' ';
+      z-index: 2;
+      position: absolute;
+      right: -1px;
+      bottom: -1px;
+      width: 12px;
+      height: 12px;
+      border-radius: 10px 0 6px 0;
+      background: #ddd;
+      opacity: 0;
+      transition: opacity 0s, border 0s;
+    }
+
+    &:hover{
+      background: #ffffff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      transform: translateY(0);
+      transition : box-shadow 0.2s, transform 0.2s, background 0.2s;
+      will-change: transform;
+      &:after{
+        opacity: 1;
+        transition: opacity 0s, border 0s;
+      }
+
+    }
+  }
+
+}

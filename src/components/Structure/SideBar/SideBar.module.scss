@@ -5,6 +5,7 @@
   min-height: 100vh;
   width: $sizeSideBarWidth;
   position: relative;
+  z-index: $zIndexSideBar;
 
   & > .container{
     height: 100vh;

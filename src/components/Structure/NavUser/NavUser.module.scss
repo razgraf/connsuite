@@ -12,30 +12,103 @@
   box-shadow: 0 -10px 30px 12px rgba($colorSecondary,0.3);
   position: fixed;
   top: 0;
+  order: 1;
+
 
 
   & > .container{
     height: calc(100% - 2 * 10px);
     width: calc(100% - 2 * 10px);
-    max-width: calc(#{$sizeCanvasMaxWidth} - 2 * 15px);
-    padding: 10px 15px;
+    max-width: calc(#{$sizeCanvasMaxWidth} - 2 * 10px);
+    padding: 10px 10px;
     display: flex;
     flex-direction: row;
 
     & > .logo{
       height: $sizeNavHeight - 20;
       width: $sizeNavHeight - 20;
-      & > img{
+      border-radius: calc((#{$sizeNavHeight} - 20px)/2);
+      background: #ffffff;
+      overflow: hidden;
+      position: relative;
+      border: none;
+
+      & > .default{
         height: 100%;
         width: 100%;
-        object-fit: cover;
-        border-radius: (#{$sizeNavHeight} - 20)/2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: translateX(0);
+        transition: transform 0.2s;
+        will-change: transform;
+        position: absolute;
+        background: #ffffff;
+        & > img{
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+      & > .back{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: translateX(100%);
+        transition: transform 0.2s;
+        will-change: transform;
+        position: absolute;
+        background: #ffffff;
+
+        i{
+          color: $colorSecondary;
+          font-size: 22pt;
+        }
+      }
+
+      &[data-back="true"]:hover{
+          & > .default{
+            transform: translateX(-100%);
+            transition: transform 0.2s;
+            will-change: transform;
+          }
+        & > .back{
+          transform: translateX(0);
+          transition: transform 0.2s;
+          will-change: transform;
+        }
       }
     }
 
     & > .content{
       height: 100%;
       flex: 1;
+
+      & > .title{
+        padding-left: 20px;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        & > .icon {
+          margin-right: 8px;
+          line-height: 0.5;
+          i{
+            font-size: 16pt;
+            color: #ffffff;
+
+          }
+        }
+        & > p{
+          font-size: 16pt;
+          color: #ffffff;
+          text-align: left;
+          font-weight: 500;
+          font-family: $fontPrimary;
+        }
+      }
+
     }
 
     & > .account{
@@ -90,7 +163,7 @@
           & > .name{
             p{
               font-family: $fontSecondary;
-              font-size: 12pt;
+              font-size: 11pt;
               line-height: 1.4;
               color: #444;
               font-weight: 400;

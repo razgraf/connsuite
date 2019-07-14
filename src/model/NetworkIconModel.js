@@ -3,6 +3,7 @@
  */
 
 import {Helper} from "../config/Util";
+import PropTypes from "prop-types";
 
 class NetworkIconModel{
     get AID() {
@@ -28,9 +29,16 @@ class NetworkIconModel{
 
     constructor(object){
 
-        this._AID = Helper.getValue(NetworkIconModel.PARAM_AID, object);
-        this._source = Helper.getValue(NetworkIconModel.PARAM_SOURCE, object);
+        this.AID = Helper.getValue(NetworkIconModel.PARAM_AID, object);
+        this.source = Helper.getValue(NetworkIconModel.PARAM_SOURCE, object);
     }
+
+
+
+    static propTypes = PropTypes.shape({
+        AID : PropTypes.string,
+        source : PropTypes.string
+    })
 }
 
 

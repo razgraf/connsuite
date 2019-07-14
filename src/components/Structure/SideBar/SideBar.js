@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 import styles from './SideBar.module.scss';
 import SideBarElement from "./SideBarElement/SideBarElement";
+import Config from "../../../config/Config";
 
 class SideBar extends Component {
 
@@ -11,8 +12,11 @@ class SideBar extends Component {
         return(
             <div className={styles.SideBar}>
                 <div className={styles.container}>
-                    <SideBarElement icon={"home"} />
-                    <SideBarElement icon={"whatshot"} />
+                    <SideBarElement route={Config.ROUTE_PAGE_DASHBOARD} />
+                    <SideBarElement route={Config.ROUTE_PAGE_PORTFOLIO}  />
+                    <SideBarElement route={Config.ROUTE_PAGE_BUSINESS_BOOK}  />
+                    <SideBarElement route={Config.ROUTE_PAGE_PROFILE}  />
+                    <SideBarElement route={Config.ROUTE_PAGE_STATISTICS} />
                 </div>
             </div>
         )
