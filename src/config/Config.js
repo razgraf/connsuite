@@ -13,6 +13,7 @@ class Config{
             {
                 AID : "NET1",
                 title : "Facebook",
+                URL : "https://facebook.com/",
                 icon : {
                     source :  require("../assets/images/networks/normal/icon_facebook.png"),
                 },
@@ -21,6 +22,7 @@ class Config{
             {
                 AID : "NET2",
                 title : "Twitter",
+                URL : "https://twitter.com/",
                 icon : {
                     source :  require("../assets/images/networks/normal/icon_twitter.png"),
                 },
@@ -29,6 +31,7 @@ class Config{
             {
                 AID : "NET3",
                 title : "Behance",
+                URL : "https://behance.com/",
                 icon : {
                     source :  require("../assets/images/networks/normal/icon_behance.png"),
                 },
@@ -37,6 +40,7 @@ class Config{
             {
                 AID : "NET4",
                 title : "Pinterest",
+                URL : "https://pinterest.com/",
                 icon : {
                     source :  require("../assets/images/networks/normal/icon_pinterest.png"),
                 },
@@ -44,6 +48,7 @@ class Config{
             },
             {
                 AID : "NET5",
+                URL : "https://github.com/",
                 title : "GitHub  LALALALLALALL lalas dlsaldsald lsal",
                 icon : {
                     source :  require("../assets/images/networks/normal/icon_github.png"),

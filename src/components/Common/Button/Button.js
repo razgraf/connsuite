@@ -39,11 +39,13 @@ class Button extends Component{
             style : PropTypes.object,
             className : PropTypes.string,
         }),
-        mini : PropTypes.bool
+        mini : PropTypes.bool,
+        active : PropTypes.bool
     };
 
     static defaultProps = {
-        mini : false
+        mini : false,
+        active: true,
     };
 
 
@@ -67,6 +69,7 @@ class Button extends Component{
                 onClick={(e)=>{this.props.onClick(e)}}
                 className={buttonClass}
                 data-mini={this.props.mini}
+                data-active={this.props.active}
                 data-style={!Helper.isEmpty(this.props.type) ? this.props.type : ButtonType.DEFAULT}
 
             >

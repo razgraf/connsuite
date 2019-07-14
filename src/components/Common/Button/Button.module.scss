@@ -1,6 +1,16 @@
 @import "../../../config/Config";
 
 .Button{
+  transition: opacity .2s, filter .2s;
+
+  &[data-active="false"]{
+    pointer-events: none;
+    opacity: 0.3;
+    filter : grayscale(100%);
+    cursor: not-allowed;
+
+    transition: opacity .2s, filter .2s;
+  }
 
   & > .container{
     padding: 10px 30px;

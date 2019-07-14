@@ -38,7 +38,19 @@ class NetworkIconModel{
     static propTypes = PropTypes.shape({
         AID : PropTypes.string,
         source : PropTypes.string
-    })
+    });
+
+
+    static clone(icon){
+        return new NetworkIconModel(icon.toObject())
+    }
+
+    toObject(){
+        return {
+            AID : this.AID,
+            source : this.source
+        }
+    }
 }
 
 

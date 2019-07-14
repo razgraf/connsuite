@@ -14,6 +14,7 @@ class TextField extends BaseField{
     }
 
 
+
     field = () => {
         return <div className={Helper.dynamicClass(stylesDefault, styles,"field", "TextField")}>
             <div className={stylesDefault.content}>
@@ -23,8 +24,15 @@ class TextField extends BaseField{
                     placeholder={this.props.placeholder}
 
                     ref={this.state.element.field}
+                    onBlur={()=>{
+                        if(!Helper.isEmpty(this.props.warnOnBlur) && this.props.warnOnBlur)
+                            this.isValid(true);
+                    }}
 
-                    onChange={() => this.props.callback.onChange(this)}
+                    onChange={() => {
+                        if(this.props.warn === true && !Helper.isEmpty(this.props.warnOnBlur) && this.props.warnOnBlur) this.isValid(true);
+                        return this.props.callback.onChange(this);
+                    }}
                 />
             </div>
         </div>;

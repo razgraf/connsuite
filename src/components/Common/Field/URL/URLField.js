@@ -25,14 +25,23 @@ class URLField extends BaseField{
 
                     ref={this.state.element.field}
 
-                    onChange={() => this.props.callback.onChange(this)}
+                    onBlur={()=>{
+                        if(!Helper.isEmpty(this.props.warnOnBlur) && this.props.warnOnBlur)
+                            this.isValid(true);
+                    }}
+
+                    onChange={() => {
+                        if(this.props.warn === true && !Helper.isEmpty(this.props.warnOnBlur) && this.props.warnOnBlur) this.isValid(true);
+                        return this.props.callback.onChange(this);
+                    }}
                 />
             </div>
         </div>;
     };
 
 
-    isValid = (handleWarn) => {
+
+    isValid = (handleWarn = false) => {
         let flag = ! super.isValid(handleWarn);
         if(flag) return true;
 
@@ -42,8 +51,8 @@ class URLField extends BaseField{
 
 
         if(handleWarn) {
-            if(flag) this.warn();
-            else this.restore();
+            if(flag) this.doWarn();
+            else this.doRestore();
         }
 
         return !flag;

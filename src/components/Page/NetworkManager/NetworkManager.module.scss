@@ -190,7 +190,7 @@
         padding-right: 40px;
         padding-bottom: 40px;
         border-bottom: 1px solid #eeeeee;
-        min-height: 300px;
+        min-height: 440px;
         background: #ffffff;
         display: flex;
         flex-direction: row;
@@ -203,8 +203,95 @@
             display: flex;
             flex-direction: column;
             width: calc(100% - 40px);
-            padding-right: 40px;
+            transition: height 0.3s;
+            position: relative;
+
+
+            @keyframes step-fade-in {
+              0% {
+                opacity: 0
+              }
+              1%{
+                opacity: 0;
+                //position: relative;
+              }
+              100%{
+                opacity: 1;
+                //position: relative;
+                pointer-events: all;
+                z-index: 2;
+              }
+            }
+            @keyframes step-fade-out {
+              0% {
+                opacity: 1;
+                position: relative;
+              }
+              99%{
+                opacity: 0;
+                //position: relative;
+              }
+              100%{
+                opacity: 0;
+                //position: absolute;
+                pointer-events: none;
+                z-index: 1;
+              }
+            }
+            @mixin step-fade-in($duration : 0.2s, $delay : 0s){
+              animation-name: step-fade-in;
+              animation-direction: normal;
+              animation-iteration-count: 1;
+              animation-fill-mode: forwards;
+              animation-duration: $duration;
+              animation-delay: $delay;
+            }
+            @mixin step-fade-out($duration : 0.2s, $delay : 0s){
+              animation-name: step-fade-out;
+              animation-direction: normal;
+              animation-iteration-count: 1;
+              animation-fill-mode: forwards;
+              animation-duration: $duration;
+              animation-delay: $delay;
+            }
+
+
+
             & > .step {
+              padding-right: 40px;
+              opacity: 0;
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: calc(100% - 40px);
+
+              @include step-fade-out(0.2s);
+
+              &[data-active="true"]{
+                @include step-fade-in(0.5s, 0.2s);
+              }
+
+              &[data-step="0"]{
+                & > section{
+                  &.default{
+                    & > .title {
+                      margin-bottom: 3px;
+                    }
+                  }
+                }
+              }
+
+              &[data-step="1"]{
+                & > section{
+                  &.custom > .content, &.default > .content{
+                    grid-template-columns: 1fr;
+                    grid-row-gap: 0;
+                    grid-column-gap: 0;
+                    max-width: 600px;
+                  }
+                }
+              }
+
               & > section {
                 display: flex;
                 flex-direction: column;
@@ -235,6 +322,26 @@
                   }
                 }
 
+                & > .warn{
+                  min-height: 14px;
+                  margin-bottom: 10px;
+                  width: 100%;
+                  &[data-active="true"]{
+                    & > .content{
+                      display: flex;
+                    }
+                  }
+                  & > .content{
+                    display: none;
+                    p{
+                      font-size: 8pt;
+                      font-weight: 400;
+                      text-align: left;
+                      color: $colorTable_Red1;
+                    }
+                  }
+                }
+
                 & > .subtitle {
                   margin-bottom: 20px;
 
@@ -247,13 +354,11 @@
                 }
 
                 &.default {
-                  min-height: 200px;
+                  min-height: 240px;
 
                   & > .content {
 
                     & > .networks {
-                      width: 100%;
-                      max-width: 600px;
                       display: grid;
                       grid-template-columns: repeat(10, 1fr);
                       grid-gap: 5px;
@@ -267,11 +372,14 @@
                     grid-template-columns: 1fr 1fr;
                     grid-column-gap: 30px;
 
+
+
                   }
                 }
 
                 &[data-active="true"] {
                   & > .title, & > .subtitle {
+                    opacity: 1;
                     position: relative;
                     display: flex;
                     align-items: center;
@@ -294,14 +402,31 @@
                     }
 
                   }
+                  & > .content {
+                    opacity: 1;
+                  }
                 }
 
-                &:not([data-active="true"]) {
+
+                &[data-active="false"]{
+                  cursor: pointer;
+                  & > .title, & > .subtitle{
+                    pointer-events: none;
+                    opacity: 0.5;
+                  }
+                  & > .warn{
+                    & > .content{
+                      display: none !important;
+                    }
+                  }
                   & > .content {
+                    pointer-events: none;
                     opacity: 0.5;
                   }
                 }
               }
+
+
             }
           }
         }
@@ -353,13 +478,22 @@
               padding: 4px 10px;
               margin-left: 4px;
               position: relative;
+              flex: 1;
+
+              &[data-highlight="true"]{
+                p{
+                  color: $colorSecondary;
+                }
+              }
+
               p{
                 font-style: italic;
-                font-size: 10pt;
+                font-size: 9pt;
                 color: #ccc;
                 font-weight: 400;
                 user-select: none;
-                width: 160px;
+                width: 100%;
+
                 max-width: 100%;
                 @include ellipsis;
               }
@@ -446,6 +580,12 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        .divider{
+          height: 100%;
+          flex: 1;
+        }
+
 
         .buttonLeft{
           @include button_default_gray;

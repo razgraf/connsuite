@@ -25,6 +25,11 @@ class FileField extends BaseField{
 
     constructor(props){
         super(props);
+        if(Helper.isEmpty(this.state)) this.state = {};
+    }
+
+    componentDidMount() {
+        super.componentDidMount();
         this.setState({fileName : null});
     }
 
@@ -35,8 +40,6 @@ class FileField extends BaseField{
 
 
     field = () => {
-        console.log(stylesDefault);
-        console.log(stylesSpecific);
         return <div className={Helper.dynamicClass(stylesDefault, stylesSpecific,"field", "FileField")}>
             <div
                 className={Helper.dynamicClass(stylesDefault, stylesSpecific,"content")}
@@ -50,6 +53,9 @@ class FileField extends BaseField{
                     defaultValue={this.props.value}
                     placeholder={this.props.placeholder}
                     ref={this.state.element.field}
+                    onBlur={()=>{
+                        if(!Helper.isEmpty(this.props.warnOnBlur) && this.props.warnOnBlur) this.isValid(true);
+                    }}
                     onChange={() => {
                         this.setState({
                             fileName : (
@@ -57,7 +63,10 @@ class FileField extends BaseField{
                                 ? this.state.element.field.current.files[0].name : null
                             )
                         });
-                        this.props.callback.onChange(this);
+
+                        if(this.props.warn === true && !Helper.isEmpty(this.props.warnOnBlur) && this.props.warnOnBlur) this.isValid(true);
+
+                        return this.props.callback.onChange(this);
                     }}
                 />
 
@@ -89,36 +98,50 @@ class FileField extends BaseField{
         let flag = false;
 
         let value = this.value();
+        console.log(value);
 
-        if(Helper.isEmpty(value) && this.props.optional) return true;
+        if(Helper.isEmpty(value)){
+            if(this.props.hasOwnProperty("optional") && this.props.optional) return true;
+            else {
+                if(!flag) this.setState({warnText : "Please select a file"});
+                flag = true;
+                console.log("Please select a file");
+            }
+        }
 
         if(FileField.isImageFileFormat(value)) {
+            if(!flag) this.setState({warnText : "Select a .jpg, .jpeg, .gif or .png file"});
             flag = true;
-            this.setState({warnText : "Select a .jpg, .jpeg, .gif or .png file"});
+            console.log("Select a .jpg, .jpeg, .gif or .png file");
         }
         if(FileField.isValidSize()) {
+            if(!flag) this.setState({warnText : `Select a file smaller than ${Math.round(this.props.maxFileSize / (1024 * 1024))} MB `});
             flag = true;
-            this.setState({warnText : `Select a file smaller than ${Math.round(this.props.maxFileSize / (1024 * 1024))} MB `});
+            console.log("Smaller");
         }
 
 
         if(handleWarn) {
-            if(flag) this.warn();
-            else this.restore();
+            if(flag) this.doWarn();
+            else this.doRestore();
         }
+
+        console.log(flag);
+
 
         return !flag;
 
     };
 
 
-    static isImageFileFormat(file, format = ['.jpg', '.jpeg', '.gif', '.png']) {
+    static isImageFileFormat(file, format = ['jpg', 'jpeg', 'gif', 'png']) {
 
         if(Helper.isEmpty(file)) return false;
 
         try {
-            const pattern = '(' + format.join('|').replace(/\./g, '\\.') + ')$';
-            return new RegExp(pattern, 'i').test(file.name);
+            console.log(file.name.split('.').pop());
+            return format.includes(file.name.split('.').pop().toLowerCase())
+
         }catch (e) {console.error(e);}
         return false;
     }

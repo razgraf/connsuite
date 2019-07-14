@@ -92,14 +92,7 @@ class NetworkModel{
      * @param {NetworkModel} network
      */
     static clone(network){
-        return new NetworkModel({
-                title : network.title,
-                username : network.username,
-                icon : network.icon,
-                thumbnail : network.thumbnail,
-                identifier :  network.identifier,
-                URL : network.URL,
-        });
+        return new NetworkModel(network.toObject());
     }
 
 
@@ -137,6 +130,20 @@ class NetworkModel{
             !Helper.isEmpty(network1.AID) &&
             !Helper.isEmpty(network2.AID) &&
             network1.AID !== network2.AID)
+    }
+
+
+
+    toObject(){
+        return {
+            AID : this.AID,
+            title : this.title,
+            username : this.username,
+            icon : this.icon.toObject(),
+            thumbnail : this.icon.toObject(),
+            identifier :  this.identifier,
+            URL : this.URL,
+        }
     }
 
 

@@ -46,7 +46,8 @@ class Helper {
 
             //case : object
             if (typeof value === 'object') {
-                for(let key in value) if(key !== undefined) return false; //isValid if the object has any values
+
+                if (value !== "" && value !== {} && value !== "{}") return false;
             }
             //case : array
             else if ( value.constructor === Array) {

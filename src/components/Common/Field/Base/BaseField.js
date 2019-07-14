@@ -19,7 +19,6 @@ class BaseField extends Component{
         super(props);
 
         this.state = {
-            warn : false,
             warnText : "Please check this field again",
             element : {
                 parent : this.props.parent,
@@ -42,9 +41,9 @@ class BaseField extends Component{
 
     render() {
         return (
-            <div className={styles.Base} data-warn={this.state.warn} ref={this.state.container}>
+            <div className={styles.Base} data-warn={this.props.warn} ref={this.state.container}>
                 <div className={styles.container}>
-                    <FieldLabel {...this.props.label} reference={this.state.element.label} warn={this.state.warn} />
+                    <FieldLabel {...this.props.label} reference={this.state.element.label} warn={this.props.warn} />
                     {this.field()}
                     <div className={styles.warn}>
                         <div className={styles.content}>
@@ -83,8 +82,8 @@ class BaseField extends Component{
             if(!this.isInLengthBounds()) flag = true;
 
             if(handleWarn) {
-                if(flag) this.warn();
-                else this.restore();
+                if(flag) this.doWarn();
+                else this.doRestore();
             }
 
             return !flag;
@@ -94,12 +93,13 @@ class BaseField extends Component{
         }
     };
 
-    warn(){
-        this.setState({warn : true});
+
+    doWarn(){
+        this.props.warnToggle(this.props.ID, true);
     };
 
-    restore(){
-        this.setState({warn : false});
+    doRestore(){
+        this.props.warnToggle(this.props.ID, false);
     };
 
     value(){

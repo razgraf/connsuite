@@ -112,6 +112,8 @@ class BaseFieldModel{
 
         this.danger = false;
         this.optional = false;
+        this.warnToggle = ()=>{};
+        this.warnOnBlur = false;
 
 
         this.callback = {
@@ -133,7 +135,10 @@ class BaseFieldModel{
         length : PropTypes.arrayOf(PropTypes.number),
 
         label : PropTypes.shape(FieldLabel.propTypes).isRequired,
+
+        warnToggle : PropTypes.func,
         warnText : PropTypes.string,
+        warnOnBlur : PropTypes.bool,
 
 
         callback : PropTypes.shape({
@@ -141,6 +146,7 @@ class BaseFieldModel{
             onChange : PropTypes.func,
             onInitialized : PropTypes.func
         }),
+
 
         optional :  PropTypes.bool,
     };
@@ -151,7 +157,9 @@ class BaseFieldModel{
             force : "bottom",
             styles : styles
         },
+        warnToggle : (ID, warn) => {},
         warnText : "Please isValid this field again",
+        warnOnBlur : false,
         callback : {
             onClick : ()=>{},
             onChange : (scope)=>{},
