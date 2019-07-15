@@ -19,14 +19,14 @@ class TextField extends BaseField{
         return <div className={Helper.dynamicClass(stylesDefault, styles,"field", "TextField")}>
             <div className={stylesDefault.content}>
                 <input
+                    id={this.props.ID}
                     type={"text"}
                     defaultValue={this.props.value}
                     placeholder={this.props.placeholder}
 
-                    ref={this.state.element.field}
+                    ref={this.element.field}
                     onBlur={()=>{
-                        if(!Helper.isEmpty(this.props.warnOnBlur) && this.props.warnOnBlur)
-                            this.isValid(true);
+                        if(!Helper.isEmpty(this.props.warnOnBlur) && this.props.warnOnBlur) this.isValid(true);
                     }}
 
                     onChange={() => {

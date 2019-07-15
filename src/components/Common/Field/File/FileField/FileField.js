@@ -44,7 +44,7 @@ class FileField extends BaseField{
             <div
                 className={Helper.dynamicClass(stylesDefault, stylesSpecific,"content")}
                 onClick={() => {
-                    this.state.element.field.current.click();
+                    this.element.field.current.click();
                 }}
             >
                 <input
@@ -52,15 +52,15 @@ class FileField extends BaseField{
                     accept={this.props.fileType === "image" ? "image/*" : (this.props.fileType === "file" ? ".pdf, .doc, .docx" : null)}
                     defaultValue={this.props.value}
                     placeholder={this.props.placeholder}
-                    ref={this.state.element.field}
+                    ref={this.element.field}
                     onBlur={()=>{
                         if(!Helper.isEmpty(this.props.warnOnBlur) && this.props.warnOnBlur) this.isValid(true);
                     }}
                     onChange={() => {
                         this.setState({
                             fileName : (
-                                !Helper.isEmpty(this.state.element.field.current) && this.state.element.field.current.files.length > 0
-                                ? this.state.element.field.current.files[0].name : null
+                                !Helper.isEmpty(this.element.field.current) && this.element.field.current.files.length > 0
+                                ? this.element.field.current.files[0].name : null
                             )
                         });
 
@@ -85,7 +85,7 @@ class FileField extends BaseField{
 
     value(){
         try{
-            return (this.state.element.field.current.files.length > 0) ?  this.state.element.field.current.files[0] : null;
+            return (this.element.field.current.files.length > 0) ?  this.element.field.current.files[0] : null;
         }
         catch (e) {
             console.error(e);
@@ -105,19 +105,16 @@ class FileField extends BaseField{
             else {
                 if(!flag) this.setState({warnText : "Please select a file"});
                 flag = true;
-                console.log("Please select a file");
             }
         }
 
-        if(FileField.isImageFileFormat(value)) {
+        if(!FileField.isImageFileFormat(value)) {
             if(!flag) this.setState({warnText : "Select a .jpg, .jpeg, .gif or .png file"});
             flag = true;
-            console.log("Select a .jpg, .jpeg, .gif or .png file");
         }
-        if(FileField.isValidSize()) {
+        if(!FileField.isValidSize(value)) {
             if(!flag) this.setState({warnText : `Select a file smaller than ${Math.round(this.props.maxFileSize / (1024 * 1024))} MB `});
             flag = true;
-            console.log("Smaller");
         }
 
 

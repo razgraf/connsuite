@@ -158,7 +158,6 @@ class BaseFieldModel{
             styles : styles
         },
         warnToggle : (ID, warn) => {},
-        warnText : "Please isValid this field again",
         warnOnBlur : false,
         callback : {
             onClick : ()=>{},

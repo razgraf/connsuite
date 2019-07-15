@@ -52,7 +52,6 @@ class NetworkManager extends Component{
         fieldsCustomStep0 : [
             {
                 ID : "F_NetworkName",
-                higherScope : this,
                 placeholder : "e.g. My personal website",
                 length : [3, 20],
                 label : {
@@ -81,7 +80,6 @@ class NetworkManager extends Component{
                 },
                 warnOnBlur : true,
                 warnToggle :(ID, warn) => {this.doFieldToggleWarn(ID, warn)},
-                warnText : "Make sure the file is valid",
                 callback :{
                     onChange : (scope) => {
                         let n = NetworkModel.clone(this.state.networkCustom);
@@ -91,8 +89,6 @@ class NetworkManager extends Component{
                             this.setState({ networkCustom: n});
                         }
                         else {
-                            console.log("tried to bind");
-                            return;
                             scope.bindImageValue().then((source) => {
 
                                 n.icon.source = source;
@@ -112,7 +108,6 @@ class NetworkManager extends Component{
         fieldsDefaultStep1 : [
             {
                 ID : "F_NetworkUsername",
-                higherScope : this,
                 placeholder : "e.g. @James",
                 optional : true,
                 length : [3, 40],
@@ -120,11 +115,12 @@ class NetworkManager extends Component{
                     label : "Username (optional)",
                 },
                 warnOnBlur : true,
-                warnToggle :(ID, warn) => {this.doFieldToggleWarn(ID, warn)},
+                warnToggle : (ID, warn) => {this.doFieldToggleWarn(ID, warn)},
                 warnText : "Make sure the value is between 3 and 30 characters",
                 callback :{
                     onChange : (scope) => {
                         let n = NetworkModel.clone(this.state.networkDefault);
+                        console.log(scope.element);
                         n.username = scope.isValid() ? scope.value() : null;
                         this.setState({ networkDefault: n});
                     }
@@ -134,7 +130,6 @@ class NetworkManager extends Component{
         fieldsCustomStep1 : [
             {
                 ID : "F_NetworkURL",
-                higherScope : this,
                 placeholder : "e.g. www.website.com/link/james",
                 length : [3, 40],
                 label : {
@@ -148,7 +143,8 @@ class NetworkManager extends Component{
                 callback :{
                     onChange : (scope) => {
                         let n = NetworkModel.clone(this.state.networkCustom);
-                        n.URL = scope.isValid(false) ? scope.value() : null;
+                        console.log(scope.element);
+                        n.URL = scope.isValid() ? scope.value() : null;
                         this.setState({ networkCustom: n});
                     }
                 }
@@ -264,21 +260,21 @@ class NetworkManager extends Component{
                                     </div>
                                     <div  className={styles.label} data-highlight={this.state.activeStep > 0}>
                                         <p>
-                                            {/*{ (() => {*/}
-                                            {/*    let active = this.getActiveNetwork();*/}
+                                            { (() => {
+                                                return "URL"; //TODO bring back
 
-                                            {/*    return (!Helper.isEmpty(active) && !Helper.isEmpty(active.URL)*/}
-                                            {/*        ? (*/}
-                                            {/*            active.URL +*/}
-                                            {/*            ( this.state.activeSection === 0 && !Helper.isEmpty(active.username)*/}
-                                            {/*                ? "" // active.username*/}
-                                            {/*                : "" )*/}
-                                            {/*        )*/}
-                                            {/*        : "http://preview")*/}
+                                                let active = this.getActiveNetwork();
+                                                return (!Helper.isEmpty(active) && !Helper.isEmpty(active.URL)
+                                                    ? (
+                                                        active.URL +
+                                                        ( this.state.activeSection === 0 && !Helper.isEmpty(active.username)
+                                                            ? active.username
+                                                            : "" )
+                                                    )
+                                                    : "http://preview")
 
-                                            {/*})()*/}
-                                            {/*}*/}
-                                            sal
+                                            })()
+                                            }
                                         </p>
                                     </div>
                                 </div>
@@ -352,10 +348,10 @@ class NetworkManager extends Component{
         if(sectionID === this.state.activeSection) return;
 
 
-        this.setState((prevState) => ({ activeSection : sectionID }))
+        this.setState((prevState) => ({ activeSection : sectionID }));
 
 
-        if(sectionID === 0){
+        if(this.state.activeStep === 0 && sectionID === 0){
             let fields = [...this.state.fieldsCustomStep0];
             fields[0].warn = false;
             fields[1].warn = false;
@@ -395,6 +391,8 @@ class NetworkManager extends Component{
 
 
     validateStep = () => {
+        return true; //TODO bring back
+
 
         let flag = true;
 
@@ -460,57 +458,45 @@ class NetworkManager extends Component{
 
 
     doFieldToggleWarn = (fieldID, warn) => {
+        return; //TODO bring back
+
+
         let found = false;
 
 
         let fields0 = [...this.state.fieldsCustomStep0];
-        fields0.forEach(element => {
-            if(element.ID === fieldID){
-                element.warn = warn;
+        for(let i = 0; i < fields0.length; i++){
+            if(fields0[i].ID === fieldID){
+                fields0[i].warn = warn;
                 found = true;
             }
-        });
-        if(found) {
-            this.setState({
-                fieldsCustomStep0 : fields0
-            });
-            return;
         }
+
+        if(found) { this.setState({ fieldsCustomStep0 : fields0}); return;}
 
 
         let fields1C = [...this.state.fieldsCustomStep1];
-        fields1C.forEach(element => {
-            if(element.ID === fieldID){
-                element.warn = warn;
+
+        for(let i = 0; i < fields1C.length; i++){
+            if(fields1C[i].ID === fieldID){
+                fields1C[i].warn = warn;
                 found = true;
             }
-        });
-
-        if(found) {
-            this.setState({
-                fieldsCustomStep1 : fields1C
-            });
-            return;
         }
 
-
+        if(found) {this.setState({ fieldsCustomStep1 : fields1C}); return;}
 
 
 
         let fields1D = [...this.state.fieldsDefaultStep1];
-        fields1D.forEach(element => {
-            if(element.ID === fieldID){
-                element.warn = warn;
+        for(let i = 0; i < fields1D.length; i++){
+            if(fields1D[i].ID === fieldID){
+                fields1D[i].warn = warn;
                 found = true;
             }
-        });
-
-        if(found) {
-            this.setState({
-                fieldsDefaultStep1 : fields1D
-            });
-            return;
         }
+
+        if(found) {this.setState({ fieldsDefaultStep1 : fields1C});return;}
 
     };
 

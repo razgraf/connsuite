@@ -20,12 +20,13 @@ class BaseField extends Component{
 
         this.state = {
             warnText : "Please check this field again",
-            element : {
-                parent : this.props.parent,
-                container : React.createRef(),
-                field : React.createRef(),
-                label : React.createRef(),
-            }
+        };
+
+        this.element =  {
+            parent: this.props.parent,
+            container: React.createRef(),
+            field: React.createRef(),
+            label: React.createRef(),
         }
 
     }
@@ -43,7 +44,7 @@ class BaseField extends Component{
         return (
             <div className={styles.Base} data-warn={this.props.warn} ref={this.state.container}>
                 <div className={styles.container}>
-                    <FieldLabel {...this.props.label} reference={this.state.element.label} warn={this.props.warn} />
+                    <FieldLabel {...this.props.label} warn={this.props.warn} />
                     {this.field()}
                     <div className={styles.warn}>
                         <div className={styles.content}>
@@ -66,7 +67,7 @@ class BaseField extends Component{
 
     field(){
         console.error("Implement Field.field()", this);
-        return <div className={styles.field}><p style={{color : "#aaa"}}>Field-specific component</p></div>;
+        return <div className={styles.field}><p style={{color : "#aaa"}}>Field-specific component</p><input/></div>;
     };
 
 
