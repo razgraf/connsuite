@@ -12,7 +12,6 @@ import {Button, ButtonType} from "../../Common/Button/Button";
 import NetworkMini from "../../Common/Network/NetworkMini/NetworkMini";
 import Config from "../../../config/Config";
 import {Helper} from "../../../config/Util";
-import {TextField, URLField, FileField} from '../../Common/Field'
 import Emoji from "../../Common/Emoji/Emoji";
 import Form from "../../Common/Field/Form/Form";
 
@@ -24,7 +23,7 @@ class NetworkManager extends Component{
 
         this.state = {
             networks : Config.DUMMY_NETWORKS,
-            networkCustom :  new NetworkModel({username : "@James"}),
+            networkCustom :  new NetworkModel(null),
             networkDefault : new NetworkModel(null),
             steps : [
                 {
@@ -46,7 +45,7 @@ class NetworkManager extends Component{
                     completed : false,
                 }
             ],
-            activeStep : -1,
+            activeStep : 0,
             activeSection : 0,
             shouldWarnDefaultStep0 : false,
 
@@ -54,7 +53,10 @@ class NetworkManager extends Component{
 
 
 
+
         };
+
+        this.referenceToFormCustomStep0 = React.createRef()
 
     }
 
@@ -63,7 +65,6 @@ class NetworkManager extends Component{
 
     componentDidMount() {
         this.pickSection(0);
-        this.setState({activeStep : 0});
     }
 
     render() {
@@ -87,9 +88,6 @@ class NetworkManager extends Component{
 
                             <div className={styles.left}>
                                 <div className={styles.content}>
-                                    <div className={styles.step} data-step={-1} data-active={this.state.activeStep === -1}>
-                                        <div className={styles.container}></div>
-                                    </div>
                                     <div className={styles.step} data-step={0} data-active={this.state.activeStep === 0}>
                                         <section className={styles.default} data-active={this.state.activeSection === 0} onClick={() => {this.pickSection(0)}}>
                                             <div className={styles.title}><p><span>a.</span> Choose the network you want to add</p></div>
@@ -117,6 +115,7 @@ class NetworkManager extends Component{
                                             <div className={styles.title}><p><span>b.</span> Or create a custom network</p></div>
                                             <div className={styles.content}>
                                                 <Form
+                                                      ref={this.referenceToFormCustomStep0}
                                                       fields={[
                                                         {
                                                             ID : "F_NetworkName",
@@ -147,7 +146,6 @@ class NetworkManager extends Component{
                                                             },
                                                             callback :{
                                                                 onChange : (element, formScope) => {
-                                                                    console.log("onChangeImage", element.data.scope.isValid(true));
                                                                     let n = NetworkModel.clone(this.state.networkCustom);
                                                                     if(element.data.scope.isValid(true)) {
                                                                         element.data.scope.bindImageValue().then((source)=>{
@@ -189,9 +187,8 @@ class NetworkManager extends Component{
                                                     <div className={styles.title}><p>{`What is your username on ${active.title}?`}</p></div>
                                                     <div className={styles.subtitle}><p>You know how every social network had to ask you for a username <Emoji symbol={'🤔'}/> ?</p></div>
                                                     <div className={styles.content}>
-
-
                                                         <Form
+                                                              columns={1}
                                                               fields={[
                                                                   {
                                                                       ID : "F_NetworkUsername",
@@ -200,7 +197,7 @@ class NetworkManager extends Component{
                                                                       placeholder : "e.g. @James",
                                                                       length : [3, 30],
                                                                       label : {
-                                                                          value : "Username (optional)",
+                                                                          value : "Username",
                                                                       },
                                                                       warn:  {
                                                                           onBlur : true,
@@ -214,26 +211,27 @@ class NetworkManager extends Component{
                                                                   n.username = !Helper.isEmpty(username) && !Helper.isEmpty(username.data.value) ? username.data.value : null;
                                                                   this.setState({ networkDefault: n});
                                                               }}
-                                                              columns={1}
+
                                                         />
-
-
                                                     </div>
                                                 </section>
-                                                : <section className={styles.custom}>
+                                                : null
+                                        }
+                                        {
+                                            this.state.activeSection ===1
+                                                ? <section className={styles.custom}>
                                                     <div className={styles.title}><p>Tell us more about this network/website. How can we reach it?</p></div>
                                                     <div className={styles.subtitle}><p>Aside from the url, you can optionally add a custom username. If empty, it will default to your First Name.</p></div>
                                                     <div className={styles.content}>
 
-
-
                                                         <Form
+                                                              columns={2}
                                                               fields={[
                                                                   {
                                                                       ID : "F_NetworkURL",
                                                                       type : 'URL',
-                                                                      value : this.state.networkCustom.URL,
                                                                       placeholder : "e.g. www.website.com/link/james",
+                                                                      value : this.state.networkCustom.URL,
                                                                       length : [3, 100],
                                                                       label : {
                                                                           value : "Full link/URL",
@@ -248,7 +246,7 @@ class NetworkManager extends Component{
                                                                   {
                                                                       ID : "F_NetworkUsernameCustom",
                                                                       type : 'Text',
-                                                                      placeholder : "e.g. @James",
+                                                                      placeholder : "e.g. @james",
                                                                       value : this.state.networkCustom.username,
                                                                       length : [2, 30],
                                                                       label : {
@@ -278,6 +276,7 @@ class NetworkManager extends Component{
 
                                                     </div>
                                                 </section>
+                                                :null
                                             }
                                     </div>
                                 </div>
@@ -296,7 +295,7 @@ class NetworkManager extends Component{
                                                         active.URL +
                                                         ( this.state.activeSection === 0 && !Helper.isEmpty(active.username)
                                                             ? active.username
-                                                            : "" )
+                                                            : "")
                                                     )
                                                     : "http://preview")
                                             }
@@ -371,19 +370,17 @@ class NetworkManager extends Component{
 
     pickSection = (sectionID) =>{
         if(sectionID === this.state.activeSection) return;
+        if(sectionID === 0 && this.referenceToFormCustomStep0 !== null && this.referenceToFormCustomStep0.current !== null){
+            try{
+                this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue("F_NetworkImage", false);
+                this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue("F_NetworkName", false);
+
+            }catch(e){console.error(e)}
+        }
 
 
         this.setState((prevState) => ({ activeSection : sectionID }));
 
-
-        if(this.state.activeStep === 0 && sectionID === 0){
-            let fields = [...this.state.fieldsCustomStep0];
-            fields[0].warn = false;
-            fields[1].warn = false;
-            this.setState({
-                fieldsCustomStep0 : fields
-            })
-        }
     };
 
 

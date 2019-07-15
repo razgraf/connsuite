@@ -27,8 +27,6 @@ class Form extends Component{
         super(props);
 
         let fields = [];
-
-        console.log(this.props.fields);
         this.props.fields.forEach((element, index) => {
 
             let field = {};
@@ -90,7 +88,6 @@ class Form extends Component{
     doUpdateFieldValue = (fieldID, value) => {
         if(Helper.isEmpty(fieldID)){ console.error("Empty fieldID in form value update."); return; }
 
-        console.log(fieldID);
         let updated = [...this.state.fields];
         let e = null;
         updated.forEach((element)=> {
@@ -150,7 +147,6 @@ class Form extends Component{
 
 
     onUpdate = () => {
-        console.log("[FORM] Updated");
         this.props.onUpdate(this);
     };
 
@@ -170,7 +166,6 @@ class Form extends Component{
                 <div className={styles.container}>
                     {
                         this.state.fields.map((element, index) => {
-
                             switch (element.type) {
 
                                 case 'Text' : return <TextField key={index} data={element.data} action={element.action} />;
