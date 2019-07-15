@@ -127,44 +127,59 @@ class BaseFieldModel{
 
     static propTypes = {
 
-        ID : PropTypes.string.isRequired,
-        parent : PropTypes.element,
+        type : PropTypes.string,
+        data : {
+            ID : PropTypes.string.isRequired,
+            value : PropTypes.any,
+            placeholder : PropTypes.any,
+            length : PropTypes.arrayOf(PropTypes.number),
 
-        value : PropTypes.any,
-        placeholder : PropTypes.any,
-        length : PropTypes.arrayOf(PropTypes.number),
+            label : PropTypes.shape(FieldLabel.propTypes).isRequired,
+            warn : PropTypes.shape({
 
-        label : PropTypes.shape(FieldLabel.propTypes).isRequired,
+                text : PropTypes.string,
+                onBlur : PropTypes.bool
+            }),
 
-        warnToggle : PropTypes.func,
-        warnText : PropTypes.string,
-        warnOnBlur : PropTypes.bool,
+            optional :  PropTypes.bool,
+        },
 
-
-        callback : PropTypes.shape({
-            onClick : PropTypes.func,
+        action :{
+            callback : PropTypes.shape({
+                onClick : PropTypes.func,
+                onChange : PropTypes.func,
+                onInitialized : PropTypes.func,
+            }),
             onChange : PropTypes.func,
-            onInitialized : PropTypes.func
-        }),
+            onUpdateWarn : PropTypes.func,
+            doDefineScope :  PropTypes.func,
+        },
 
 
-        optional :  PropTypes.bool,
     };
 
     static defaultProps = {
-        label : {
-            label : "Label",
-            force : "bottom",
-            styles : styles
+        data : {
+            label : {
+                label : "Label",
+                force : "bottom",
+                styles : styles
+            },
+            warn : {
+                onBlur : false,
+            },
+            optional :  false,
         },
-        warnToggle : (ID, warn) => {},
-        warnOnBlur : false,
-        callback : {
-            onClick : ()=>{},
-            onChange : (scope)=>{},
-            onInitialized : ()=>{}
-        },
-        optional :  false,
+        action : {
+            onChange : () => {},
+
+            callback : {
+                onClick : ()=>{},
+                onChange : (scope)=>{},
+                onInitialized : ()=>{}
+            },
+        }
+
     };
 
 }

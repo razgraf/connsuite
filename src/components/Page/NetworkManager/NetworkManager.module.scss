@@ -290,7 +290,7 @@
                     max-width: 600px;
                   }
                   &.custom{
-                    padding-top: 200px; //TODO
+
                   }
                 }
               }
@@ -364,17 +364,16 @@
                     & > .networks {
                       display: grid;
                       grid-template-columns: repeat(10, 1fr);
-                      grid-gap: 5px;
+                      grid-gap: 10px;
                     }
                   }
                 }
 
                 &.custom {
                   & > .content {
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    grid-column-gap: 30px;
-
+                    //display: grid;
+                    ////grid-template-columns: 1fr 1fr;
+                    ////grid-column-gap: 30px;
 
 
                   }

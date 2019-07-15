@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import stylesDefault from './../Base/BaseField.module.scss'
 import styles from './URLField.module.scss';
 import BaseField from "../Base/BaseField";
@@ -7,7 +7,6 @@ import validator from 'validator';
 
 
 class URLField extends BaseField{
-
 
 
     render() {
@@ -19,21 +18,22 @@ class URLField extends BaseField{
         return <div className={Helper.dynamicClass(stylesDefault, styles,"field", "URLField")}>
             <div className={stylesDefault.content}>
                 <input
-                    id={this.props.ID}
+                    id={this.props.data.ID}
                     type={"text"}
-                    defaultValue={this.props.value}
-                    placeholder={this.props.placeholder}
+                    defaultValue={Helper.sanitize(this.props.data.value)}
+                    // value={Helper.sanitize(this.props.data.value)}
+                    placeholder={this.props.data.placeholder}
 
                     ref={this.element.field}
 
                     onBlur={()=>{
-                        if(!Helper.isEmpty(this.props.warnOnBlur) && this.props.warnOnBlur)
+                        if(!Helper.isEmpty(this.props.data.warnOnBlur) && this.props.data.warnOnBlur)
                             this.isValid(true);
                     }}
 
                     onChange={() => {
-                        if(this.props.warn === true && !Helper.isEmpty(this.props.warnOnBlur) && this.props.warnOnBlur) this.isValid(true);
-                        return this.props.callback.onChange(this);
+                        if(this.props.data.warn === true && !Helper.isEmpty(this.props.data.warnOnBlur) && this.props.data.warnOnBlur) this.isValid(true);
+                        this.props.data.callback.onChange(this);
                     }}
                 />
             </div>
@@ -47,9 +47,13 @@ class URLField extends BaseField{
         if(flag) return true;
 
 
+
         let value = this.value();
+
         if(!validator.isURL(value)) flag = true;
 
+
+        console.log(value, flag);
 
         if(handleWarn) {
             if(flag) this.doWarn();

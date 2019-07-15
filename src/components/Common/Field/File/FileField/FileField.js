@@ -12,14 +12,24 @@ import {Button, ButtonType} from "../../../Button/Button";
 class FileField extends BaseField{
 
     static propTypes = {
-        ...BaseFieldModel.propTypes,
-        fileType : PropTypes.oneOf(["image", "file"]),
-        maxFileSize : PropTypes.number
+        data  :  PropTypes.shape({
+            ...BaseFieldModel.propTypes.data,
+            fileType : PropTypes.oneOf(["image", "file"]),
+            maxFileSize : PropTypes.number
+        }),
+        action : PropTypes.shape({
+            ...BaseFieldModel.propTypes.action,
+        })
     };
     static defaultProps = {
-        ...BaseFieldModel.defaultProps,
-        fileType : "image",
-        maxFileSize : 1024 * 1024 * 10,
+        data : {
+            ...BaseFieldModel.defaultProps.data,
+            fileType: "image",
+            maxFileSize: 1024 * 1024 * 10,
+        },
+        action : {
+            ...BaseFieldModel.defaultProps.action
+        }
     };
 
 
@@ -27,6 +37,8 @@ class FileField extends BaseField{
         super(props);
         if(Helper.isEmpty(this.state)) this.state = {};
     }
+
+
 
     componentDidMount() {
         super.componentDidMount();
@@ -43,30 +55,20 @@ class FileField extends BaseField{
         return <div className={Helper.dynamicClass(stylesDefault, stylesSpecific,"field", "FileField")}>
             <div
                 className={Helper.dynamicClass(stylesDefault, stylesSpecific,"content")}
-                onClick={() => {
-                    this.element.field.current.click();
-                }}
+                onClick={() => { this.element.field.current.click(); }}
             >
                 <input
                     type={"file"}
-                    accept={this.props.fileType === "image" ? "image/*" : (this.props.fileType === "file" ? ".pdf, .doc, .docx" : null)}
-                    defaultValue={this.props.value}
-                    placeholder={this.props.placeholder}
+                    accept={this.props.data.fileType === "image" ? "image/*" : (this.props.data.fileType === "file" ? ".pdf, .doc, .docx" : null)}
+                    placeholder={this.props.data.placeholder}
                     ref={this.element.field}
-                    onBlur={()=>{
-                        if(!Helper.isEmpty(this.props.warnOnBlur) && this.props.warnOnBlur) this.isValid(true);
-                    }}
-                    onChange={() => {
-                        this.setState({
-                            fileName : (
-                                !Helper.isEmpty(this.element.field.current) && this.element.field.current.files.length > 0
-                                ? this.element.field.current.files[0].name : null
-                            )
-                        });
-
-                        if(this.props.warn === true && !Helper.isEmpty(this.props.warnOnBlur) && this.props.warnOnBlur) this.isValid(true);
-
-                        return this.props.callback.onChange(this);
+                    onBlur={()=>{if(this.props.data.warn.onBlur)  this.isValid(true);}}
+                    onChange={(e) => {
+                        let files = e.target.files;
+                        let file = !Helper.isEmpty(files) && files.length > 0 ? files[0] : null;
+                        let valid = (FileField.isImageFileValid(file));
+                        this.setState({fileName: (file && valid? file.name : null)});
+                        this.props.action.onChange(this.props.data.ID,file);
                     }}
                 />
 
@@ -85,7 +87,7 @@ class FileField extends BaseField{
 
     value(){
         try{
-            return (this.element.field.current.files.length > 0) ?  this.element.field.current.files[0] : null;
+            return (!Helper.isEmpty(this.props.data.value)) ? this.props.data.value : null;
         }
         catch (e) {
             console.error(e);
@@ -98,10 +100,9 @@ class FileField extends BaseField{
         let flag = false;
 
         let value = this.value();
-        console.log(value);
 
         if(Helper.isEmpty(value)){
-            if(this.props.hasOwnProperty("optional") && this.props.optional) return true;
+            if(this.props.data.hasOwnProperty("optional") && this.props.data.optional) return true;
             else {
                 if(!flag) this.setState({warnText : "Please select a file"});
                 flag = true;
@@ -113,7 +114,7 @@ class FileField extends BaseField{
             flag = true;
         }
         if(!FileField.isValidSize(value)) {
-            if(!flag) this.setState({warnText : `Select a file smaller than ${Math.round(this.props.maxFileSize / (1024 * 1024))} MB `});
+            if(!flag) this.setState({warnText : `Select a file smaller than ${Math.round(this.props.data.maxFileSize / (1024 * 1024))} MB `});
             flag = true;
         }
 
@@ -129,6 +130,17 @@ class FileField extends BaseField{
         return !flag;
 
     };
+
+
+    static isImageFileValid(file){
+
+        if(Helper.isEmpty(file)) return false;
+
+        if(!FileField.isImageFileFormat(file)) return false;
+        if(!FileField.isValidSize(file)) return false;
+
+        return true;
+    }
 
 
     static isImageFileFormat(file, format = ['jpg', 'jpeg', 'gif', 'png']) {
@@ -155,6 +167,7 @@ class FileField extends BaseField{
 
 
     bindImageValue = () => {
+        console.log("ere");
         let file = this.value();
         return new Promise((resolve,reject) => {
             try {

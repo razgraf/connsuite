@@ -95,6 +95,10 @@ class NetworkModel{
         return new NetworkModel(network.toObject());
     }
 
+    clone(){
+        return NetworkModel.clone(this);
+    }
+
 
 
     static propTypes =  PropTypes.shape({

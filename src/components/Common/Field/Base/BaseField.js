@@ -3,16 +3,21 @@ import {Helper} from "../../../../config/Util";
 import styles from './BaseField.module.scss';
 import FieldLabel from "../FieldLabel/FieldLabel";
 import BaseFieldModel from "../BaseFieldModel";
+import PropTypes from "prop-types";
 
 
 class BaseField extends Component{
 
 
+    static propTypes = {
+        data : PropTypes.shape({...BaseFieldModel.propTypes.data}),
+        action : PropTypes.shape({...BaseFieldModel.propTypes.action}),
 
+    };
 
-
-    static propTypes = BaseFieldModel.propTypes;
-    static defaultProps = BaseFieldModel.defaultProps;
+    static defaultProps = {
+        ...BaseFieldModel.defaultProps
+    };
 
 
     constructor(props){
@@ -23,39 +28,37 @@ class BaseField extends Component{
         };
 
         this.element =  {
-            parent: this.props.parent,
             container: React.createRef(),
-            field: React.createRef(),
             label: React.createRef(),
-        }
+            field :  React.createRef(),
+        };
+
+
+        this.props.action.doDefineScope(this.props.data.ID, this);
 
     }
 
     componentDidMount() {
-        if(!Helper.isEmpty(this.props)
-            && !Helper.isEmpty(this.props.callback)
-            && !Helper.isEmpty(this.props.callback.onInitialized)
-        )
-            this.props.callback.onInitialized(this);
+        if(!Helper.isEmpty(this.props) && !Helper.isEmpty(this.props.action)  && !Helper.isEmpty(this.props.action.callback)  && !Helper.isEmpty(this.props.action.callback.onInitialized))
+            this.props.action.callback.onInitialized(this);
     }
+
 
 
     render() {
         return (
-            <div className={styles.Base} data-warn={this.props.warn} ref={this.state.container}>
+            <div className={styles.Base} data-warn={this.props.data.warn.value} ref={this.element.container}>
                 <div className={styles.container}>
-                    <FieldLabel {...this.props.label} warn={this.props.warn} />
+                    <FieldLabel data = {{ ...this.props.data.label, warn :this.props.data.warn.value} } referece={this.element.label} />
                     {this.field()}
                     <div className={styles.warn}>
                         <div className={styles.content}>
                             <p>{
-                                !Helper.isEmpty(this.props.warnText)
-                                    ? this.props.warnText
-                                    : (
-                                        !Helper.isEmpty(this.state.warnText) ?
-                                            this.state.warnText : "Please check this field again"
-                                    )
-                            }</p>
+                                !Helper.isEmpty(this.props.data.warn.text)
+                                    ? this.props.data.warn.text
+                                    : (!Helper.isEmpty(this.state.warnText) ? this.state.warnText : "Please check this field again")
+                            }
+                            </p>
                         </div>
                     </div>
 
@@ -67,7 +70,7 @@ class BaseField extends Component{
 
     field(){
         console.error("Implement Field.field()", this);
-        return <div className={styles.field}><p style={{color : "#aaa"}}>Field-specific component</p><input/></div>;
+        return <div className={styles.field}><p style={{color : "#aaa"}}>Field-specific component</p></div>;
     };
 
 
@@ -77,7 +80,7 @@ class BaseField extends Component{
 
             let value = this.value();
             if(Helper.isEmpty(value)) {
-                if(this.props.optional) return true;
+                if(this.props.data.optional) return true;
                 flag = true;
             }
             if(!this.isInLengthBounds()) flag = true;
@@ -96,16 +99,16 @@ class BaseField extends Component{
 
 
     doWarn(){
-        this.props.warnToggle(this.props.ID, true);
+        this.props.action.onUpdateWarn(this.props.data.ID, true);
     };
 
     doRestore(){
-        this.props.warnToggle(this.props.ID, false);
+        this.props.action.onUpdateWarn(this.props.data.ID, false);
     };
 
     value(){
         try{
-            return this.state.element.field.current.value;
+            return this.props.data.value;
         }
         catch (e) {
             console.error("Implement Field.value()", this);
@@ -121,8 +124,8 @@ class BaseField extends Component{
 
        let l = length !== null
            ? length
-           : (this.props.length !== null
-               ? this.props.length : null
+           : (this.props.data.length !== null
+               ? this.props.data.length : null
            );
        if(Helper.isEmpty(l)) return true;
 

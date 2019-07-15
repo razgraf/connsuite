@@ -6,6 +6,13 @@ import {Helper} from "../config/Util";
 import PropTypes from "prop-types";
 
 class NetworkIconModel{
+    get file() {
+        return this._file;
+    }
+
+    set file(value) {
+        this._file = value;
+    }
     get AID() {
         return this._AID;
     }
@@ -25,19 +32,22 @@ class NetworkIconModel{
 
     static PARAM_AID = "AID";
     static PARAM_SOURCE = "source";
+    static PARAM_FILE = "file";
 
 
     constructor(object){
 
         this.AID = Helper.getValue(NetworkIconModel.PARAM_AID, object);
         this.source = Helper.getValue(NetworkIconModel.PARAM_SOURCE, object);
+        this.file = Helper.getValue(NetworkIconModel.PARAM_FILE, object);
     }
 
 
 
     static propTypes = PropTypes.shape({
         AID : PropTypes.string,
-        source : PropTypes.string
+        source : PropTypes.string,
+        file : PropTypes.object
     });
 
 
@@ -48,7 +58,8 @@ class NetworkIconModel{
     toObject(){
         return {
             AID : this.AID,
-            source : this.source
+            source : this.source,
+            file : this.file
         }
     }
 }
