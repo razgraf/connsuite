@@ -3,19 +3,22 @@
 .Button{
   transition: opacity .2s, filter .2s;
 
-  &[data-active="false"]{
+  &[dataforbidden="true"]{
     pointer-events: none;
-    opacity: 0.3;
+  }
+  &[data-active="false"]{
+    opacity: 0.4;
     filter : grayscale(100%);
-    cursor: not-allowed;
-
     transition: opacity .2s, filter .2s;
+
+    &>.container{cursor: not-allowed !important;}
   }
 
   & > .container{
     padding: 10px 30px;
     min-height: calc(48px - 2 * 12px);
     border-radius: 40px;
+    border: 1px solid transparent;
     min-width: calc(100px - 2 * 30px);
     display: flex;
     justify-content: center;
@@ -28,15 +31,10 @@
       -webkit-appearance: none;
     }
 
-    & > .icon{
-      width: 20px;
-      margin-right: 10px;
-      margin-left: -10px;
-      line-height: 0.2 !important;
-      i{
-        font-size: 13pt;
-      }
-    }
+
+
+    @include button_icon_component;
+
     & > .label{
       p{
         font-size: 10pt;
@@ -47,7 +45,7 @@
   }
 
 
-  &[data-mini="true"]{
+  &[data-mini="true"],&[data-style="mini"]{
     & > .container{
       padding: 6px 10px;
       min-height: calc(36px - 2 * 8px);
@@ -70,7 +68,6 @@
 
     }
   }
-
 
 
   &[data-style="default"],&[data-style="mini_default"]{
@@ -107,9 +104,32 @@
           transition: color 0.2s;
         }
       }
-
     }
   }
+
+  &[data-style="simple"],&[data-style="mini_simple"]{
+    & > .container{
+      background: transparent;
+      border: 1px solid transparent;
+      transition: background 0.2s;
+      & > .icon i, & > .label p{
+        color: $colorPrimary;
+        transition: color 0.2s;
+      }
+
+      &:hover, &:active, &:focus{
+        background: transparent;
+        border: 1px solid transparent;
+        transition: background 0.2s;
+        & > .icon i, & > .label p{
+          color: darken($colorPrimary, 7%);
+          transition: color 0.2s;
+        }
+      }
+    }
+  }
+
+
   &[data-style="glow"]{
     & > .container{
       background: $colorPrimary;

@@ -17,31 +17,31 @@
       height: calc(100% - 2 * 1px);
       background: #ffffff;
       border-radius: $borderRadiusNetworkCard;
-      border: 1px solid $colorNetworkAddDetails;
+      border: 1px solid $colorTable_GrayBlue_Light;
       display: flex;
       flex-direction: column;
       transition: box-shadow 0.2s, border 0.2s;
 
       & > .shape{
-        width: calc(100% - 2 * 50px);
-        height: calc(100% - 2 * 50px);
-        padding: 50px;
+        width: calc(100% - 2 * 60px);
+        height: calc(100% - 2 * 60px);
+        padding: 60px;
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
 
         & > div.vert{
-          height: calc(100% - 2 * 50px);
+          height: calc(100% - 2 * 60px);
           width: 1px;
-          background: $colorNetworkAddDetails;
+          background: $colorTable_GrayBlue_Light;
           position: absolute;
           transition: background 0.2s;
         }
         & > div.horiz{
-          width: calc(100% - 2 * 50px);
+          width: calc(100% - 2 * 60px);
           height: 1px;
-          background: $colorNetworkAddDetails;
+          background: $colorTable_GrayBlue_Light;
           position: absolute;
           z-index: 1;
           transition: background 0.2s;
@@ -60,10 +60,10 @@
     padding-top: 25px;
     & > .title{
       p{
-        font-size: 11pt;
+        font-size: 10pt;
         font-weight: 400;
         font-family: $fontSecondary;
-        color: darken($colorNetworkAddDetails, 20%);
+        color: darken($colorTable_GrayBlue_Light, 10%);
         transition: color 0.2s;
       }
     }
@@ -73,12 +73,12 @@
   &:hover{
     & > .container {
       & > .content {
-        border: 1px solid $colorNetworkAddDetailsHover;
+        border: 1px solid darken($colorTable_GrayBlue_Light, 10%);
         transition: box-shadow 0.2s, border 0.2s;
 
         & > .shape {
           & > div.vert, & > div.horiz {
-            background: $colorNetworkAddDetailsHover;
+            background: darken($colorTable_GrayBlue_Light, 10%);
             transition: background 0.2s;
           }
         }
@@ -87,7 +87,7 @@
     & > .info{
       & > .title{
         p{
-          color: darken($colorNetworkAddDetailsHover, 15%);
+          color: darken($colorTable_GrayBlue_Light, 20%);
           transition: color 0.2s;
 
         }

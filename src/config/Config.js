@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import NetworkModel from "../model/NetworkModel";
 
 /**
@@ -116,16 +115,19 @@ class Config{
 
 
 
-
             case this.ROUTE_PAGE_NETWORK_ADD : return {
                 route : this.ROUTE_PAGE_NETWORK_ADD,
                 title : "Add a new Network",
-                depth : 2
+                depth : 2,
+
+                routeBack : this.ROUTE_PAGE_PORTFOLIO,
             };
             case this.ROUTE_PAGE_NETWORK_EDIT : return {
-                route : this.ROUTE_PAGE_NETWORK_ADD,
+                route : this.ROUTE_PAGE_NETWORK_EDIT,
                 title : "Edit this Network",
-                depth : 2
+                depth : 2,
+
+                routeBack : this.ROUTE_PAGE_PORTFOLIO,
             };
 
 
@@ -160,6 +162,7 @@ class Config{
     static REDUX_ACTION_VIEW_COMMON_DOCUMENT_BACKGROUND_SCROLL_ENABLE = 'REDUX_ACTION_VIEW_COMMON_DOCUMENT_BACKGROUND_SCROLL_ENABLE';
     static REDUX_ACTION_VIEW_COMMON_DOCUMENT_BACKGROUND_SCROLL_DISABLE = 'REDUX_ACTION_VIEW_COMMON_DOCUMENT_BACKGROUND_SCROLL_DISABLE';
 
+    static REDUX_ACTION_VIEW_NAVIGATOR_SET_ROUTE_BACK = 'REDUX_ACTION_VIEW_NAVIGATOR_SET_ROUTE_BACK';
 
     /**
      *

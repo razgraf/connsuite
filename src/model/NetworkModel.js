@@ -30,6 +30,13 @@ class NetworkModel{
     set title(value) {
         this._title = value;
     }
+    get description() {
+        return this._description;
+    }
+
+    set description(value) {
+        this._description = value;
+    }
 
     get username() {
         return this._username;
@@ -70,12 +77,14 @@ class NetworkModel{
     static PARAM_THUMBNAIL = "thumbnail";
     static PARAM_IDENTIFIER = "identifier";
     static PARAM_URL = "URL";
+    static PARAM_DESCRIPTION = "description";
 
     constructor(object){
 
         this.AID = Helper.getValue(NetworkModel.PARAM_AID, object);
         this.title = Helper.getValue(NetworkModel.PARAM_TITLE, object);
         this.username = Helper.getValue(NetworkModel.PARAM_USERNAME, object);
+        this.description = Helper.getValue(NetworkModel.PARAM_DESCRIPTION, object);
         this.icon = new NetworkIconModel(Helper.getValue(NetworkModel.PARAM_ICON, object));
         this.thumbnail = new NetworkIconModel(Helper.getValue(NetworkModel.PARAM_THUMBNAIL, object));
         this.identifier =  Helper.getValue(NetworkModel.PARAM_IDENTIFIER, object);
@@ -105,6 +114,7 @@ class NetworkModel{
             AID : PropTypes.string,
             title : PropTypes.string,
             username : PropTypes.string,
+            description : PropTypes.string,
             URL : PropTypes.string,
             identifier : PropTypes.string,
             icon : NetworkIconModel.propTypes,
@@ -115,6 +125,7 @@ class NetworkModel{
             AID: null,
             title: null,
             username: null,
+            description : null,
             URL: null,
             identifier: null,
             icon: {
@@ -143,6 +154,7 @@ class NetworkModel{
             AID : this.AID,
             title : this.title,
             username : this.username,
+            description : this.description,
             icon : this.icon.toObject(),
             thumbnail : this.icon.toObject(),
             identifier :  this.identifier,

@@ -2,7 +2,7 @@
  * Created by @VanSoftware on 2019-07-09.
  */
 
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 import styles from './Cover.module.scss'
 import cx from 'classnames';
 import {connect} from "react-redux";
@@ -12,13 +12,12 @@ import Icon from "../../Common/Icon/Icon";
 import Emoji from "../../Common/Emoji/Emoji";
 import NetworkModel from "../../../model/NetworkModel";
 
-class Cover extends Component{
+class Cover extends PureComponent{
 
 
     static defaultProps = {
         network : new NetworkModel(null),
     };
-
 
     render() {
         return(
@@ -42,10 +41,10 @@ class Cover extends Component{
                                         </div>
                                         <div className={styles.actions}>
                                             <div className={cx(styles.action, styles.statistic)}>
-                                                <Icon icon round source={"multiline_chart"} className={"icon"}/>
+                                                <Icon title={"Network statistics"} icon round source={"multiline_chart"} className={"icon"}/>
                                             </div>
                                             <div className={cx(styles.action, styles.view)}>
-                                                <Icon icon round source={"arrow_forward"} className={"icon"}/>
+                                                <Icon title={"Visit network"} icon round source={"arrow_forward"} className={"icon"}/>
                                             </div>
                                         </div>
                                     </div>

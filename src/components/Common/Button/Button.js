@@ -7,25 +7,15 @@ import PropTypes from 'prop-types';
 import styles from './Button.module.scss'
 import Icon from "../Icon/Icon";
 import {Helper} from "../../../config/Util";
-import cx from 'classnames';
+
 
 class ButtonType{
     static DEFAULT = 'default';
     static OUTLINE = 'outline';
-    static MINI_DEFAULT = 'mini_default';
-    static MINI_OUTLINE = 'mini_outline';
+    static SIMPLE = 'simple';
     static GLOW = 'glow';
+    static MINI = 'mini';
 
-    static CUSTOM_DEFAULT = 'custom_default';
-    static CUSTOM_OUTLINE = 'custom_outline';
-
-    static CUSTOM_MINI = 'custom_mini';
-    static CUSTOM_MINI_DEFAULT = 'custom_mini_default';
-    static CUSTOM_MINI_OUTLINE = 'custom_mini_outline';
-
-    static WHITE_DEFAULT = 'white_default';
-    static WHITE_OUTLINE = 'white_outline';
-    static WHITE_GLOW = 'white_glow';
 }
 
 class Button extends Component{
@@ -40,12 +30,14 @@ class Button extends Component{
             className : PropTypes.string,
         }),
         mini : PropTypes.bool,
-        active : PropTypes.bool
+        active : PropTypes.bool,
+        forbidden : PropTypes.bool,
     };
 
     static defaultProps = {
         mini : false,
         active: true,
+        forbidden: false,
     };
 
 
@@ -70,6 +62,7 @@ class Button extends Component{
                 className={buttonClass}
                 data-mini={this.props.mini}
                 data-active={this.props.active}
+                data-forbidden={this.props.forbidden}
                 data-style={!Helper.isEmpty(this.props.type) ? this.props.type : ButtonType.DEFAULT}
 
             >

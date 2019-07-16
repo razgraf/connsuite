@@ -3,7 +3,6 @@ import stylesDefault from './../../Base/BaseField.module.scss'
 import stylesSpecific from './FileField.module.scss';
 import BaseField from "../../Base/BaseField";
 import {Helper} from "../../../../../config/Util";
-import validator from "validator";
 import BaseFieldModel from "../../BaseFieldModel";
 import PropTypes from "prop-types";
 import {Button, ButtonType} from "../../../Button/Button";
@@ -77,7 +76,7 @@ class FileField extends BaseField{
                 <Button custom={{ style: stylesSpecific, className: "buttonUpload"}}
                         title={"Choose"}
                         mini={true}
-                        type={ButtonType.CUSTOM_MINI_OUTLINE}
+                        type={ButtonType.MINI}
                         onClick={() => {}}
                 />
             </div>

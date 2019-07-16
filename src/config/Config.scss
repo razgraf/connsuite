@@ -9,8 +9,8 @@ $colorBackground : #f3f8fa; //#fafafa;
 
 
 $sizeCanvasMaxWidth : 1200px;
-$sizeNavHeight : 80px;
-$sizeCanvasPaddingDashboard : 30px;
+$sizeNavHeight : 76px;
+$sizeCanvasPaddingDashboard : 20px;
 $sizeCanvasPaddingMobile : 30px;
 $sizeSideBarWidth : 80px;
 
@@ -24,8 +24,10 @@ $zIndexCover : 90;
 $zIndexSideBar : 10;
 
 
-$borderRadiusNetworkCard : 26px;
-
+$borderRadiusNetworkCard : 22px;
+$paddingNetworkCard  : $borderRadiusNetworkCard - 6;
+$countNetworksOnRow : 5;
+$sizeNetworkImageMax : 90px;
 
 
 
@@ -137,11 +139,23 @@ $top-mobile : "all and (max-width : #{$col-sm})";
   }
 }
 
+@mixin button_icon_component(){
+  & > .icon, .icon {
+    width: 20px;
+    margin-right: 6px;
+    margin-left: -10px;
+    line-height: 1em;
+    i {
+      font-size: 12pt;
+    }
+  }
+}
 
 @mixin button_default($background : $colorPrimary,  $color : #ffffff, $backgroundHover : darken($background, 10%), $colorHover: $color, $transition : 0.2s){
   & > .container{
     background: $background;
     transition: background $transition;
+    @include button_icon_component;
     & > .icon i, & > .label p{
       color: $color;
       transition: color $transition;
@@ -166,6 +180,7 @@ $top-mobile : "all and (max-width : #{$col-sm})";
     background: $background;
     border: 1px solid $outline;
     transition: background $transition, border $transition;
+    @include button_icon_component;
     & > .icon i, & > .label p{
       color: $color;
       transition: color $transition;
@@ -185,6 +200,29 @@ $top-mobile : "all and (max-width : #{$col-sm})";
   }
 }
 
+@mixin button_simple($color : $colorPrimary, $colorHover : darken($color, 7%), $backgroundHover:transparent, $transition : 0.2s){
+  & > .container{
+    background: transparent;
+    border: 1px solid transparent;
+    transition: background 0.2s;
+    @include button_icon_component;
+    & > .icon i, & > .label p{
+      color: $color;
+      transition: color 0.2s;
+    }
+
+    &:hover, &:active, &:focus{
+      background: $backgroundHover;
+      border: 1px solid transparent;
+      transition: background 0.2s;
+      & > .icon i, & > .label p{
+        color: $colorHover;
+        transition: color 0.2s;
+      }
+    }
+  }
+}
+
 
 @mixin button_default_gray(){
   @include button_default($colorTable_GrayBlue_Light, $colorTable_GrayBlue_DarkText, darken($colorTable_GrayBlue_Light, 6%), darken($colorTable_GrayBlue_DarkText,5%) );
@@ -192,6 +230,10 @@ $top-mobile : "all and (max-width : #{$col-sm})";
 
 @mixin button_outline_gray(){
   @include button_outline($colorTable_GrayBlue_Light, $colorTable_GrayBlue_DarkText, darken($colorTable_GrayBlue_Light, 6%), darken($colorTable_GrayBlue_DarkText,5%) );
+}
+
+@mixin button_simple_gray(){
+  @include button_simple($colorTable_GrayBlue_DarkText,darken($colorTable_GrayBlue_DarkText, 10%), #fafafa );
 }
 
 

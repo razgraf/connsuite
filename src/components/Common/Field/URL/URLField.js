@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import stylesDefault from './../Base/BaseField.module.scss'
 import styles from './URLField.module.scss';
 import BaseField from "../Base/BaseField";

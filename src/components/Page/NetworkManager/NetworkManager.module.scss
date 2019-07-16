@@ -208,7 +208,7 @@
           width: 100%;
           height: 100%;
           background: #ffffff;
-          @include fade-out(0.3s, 0.4s);
+          @include fade-out(0.3s, 0.3s);
           z-index: 100;
           pointer-events: none;
         }
@@ -231,11 +231,9 @@
               }
               1%{
                 opacity: 0;
-                //position: relative;
               }
               100%{
                 opacity: 1;
-                //position: relative;
                 pointer-events: all;
                 z-index: 2;
               }
@@ -243,20 +241,17 @@
             @keyframes step-fade-out {
               0% {
                 opacity: 1;
-                position: relative;
               }
               99%{
                 opacity: 0;
-                //position: relative;
               }
               100%{
                 opacity: 0;
-                //position: absolute;
                 pointer-events: none;
                 z-index: 1;
               }
             }
-            @mixin step-fade-in($duration : 0.4s, $delay : 0.2s){
+            @mixin step-fade-in($duration : 0.3s, $delay : 0.2s){
               animation-name: step-fade-in;
               animation-direction: normal;
               animation-iteration-count: 1;
@@ -288,27 +283,6 @@
                   @include step-fade-in();
               }
 
-              &[data-step="-1"]{
-                background: red;
-                animation: none !important;
-                z-index: 30;
-                opacity: 1;
-                position: absolute;
-
-                &[data-active="true"]{
-                  & + div{
-                    opacity: 0 !important;
-                  }
-                }
-
-                & > .container{
-                  width: 100%;
-                  height: 440px;
-                  background: red;
-
-                }
-              }
-
               &[data-step="0"]{
                 & > section{
                   &.default{
@@ -318,17 +292,82 @@
                   }
                 }
               }
-
               &[data-step="1"]{
                 & > section{
                   &.custom > .content, &.default > .content{
                     grid-template-columns: 1fr;
                     grid-row-gap: 0;
                     grid-column-gap: 0;
-                    max-width: 600px;
                   }
-                  &.custom{
+                }
+              }
+              &[data-step="2"]{
+                & > section{
+                  align-items: flex-start;
+                  & > .title{
+                    display: flex;
+                    align-items: center;
+                  }
+                  & > .content{
+                    width: 100%;
+                    & > .summary{
+                      display: flex;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      width: 100%;
 
+                      & > .title {
+                        border-radius: 4px;
+                        background: #eee;
+                        padding: 4px 8px;
+                        margin-bottom: 10px;
+
+                        p {
+                          color: #aaa;
+                          font-size: 9pt;
+                          font-weight: 600;
+                        }
+                      }
+                      & > .group{
+                        display: grid;
+                        width: 100%;
+                        grid-template-columns: 1fr 1fr;
+                        grid-column-gap: 20px;
+                        grid-row-gap: 10px;
+                        & > div{
+                          grid-column: span 1;
+                        }
+                      }
+                    }
+
+                    & > .action{
+                      width: 100%;
+                      padding-top: 30px;
+                      padding-bottom: 40px;
+                      border-bottom: 1px solid #eeeeee;
+                      display: flex;
+                      align-items: center;
+                      justify-content: flex-start;
+
+                      display: none;
+
+                      & > .content{
+                        p{
+                          font-size: 11pt;
+                          color: $colorTable_GrayBlue_DarkText;
+                          margin-right: 30px;
+                        }
+                      }
+
+
+                      & > .buttonLive{
+                        @include button_default($colorSecondary);
+                      }
+                    }
+                  }
+                  &:last-of-type{
+                    border-top: 1px solid #eee;
+                    padding-top: 30px;
                   }
                 }
               }
@@ -348,14 +387,14 @@
 
                   & > p {
                     font-size: 13pt;
-                    color: #111111;
+                    color: darken($colorTable_GrayBlue_DarkText, 15%);//#111111;
                     font-family: $fontPrimary;
                     z-index: 2;
-                    font-weight: 400;
+                    font-weight: 500;
                     position: relative;
 
                     & > span {
-                      color: #111111;
+                      color: darken($colorTable_GrayBlue_DarkText, 15%);
                       font-family: $fontPrimary;
                       font-weight: 500;
                       font-size: 13pt;
@@ -387,9 +426,9 @@
                   margin-bottom: 20px;
 
                   p {
-                    font-size: 10pt;
+                    font-size: 11pt;
                     font-weight: 400;
-                    color: #999;
+                    color:$colorTable_GrayBlue_DarkText;// #999;
                     font-family: $fontSecondary;
                   }
                 }
@@ -433,6 +472,7 @@
                     }
 
                     & > p {
+                      color: $colorSecondary;
                       & > span {
                         color: $colorSecondary;
                       }
@@ -465,6 +505,8 @@
 
 
             }
+
+
           }
         }
 
@@ -626,17 +668,13 @@
 
         .buttonLeft{
           @include button_default_gray;
+
+        }
+        .buttonCancel{
+          @include button_simple_gray;
         }
         .buttonRight{
-          .icon{
-            line-height: 0.2 !important;
-            width: 20px;
-            margin-right: 6px;
-            i{
-              font-size: 14pt;
-            }
-          }
-
+          @include button_default($colorSecondary);
         }
       }
     }

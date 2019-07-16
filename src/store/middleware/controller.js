@@ -12,6 +12,7 @@ const cover =
                 switch (action.type) {
                     case Config.REDUX_ACTION_CONTROLLER_COVER_CLOSE: {
                         store.dispatch({type: Config.REDUX_ACTION_VIEW_COVER_CLOSE});
+                        setTimeout(()=>{store.dispatch({type: Config.REDUX_ACTION_VIEW_COVER_RESET});},350);
                         break;
                     }
                     case Config.REDUX_ACTION_CONTROLLER_COVER_NETWORK_CHOOSE: {

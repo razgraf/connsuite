@@ -8,7 +8,6 @@ import {Button, ButtonType} from "../Button/Button";
 import {connect} from "react-redux";
 import Config from "../../../config/Config";
 import PropTypes from "prop-types";
-import {Helper} from "../../../config/Util";
 import NetworkModel from "../../../model/NetworkModel";
 
 
@@ -18,6 +17,7 @@ class Network extends Component{
 
     static propTypes = {
         network : NetworkModel.propTypes,
+        design : PropTypes.string,
         viewonly : PropTypes.bool
     };
     static defaultProps = {
@@ -32,7 +32,7 @@ class Network extends Component{
         let viewonly = this.props.hasOwnProperty("viewonly");
 
         return(
-            <div className={styles.Network} data-viewonly={viewonly}>
+            <div className={styles.Network} data-viewonly={viewonly} data-design={this.props.design}>
                 <div className={styles.container}>
 
                     <div className={styles.content}>

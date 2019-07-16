@@ -1,0 +1,63 @@
+@import "../../../../config/Config";
+
+
+.FieldShowcase {
+  width: 100%;
+  grid-column: span 1;
+  & > .container{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    & > .FieldLabel{
+
+    }
+    & > .content{
+      p{
+        color: $colorTable_GrayBlue_Black;
+        font-size: 12pt;
+        font-weight: 400;
+        text-align: left;
+      }
+    }
+
+  }
+
+
+  &[data-design="gray_background"]{
+      & > .container{
+        padding: 6px 8px;
+        border-radius: 4px;
+        background: #fafafa;
+        flex-direction: row;
+        align-items: center;
+
+        & > .FieldLabel{
+          margin-right: 5px;
+          margin-bottom: 0 !important;
+          & > .label{
+            line-height: 17px;
+            label{
+              font-family: $fontSecondary;
+              color: $colorTable_GrayBlue_DarkText;
+              font-size: 10pt;
+              font-weight: 500;
+              &:after{
+                content: ':';
+                font-size: 10pt;
+                font-weight: 500;
+              }
+            }
+          }
+        }
+        & > .content{
+          p{
+            color: $colorTable_GrayBlue_Black;
+            font-size: 10pt;
+            font-weight: 400;
+            text-align: left;
+          }
+        }
+      }
+  }
+
+}

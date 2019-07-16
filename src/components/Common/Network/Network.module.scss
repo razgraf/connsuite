@@ -2,6 +2,20 @@
 
 .Network{
   grid-column: span 1;
+
+  &[data-design="big_icon"]{
+    & > .container{
+      & > .content{
+        & > .main{
+          & > .icon{
+            max-width: 120px;
+            max-height: 120px;
+          }
+        }
+      }
+    }
+  }
+
   & > .container{
     position: relative;
     width: 100%;
@@ -45,13 +59,11 @@
         & > .icon{
           width: 100%;
           height: 100%;
-          max-width: 120px;
-          max-height: 120px;
+          max-width: $sizeNetworkImageMax;
+          max-height: $sizeNetworkImageMax;
           & > img{
             width: 100%;
             height: 100%;
-            max-width: 120px;
-            max-height: 120px;
             object-fit: contain;
             user-select: none;
 
@@ -70,14 +82,14 @@
         }
       }
       & > .footer{
-        padding: 10px 0 20px 0;
+        padding: 6px 0 24px 0;
         display: flex;
         align-items: center;
         justify-content: center;
         p{
           text-align: center;
-          color: #aaa;
-          font-size: 10pt;
+          color: lighten($colorTable_GrayBlue_DarkText,10%); // #aaa;
+          font-size: 9pt;
 
         }
       }
@@ -101,9 +113,9 @@
       transition: opacity 0.2s;
 
       & > .content{
-        width: calc(100% - 2 * calc(#{$borderRadiusNetworkCard} + 0px));
-        height: calc(100% - 2 * calc(#{$borderRadiusNetworkCard} + 0px));
-        padding: calc(#{$borderRadiusNetworkCard} + 0px);
+        width: calc(100% - 2 * calc(#{$paddingNetworkCard} + 0px));
+        height: calc(100% - 2 * calc(#{$paddingNetworkCard} + 0px));
+        padding: calc(#{$paddingNetworkCard} + 0px);
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -121,7 +133,7 @@
               width: 40px;
               border-radius: 20px;
               background: #ffffff;
-              margin-right: 10px;
+              margin-right: 8px;
               display: flex;
               align-items: center;
               justify-content: center;
@@ -145,7 +157,7 @@
             }
             & > p{
               color: #ffffff;
-              font-size: 10pt;
+              font-size: 9pt;
             }
           }
           & > .view{
@@ -170,6 +182,7 @@
         & > .main{
           & > .icon{
             & > img{
+              transition: filter 0.15s;
               -webkit-filter: blur(5px);
               -moz-filter: blur(5px);
               -o-filter: blur(5px);
@@ -195,14 +208,14 @@
       text-align: center;
       p{
         letter-spacing: -0.05em;
-        font-size: 14pt;
+        font-size: 13pt;
         font-weight: 400;
         font-family: $fontPrimary;
-        color: #111;
+        color: $colorTable_GrayBlue_Black; //#111;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        width: 220px;
+        width: calc(((#{$sizeCanvasMaxWidth} - #{$sizeSideBarWidth} - 2 * #{$sizeCanvasPaddingDashboard} ) / #{$countNetworksOnRow}) - 20px - 20px )  ;//220px;
         transition: width 0.15s;
         min-height: 25px;
 
@@ -218,9 +231,9 @@
     }
     & > .description{
       p{
-        font-size: 11pt;
-        color: #aaa;
-        width: 220px;
+        font-size: 10pt;
+        color: lighten($colorTable_GrayBlue_DarkText, 10%); //#aaa
+        width: calc(((#{$sizeCanvasMaxWidth} - #{$sizeSideBarWidth} - 2 * #{$sizeCanvasPaddingDashboard} ) / #{$countNetworksOnRow}) - 20px - 20px ); //220px;
         transition: width 0.15s;
         text-align: center;
         min-height: 20px;

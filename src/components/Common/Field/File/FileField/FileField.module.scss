@@ -16,11 +16,11 @@
       &:empty{
         &:after{
           content : 'e.g. my_network.png';
-          color: darken($colorTable_GrayBlue_Light, 30%);
+          color: darken($colorTable_GrayBlue_Light, 20%);
           font-size: 11pt;
           font-weight: 300;
           font-style: normal;
-          opacity: 0.6;
+          opacity: 1;
         }
 
       }

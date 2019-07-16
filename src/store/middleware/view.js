@@ -1,5 +1,6 @@
 import Config from "../../config/Config";
 
+
 /**
  * Created by @VanSoftware on 2019-07-10.
  */
@@ -43,4 +44,15 @@ const cover =
     };
 
 
-export default [overlay, cover];
+const navigator =
+    store => {
+        return next => {
+            return action => {
+                return next(action);
+            }
+        }
+    };
+
+
+
+export default [overlay, cover, navigator];

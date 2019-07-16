@@ -2,6 +2,7 @@
  * Created by @VanSoftware on 2019-07-12.
  */
 import React from 'react';
+import PropTypes from "prop-types";
 
 const Emoji = (props) => {
     return (
@@ -13,6 +14,11 @@ const Emoji = (props) => {
         >
         {props.symbol}
     </span>);
+};
+
+Emoji.propTypes = {
+    label : PropTypes.string,
+    symbol : PropTypes.string.isRequired
 };
 
 export default Emoji;

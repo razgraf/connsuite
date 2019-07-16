@@ -65,11 +65,28 @@ const common = (state = {}, action ) => {
     }
 
     return state;
-}
+};
+
+const navigatorInitial = {
+    routeBack : Config.ROUTE_PAGE_DASHBOARD
+};
+
+
+
+const navigator = (state = navigatorInitial, action) => {
+    switch (action.type) {
+        case Config.REDUX_ACTION_VIEW_NAVIGATOR_SET_ROUTE_BACK : {
+            return {...state, routeBack: (action.payload.hasOwnProperty("reset") && action.payload.reset ? navigatorInitial.routeBack :  action.payload.routeBack)};
+        }
+        default: break;
+    }
+
+    return state;
+};
 
 
 
 
-const reducerUI = combineReducers({overlay : overlay, cover : cover, common : common});
+const reducerUI = combineReducers({overlay : overlay, cover : cover, common : common, navigator : navigator});
 
 export default reducerUI;

@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import styles from './Form.module.scss'
 import {Helper} from '../../../../config/Util'
 import {TextField, FileField, URLField} from './../index';
-import NetworkModel from "../../../../model/NetworkModel";
 import PropTypes from "prop-types";
-import BaseFieldModel from "../BaseFieldModel";
 
 
 class Form extends Component{
@@ -104,8 +102,9 @@ class Form extends Component{
     };
 
 
-    doUpdateFieldWarnValue = (fieldID, warn) => {
+    doUpdateFieldWarnValue = (fieldID, warn = true) => {
 
+        console.log(fieldID);
         if(Helper.isEmpty(fieldID)){ console.error("Empty fieldID in form warn update."); return; }
 
         let updated = [...this.state.fields];

@@ -14,9 +14,18 @@ import Config from "../../../config/Config";
 import {Helper} from "../../../config/Util";
 import Emoji from "../../Common/Emoji/Emoji";
 import Form from "../../Common/Field/Form/Form";
+import {FieldShowcase} from "../../Common/Field/";
 
 
 class NetworkManager extends Component{
+
+    static FIELD_CUSTOM_TITLE = "F_NetworkName";
+    static FIELD_CUSTOM_IMAGE = "F_NetworkImage";
+    static FIELD_CUSTOM_URL = "F_NetworkURL";
+    static FIELD_CUSTOM_USERNAME = "F_NetworkUsernameCustom";
+    static FIELD_DEFAULT_USERNAME="F_NetworkUsername";
+    static FIELD_COMMON_DESCRIPTION = "F_NetworkDescription";
+
 
     constructor(props){
         super(props);
@@ -56,7 +65,9 @@ class NetworkManager extends Component{
 
         };
 
-        this.referenceToFormCustomStep0 = React.createRef()
+        this.referenceToFormCustomStep0 = React.createRef();
+        this.referenceToFormCustomStep1 = React.createRef();
+        this.referenceToFormDefaultStep1 = React.createRef();
 
     }
 
@@ -65,6 +76,9 @@ class NetworkManager extends Component{
 
     componentDidMount() {
         this.pickSection(0);
+
+        let e = (document.scrollingElement || document.documentElement);
+        if (!Helper.isEmpty(e)) e.scrollTop = 0;
     }
 
     render() {
@@ -95,7 +109,8 @@ class NetworkManager extends Component{
                                             <div className={styles.content}>
                                                 <div className={styles.networks}>
                                                         {
-                                                            this.state.networks.map((element,index) => {
+                                                            this.state.networks.map((e,index) => {
+                                                                let element = e.clone();
                                                                 element.username = null;
                                                                 return (
                                                                 <NetworkMini
@@ -118,7 +133,7 @@ class NetworkManager extends Component{
                                                       ref={this.referenceToFormCustomStep0}
                                                       fields={[
                                                         {
-                                                            ID : "F_NetworkName",
+                                                            ID : NetworkManager.FIELD_CUSTOM_TITLE,
                                                             type : 'Text',
                                                             placeholder : "e.g. My personal website",
                                                             length : [3, 20],
@@ -133,7 +148,7 @@ class NetworkManager extends Component{
                                                             }
                                                         },
                                                         {
-                                                            ID : "F_NetworkImage",
+                                                            ID : NetworkManager.FIELD_CUSTOM_IMAGE,
                                                             type : 'File',
                                                             fileType : "image",
                                                             label : {
@@ -165,10 +180,10 @@ class NetworkManager extends Component{
                                                         ]}
                                                       onUpdate={(formState)=>{
                                                           let n = NetworkModel.clone(this.state.networkCustom);
-                                                          let icon = formState.findFieldByID("F_NetworkImage");
+                                                          let icon = formState.findFieldByID(NetworkManager.FIELD_CUSTOM_IMAGE);
                                                           n.icon.file = !Helper.isEmpty(icon) && !Helper.isEmpty(icon.data.value) ? icon.data.value : null;
 
-                                                          let title = formState.findFieldByID("F_NetworkName");
+                                                          let title = formState.findFieldByID(NetworkManager.FIELD_CUSTOM_TITLE);
                                                           n.title = !Helper.isEmpty(title) && !Helper.isEmpty(title.data.value) ? title.data.value : null;
 
 
@@ -188,14 +203,15 @@ class NetworkManager extends Component{
                                                     <div className={styles.subtitle}><p>You know how every social network had to ask you for a username <Emoji symbol={'🤔'}/> ?</p></div>
                                                     <div className={styles.content}>
                                                         <Form
+                                                              ref = {this.referenceToFormDefaultStep1}
                                                               columns={1}
                                                               fields={[
                                                                   {
-                                                                      ID : "F_NetworkUsername",
+                                                                      ID : NetworkManager.FIELD_DEFAULT_USERNAME,
                                                                       type : 'Text',
                                                                       value : this.state.networkDefault.username,
                                                                       placeholder : "e.g. @James",
-                                                                      length : [3, 30],
+                                                                      length : [2, 30],
                                                                       label : {
                                                                           value : "Username",
                                                                       },
@@ -207,7 +223,7 @@ class NetworkManager extends Component{
                                                               ]}
                                                               onUpdate={(formState)=>{
                                                                   let n = NetworkModel.clone(this.state.networkDefault);
-                                                                  let username = formState.findFieldByID("F_NetworkUsername");
+                                                                  let username = formState.findFieldByID(NetworkManager.FIELD_DEFAULT_USERNAME);
                                                                   n.username = !Helper.isEmpty(username) && !Helper.isEmpty(username.data.value) ? username.data.value : null;
                                                                   this.setState({ networkDefault: n});
                                                               }}
@@ -225,14 +241,15 @@ class NetworkManager extends Component{
                                                     <div className={styles.content}>
 
                                                         <Form
+                                                              ref={this.referenceToFormCustomStep1}
                                                               columns={2}
                                                               fields={[
                                                                   {
-                                                                      ID : "F_NetworkURL",
+                                                                      ID : NetworkManager.FIELD_CUSTOM_URL,
                                                                       type : 'URL',
                                                                       placeholder : "e.g. www.website.com/link/james",
                                                                       value : this.state.networkCustom.URL,
-                                                                      length : [3, 100],
+                                                                      length : [2, 100],
                                                                       label : {
                                                                           value : "Full link/URL",
                                                                           help : "We need a link for the website so we know where to send people that click on the card.",
@@ -240,11 +257,11 @@ class NetworkManager extends Component{
                                                                       },
                                                                       warn:  {
                                                                           onBlur : true,
-                                                                          text :  "Make sure the link is valid",
+                                                                          text :  "Add the link shown in the address bar for that network (https://...)",
                                                                       }
                                                                   },
                                                                   {
-                                                                      ID : "F_NetworkUsernameCustom",
+                                                                      ID : NetworkManager.FIELD_CUSTOM_USERNAME,
                                                                       type : 'Text',
                                                                       placeholder : "e.g. @james",
                                                                       value : this.state.networkCustom.username,
@@ -255,7 +272,7 @@ class NetworkManager extends Component{
                                                                           force : 'right',
                                                                       },
                                                                       warn:  {
-                                                                          onBlur : true,
+                                                                          onBlur : false,
                                                                           text :  "Make sure the value is between 2 and 30 characters",
                                                                       }
                                                                   },
@@ -263,10 +280,10 @@ class NetworkManager extends Component{
                                                               onUpdate={(formState)=>{
                                                                   let n = NetworkModel.clone(this.state.networkCustom);
 
-                                                                  let URL = formState.findFieldByID("F_NetworkURL");
+                                                                  let URL = formState.findFieldByID(NetworkManager.FIELD_CUSTOM_URL);
                                                                   n.URL = !Helper.isEmpty(URL) && !Helper.isEmpty(URL.data.value) ? URL.data.value : null;
 
-                                                                  let username = formState.findFieldByID("F_NetworkUsernameCustom");
+                                                                  let username = formState.findFieldByID(NetworkManager.FIELD_CUSTOM_USERNAME);
                                                                   n.username = !Helper.isEmpty(username) && !Helper.isEmpty(username.data.value) ? username.data.value : null;
 
                                                                   this.setState({ networkCustom: n});
@@ -279,6 +296,72 @@ class NetworkManager extends Component{
                                                 :null
                                             }
                                     </div>
+
+                                    <div className={styles.step} data-step={2} data-active={this.state.activeStep === 2}>
+
+                                            <section>
+                                                <div className={styles.title}><p>You're almost there! </p><Emoji symbol={'👌'}/></div>
+                                                <div className={styles.subtitle}><p>Once you go live, you'll have one more network added to your online business card! To confirm everything, click on the 'Go Live' button.</p></div>
+                                                <div className={styles.content}>
+
+                                                    <div className={styles.summary}>
+                                                        <div className={styles.group}>
+                                                            <FieldShowcase design={FieldShowcase.GRAY_BACKGROUND} label={{value : "Network"}} value={active.title}  />
+                                                            <FieldShowcase design={FieldShowcase.GRAY_BACKGROUND}  label={{value : "Username"}} value={active.username}  />
+                                                            {this.state.activeSection === 1 ?     <FieldShowcase columnSpan={2} design={FieldShowcase.GRAY_BACKGROUND}  label={{value : "Link/URL"}} value={active.URL}  /> : null}
+                                                        </div>
+                                                    </div>
+                                                    <div className={styles.action}>
+                                                        <div className={styles.content}><p>Ready to publish?</p></div>
+                                                        <Button custom={{ style: styles, className: "buttonLive"}}
+                                                                title={"Go Live"}
+                                                                icon={ <Icon icon round className={styles.icon} source={"flash_on"} alt={"Go Live"} />}
+                                                                type={ButtonType.DEFAULT}
+                                                                onClick={()=>{this.goOneStepForward()}}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </section>
+
+                                        <section>
+                                            <div className={styles.subtitle}><p>* P.S. Optionally, you could add a description to this account.</p></div>
+                                            <div className={styles.content}>
+                                                <Form
+                                                    columns={1}
+                                                    fields={[
+                                                        {
+                                                            ID : NetworkManager.FIELD_COMMON_DESCRIPTION,
+                                                            type : 'Text',
+                                                            value : active.description,
+                                                            placeholder : "e.g. Contact me here for business inquiries only.",
+                                                            length : [0, 500],
+                                                            label : {
+                                                                value : "Description (optional)",
+                                                                help : "This description will be shown when someone is interested in accessing your network. You can use this to separate business from personal accounts."
+                                                            },
+                                                            warn:  {
+                                                                onBlur : false,
+                                                                text :  "Make sure the description is smaller than 500 characters",
+                                                            }
+                                                        },
+                                                    ]}
+                                                    onUpdate={(formState)=>{
+                                                        let n = NetworkModel.clone(this.getActiveNetwork());
+                                                        let description = formState.findFieldByID(NetworkManager.FIELD_COMMON_DESCRIPTION);
+                                                        n.description = !Helper.isEmpty(description) && !Helper.isEmpty(description.data.value) ? description.data.value : null;
+
+                                                        this.state.activeSection === 0
+                                                            ? this.setState({ networkDefault: n})
+                                                            : this.setState({ networkCustom: n});
+
+                                                    }}
+
+                                                />
+                                            </div>
+                                        </section>
+
+                                    </div>
+
                                 </div>
                             </div>
                             <div className={styles.right}>
@@ -305,7 +388,7 @@ class NetworkManager extends Component{
                                 <div className={styles.container}>
                                      <div className={styles.content}>
                                     <div className={styles.default}>
-                                        <Network viewonly network={active}/>
+                                        <Network viewonly design={"big_icon"} network={active}/>
                                     </div>
                                     <div className={styles.group}>
                                         <div className={styles.item}><NetworkMini style={{width : "60px", height :'60px'}} viewonly network={active}/></div>
@@ -320,20 +403,28 @@ class NetworkManager extends Component{
                         <div className={styles.footer}>
                             {this.state.activeStep > 0
                                 ?
-                                <Button custom={{style: styles, className: "buttonLeft"}}
+                                (<Button custom={{style: styles, className: "buttonLeft"}}
                                         title={"Previous Step"}
-                                        type={ButtonType.CUSTOM_DEFAULT}
+                                        type={ButtonType.DEFAULT}
                                         onClick={()=>{this.goOneStepBackward()}}
-                                />
-                                : null}
+                                />)
+                                : (
+                                    <Button custom={{style: styles, className: "buttonCancel"}}
+                                            title={"Cancel"}
+                                            icon={<Icon icon round source={"arrow_back"} className={styles.icon} />}
+                                            type={ButtonType.DEFAULT}
+                                            onClick={()=>{this.props.history.push(Config.ROUTE_PAGE_PORTFOLIO)}}
+                                    />
+                                )}
                             <div className={styles.divider}/>
                             {
-                                this.state.activeStep < 2
+                                this.state.activeStep <= 2
                                     ?
                                     <Button custom={{ style: styles, className: "buttonRight"}}
                                             title={this.state.activeStep === this.state.steps[this.state.steps.length - 1].id ? "Go Live"  : "Next Step"}
                                             icon={ this.state.activeStep === this.state.steps[this.state.steps.length - 1].id ? <Icon icon round className={styles.icon} source={"flash_on"} alt={"Step 2"} /> : null}
                                             type={ButtonType.DEFAULT}
+                                            active={this.validateStep(false)}
                                             onClick={()=>{this.goOneStepForward()}}
                                             />
                                 : null
@@ -372,8 +463,8 @@ class NetworkManager extends Component{
         if(sectionID === this.state.activeSection) return;
         if(sectionID === 0 && this.referenceToFormCustomStep0 !== null && this.referenceToFormCustomStep0.current !== null){
             try{
-                this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue("F_NetworkImage", false);
-                this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue("F_NetworkName", false);
+                this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue(NetworkManager.FIELD_CUSTOM_IMAGE, false);
+                this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue(NetworkManager.FIELD_CUSTOM_TITLE, false);
 
             }catch(e){console.error(e)}
         }
@@ -421,8 +512,11 @@ class NetworkManager extends Component{
             }));
     };
 
+    goLive = () => {
 
-    validateStep = () => {
+    };
+
+    validateStep = ( handleWarn = true ) => {
 
 
         let flag = true;
@@ -433,23 +527,41 @@ class NetworkManager extends Component{
                     if (Helper.isEmpty(this.state.networkDefault) || Helper.isEmpty(this.state.networkDefault.AID)){
                         flag = false;
                     }
-                    this.setState({shouldWarnDefaultStep0 : !flag})
+                    if(handleWarn) this.setState({shouldWarnDefaultStep0 : !flag})
                 }
                 else if(this.state.activeSection === 1) {
                     if (Helper.isEmpty(this.state.networkCustom)){ flag = false;}
                     if (Helper.isEmpty(this.state.networkCustom.title)) flag = false;
                     if (Helper.isEmpty(this.state.networkCustom.icon) || Helper.isEmpty(this.state.networkCustom.icon.source)) flag = false;
 
+                    if(handleWarn && flag === false && this.referenceToFormCustomStep0 !== null && this.referenceToFormCustomStep0.current !== null){
+                        try{
+                            this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue(NetworkManager.FIELD_CUSTOM_IMAGE, true);
+                            this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue(NetworkManager.FIELD_CUSTOM_TITLE, true);
+
+                        }catch(e){console.error(e)}
+                    }
                 }
 
                 break;
             case 1 :
                 if(this.state.activeSection === 0) {
                     if (Helper.isEmpty(this.state.networkDefault.username)) flag = false;
+                    if(handleWarn && flag === false && this.referenceToFormDefaultStep1 !== null && this.referenceToFormDefaultStep1.current !== null){
+                        try{
+                            this.referenceToFormDefaultStep1.current.doUpdateFieldWarnValue(NetworkManager.FIELD_DEFAULT_USERNAME, true);
+
+                        }catch(e){console.error(e)}
+                    }
                 }
                 else if(this.state.activeSection === 1) {
                     if (Helper.isEmpty(this.state.networkCustom.URL)){flag = false;}
+                    if(handleWarn && flag === false && this.referenceToFormCustomStep1 !== null && this.referenceToFormCustomStep1.current !== null){
+                        try{
+                            this.referenceToFormCustomStep1.current.doUpdateFieldWarnValue(NetworkManager.FIELD_CUSTOM_URL, true);
 
+                        }catch(e){console.error(e)}
+                    }
                 }
                 break;
             case 2 : break;
