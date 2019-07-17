@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import styles from './SideBarElement.module.scss';
-import {NavLink} from "react-router-dom";
+import {NavLink, withRouter} from "react-router-dom";
 import Icon from "../../../Common/Icon/Icon";
 import Config from "../../../../config/Config";
 import {Helper} from "../../../../config/Util";
@@ -12,9 +12,8 @@ class SideBarElement extends Component {
 
     render() {
 
-        let page = Config.getPageByRoute(this.props.route);
+        let page = Config.getPageByPath(this.props.location.pathname);
         if( Helper.isEmpty(page) || Helper.isEmpty(page.icon) ||  Helper.isEmpty(page.title)) return null;
-
 
 
         return(
@@ -34,4 +33,4 @@ class SideBarElement extends Component {
     }
 
 }
-export default SideBarElement;
+export default withRouter(SideBarElement);

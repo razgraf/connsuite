@@ -18,8 +18,10 @@
     background: rgba(0,0,0,0.8);
   }
 
+
   @keyframes overlay-open {  from{ opacity: 0; }  to{ opacity: 1; } }
-  @keyframes overlay-close {  from{ opacity: 1; }  to{ opacity: 0; } }
+  @keyframes overlay-close {  0%{ opacity: 1;     pointer-events: all; }  99%{ opacity: 0; pointer-events: all;} 100%{ opacity: 0; pointer-events: none } }
+
 
   &[data-visible="true"]{
     pointer-events: all;

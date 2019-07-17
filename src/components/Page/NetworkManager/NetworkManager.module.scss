@@ -287,7 +287,7 @@
                 & > section{
                   &.default{
                     & > .title {
-                      margin-bottom: 3px;
+
                     }
                   }
                 }
@@ -675,6 +675,29 @@
         }
         .buttonRight{
           @include button_default($colorSecondary);
+        }
+      }
+    }
+  }
+
+
+
+
+  &.Add{
+
+  }
+
+  &.Edit{
+    & > .container{
+      & > .content {
+        & > .main{
+          & > .left{
+            & > .content{
+              & > .step{
+
+              }
+            }
+          }
         }
       }
     }

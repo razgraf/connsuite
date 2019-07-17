@@ -1,4 +1,6 @@
 import NetworkModel from "../model/NetworkModel";
+import {matchPath} from "react-router-dom";
+import {Helper} from "./Util";
 
 /**
  * Created by @VanSoftware on 2019-07-04.
@@ -12,6 +14,7 @@ class Config{
             {
                 AID : "NET1",
                 title : "Facebook",
+                type : "default",
                 URL : "https://facebook.com/",
                 icon : {
                     source :  require("../assets/images/networks/normal/icon_facebook.png"),
@@ -21,6 +24,7 @@ class Config{
             {
                 AID : "NET2",
                 title : "Twitter",
+                type : "default",
                 URL : "https://twitter.com/",
                 icon : {
                     source :  require("../assets/images/networks/normal/icon_twitter.png"),
@@ -30,6 +34,7 @@ class Config{
             {
                 AID : "NET3",
                 title : "Behance",
+                type : "default",
                 URL : "https://behance.com/",
                 icon : {
                     source :  require("../assets/images/networks/normal/icon_behance.png"),
@@ -39,6 +44,7 @@ class Config{
             {
                 AID : "NET4",
                 title : "Pinterest",
+                type : "default",
                 URL : "https://pinterest.com/",
                 icon : {
                     source :  require("../assets/images/networks/normal/icon_pinterest.png"),
@@ -48,11 +54,23 @@ class Config{
             {
                 AID : "NET5",
                 URL : "https://github.com/",
+                type : "default",
                 title : "GitHub  LALALALLALALL lalas dlsaldsald lsal",
                 icon : {
                     source :  require("../assets/images/networks/normal/icon_github.png"),
                 },
                 username : "razgraf"
+            },
+            {
+                AID : "NET6C",
+                URL : "https://www.vansoftware.ro/",
+                type : "custom",
+                title : "Van Software",
+                icon : {
+                    name : "icon_custom.png",
+                    source :  require("../assets/images/networks/normal/icon_github.png"),
+                },
+                username : "@Razvan"
             }
         ];
         let n = [];
@@ -78,66 +96,86 @@ class Config{
     static ROUTE_PAGE_PROFILE = '/:username';
 
     static ROUTE_PAGE_NETWORK_ADD = '/network';
-    static ROUTE_PAGE_NETWORK_EDIT = '/network/:AID';
 
-    static getPageByRoute(page){
-        switch (page) {
-            case this.ROUTE_PAGE_DASHBOARD : return {
-                route : this.ROUTE_PAGE_DASHBOARD,
-                title : 'Dashboard',
-                depth : 1,
-                icon : 'home',
-            };
-            case this.ROUTE_PAGE_PORTFOLIO : return {
+    static ROUTE_PAGE_NETWORK_EDIT_CLEAN = '/network/';
+    static ROUTE_PAGE_NETWORK_EDIT = Config.ROUTE_PAGE_NETWORK_EDIT_CLEAN + ':AID';
+
+    static getPageByPath(path){
+        let pages = [
+            {
+                exact : true,
+                route: this.ROUTE_PAGE_DASHBOARD,
+                title: 'Dashboard',
+                depth: 1,
+                icon: 'home',
+            },
+            {
+                exact : true,
                 route : this.ROUTE_PAGE_PORTFOLIO,
                 title : 'Portfolio',
                 depth : 1,
                 icon : 'folder_special',
-            };
-            case this.ROUTE_PAGE_PROFILE : return {
+            },
+            {
+                exact : true,
                 route : this.ROUTE_PAGE_PROFILE,
                 title : 'Profile',
                 depth : 1,
                 icon : 'person',
-            };
-            case this.ROUTE_PAGE_BUSINESS_BOOK : return {
+            },
+            {
+                exact : true,
                 route : this.ROUTE_PAGE_BUSINESS_BOOK,
                 title : 'Business Book',
                 depth : 1,
                 icon : 'business',
-            };
-            case this.ROUTE_PAGE_STATISTICS : return {
+            },
+            {
+                exact : true,
                 route : this.ROUTE_PAGE_STATISTICS,
                 title : 'Statistics',
                 depth : 1,
                 icon : 'multiline_chart',
-            };
+            },
 
 
 
-            case this.ROUTE_PAGE_NETWORK_ADD : return {
+            {
+                exact : true,
                 route : this.ROUTE_PAGE_NETWORK_ADD,
                 title : "Add a new Network",
                 depth : 2,
 
                 routeBack : this.ROUTE_PAGE_PORTFOLIO,
-            };
-            case this.ROUTE_PAGE_NETWORK_EDIT : return {
+            },
+            {
+                exact : true,
                 route : this.ROUTE_PAGE_NETWORK_EDIT,
                 title : "Edit this Network",
                 depth : 2,
 
                 routeBack : this.ROUTE_PAGE_PORTFOLIO,
-            };
+            },
+          ];
 
 
-            default : return {
-                route : null,
-                title : null,
-                depth : null
-            }
-
+        for(let i = 0; i < pages.length; i++){
+            let match = matchPath(path,  {path : pages[i].route, exact : pages[i].exact});
+            if(match && !Helper.isEmpty(match) && match.isExact)
+                return pages[i];
         }
+
+        return {
+            exact : false,
+            route : null,
+            title : null,
+            depth : null,
+            routeBack : this.ROUTE_PAGE_DASHBOARD
+        }
+
+
+
+
     }
 
 

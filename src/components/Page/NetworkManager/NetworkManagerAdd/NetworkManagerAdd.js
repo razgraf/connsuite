@@ -3,21 +3,21 @@
  */
 
 import React, {Component} from 'react';
-import styles from './NetworkManager.module.scss'
+import styles from '../NetworkManager.module.scss'
 import cx from "classnames";
-import Icon from "../../Common/Icon/Icon";
-import Network from "../../Common/Network/Network";
-import NetworkModel from "../../../model/NetworkModel";
-import {Button, ButtonType} from "../../Common/Button/Button";
-import NetworkMini from "../../Common/Network/NetworkMini/NetworkMini";
-import Config from "../../../config/Config";
-import {Helper} from "../../../config/Util";
-import Emoji from "../../Common/Emoji/Emoji";
-import Form from "../../Common/Field/Form/Form";
-import {FieldShowcase} from "../../Common/Field/";
+import Icon from "../../../Common/Icon/Icon";
+import Network from "../../../Common/Network/Network";
+import NetworkModel from "../../../../model/NetworkModel";
+import {Button, ButtonType} from "../../../Common/Button/Button";
+import NetworkMini from "../../../Common/Network/NetworkMini/NetworkMini";
+import Config from "../../../../config/Config";
+import {Helper} from "../../../../config/Util";
+import Emoji from "../../../Common/Emoji/Emoji";
+import Form from "../../../Common/Field/Form/Form";
+import {FieldShowcase} from "../../../Common/Field";
 
 
-class NetworkManager extends Component{
+class NetworkManagerAdd extends Component{
 
     static FIELD_CUSTOM_TITLE = "F_NetworkName";
     static FIELD_CUSTOM_IMAGE = "F_NetworkImage";
@@ -86,7 +86,7 @@ class NetworkManager extends Component{
         let active = this.getActiveNetwork();
 
         return (
-            <div className={cx(styles.Page, styles.NetworkManager)} data-nav-fixed={true}>
+            <div className={cx(styles.Page, styles.NetworkManager, styles.Add)} data-nav-fixed={true}>
                 <div className={styles.container}>
                     <div className={styles.content}>
 
@@ -133,7 +133,7 @@ class NetworkManager extends Component{
                                                       ref={this.referenceToFormCustomStep0}
                                                       fields={[
                                                         {
-                                                            ID : NetworkManager.FIELD_CUSTOM_TITLE,
+                                                            ID : NetworkManagerAdd.FIELD_CUSTOM_TITLE,
                                                             type : 'Text',
                                                             placeholder : "e.g. My personal website",
                                                             length : [3, 20],
@@ -148,7 +148,7 @@ class NetworkManager extends Component{
                                                             }
                                                         },
                                                         {
-                                                            ID : NetworkManager.FIELD_CUSTOM_IMAGE,
+                                                            ID : NetworkManagerAdd.FIELD_CUSTOM_IMAGE,
                                                             type : 'File',
                                                             fileType : "image",
                                                             label : {
@@ -180,10 +180,10 @@ class NetworkManager extends Component{
                                                         ]}
                                                       onUpdate={(formState)=>{
                                                           let n = NetworkModel.clone(this.state.networkCustom);
-                                                          let icon = formState.findFieldByID(NetworkManager.FIELD_CUSTOM_IMAGE);
+                                                          let icon = formState.findFieldByID(NetworkManagerAdd.FIELD_CUSTOM_IMAGE);
                                                           n.icon.file = !Helper.isEmpty(icon) && !Helper.isEmpty(icon.data.value) ? icon.data.value : null;
 
-                                                          let title = formState.findFieldByID(NetworkManager.FIELD_CUSTOM_TITLE);
+                                                          let title = formState.findFieldByID(NetworkManagerAdd.FIELD_CUSTOM_TITLE);
                                                           n.title = !Helper.isEmpty(title) && !Helper.isEmpty(title.data.value) ? title.data.value : null;
 
 
@@ -207,7 +207,7 @@ class NetworkManager extends Component{
                                                               columns={1}
                                                               fields={[
                                                                   {
-                                                                      ID : NetworkManager.FIELD_DEFAULT_USERNAME,
+                                                                      ID : NetworkManagerAdd.FIELD_DEFAULT_USERNAME,
                                                                       type : 'Text',
                                                                       value : this.state.networkDefault.username,
                                                                       placeholder : "e.g. @James",
@@ -223,7 +223,7 @@ class NetworkManager extends Component{
                                                               ]}
                                                               onUpdate={(formState)=>{
                                                                   let n = NetworkModel.clone(this.state.networkDefault);
-                                                                  let username = formState.findFieldByID(NetworkManager.FIELD_DEFAULT_USERNAME);
+                                                                  let username = formState.findFieldByID(NetworkManagerAdd.FIELD_DEFAULT_USERNAME);
                                                                   n.username = !Helper.isEmpty(username) && !Helper.isEmpty(username.data.value) ? username.data.value : null;
                                                                   this.setState({ networkDefault: n});
                                                               }}
@@ -245,7 +245,7 @@ class NetworkManager extends Component{
                                                               columns={2}
                                                               fields={[
                                                                   {
-                                                                      ID : NetworkManager.FIELD_CUSTOM_URL,
+                                                                      ID : NetworkManagerAdd.FIELD_CUSTOM_URL,
                                                                       type : 'URL',
                                                                       placeholder : "e.g. www.website.com/link/james",
                                                                       value : this.state.networkCustom.URL,
@@ -261,7 +261,7 @@ class NetworkManager extends Component{
                                                                       }
                                                                   },
                                                                   {
-                                                                      ID : NetworkManager.FIELD_CUSTOM_USERNAME,
+                                                                      ID : NetworkManagerAdd.FIELD_CUSTOM_USERNAME,
                                                                       type : 'Text',
                                                                       placeholder : "e.g. @james",
                                                                       value : this.state.networkCustom.username,
@@ -280,10 +280,10 @@ class NetworkManager extends Component{
                                                               onUpdate={(formState)=>{
                                                                   let n = NetworkModel.clone(this.state.networkCustom);
 
-                                                                  let URL = formState.findFieldByID(NetworkManager.FIELD_CUSTOM_URL);
+                                                                  let URL = formState.findFieldByID(NetworkManagerAdd.FIELD_CUSTOM_URL);
                                                                   n.URL = !Helper.isEmpty(URL) && !Helper.isEmpty(URL.data.value) ? URL.data.value : null;
 
-                                                                  let username = formState.findFieldByID(NetworkManager.FIELD_CUSTOM_USERNAME);
+                                                                  let username = formState.findFieldByID(NetworkManagerAdd.FIELD_CUSTOM_USERNAME);
                                                                   n.username = !Helper.isEmpty(username) && !Helper.isEmpty(username.data.value) ? username.data.value : null;
 
                                                                   this.setState({ networkCustom: n});
@@ -330,7 +330,7 @@ class NetworkManager extends Component{
                                                     columns={1}
                                                     fields={[
                                                         {
-                                                            ID : NetworkManager.FIELD_COMMON_DESCRIPTION,
+                                                            ID : NetworkManagerAdd.FIELD_COMMON_DESCRIPTION,
                                                             type : 'Text',
                                                             value : active.description,
                                                             placeholder : "e.g. Contact me here for business inquiries only.",
@@ -347,7 +347,7 @@ class NetworkManager extends Component{
                                                     ]}
                                                     onUpdate={(formState)=>{
                                                         let n = NetworkModel.clone(this.getActiveNetwork());
-                                                        let description = formState.findFieldByID(NetworkManager.FIELD_COMMON_DESCRIPTION);
+                                                        let description = formState.findFieldByID(NetworkManagerAdd.FIELD_COMMON_DESCRIPTION);
                                                         n.description = !Helper.isEmpty(description) && !Helper.isEmpty(description.data.value) ? description.data.value : null;
 
                                                         this.state.activeSection === 0
@@ -463,8 +463,8 @@ class NetworkManager extends Component{
         if(sectionID === this.state.activeSection) return;
         if(sectionID === 0 && this.referenceToFormCustomStep0 !== null && this.referenceToFormCustomStep0.current !== null){
             try{
-                this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue(NetworkManager.FIELD_CUSTOM_IMAGE, false);
-                this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue(NetworkManager.FIELD_CUSTOM_TITLE, false);
+                this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue(NetworkManagerAdd.FIELD_CUSTOM_IMAGE, false);
+                this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue(NetworkManagerAdd.FIELD_CUSTOM_TITLE, false);
 
             }catch(e){console.error(e)}
         }
@@ -536,8 +536,8 @@ class NetworkManager extends Component{
 
                     if(handleWarn && flag === false && this.referenceToFormCustomStep0 !== null && this.referenceToFormCustomStep0.current !== null){
                         try{
-                            this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue(NetworkManager.FIELD_CUSTOM_IMAGE, true);
-                            this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue(NetworkManager.FIELD_CUSTOM_TITLE, true);
+                            this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue(NetworkManagerAdd.FIELD_CUSTOM_IMAGE, true);
+                            this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue(NetworkManagerAdd.FIELD_CUSTOM_TITLE, true);
 
                         }catch(e){console.error(e)}
                     }
@@ -549,7 +549,7 @@ class NetworkManager extends Component{
                     if (Helper.isEmpty(this.state.networkDefault.username)) flag = false;
                     if(handleWarn && flag === false && this.referenceToFormDefaultStep1 !== null && this.referenceToFormDefaultStep1.current !== null){
                         try{
-                            this.referenceToFormDefaultStep1.current.doUpdateFieldWarnValue(NetworkManager.FIELD_DEFAULT_USERNAME, true);
+                            this.referenceToFormDefaultStep1.current.doUpdateFieldWarnValue(NetworkManagerAdd.FIELD_DEFAULT_USERNAME, true);
 
                         }catch(e){console.error(e)}
                     }
@@ -558,7 +558,7 @@ class NetworkManager extends Component{
                     if (Helper.isEmpty(this.state.networkCustom.URL)){flag = false;}
                     if(handleWarn && flag === false && this.referenceToFormCustomStep1 !== null && this.referenceToFormCustomStep1.current !== null){
                         try{
-                            this.referenceToFormCustomStep1.current.doUpdateFieldWarnValue(NetworkManager.FIELD_CUSTOM_URL, true);
+                            this.referenceToFormCustomStep1.current.doUpdateFieldWarnValue(NetworkManagerAdd.FIELD_CUSTOM_URL, true);
 
                         }catch(e){console.error(e)}
                     }
@@ -584,4 +584,4 @@ class NetworkManager extends Component{
 }
 
 
-export default NetworkManager;
+export default NetworkManagerAdd;

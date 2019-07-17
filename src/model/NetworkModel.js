@@ -8,6 +8,13 @@ import NetworkIconModel from "./NetworkIconModel";
 import PropTypes from "prop-types";
 
 class NetworkModel{
+    get type() {
+        return this._type;
+    }
+
+    set type(value) {
+        this._type = value;
+    }
     get URL() {
         return this._URL;
     }
@@ -69,6 +76,9 @@ class NetworkModel{
         this._identifier = value;
     }
 
+    static TYPE_DEFAULT = "default";
+    static TYPE_CUSTOM = "custom";
+
 
     static PARAM_AID = "AID";
     static PARAM_TITLE = "title";
@@ -78,10 +88,12 @@ class NetworkModel{
     static PARAM_IDENTIFIER = "identifier";
     static PARAM_URL = "URL";
     static PARAM_DESCRIPTION = "description";
+    static PARAM_TYPE = "type";
 
     constructor(object){
 
         this.AID = Helper.getValue(NetworkModel.PARAM_AID, object);
+        this.type = Helper.getValue(NetworkModel.PARAM_TYPE,object);
         this.title = Helper.getValue(NetworkModel.PARAM_TITLE, object);
         this.username = Helper.getValue(NetworkModel.PARAM_USERNAME, object);
         this.description = Helper.getValue(NetworkModel.PARAM_DESCRIPTION, object);
@@ -113,6 +125,7 @@ class NetworkModel{
     static propTypes =  PropTypes.shape({
             AID : PropTypes.string,
             title : PropTypes.string,
+            type : PropTypes.oneOf([NetworkModel.TYPE_DEFAULT,NetworkModel.TYPE_CUSTOM]),
             username : PropTypes.string,
             description : PropTypes.string,
             URL : PropTypes.string,
@@ -124,6 +137,7 @@ class NetworkModel{
     static defaultProps = {
             AID: null,
             title: null,
+            type : NetworkModel.TYPE_DEFAULT,
             username: null,
             description : null,
             URL: null,
@@ -153,6 +167,7 @@ class NetworkModel{
         return {
             AID : this.AID,
             title : this.title,
+            type : this.type,
             username : this.username,
             description : this.description,
             icon : this.icon.toObject(),

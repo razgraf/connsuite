@@ -11,6 +11,7 @@ import OverlayIndividual from "../../Common/Overlay/OverlayIndividual/OverlayInd
 import Icon from "../../Common/Icon/Icon";
 import Emoji from "../../Common/Emoji/Emoji";
 import NetworkModel from "../../../model/NetworkModel";
+import {Link} from "react-router-dom";
 
 class Cover extends PureComponent{
 
@@ -37,7 +38,7 @@ class Cover extends PureComponent{
                                         <Icon image source={this.props.network.icon.source} className={styles.icon} />
                                         <div className={styles.main}>
                                             <div className={styles.title}><p>{this.props.network.title}</p></div>
-                                            <div className={styles.description}><p>@{this.props.network.username}</p></div>
+                                            <div className={styles.description}><Icon  icon outline  className={styles.icon} source={"account_circle"} /><p>{this.props.network.username}</p></div>
                                         </div>
                                         <div className={styles.actions}>
                                             <div className={cx(styles.action, styles.statistic)}>
@@ -76,10 +77,10 @@ class Cover extends PureComponent{
                                             <Icon icon round className={styles.icon} source={"share"} />
                                             <div className={styles.title}><p>Share:  <span className={styles.share}>connsuite.com/razgraf/{this.props.network.identifier}</span></p></div>
                                         </div>
-                                        <div className={styles.action}>
+                                        <Link to={Config.ROUTE_PAGE_NETWORK_EDIT_CLEAN + this.props.network.AID} className={styles.action}>
                                             <Icon icon round className={styles.icon} source={"edit"} />
                                             <div className={styles.title}><p>Edit network</p></div>
-                                        </div>
+                                        </Link>
                                         <div className={styles.action}>
                                             <Icon icon round className={styles.icon} source={"remove_circle_outline"} />
                                             <div className={styles.title}><p>Remove network</p></div>

@@ -14,7 +14,8 @@ class FileField extends BaseField{
         data  :  PropTypes.shape({
             ...BaseFieldModel.propTypes.data,
             fileType : PropTypes.oneOf(["image", "file"]),
-            maxFileSize : PropTypes.number
+            maxFileSize : PropTypes.number,
+            fileName : PropTypes.string,
         }),
         action : PropTypes.shape({
             ...BaseFieldModel.propTypes.action,
@@ -35,6 +36,13 @@ class FileField extends BaseField{
     constructor(props){
         super(props);
         if(Helper.isEmpty(this.state)) this.state = {};
+
+
+        if(!Helper.isEmpty(this.props.data.fileName)){
+            this.setState({
+                fileName : this.props.data.fileName
+            })
+        }
     }
 
 

@@ -3,19 +3,22 @@
  */
 import React, {Component} from 'react';
 import styles from './NavUser.module.scss';
-import {Link, withRouter} from 'react-router-dom';
+import {Link, matchPath, withRouter} from 'react-router-dom';
 import Config from "../../../config/Config";
 import {Helper} from "../../../config/Util";
 import Icon from "../../Common/Icon/Icon";
 
 
 class NavUser extends Component{
+
     render(){
 
-
-       let page = Config.getPageByRoute(this.props.location.pathname);
+       let page = Config.getPageByPath(this.props.location.pathname);
        let withName = !Helper.isEmpty(page) && !Helper.isEmpty(page.depth) && page.depth  > 1;
        let routeBack = !Helper.isEmpty(page)  && !Helper.isEmpty(page.routeBack) ? page.routeBack : Config.ROUTE_PAGE_DASHBOARD;
+
+       
+
 
         return(
             <nav className={styles.NavUser}>

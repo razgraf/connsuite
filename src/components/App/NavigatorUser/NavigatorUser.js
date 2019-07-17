@@ -7,10 +7,11 @@ import {Switch, Route} from 'react-router-dom';
 import Dashboard from "../../Page/Dashboard/Dashboard";
 import Portfolio from "../../Page/Portfolio/Portfolio";
 import NavUser from "../../Structure/NavUser/NavUser";
-import NetworkManager from "../../Page/NetworkManager/NetworkManager";
+import NetworkManagerAdd from "../../Page/NetworkManager/NetworkManagerAdd/NetworkManagerAdd";
 import Config from "../../../config/Config";
 import BusinessBook from "../../Page/BusinessBook/BusinessBook";
 import Statistics from "../../Page/Statistics/Statistics";
+import NetworkManagerEdit from "../../Page/NetworkManager/NetworkManagerEdit/NetworkManagerEdit";
 
 
 class NavigatorUser extends Component{
@@ -27,8 +28,8 @@ class NavigatorUser extends Component{
                     <Route path={Config.ROUTE_PAGE_STATISTICS} exact component={Statistics}/>
 
 
-                    <Route path={Config.ROUTE_PAGE_NETWORK_EDIT} exact component={NetworkManager}/>
-                    <Route path={Config.ROUTE_PAGE_NETWORK_ADD} exact component={NetworkManager}/>
+                    <Route path={Config.ROUTE_PAGE_NETWORK_EDIT} exact component={NetworkManagerEdit}/>
+                    <Route path={Config.ROUTE_PAGE_NETWORK_ADD} exact component={NetworkManagerAdd}/>
 
 
 
