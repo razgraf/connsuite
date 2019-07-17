@@ -12,7 +12,8 @@ import PropTypes from "prop-types";
 class SideBarElement extends Component {
 
     static propTypes = {
-        route : PropTypes.string
+        route : PropTypes.string,
+        target : PropTypes.string
     };
 
     render() {
@@ -22,7 +23,7 @@ class SideBarElement extends Component {
 
 
         return(
-            <NavLink className={styles.SideBarElement} activeClassName={styles.active} to={page.route}>
+            <NavLink className={styles.SideBarElement} activeClassName={styles.active} to={Helper.isEmpty(this.props.target) ? page.route : this.props.target}>
                 <div className={styles.inner}>
                     <div className={styles.container}>
                         <Icon icon round className={styles.icon} source={page.icon}/>

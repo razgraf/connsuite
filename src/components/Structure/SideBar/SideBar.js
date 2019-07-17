@@ -15,8 +15,12 @@ class SideBar extends Component {
                     <SideBarElement route={Config.ROUTE_PAGE_DASHBOARD} />
                     <SideBarElement route={Config.ROUTE_PAGE_PORTFOLIO}  />
                     <SideBarElement route={Config.ROUTE_PAGE_BUSINESS_BOOK}  />
-                    <SideBarElement route={Config.ROUTE_PAGE_PROFILE}  />
                     <SideBarElement route={Config.ROUTE_PAGE_STATISTICS} />
+                    <div className={styles.divider}/>
+                    <SideBarElement
+                        route={Config.ROUTE_PAGE_PROFILE}
+                        target={Config.ROUTE_PAGE_PROFILE_CLEAN + Config.USER.self.username.main}
+                    />
                 </div>
             </div>
         )

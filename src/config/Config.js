@@ -7,6 +7,7 @@ import BusinessBook from "../components/Page/BusinessBook/BusinessBook";
 import Statistics from "../components/Page/Statistics/Statistics";
 import NetworkManagerEdit from "../components/Page/NetworkManager/NetworkManagerEdit/NetworkManagerEdit";
 import NetworkManagerAdd from "../components/Page/NetworkManager/NetworkManagerAdd/NetworkManagerAdd";
+import Profile from "../components/Page/Profile/Profile";
 
 /**
  * Created by @VanSoftware on 2019-07-04.
@@ -99,12 +100,45 @@ class Config{
     static ROUTE_PAGE_BUSINESS_BOOK = '/book';
     static ROUTE_PAGE_PORTFOLIO = '/portfolio';
     static ROUTE_PAGE_STATISTICS = '/statistics';
-    static ROUTE_PAGE_PROFILE = '/:username';
+
+    static ROUTE_PAGE_PROFILE_CLEAN = '/';
+    static ROUTE_PAGE_PROFILE = Config.ROUTE_PAGE_PROFILE_CLEAN + ':username';
 
     static ROUTE_PAGE_NETWORK_ADD = '/network';
 
     static ROUTE_PAGE_NETWORK_EDIT_CLEAN = '/network/';
     static ROUTE_PAGE_NETWORK_EDIT = Config.ROUTE_PAGE_NETWORK_EDIT_CLEAN + ':AID';
+
+
+    static USER = {
+        self : {
+            AID : "RAZ1",
+            username : {
+                main : "razgraf",
+                alias : ["razvy123"]
+            },
+            firstName : "Razvan",
+            lastName : "Apostu",
+            image : {
+                source :  require("../assets/images/me-1.png"),
+            }
+        },
+        others : [
+            {
+                AID : "VAN1",
+                username : {
+                    main : "vansoftware",
+                    alias : ["van"]
+                },
+                firstName : "Van",
+                lastName : "Software",
+                image : {
+                    source :  require("../assets/images/user-1.png"),
+                }
+            }
+        ]
+    };
+
 
 
     static PAGES = [
@@ -162,14 +196,13 @@ class Config{
             component : () => NetworkManagerAdd
         },
 
-
         {
             exact : false,
             route : this.ROUTE_PAGE_PROFILE,
             title : 'Profile',
             depth : 1,
             icon : 'person',
-            component : () => Dashboard
+            component : () => Profile
         },
 
     ];

@@ -2,13 +2,16 @@
  * Created by @VanSoftware on 2019-07-04.
  */
 import React, {Component} from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, Redirect} from 'react-router-dom';
 import NavUser from "../../Structure/NavUser/NavUser";
 import Config from "../../../config/Config";
 
 class NavigatorUser extends Component{
 
     render(){
+
+        let fallback = Config.getPageByRoute(Config.ROUTE_PAGE_DASHBOARD);
+
         return (
             <div style={{display : "flex", flexDirection : "column"}}>
 
@@ -23,6 +26,8 @@ class NavigatorUser extends Component{
                                 exact={element.exact}
                             />)
                     }
+
+                    <Redirect from="/" to={fallback.route}/>
 
                 </Switch>
 

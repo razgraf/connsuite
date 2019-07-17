@@ -252,12 +252,16 @@
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                opacity: 0.85;
                 cursor: pointer;
                 transition: opacity 0.15s, background 0.15s;
 
                 &:last-child{
                   margin-bottom: 0;
+                  &:hover{
+                    opacity: 1;
+                    background: rgba($colorTable_Red1,1);
+                    transition: opacity 0.15s, background 0.15s;
+                  }
                 }
 
                 & > .icon{
