@@ -3,16 +3,8 @@
  */
 import React, {Component} from 'react';
 import {Switch, Route} from 'react-router-dom';
-
-import Dashboard from "../../Page/Dashboard/Dashboard";
-import Portfolio from "../../Page/Portfolio/Portfolio";
 import NavUser from "../../Structure/NavUser/NavUser";
-import NetworkManagerAdd from "../../Page/NetworkManager/NetworkManagerAdd/NetworkManagerAdd";
 import Config from "../../../config/Config";
-import BusinessBook from "../../Page/BusinessBook/BusinessBook";
-import Statistics from "../../Page/Statistics/Statistics";
-import NetworkManagerEdit from "../../Page/NetworkManager/NetworkManagerEdit/NetworkManagerEdit";
-
 
 class NavigatorUser extends Component{
 

@@ -29,15 +29,25 @@ class NetworkIconModel{
         this._source = value;
     }
 
+    get name() {
+        return this._name;
+    }
+
+    set name(value) {
+        this._name = value;
+    }
+
 
     static PARAM_AID = "AID";
     static PARAM_SOURCE = "source";
     static PARAM_FILE = "file";
+    static PARAM_NAME = "name";
 
 
     constructor(object){
 
         this.AID = Helper.getValue(NetworkIconModel.PARAM_AID, object);
+        this.name = Helper.getValue(NetworkIconModel.PARAM_NAME,object);
         this.source = Helper.getValue(NetworkIconModel.PARAM_SOURCE, object);
         this.file = Helper.getValue(NetworkIconModel.PARAM_FILE, object);
     }
@@ -47,7 +57,8 @@ class NetworkIconModel{
     static propTypes = PropTypes.shape({
         AID : PropTypes.string,
         source : PropTypes.string,
-        file : PropTypes.object
+        name : PropTypes.string,
+        file : PropTypes.object,
     });
 
 
@@ -59,6 +70,7 @@ class NetworkIconModel{
         return {
             AID : this.AID,
             source : this.source,
+            name : this.name,
             file : this.file
         }
     }

@@ -12,9 +12,8 @@ import {Button, ButtonType} from "../../../Common/Button/Button";
 import NetworkMini from "../../../Common/Network/NetworkMini/NetworkMini";
 import Config from "../../../../config/Config";
 import {Helper} from "../../../../config/Util";
-import Emoji from "../../../Common/Emoji/Emoji";
 import Form from "../../../Common/Field/Form/Form";
-import {FieldShowcase} from "../../../Common/Field";
+
 
 
 class NetworkManagerEdit extends Component{
@@ -111,6 +110,7 @@ class NetworkManagerEdit extends Component{
                                                         <Form
                                                               ref = {this.referenceToForm}
                                                               columns={1}
+                                                              defaultValid={true}
                                                               fields={[
                                                                   {
                                                                       ID : NetworkManagerEdit.FIELD_DEFAULT_USERNAME,
@@ -123,12 +123,12 @@ class NetworkManagerEdit extends Component{
                                                                       },
                                                                       warn:  {
                                                                           onBlur : true,
-                                                                          text :  "Make sure the username is between 3 and 30 characters",
+                                                                          text :  "Make sure the username is between 2 and 30 characters",
                                                                       }
                                                                   },
                                                                   {
                                                                       ID : NetworkManagerEdit.FIELD_COMMON_DESCRIPTION,
-                                                                      type : 'Text',
+                                                                      type : 'Area',
                                                                       value : active.description,
                                                                       placeholder : "e.g. Contact me here for business inquiries only.",
                                                                       length : [0, 500],
@@ -167,6 +167,7 @@ class NetworkManagerEdit extends Component{
                                                     <div className={styles.subtitle}><p>If you want to edit the info regarding your network here's the place to do it. Make sure that the modifications you have in mind are necessary as changes will directly affect your profile.</p></div>
                                                     <div className={styles.content}>
                                                         <Form
+                                                              defaultValid={true}
                                                               ref={this.referenceToForm}
                                                               columns={2}
                                                               fields={[
@@ -251,7 +252,7 @@ class NetworkManagerEdit extends Component{
                                                                   },
                                                                   {
                                                                       ID : NetworkManagerEdit.FIELD_COMMON_DESCRIPTION,
-                                                                      type : 'Text',
+                                                                      type : 'Area',
                                                                       value : active.description,
                                                                       placeholder : "e.g. Contact me here for business inquiries only.",
                                                                       length : [0, 500],
@@ -262,7 +263,8 @@ class NetworkManagerEdit extends Component{
                                                                       warn:  {
                                                                           onBlur : false,
                                                                           text :  "Make sure the description is smaller than 500 characters",
-                                                                      }
+                                                                      },
+                                                                      columnSpan : 2,
                                                                   },
                                                               ]}
                                                               onUpdate={(formState)=>{
@@ -421,8 +423,9 @@ class NetworkManagerEdit extends Component{
             if (Helper.isEmpty(this.state.network.username)) flag = false;
             if (Helper.isEmpty(this.state.network.URL)) flag = false;
             if (Helper.isEmpty(this.state.network.icon) || Helper.isEmpty(this.state.network.icon.source)) flag = false;
+            if(!this.referenceToForm.current.state.valid) flag = false;
 
-            if(handleWarn && flag === false && this.referenceToForm !== null && this.referenceToForm.current !== null){
+            if(handleWarn && flag === false){
                 try{
                     this.referenceToForm.current.doUpdateFieldWarnValue(NetworkManagerEdit.FIELD_CUSTOM_IMAGE, true);
                     this.referenceToForm.current.doUpdateFieldWarnValue(NetworkManagerEdit.FIELD_CUSTOM_USERNAME, true);

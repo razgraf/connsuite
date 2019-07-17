@@ -10,6 +10,9 @@
           & > .icon{
             max-width: 120px;
             max-height: 120px;
+            & > img{
+              @include fade-in();
+            }
           }
         }
       }
@@ -76,7 +79,6 @@
             border: none;
             outline: 0;
 
-            @include fade-in();
 
           }
         }

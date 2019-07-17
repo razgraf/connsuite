@@ -117,7 +117,7 @@
                 flex: 1;
 
                 & > .title{
-                  margin-bottom: 8px;
+                  margin-bottom: 10px;
                   p{
                     letter-spacing: -0.05em;
                     font-size: 18pt;
@@ -131,7 +131,7 @@
                   align-items: center;
                   & > .icon{
                     line-height: 1em;
-                    display: flex;
+                    display: none;
                     align-items: center;
                     i{
                       font-size: 16pt;
@@ -327,8 +327,6 @@
       animation-iteration-count: 1;
       animation-direction: normal;
     }
-
-
   }
 
   &[data-visible="false"] {
@@ -348,6 +346,12 @@
       pointer-events: none;
       transform: translateX(100%);
     }
+  }
+
+  &[data-visible="fixed"]{
+    animation-name: none;
+    pointer-events: all;
+    transform: translateX(0);
   }
 
 

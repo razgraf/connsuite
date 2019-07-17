@@ -6,7 +6,6 @@ const middlewareLogger =
     store => {
         return next => {
             return action => {
-                console.log("[M LOGGER] Dispatching: " + action.type);
                 return next(action);
             }
         }

@@ -6,7 +6,6 @@ import styles from './NetworkMini.module.scss';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Icon from "../../Icon/Icon";
-import Config from "../../../../config/Config";
 import NetworkModel from "../../../../model/NetworkModel";
 
 

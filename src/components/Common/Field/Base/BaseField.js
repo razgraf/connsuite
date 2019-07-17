@@ -10,13 +10,15 @@ class BaseField extends Component{
 
 
     static propTypes = {
+        columnSpan : PropTypes.number,
         data : PropTypes.shape({...BaseFieldModel.propTypes.data}),
         action : PropTypes.shape({...BaseFieldModel.propTypes.action}),
 
     };
 
     static defaultProps = {
-        ...BaseFieldModel.defaultProps
+        ...BaseFieldModel.defaultProps,
+        columnSpan : 1,
     };
 
 
@@ -47,7 +49,7 @@ class BaseField extends Component{
 
     render() {
         return (
-            <div className={styles.Base} data-warn={this.props.data.warn.value} ref={this.element.container}>
+            <div className={styles.Base} data-warn={this.props.data.warn.value} ref={this.element.container}  style={{gridColumn : "span " + this.props.columnSpan}}>
                 <div className={styles.container}>
                     <FieldLabel data = {{ ...this.props.data.label, warn :this.props.data.warn.value} } referece={this.element.label} />
                     {this.field()}

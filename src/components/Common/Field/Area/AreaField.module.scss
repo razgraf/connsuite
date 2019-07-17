@@ -1,0 +1,10 @@
+@import "../../../../config/Config";
+
+
+.AreaField{
+  & > .content{
+    textarea{
+      resize: none;
+    }
+  }
+}

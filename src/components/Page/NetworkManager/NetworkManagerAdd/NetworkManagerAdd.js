@@ -217,7 +217,7 @@ class NetworkManagerAdd extends Component{
                                                                       },
                                                                       warn:  {
                                                                           onBlur : true,
-                                                                          text :  "Make sure the username is between 3 and 30 characters",
+                                                                          text :  "Make sure the username is between 2 and 30 characters",
                                                                       }
                                                                   },
                                                               ]}
@@ -331,7 +331,7 @@ class NetworkManagerAdd extends Component{
                                                     fields={[
                                                         {
                                                             ID : NetworkManagerAdd.FIELD_COMMON_DESCRIPTION,
-                                                            type : 'Text',
+                                                            type : 'Area',
                                                             value : active.description,
                                                             placeholder : "e.g. Contact me here for business inquiries only.",
                                                             length : [0, 500],
@@ -533,8 +533,9 @@ class NetworkManagerAdd extends Component{
                     if (Helper.isEmpty(this.state.networkCustom)){ flag = false;}
                     if (Helper.isEmpty(this.state.networkCustom.title)) flag = false;
                     if (Helper.isEmpty(this.state.networkCustom.icon) || Helper.isEmpty(this.state.networkCustom.icon.source)) flag = false;
+                    if(!this.referenceToFormCustomStep0.current.state.valid) flag = false;
 
-                    if(handleWarn && flag === false && this.referenceToFormCustomStep0 !== null && this.referenceToFormCustomStep0.current !== null){
+                    if(handleWarn && flag === false){
                         try{
                             this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue(NetworkManagerAdd.FIELD_CUSTOM_IMAGE, true);
                             this.referenceToFormCustomStep0.current.doUpdateFieldWarnValue(NetworkManagerAdd.FIELD_CUSTOM_TITLE, true);
@@ -547,7 +548,9 @@ class NetworkManagerAdd extends Component{
             case 1 :
                 if(this.state.activeSection === 0) {
                     if (Helper.isEmpty(this.state.networkDefault.username)) flag = false;
-                    if(handleWarn && flag === false && this.referenceToFormDefaultStep1 !== null && this.referenceToFormDefaultStep1.current !== null){
+                    if(!this.referenceToFormDefaultStep1.current.state.valid) flag = false;
+
+                    if(handleWarn && flag === false){
                         try{
                             this.referenceToFormDefaultStep1.current.doUpdateFieldWarnValue(NetworkManagerAdd.FIELD_DEFAULT_USERNAME, true);
 
@@ -555,8 +558,10 @@ class NetworkManagerAdd extends Component{
                     }
                 }
                 else if(this.state.activeSection === 1) {
-                    if (Helper.isEmpty(this.state.networkCustom.URL)){flag = false;}
-                    if(handleWarn && flag === false && this.referenceToFormCustomStep1 !== null && this.referenceToFormCustomStep1.current !== null){
+                    if (Helper.isEmpty(this.state.networkCustom.URL)) flag = false;
+                    if(!this.referenceToFormCustomStep1.current.state.valid) flag = false;
+
+                    if(handleWarn && flag === false){
                         try{
                             this.referenceToFormCustomStep1.current.doUpdateFieldWarnValue(NetworkManagerAdd.FIELD_CUSTOM_URL, true);
 

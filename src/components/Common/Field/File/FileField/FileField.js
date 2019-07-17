@@ -33,24 +33,13 @@ class FileField extends BaseField{
     };
 
 
-    constructor(props){
-        super(props);
-        if(Helper.isEmpty(this.state)) this.state = {};
-
-
-        if(!Helper.isEmpty(this.props.data.fileName)){
-            this.setState({
-                fileName : this.props.data.fileName
-            })
-        }
-    }
-
-
-
     componentDidMount() {
         super.componentDidMount();
-        this.setState({fileName : null});
+        this.setState({
+            fileName : !Helper.isEmpty(this.props.data.fileName) ? this.props.data.fileName : null
+        });
     }
+
 
     render() {
         return super.render();
@@ -64,6 +53,7 @@ class FileField extends BaseField{
                 className={Helper.dynamicClass(stylesDefault, stylesSpecific,"content")}
                 onClick={() => { this.element.field.current.click(); }}
             >
+
                 <input
                     type={"file"}
                     accept={this.props.data.fileType === "image" ? "image/*" : (this.props.data.fileType === "file" ? ".pdf, .doc, .docx" : null)}
@@ -82,7 +72,7 @@ class FileField extends BaseField{
                 <p>{this.state.fileName}</p>
 
                 <Button custom={{ style: stylesSpecific, className: "buttonUpload"}}
-                        title={"Choose"}
+                        title={Helper.isEmpty(this.state.fileName) ? "Choose" : "Change"}
                         mini={true}
                         type={ButtonType.MINI}
                         onClick={() => {}}

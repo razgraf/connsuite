@@ -2,7 +2,7 @@
  * Created by @VanSoftware on 2019-07-09.
  */
 
-import React, {Component, PureComponent} from 'react';
+import React, {PureComponent} from 'react';
 import styles from './Cover.module.scss'
 import cx from 'classnames';
 import {connect} from "react-redux";
@@ -11,7 +11,8 @@ import OverlayIndividual from "../../Common/Overlay/OverlayIndividual/OverlayInd
 import Icon from "../../Common/Icon/Icon";
 import Emoji from "../../Common/Emoji/Emoji";
 import NetworkModel from "../../../model/NetworkModel";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
+import {compose} from "redux";
 
 class Cover extends PureComponent{
 
@@ -77,10 +78,14 @@ class Cover extends PureComponent{
                                             <Icon icon round className={styles.icon} source={"share"} />
                                             <div className={styles.title}><p>Share:  <span className={styles.share}>connsuite.com/razgraf/{this.props.network.identifier}</span></p></div>
                                         </div>
-                                        <Link to={Config.ROUTE_PAGE_NETWORK_EDIT_CLEAN + this.props.network.AID} className={styles.action}>
+                                        <div onClick={()=> {
+                                            this.props.onLeave();
+                                            this.props.history.push( Config.ROUTE_PAGE_NETWORK_EDIT_CLEAN + this.props.network.AID);
+
+                                        }} className={styles.action}>
                                             <Icon icon round className={styles.icon} source={"edit"} />
                                             <div className={styles.title}><p>Edit network</p></div>
-                                        </Link>
+                                        </div>
                                         <div className={styles.action}>
                                             <Icon icon round className={styles.icon} source={"remove_circle_outline"} />
                                             <div className={styles.title}><p>Remove network</p></div>
@@ -99,7 +104,7 @@ class Cover extends PureComponent{
 }
 
 
-export default connect(
+export default compose(withRouter, connect(
     (reduxState) => {
         return {
             network : reduxState.model.cover.network,
@@ -108,6 +113,7 @@ export default connect(
     },
     (dispatch) => {
         return {
-            onClose : (callback)=>{ console.log("Cover closing"); return dispatch({type : Config.REDUX_ACTION_CONTROLLER_COVER_CLOSE, payload: { visible : false }  }) }
+            onLeave : ()=>{ return dispatch({type : Config.REDUX_ACTION_VIEW_COVER_TOGGLE, payload: { visible : "fixed" }  }) },
+            onClose : ()=>{  return dispatch({type : Config.REDUX_ACTION_CONTROLLER_COVER_CLOSE, payload: { visible : false }  }) }
         }
-    })(Cover);
+    }))(Cover);

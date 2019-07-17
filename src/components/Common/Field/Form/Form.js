@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styles from './Form.module.scss'
 import {Helper} from '../../../../config/Util'
-import {TextField, FileField, URLField} from './../index';
+import {TextField, FileField, URLField, AreaField} from './../index';
 import PropTypes from "prop-types";
 
 
@@ -12,12 +12,14 @@ class Form extends Component{
         fields : PropTypes.arrayOf(PropTypes.shape({})),
         columns : PropTypes.number,
         onUpdate : PropTypes.func,
+        defaultValid : PropTypes.bool,
     };
 
     static defaultProps = {
         fields : [],
         columns : 2,
-        onUpdate : ()=>{}
+        onUpdate : ()=>{},
+        defaultValid : false,
     };
 
 
@@ -27,7 +29,6 @@ class Form extends Component{
         for(let i = 0; i < nextProps.fields.length; i++){
             if(prevState.fields[i].data.value !== nextProps.fields[i].value) {
                 newState.fields[i].data.value = nextProps.fields[i].value;
-                console.log(`Form: ${newState.fields[i].value}`);
                 flag = true;
             }
         }
@@ -41,6 +42,7 @@ class Form extends Component{
         let fields = this.constructFields();
 
         this.state = {
+            valid : this.props.defaultValid,
             fields : fields,
         }
     }
@@ -76,6 +78,14 @@ class Form extends Component{
             }
 
 
+            data.fileType = Helper.getValue( "fileType",element);
+            data.maxFileSize = Helper.getValue( "maxFileSize",element);
+            data.fileName = Helper.getValue( "fileName",element);
+            data.height = Helper.getValue( "height",element);
+
+
+
+
 
             action.callback = {};
             if(!Helper.isEmpty(element.callback)){
@@ -93,8 +103,11 @@ class Form extends Component{
 
 
             field.type = Helper.getValue("type",element);
+            field.columnSpan  =Helper.getValue("columnSpan",element);
+
             field.data = data;
             field.action = action;
+
             fields.push(field);
         });
         return fields;
@@ -166,6 +179,7 @@ class Form extends Component{
 
     onUpdate = () => {
         this.props.onUpdate(this);
+        this.setState({valid : this.isValid(false)});
     };
 
 
@@ -184,11 +198,20 @@ class Form extends Component{
                 <div className={styles.container}>
                     {
                         this.state.fields.map((element, index) => {
+
+                            let configuration = {
+                                key : index,
+                                data : element.data,
+                                action : element.action,
+                                columnSpan : element.columnSpan
+                            };
+
                             switch (element.type) {
 
-                                case 'Text' : return <TextField key={index} data={element.data} action={element.action} />;
-                                case 'File' : return <FileField key={index} data={element.data} action={element.action} />;
-                                case 'URL' : return <URLField key={index} data={element.data} action={element.action} />;
+                                case 'Text' : return <TextField {...configuration} />;
+                                case 'File' : return <FileField {...configuration} />;
+                                case 'URL' : return <URLField {...configuration} />;
+                                case 'Area' : return <AreaField {...configuration} />;
                                 default : return <div key={index}/>
                             }
                         })
