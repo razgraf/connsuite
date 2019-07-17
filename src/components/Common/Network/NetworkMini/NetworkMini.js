@@ -22,7 +22,7 @@ class NetworkMini extends Component{
     };
 
     static defaultProps = {
-        network : Config.defaultPropsNetwork,
+        network : NetworkModel.defaultProps,
         onClick : ()=> {}
     };
 

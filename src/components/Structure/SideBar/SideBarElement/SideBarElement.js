@@ -7,12 +7,17 @@ import {NavLink, withRouter} from "react-router-dom";
 import Icon from "../../../Common/Icon/Icon";
 import Config from "../../../../config/Config";
 import {Helper} from "../../../../config/Util";
+import PropTypes from "prop-types";
 
 class SideBarElement extends Component {
 
+    static propTypes = {
+        route : PropTypes.string
+    };
+
     render() {
 
-        let page = Config.getPageByPath(this.props.location.pathname);
+        let page = Config.getPageByRoute(this.props.route);
         if( Helper.isEmpty(page) || Helper.isEmpty(page.icon) ||  Helper.isEmpty(page.title)) return null;
 
 

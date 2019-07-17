@@ -22,18 +22,16 @@ class NavigatorUser extends Component{
 
 
                 <Switch>
-                    <Route path={Config.ROUTE_PAGE_DASHBOARD} exact component={Dashboard}/>
-                    <Route path={Config.ROUTE_PAGE_PORTFOLIO} exact component={Portfolio}/>
-                    <Route path={Config.ROUTE_PAGE_BUSINESS_BOOK} exact component={BusinessBook}/>
-                    <Route path={Config.ROUTE_PAGE_STATISTICS} exact component={Statistics}/>
+                    {
+                        Config.PAGES.map((element, index)=>
+                            <Route
+                                key ={index}
+                                path={element.route}
+                                component={element.component()}
+                                exact={element.exact}
+                            />)
+                    }
 
-
-                    <Route path={Config.ROUTE_PAGE_NETWORK_EDIT} exact component={NetworkManagerEdit}/>
-                    <Route path={Config.ROUTE_PAGE_NETWORK_ADD} exact component={NetworkManagerAdd}/>
-
-
-
-                    <Route path={Config.ROUTE_PAGE_PROFILE} exact component={Dashboard}/>
                 </Switch>
 
                 <NavUser/>

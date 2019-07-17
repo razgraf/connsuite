@@ -1,6 +1,12 @@
 import NetworkModel from "../model/NetworkModel";
 import {matchPath} from "react-router-dom";
 import {Helper} from "./Util";
+import Dashboard from "../components/Page/Dashboard/Dashboard";
+import Portfolio from "../components/Page/Portfolio/Portfolio";
+import BusinessBook from "../components/Page/BusinessBook/BusinessBook";
+import Statistics from "../components/Page/Statistics/Statistics";
+import NetworkManagerEdit from "../components/Page/NetworkManager/NetworkManagerEdit/NetworkManagerEdit";
+import NetworkManagerAdd from "../components/Page/NetworkManager/NetworkManagerAdd/NetworkManagerAdd";
 
 /**
  * Created by @VanSoftware on 2019-07-04.
@@ -100,63 +106,94 @@ class Config{
     static ROUTE_PAGE_NETWORK_EDIT_CLEAN = '/network/';
     static ROUTE_PAGE_NETWORK_EDIT = Config.ROUTE_PAGE_NETWORK_EDIT_CLEAN + ':AID';
 
+
+    static PAGES = [
+        {
+            exact : true,
+            route: this.ROUTE_PAGE_DASHBOARD,
+            title: 'Dashboard',
+            depth: 1,
+            icon: 'home',
+            component: () => Dashboard,
+        },
+        {
+            exact : true,
+            route : this.ROUTE_PAGE_PORTFOLIO,
+            title : 'Portfolio',
+            depth : 1,
+            icon : 'folder_special',
+            component: () => Portfolio,
+        },
+        {
+            exact : true,
+            route : this.ROUTE_PAGE_BUSINESS_BOOK,
+            title : 'Business Book',
+            depth : 1,
+            icon : 'business',
+            component: () => BusinessBook,
+        },
+        {
+            exact : true,
+            route : this.ROUTE_PAGE_STATISTICS,
+            title : 'Statistics',
+            depth : 1,
+            icon : 'multiline_chart',
+            component : () => Statistics,
+        },
+
+
+
+        {
+            exact : true,
+            route : this.ROUTE_PAGE_NETWORK_EDIT,
+            title : "Edit Network",
+            depth : 2,
+
+            routeBack : this.ROUTE_PAGE_PORTFOLIO,
+            component : () => NetworkManagerEdit
+        },
+        {
+            exact : true,
+            route : this.ROUTE_PAGE_NETWORK_ADD,
+            title : "Add a new Network",
+            depth : 2,
+
+            routeBack : this.ROUTE_PAGE_PORTFOLIO,
+            component : () => NetworkManagerAdd
+        },
+
+
+        {
+            exact : false,
+            route : this.ROUTE_PAGE_PROFILE,
+            title : 'Profile',
+            depth : 1,
+            icon : 'person',
+            component : () => Dashboard
+        },
+
+    ];
+
+    static getPageByRoute(route){
+        let pages = Config.PAGES;
+
+
+        for(let i = 0; i < pages.length; i++){
+            if(pages[i].route === route)
+                return pages[i];
+        }
+
+        return {
+            exact : false,
+            route : null,
+            title : null,
+            depth : null,
+            routeBack : this.ROUTE_PAGE_DASHBOARD
+        }
+    }
+
     static getPageByPath(path){
-        let pages = [
-            {
-                exact : true,
-                route: this.ROUTE_PAGE_DASHBOARD,
-                title: 'Dashboard',
-                depth: 1,
-                icon: 'home',
-            },
-            {
-                exact : true,
-                route : this.ROUTE_PAGE_PORTFOLIO,
-                title : 'Portfolio',
-                depth : 1,
-                icon : 'folder_special',
-            },
-            {
-                exact : true,
-                route : this.ROUTE_PAGE_PROFILE,
-                title : 'Profile',
-                depth : 1,
-                icon : 'person',
-            },
-            {
-                exact : true,
-                route : this.ROUTE_PAGE_BUSINESS_BOOK,
-                title : 'Business Book',
-                depth : 1,
-                icon : 'business',
-            },
-            {
-                exact : true,
-                route : this.ROUTE_PAGE_STATISTICS,
-                title : 'Statistics',
-                depth : 1,
-                icon : 'multiline_chart',
-            },
-
-
-
-            {
-                exact : true,
-                route : this.ROUTE_PAGE_NETWORK_ADD,
-                title : "Add a new Network",
-                depth : 2,
-
-                routeBack : this.ROUTE_PAGE_PORTFOLIO,
-            },
-            {
-                exact : true,
-                route : this.ROUTE_PAGE_NETWORK_EDIT,
-                title : "Edit this Network",
-                depth : 2,
-
-                routeBack : this.ROUTE_PAGE_PORTFOLIO,
-            },
-          ];
+        let pages = Config.PAGES;
 
 
         for(let i = 0; i < pages.length; i++){

@@ -13,12 +13,15 @@ class NavUser extends Component{
 
     render(){
 
+
+
        let page = Config.getPageByPath(this.props.location.pathname);
        let withName = !Helper.isEmpty(page) && !Helper.isEmpty(page.depth) && page.depth  > 1;
        let routeBack = !Helper.isEmpty(page)  && !Helper.isEmpty(page.routeBack) ? page.routeBack : Config.ROUTE_PAGE_DASHBOARD;
 
-       
 
+        console.log(this.props);
+        console.log(page);
 
         return(
             <nav className={styles.NavUser}>

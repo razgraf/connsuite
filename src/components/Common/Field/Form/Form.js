@@ -21,11 +21,34 @@ class Form extends Component{
     };
 
 
+    static getDerivedStateFromProps(nextProps, prevState){
+        let newState = {...prevState};
+        let flag = false;
+        for(let i = 0; i < nextProps.fields.length; i++){
+            if(prevState.fields[i].data.value !== nextProps.fields[i].value) {
+                newState.fields[i].data.value = nextProps.fields[i].value;
+                console.log(`Form: ${newState.fields[i].value}`);
+                flag = true;
+            }
+        }
+
+        return flag ? newState : null;
+    }
+
     constructor(props){
         super(props);
 
+        let fields = this.constructFields();
+
+        this.state = {
+            fields : fields,
+        }
+    }
+
+
+    constructFields (source = this.props.fields){
         let fields = [];
-        this.props.fields.forEach((element, index) => {
+        source.forEach((element, index) => {
 
             let field = {};
             let data = {};
@@ -74,11 +97,7 @@ class Form extends Component{
             field.action = action;
             fields.push(field);
         });
-
-
-        this.state = {
-            fields : fields,
-        }
+        return fields;
     }
 
 

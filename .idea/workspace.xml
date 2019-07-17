@@ -2,19 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2df39809-93eb-44f8-8156-b95cd044405e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/App/NavigatorUser/NavigatorUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App/NavigatorUser/NavigatorUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Common/Field/File/FileField/FileField.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Common/Field/File/FileField/FileField.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Common/Overlay/OverlayGlobal/OverlayGlobal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Common/Overlay/OverlayGlobal/OverlayGlobal.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Common/Overlay/OverlayIndividual/OverlayIndividual.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Common/Overlay/OverlayIndividual/OverlayIndividual.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerAdd/NetworkManagerAdd.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManager.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManager.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Structure/Cover/Cover.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/Cover/Cover.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Structure/Cover/Cover.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/Cover/Cover.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Common/Field/Form/Form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Common/Field/Form/Form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMini.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMini.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerEdit/NetworkManagerEdit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerEdit/NetworkManagerEdit.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Structure/SideBar/SideBarElement/SideBarElement.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/SideBar/SideBarElement/SideBarElement.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config/Config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/Config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/NetworkModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/NetworkModel.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,7 +24,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerAdd/NetworkManagerAdd.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5806">
+            <state relative-caret-position="7234">
               <caret line="485" column="65" lean-forward="true" selection-start-line="485" selection-start-column="65" selection-end-line="485" selection-end-column="65" />
               <folding>
                 <element signature="e#51#90#0" expanded="true" />
@@ -42,8 +36,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerEdit/NetworkManagerEdit.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
-              <caret line="33" column="26" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
+            <state relative-caret-position="171">
+              <caret line="26" column="61" lean-forward="true" selection-start-line="26" selection-start-column="61" selection-end-line="26" selection-end-column="61" />
               <folding>
                 <element signature="e#51#90#0" expanded="true" />
               </folding>
@@ -52,12 +46,36 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/Common/Field/Form/Form.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/config/Config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="610">
-              <caret line="163" column="32" selection-start-line="163" selection-start-column="32" selection-end-line="163" selection-end-column="32" />
+            <state relative-caret-position="2640">
+              <caret line="265" column="14" selection-start-line="265" selection-start-column="14" selection-end-line="265" selection-end-column="14" />
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMini.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="23" column="27" lean-forward="true" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
+              <folding>
+                <element signature="e#50#89#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -67,7 +85,7 @@
         <entry file="file://$PROJECT_DIR$/src/components/Structure/SideBar/SideBarElement/SideBarElement.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="135">
-              <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
+              <caret line="15" column="6" lean-forward="true" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -84,23 +102,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/App/NavigatorUser/NavigatorUser.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="24" column="67" selection-start-line="24" selection-start-column="62" selection-end-line="24" selection-end-column="67" />
-              <folding>
-                <element signature="e#50#89#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+            <state relative-caret-position="405">
+              <caret line="27" column="37" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
               <folding>
                 <element signature="e#50#89#0" expanded="true" />
               </folding>
@@ -119,8 +125,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ButtonType</find>
-      <find>n</find>
       <find>buttonRight</find>
       <find>summary</find>
       <find>buttonLive</find>
@@ -149,6 +153,8 @@
       <find>username</find>
       <find>picknetwork</find>
       <find>console.log</find>
+      <find>console.lo</find>
+      <find>defaultProps</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -180,8 +186,6 @@
         <option value="$PROJECT_DIR$/src/components/Common/Button/Button.js" />
         <option value="$PROJECT_DIR$/src/components/Common/Field/URL/URLField.js" />
         <option value="$PROJECT_DIR$/src/store/middleware/view.js" />
-        <option value="$PROJECT_DIR$/src/components/Common/Field/Form/Form.js" />
-        <option value="$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMini.js" />
         <option value="$PROJECT_DIR$/src/components/Common/Field/FieldShowcase/FieldShowcase.js" />
         <option value="$PROJECT_DIR$/src/components/Common/Network/NetworkAdd/NetworkAdd.module.scss" />
         <option value="$PROJECT_DIR$/src/components/Common/SectionHeader/SectionHeader.module.scss" />
@@ -203,11 +207,13 @@
         <option value="$PROJECT_DIR$/src/components/Structure/Cover/Cover.module.scss" />
         <option value="$PROJECT_DIR$/src/model/NetworkModel.js" />
         <option value="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManager.module.scss" />
-        <option value="$PROJECT_DIR$/src/components/App/NavigatorUser/NavigatorUser.js" />
+        <option value="$PROJECT_DIR$/src/components/Common/Field/Form/Form.js" />
         <option value="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerEdit/NetworkManagerEdit.js" />
         <option value="$PROJECT_DIR$/src/components/Structure/SideBar/SideBarElement/SideBarElement.js" />
-        <option value="$PROJECT_DIR$/src/config/Config.js" />
         <option value="$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.js" />
+        <option value="$PROJECT_DIR$/src/config/Config.js" />
+        <option value="$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMini.js" />
+        <option value="$PROJECT_DIR$/src/components/App/NavigatorUser/NavigatorUser.js" />
       </list>
     </option>
   </component>
@@ -278,6 +284,30 @@
               <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="App" type="462c0819:PsiDirectoryNode" />
               <item name="NavigatorUser" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="connsuite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="connsuite" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="Common" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="connsuite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="connsuite" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="Common" type="462c0819:PsiDirectoryNode" />
+              <item name="Network" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="connsuite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="connsuite" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="Common" type="462c0819:PsiDirectoryNode" />
+              <item name="Network" type="462c0819:PsiDirectoryNode" />
+              <item name="NetworkMini" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="connsuite" type="b2602c69:ProjectViewProjectNode" />
@@ -457,12 +487,12 @@
       <workItem from="1562695489705" duration="20218000" />
       <workItem from="1562954614276" duration="68335000" />
       <workItem from="1563145337788" duration="27042000" />
-      <workItem from="1563285294650" duration="22436000" />
+      <workItem from="1563285294650" duration="24171000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="160406000" />
+    <option name="totallyTimeSpent" value="162141000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -503,13 +533,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/Common/Field/Text/TextField.module.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="10" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/config/Util.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="268">
@@ -674,24 +697,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Common/Field/Form/Form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="58" selection-start-line="3" selection-start-column="58" selection-end-line="3" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Common/Field/FieldLabel/FieldLabel.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="37" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMini.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -866,43 +875,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/App/NavigatorUser/NavigatorUser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="67" selection-start-line="24" selection-start-column="62" selection-end-line="24" selection-end-column="67" />
-          <folding>
-            <element signature="e#50#89#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerAdd/NetworkManagerAdd.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5806">
-          <caret line="485" column="65" lean-forward="true" selection-start-line="485" selection-start-column="65" selection-end-line="485" selection-end-column="65" />
-          <folding>
-            <element signature="e#51#90#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerEdit/NetworkManagerEdit.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="33" column="26" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
-          <folding>
-            <element signature="e#51#90#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Structure/SideBar/SideBarElement/SideBarElement.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/NetworkModel.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="335">
@@ -913,20 +885,84 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config/Config.js">
+    <entry file="file://$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerAdd/NetworkManagerAdd.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="610">
-          <caret line="163" column="32" selection-start-line="163" selection-start-column="32" selection-end-line="163" selection-end-column="32" />
+        <state relative-caret-position="7234">
+          <caret line="485" column="65" lean-forward="true" selection-start-line="485" selection-start-column="65" selection-end-line="485" selection-end-column="65" />
           <folding>
-            <element signature="e#0#49#0" expanded="true" />
+            <element signature="e#51#90#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerEdit/NetworkManagerEdit.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="26" column="61" lean-forward="true" selection-start-line="26" selection-start-column="61" selection-end-line="26" selection-end-column="61" />
+          <folding>
+            <element signature="e#51#90#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Common/Field/Form/Form.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+        <state relative-caret-position="180">
+          <caret line="23" column="26" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
+          <folding>
+            <element signature="e#50#89#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMini.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="27" lean-forward="true" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
+          <folding>
+            <element signature="e#50#89#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Structure/SideBar/SideBar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="14" column="32" lean-forward="true" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Structure/SideBar/SideBarElement/SideBarElement.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="15" column="6" lean-forward="true" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config/Config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2640">
+          <caret line="265" column="14" selection-start-line="265" selection-start-column="14" selection-end-line="265" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/App/NavigatorUser/NavigatorUser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="37" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
           <folding>
             <element signature="e#50#89#0" expanded="true" />
           </folding>

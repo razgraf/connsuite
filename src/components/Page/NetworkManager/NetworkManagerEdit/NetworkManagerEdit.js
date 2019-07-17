@@ -31,8 +31,7 @@ class NetworkManagerEdit extends Component{
         super(props);
 
         let {AID} = this.props.match.params;
-        console.info(AID);
-        //if(!Helper.isEmpty(AID)) this.props.history.go(Config.ROUTE_PAGE_DASHBOARD);
+        ///if(!Helper.isEmpty(AID)) this.props.history.go(Config.ROUTE_PAGE_DASHBOARD);
 
         this.state = {
             AID : AID,
