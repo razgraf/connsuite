@@ -4,7 +4,7 @@
 
 
 import {Helper} from "../config/Util";
-import NetworkIconModel from "./NetworkIconModel";
+import ImageModel from "./ImageModel";
 import PropTypes from "prop-types";
 
 class NetworkModel{
@@ -97,8 +97,8 @@ class NetworkModel{
         this.title = Helper.getValue(NetworkModel.PARAM_TITLE, object);
         this.username = Helper.getValue(NetworkModel.PARAM_USERNAME, object);
         this.description = Helper.getValue(NetworkModel.PARAM_DESCRIPTION, object);
-        this.icon = new NetworkIconModel(Helper.getValue(NetworkModel.PARAM_ICON, object));
-        this.thumbnail = new NetworkIconModel(Helper.getValue(NetworkModel.PARAM_THUMBNAIL, object));
+        this.icon = new ImageModel(Helper.getValue(NetworkModel.PARAM_ICON, object));
+        this.thumbnail = new ImageModel(Helper.getValue(NetworkModel.PARAM_THUMBNAIL, object));
         this.identifier =  Helper.getValue(NetworkModel.PARAM_IDENTIFIER, object);
 
         this.URL = Helper.getValue(NetworkModel.PARAM_URL, object);
@@ -130,8 +130,8 @@ class NetworkModel{
             description : PropTypes.string,
             URL : PropTypes.string,
             identifier : PropTypes.string,
-            icon : NetworkIconModel.propTypes,
-            thumbnail : NetworkIconModel.propTypes,
+            icon : ImageModel.propTypes,
+            thumbnail : ImageModel.propTypes,
     });
 
     static defaultProps = {

@@ -9,6 +9,7 @@ import SideBar from "../../Structure/SideBar/SideBar";
 import Cover from "../../Structure/Cover/Cover";
 import Overlay from "../../Common/Overlay/OverlayGlobal/OverlayGlobal";
 import Config from "../../../config/Config";
+import NavUser from "../../Structure/NavUser/NavUser";
 
 
 class Dashboard extends Component{
@@ -21,17 +22,17 @@ class Dashboard extends Component{
 
     render() {
         return(
-            <div className={cx(styles.Page, styles.Dashboard)}>
-                <Overlay/>
-                <Cover/>
-                <div className={styles.container}>
-                    <SideBar/>
-                    <div className={styles.content}>
+                <div className={cx(styles.Page, styles.Dashboard)}>
+                    <Overlay/>
+                    <Cover/>
+                    <div className={styles.container}>
+                        <SideBar/>
+                        <div className={styles.content}>
 
 
+                        </div>
                     </div>
                 </div>
-            </div>
         )
     }
 

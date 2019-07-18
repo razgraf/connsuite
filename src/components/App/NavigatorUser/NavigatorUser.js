@@ -3,8 +3,8 @@
  */
 import React, {Component} from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
-import NavUser from "../../Structure/NavUser/NavUser";
 import Config from "../../../config/Config";
+import NavUser from "../../Structure/NavUser/NavUser";
 
 class NavigatorUser extends Component{
 
@@ -28,7 +28,6 @@ class NavigatorUser extends Component{
                     }
 
                     <Redirect from="/" to={fallback.route}/>
-
                 </Switch>
 
                 <NavUser/>

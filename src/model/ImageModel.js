@@ -5,7 +5,7 @@
 import {Helper} from "../config/Util";
 import PropTypes from "prop-types";
 
-class NetworkIconModel{
+class ImageModel{
     get file() {
         return this._file;
     }
@@ -46,10 +46,10 @@ class NetworkIconModel{
 
     constructor(object){
 
-        this.AID = Helper.getValue(NetworkIconModel.PARAM_AID, object);
-        this.name = Helper.getValue(NetworkIconModel.PARAM_NAME,object);
-        this.source = Helper.getValue(NetworkIconModel.PARAM_SOURCE, object);
-        this.file = Helper.getValue(NetworkIconModel.PARAM_FILE, object);
+        this.AID = Helper.getValue(ImageModel.PARAM_AID, object);
+        this.name = Helper.getValue(ImageModel.PARAM_NAME,object);
+        this.source = Helper.getValue(ImageModel.PARAM_SOURCE, object);
+        this.file = Helper.getValue(ImageModel.PARAM_FILE, object);
     }
 
 
@@ -63,7 +63,7 @@ class NetworkIconModel{
 
 
     static clone(icon){
-        return new NetworkIconModel(icon.toObject())
+        return new ImageModel(icon.toObject())
     }
 
     toObject(){
@@ -77,4 +77,4 @@ class NetworkIconModel{
 }
 
 
-export default NetworkIconModel;
+export default ImageModel;

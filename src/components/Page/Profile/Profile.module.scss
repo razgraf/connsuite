@@ -1,13 +1,200 @@
 @import "../../../config/Config";
 
+
+@keyframes color-fade {
+  from{background: $colorBackground}
+  to{background: #ffffff}
+}
+
 .Profile{
+  animation-name: color-fade;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
 
-  & > .container{
-
-    & > .content{
 
 
+  & > .header{
+    width: 100%;
 
+
+    & > .container{
+      background: #ffffff;
+      margin: 0 auto;
+      width: calc(100% - 2 * 1px);
+      max-width: calc(#{$sizeCanvasMaxWidth} - 2 * 1px);
+
+      border-left: 1px solid #f5f5f5;
+      border-right: 1px solid #f5f5f5;
+      display: flex;
+      flex-direction: row;
+
+
+
+      & > .content{
+        display: flex;
+        align-items: flex-start;
+        flex: 1;
+        padding: calc(#{$sizeNavHeight} + 15px + 100px) $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard;
+
+        $sizeLeftContainerWidth : 400px;
+
+        & > .left{
+          height: 400px;
+          width: $sizeLeftContainerWidth;
+          display: flex;
+          align-items: flex-start;
+          justify-content: flex-start;
+          z-index: 1;
+          & > .content{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            & > .shapes{
+              z-index: 1;
+              position: relative;
+              height: calc(#{$sizeLeftContainerWidth} - 100px);
+              width: calc(#{$sizeLeftContainerWidth} - 100px);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              & > .shape{
+                will-change: transform;
+                position: absolute;
+                &:first-child {
+                  position: relative;
+                  div {
+                    height: calc(#{$sizeLeftContainerWidth} - 70px);
+                    width: calc(#{$sizeLeftContainerWidth} - 70px);
+                    border-radius: 30%;
+                    background: $colorSecondary;
+                    transform: rotate(45deg);
+                  }
+                }
+
+                div{
+                  height: 40px;
+                  width: 40px;
+                  border-radius: 15px;
+                  background: $colorSecondary;
+                  transform: rotate(45deg);
+                }
+                &:nth-child(2){
+                  right: -100px;
+                  top: 10px;
+                  div{
+                    height: 70px;
+                    width: 70px;
+                    border-radius: 30px;
+                  }
+                }
+
+                &:nth-child(3){
+                  right: -80px;
+                  bottom: 20px;
+                }
+
+              }
+
+            }
+            & > .image{
+              position: absolute;
+              z-index: 2;
+              img{
+                height: calc(#{$sizeLeftContainerWidth} - 100px);
+                width: calc(#{$sizeLeftContainerWidth} - 100px);
+                border-radius: 30px;
+                object-fit: cover;
+                box-shadow: 0 5px 28px -6px rgba(0,0,0, 0.15);
+              }
+            }
+          }
+        }
+
+        & > .right{
+          z-index: 2;
+          flex: 1;
+          display: flex;
+          align-items: flex-start;
+          justify-content: flex-start;
+          & > .content{
+            display: flex;
+            width: 100%;
+            padding-left: 40px;
+            flex-direction: column;
+            align-items: flex-start;
+
+            & > .title{
+              max-width: 800px;
+              width: auto;
+              margin-bottom: 10px;
+              p{
+                font-family: $fontSecondary;
+                font-weight: 700;
+                color: #111111;
+                text-align: left;
+                font-size: 35pt;
+
+              }
+            }
+
+            & > .name{
+              margin-bottom: 40px;
+              p{
+                color: $colorSecondary;
+                font-family: $fontSecondary;
+                font-size: 14pt;
+                font-weight: 600;
+                text-align: left;
+              }
+            }
+            & > .description{
+              & > p{
+                font-weight: 300;
+                color: #111111;
+                line-height: 1.7;
+                font-size: 12pt;
+              }
+            }
+          }
+
+        }
+
+
+      }
+    }
+
+  }
+
+  & > .main{
+
+    width: 100%;
+    min-height: 200vh;
+
+    & > .container{
+      background: #ffffff;
+      margin: 0 auto;
+      width: calc(100% - 2 * 1px);
+      max-width: calc(#{$sizeCanvasMaxWidth} - 2 * 1px);
+
+      border-left: 1px solid #f5f5f5;
+      border-right: 1px solid #f5f5f5;
+      display: flex;
+      flex-direction: row;
+
+      & > .content{
+        display: flex;
+        align-items: flex-start;
+        flex: 1;
+        padding: calc(#{$sizeNavHeight} + 15px + 100px) $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard;
+
+
+
+      }
     }
   }
+
+
 }

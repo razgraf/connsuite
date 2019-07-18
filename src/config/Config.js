@@ -121,7 +121,8 @@ class Config{
             lastName : "Apostu",
             image : {
                 source :  require("../assets/images/me-1.png"),
-            }
+            },
+            networks : (()=>{ return Config.DUMMY_NETWORKS.map(element => element.toObject())  })()
         },
         others : [
             {
@@ -133,8 +134,10 @@ class Config{
                 firstName : "Van",
                 lastName : "Software",
                 image : {
-                    source :  require("../assets/images/user-1.png"),
-                }
+                    //source :  require("../assets/images/user-1.png"),
+                    source :  require("../assets/images/me-2.png"),
+                },
+                networks : (()=>{ return Config.DUMMY_NETWORKS.map(element => element.toObject())  })()
             }
         ]
     };
@@ -280,6 +283,8 @@ class Config{
 
     static REDUX_ACTION_MODEL_COVER_NETWORK_CHOOSE = 'REDUX_ACTION_MODEL_COVER_NETWORK_CHOOSE';
 
+    static REDUX_ACTION_MODEL_USER_SET_SELF = 'REDUX_ACTION_MODEL_USER_SET_SELF';
+    static REDUX_ACTION_MODEL_USER_SET_ACTIVE = 'REDUX_ACTION_MODEL_USER_SET_ACTIVE';
 
     /**
      *
