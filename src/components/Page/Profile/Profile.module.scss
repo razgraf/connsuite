@@ -35,7 +35,7 @@
         display: flex;
         align-items: flex-start;
         flex: 1;
-        padding: calc(#{$sizeNavHeight} + 15px + 100px) $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard;
+        padding: calc(#{$sizeNavHeight} + 15px + 80px) $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard;
 
         $sizeLeftContainerWidth : 400px;
 
@@ -63,6 +63,7 @@
               & > .shape{
                 will-change: transform;
                 position: absolute;
+                transition: transform 1s;
                 &:first-child {
                   position: relative;
                   div {
@@ -135,29 +136,64 @@
                 font-weight: 700;
                 color: #111111;
                 text-align: left;
-                font-size: 35pt;
+                font-size: 34pt;
 
               }
             }
 
             & > .name{
-              margin-bottom: 40px;
               p{
-                color: $colorSecondary;
+                color: #222;
                 font-family: $fontSecondary;
-                font-size: 14pt;
+                font-size: 16pt;
                 font-weight: 600;
                 text-align: left;
               }
             }
-            & > .description{
-              & > p{
-                font-weight: 300;
-                color: #111111;
-                line-height: 1.7;
-                font-size: 12pt;
+            & > section{
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              & > .divider{
+                width: 100%;
+                background: #eeeeee;
+                height: 1px;
+                margin-top: 60px;
+                margin-bottom: 20px;
+              }
+              & > .title{
+                margin-bottom: 30px;
+                p{
+                  font-size: 16pt;
+                  font-weight: 600;
+                  color: $colorSecondary;
+                  position: relative;
+                  span{
+                    margin-right: 3px;
+                  }
+                  &:after{
+                    content:'';
+                    bottom: -4px;
+                    left: 0;
+                    height: 2px;
+                    position: absolute;
+                    width: 100%;
+                    background: $colorSecondary;
+                  }
+                }
+              }
+              & > .description{
+                  & > p, & > span{
+                    font-weight: 300;
+                    color: #111111;
+                    line-height: 1.7;
+                    font-size: 12pt;
+                  }
+
               }
             }
+
           }
 
         }
@@ -171,7 +207,17 @@
   & > .main{
 
     width: 100%;
-    min-height: 200vh;
+    position: relative;
+
+    & > .positioner{
+      position: absolute;
+      top: - 150px;
+      width: 100%;
+      height: 4px;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0;
+    }
 
     & > .container{
       background: #ffffff;
@@ -184,11 +230,61 @@
       display: flex;
       flex-direction: row;
 
-      & > .content{
+      & > section.content{
         display: flex;
         align-items: flex-start;
+        flex-direction: column;
+        justify-items: flex-start;
         flex: 1;
-        padding: calc(#{$sizeNavHeight} + 15px + 100px) $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard;
+        padding:  $sizeCanvasPaddingDashboard;
+
+
+        & > .title{
+          margin-bottom: 30px;
+          p{
+            font-size: 16pt;
+            font-weight: 600;
+            color: $colorSecondary;
+            position: relative;
+            span{
+              margin-right: 3px;
+            }
+            &:after{
+              content:'';
+              bottom: -4px;
+              right: 0;
+              height: 2px;
+              position: absolute;
+              width: 50%;
+              background: $colorSecondary;
+              transform: translateX(50%);
+              transition: transform 0.3s;
+              will-change: transform;
+
+            }
+          }
+          &[data-in-view="true"]{
+            p{
+              &:after{
+                transform: translateX(-100%);
+                transition: transform 0.3s 0.5s;
+                will-change: transform;
+              }
+            }
+          }
+        }
+
+        &.networks{
+          width: 100%;
+
+          & > .grid{
+            display: grid;
+            width: 100%;
+            grid-template-columns: repeat(#{$countNetworksOnRow}, 1fr);
+            grid-gap: 20px;
+
+          }
+        }
 
 
 

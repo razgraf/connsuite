@@ -10,12 +10,10 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import {UserModel} from "../../../model/UserModel";
-import Icon from "../../Common/Icon/Icon";
 import Image from "../../Common/Image/Image";
-import {Helper} from "../../../config/Util";
 import Skill from "../../Common/Skill/Skill";
-
-
+import Network from "../../Common/Network/Network";
+import InView from 'react-intersection-observer'
 
 class Profile extends Component{
 
@@ -30,12 +28,18 @@ class Profile extends Component{
 
         this.props.onUserBounded(this.state.user);
 
+        this.steps = [
+             React.createRef(),
+             React.createRef(),
+             React.createRef(),
+        ];
+
     }
 
 
-
     componentDidMount() {
-        window.addEventListener("scroll",this.watchScroll)
+        window.addEventListener("scroll",this.watchScroll);
+        this.watchScroll();
     }
 
     componentWillUnmount() {
@@ -44,7 +48,24 @@ class Profile extends Component{
 
 
     watchScroll = (event) => {
-            this.setState({scrollY : window.scrollY})
+        let step = null;
+
+        for (let i = this.steps.length - 1; i >= 0; i--) {
+            let b = this.steps[i].current.getBoundingClientRect().bottom;
+            let t = this.steps[i].current.getBoundingClientRect().top;
+            if (b >= (window.innerHeight / 2) && t <= (window.innerHeight / 2)) {
+                step = i;
+            }
+
+            if( window.scrollY <= 50) step = 0;
+
+
+        }
+
+        this.setState({scrollY: window.scrollY});
+        if(this.props.activeStep !== step) this.props.changeActiveStep(step);
+
+
     };
 
 
@@ -53,15 +74,15 @@ class Profile extends Component{
         return(
             <div className={cx(styles.Page, styles.Profile)}>
                 <Cover/>
-                <div className={styles.header}>
+                <div id={"story"} className={styles.header} ref={this.steps[0]}>
                     <div className={styles.container}>
                         <div className={styles.content}>
                             <div className={styles.left}>
                                 <div className={styles.content}>
                                     <div className={styles.shapes}>
-                                        <div className={styles.shape}  style={{transform : `translate(${ - Math.round(Math.min(this.state.scrollY,800) / 4)}px)`}}><div /></div>
-                                        <div className={styles.shape}  style={{transform : `translate(${ - Math.round(Math.min(this.state.scrollY,800) / 8)}px)`}}><div /></div>
-                                        <div className={styles.shape}  style={{transform : `translate(${ - Math.round(Math.min(this.state.scrollY,800) / 6)}px)`}}><div /></div>
+                                        <div className={styles.shape}  style={{transform : `translate(${ this.computeTranslate(5) }px)`}}><div /></div>
+                                        <div className={styles.shape}  style={{transform : `translate(${ this.computeTranslate(3) }px)`}}><div /></div>
+                                        <div className={styles.shape}  style={{transform : `translate(${ this.computeTranslate(4) }px)`}}><div /></div>
 
                                        </div>
                                     <Image source={this.state.user.image} className={styles.image} />
@@ -76,9 +97,14 @@ class Profile extends Component{
                                     <div className={styles.name}>
                                         <p>{this.state.user.name}</p>
                                     </div>
-                                    <div className={styles.description}>
-                                        <p>Hi 👋!<br/> Lorem ipsum dolor sit amet, <Skill label={"ReactJS"}/>  consectetur adipiscing elit. Nunc varius nulla ut tortor accumsan faucibus. Donec semper eget justo sit amet fermentum. Vivamus sed tellus fermentum, convallis nisi eget, imperdiet orci. </p>
-                                    </div>
+                                    <section>
+                                        <div className={styles.divider}/>
+
+
+                                        <div className={styles.description}>
+                                            <p>Hi 👋!<br/> Lorem ipsum dolor sit amet <Skill label={"ReactJS"}/> consectetur adipiscing elit. Nunc varius nulla ut tortor accumsan faucibus. Donec semper eget justo sit amet fermentum. Vivamus sed tellus fermentum, convallis nisi eget, imperdiet orci. </p>
+                                        </div>
+                                    </section>
                                 </div>
                             </div>
 
@@ -86,18 +112,66 @@ class Profile extends Component{
                         </div>
                     </div>
                 </div>
-               <div className={styles.main}>
+
+                <div className={styles.main} ref={this.steps[1]}>
+                   <div className={styles.positioner} id={"networks"}/>
                    <div className={styles.container}>
+                       <section className={cx(styles.content, styles.networks)}>
+                           <InView>
+                               {({ inView, ref, entry }) => (
+                                   <div ref={ref} className={styles.title} data-in-view={inView}>
+                                       <p>Networks</p>
+                                   </div>
 
-                       <div className={styles.content}>
+                               )}
+                           </InView>
+                           <div className={styles.grid}>
+                               {
+                                   this.state.user.networks.map((element,index) => <Network key={index} network={element} />)
+                               }
+                           </div>
 
-
-                       </div>
+                       </section>
                    </div>
                </div>
+
+
+
+                <div className={styles.main} ref={this.steps[2]}>
+                    <div className={styles.positioner} id={"portfolio"}/>
+                    <div className={styles.container}>
+                        <section className={cx(styles.content, styles.networks)}>
+                            <InView>
+                                {({ inView, ref, entry }) => (
+                                    <div ref={ref}  className={styles.title} data-in-view={inView}>
+                                        <p>Portfolio</p>
+                                    </div>
+
+                                )}
+                            </InView>
+
+                            <div className={styles.grid}>
+                                <p>Items</p>
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+
+
             </div>
         )
     }
+
+
+
+    computeTranslate = (a = 5) => {
+
+        let position = Math.min(this.state.scrollY,500);
+        return - ( Math.floor(position / 40) * 4 * a );
+
+    }
+
 }
 
 
@@ -106,6 +180,7 @@ export default compose( withRouter, connect(
     (reduxState) => {
         return {
             self : reduxState.model.user.self,
+            activeStep : reduxState.view.profile.activeStep
         }
     },
     (dispatch) => {
@@ -113,6 +188,9 @@ export default compose( withRouter, connect(
             onUserBounded : (user) => {
                 console.log("Cover closing");
                 return dispatch({type : Config.REDUX_ACTION_MODEL_USER_SET_ACTIVE, payload: { active : user }  })
-            }
+            },
+            changeActiveStep : (activeStep) => {
+                return dispatch({type : Config.REDUX_ACTION_VIEW_PROFILE_SET_STEP, payload: { activeStep : activeStep }  })
+            },
         }
     }) )(Profile);

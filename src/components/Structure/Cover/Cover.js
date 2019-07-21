@@ -80,6 +80,7 @@ class Cover extends PureComponent{
                                         </div>
                                         <div onClick={()=> {
                                             this.props.onLeave();
+                                            this.props.updateHistory([...this.props.reduxHistory, this.props.location.pathname]);
                                             this.props.history.push( Config.ROUTE_PAGE_NETWORK_EDIT_CLEAN + this.props.network.AID);
 
                                         }} className={styles.action}>
@@ -108,12 +109,14 @@ export default compose(withRouter, connect(
     (reduxState) => {
         return {
             network : reduxState.model.cover.network,
-            visible: reduxState.view.cover.visible
+            visible: reduxState.view.cover.visible,
+            reduxHistory : reduxState.view.navigator.history,
         }
     },
     (dispatch) => {
         return {
             onLeave : ()=>{ return dispatch({type : Config.REDUX_ACTION_VIEW_COVER_TOGGLE, payload: { visible : "fixed" }  }) },
-            onClose : ()=>{  return dispatch({type : Config.REDUX_ACTION_CONTROLLER_COVER_CLOSE, payload: { visible : false }  }) }
+            onClose : ()=>{  return dispatch({type : Config.REDUX_ACTION_CONTROLLER_COVER_CLOSE, payload: { visible : false }  }) },
+            updateHistory : (history) => {return dispatch({type : Config.REDUX_ACTION_VIEW_NAVIGATOR_SET_HISTORY, payload : {history : history}})},
         }
     }))(Cover);

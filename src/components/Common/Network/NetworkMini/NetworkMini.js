@@ -19,7 +19,8 @@ class NetworkMini extends Component{
         css : PropTypes.shape({
             size : PropTypes.string
         }),
-        active : PropTypes.bool
+        active : PropTypes.bool,
+        title : PropTypes.string,
     };
 
     static defaultProps = {
@@ -31,7 +32,7 @@ class NetworkMini extends Component{
         let viewonly = this.props.hasOwnProperty("viewonly");
         let css = this.props.hasOwnProperty("css") ? this.props.css : {};
         return (
-            <div style={css} className={Helper.dynamicClass(styles, this.props.style, "NetworkMini")} data-active={this.props.active} data-viewonly={viewonly} onClick={()=>{if(!viewonly) this.props.onClick()}}>
+            <div title={Helper.isEmpty(this.props.title) ? this.props.network.title : this.props.title} style={css} className={Helper.dynamicClass(styles, this.props.style, "NetworkMini")} data-active={this.props.active} data-viewonly={viewonly} onClick={()=>{if(!viewonly) this.props.onClick()}}>
                 <div className={Helper.dynamicClass(styles, this.props.style, "container")}>
                     <div className={Helper.dynamicClass(styles, this.props.style, "content")}>
                         <Icon className={Helper.dynamicClass(styles, this.props.style, "icon")}

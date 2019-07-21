@@ -3,11 +3,14 @@
  */
 import React, {Component} from 'react';
 import styles from './SideBarElement.module.scss';
-import {NavLink, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import Icon from "../../../Common/Icon/Icon";
 import Config from "../../../../config/Config";
 import {Helper} from "../../../../config/Util";
 import PropTypes from "prop-types";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import cx from 'classnames';
 
 class SideBarElement extends Component {
 
@@ -21,9 +24,18 @@ class SideBarElement extends Component {
         let page = Config.getPageByRoute(this.props.route);
         if( Helper.isEmpty(page) || Helper.isEmpty(page.icon) ||  Helper.isEmpty(page.title)) return null;
 
+        let className = styles.SideBarElement;
+        let target = Helper.isEmpty(this.props.target) ? page.route : this.props.target;
+        if(target === this.props.location.pathname) className = cx(className, styles.active);
 
         return(
-            <NavLink className={styles.SideBarElement} activeClassName={styles.active} to={Helper.isEmpty(this.props.target) ? page.route : this.props.target}>
+            <div
+                className={className}
+                onClick={(event)=> {
+                    if(page.route === Config.ROUTE_PAGE_PROFILE) this.props.updateHistory([...this.props.reduxHistory, this.props.location.pathname]);
+                    this.props.history.push(target);
+                }}
+            >
                 <div className={styles.inner}>
                     <div className={styles.container}>
                         <Icon icon round className={styles.icon} source={page.icon}/>
@@ -34,9 +46,19 @@ class SideBarElement extends Component {
                         </div>
                     </div>
                 </div>
-            </NavLink>
+            </div>
         )
     }
 
 }
-export default withRouter(SideBarElement);
+export default compose( withRouter, connect(
+    (reduxState) => {
+        return {
+            reduxHistory : reduxState.view.navigator.history,
+        }
+    },
+    (dispatch) => {
+        return {
+            updateHistory : (history) => {return dispatch({type : Config.REDUX_ACTION_VIEW_NAVIGATOR_SET_HISTORY, payload : {history : history}})},
+        }
+    }) )(SideBarElement);

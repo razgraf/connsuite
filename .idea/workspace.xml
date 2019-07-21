@@ -3,21 +3,21 @@
   <component name="ChangeListManager">
     <list default="true" id="2df39809-93eb-44f8-8156-b95cd044405e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/App/NavigatorUser/NavigatorUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App/NavigatorUser/NavigatorUser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMini.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMini.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Page/BusinessBook/BusinessBook.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Page/BusinessBook/BusinessBook.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Page/Dashboard/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Page/Dashboard/Dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerAdd/NetworkManagerAdd.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerAdd/NetworkManagerAdd.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerEdit/NetworkManagerEdit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerEdit/NetworkManagerEdit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Common/Skill/Skill.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Common/Skill/Skill.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Common/Skill/Skill.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Common/Skill/Skill.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Page/Profile/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Page/Profile/Profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Page/Profile/Profile.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Page/Profile/Profile.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Page/Statistics/Statistics.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Page/Statistics/Statistics.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Structure/Cover/Cover.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/Cover/Cover.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Structure/NavUser/NavUserDefault/NavUserDefault.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/NavUser/NavUserDefault/NavUserDefault.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Structure/NavUser/NavUserProfile/NavUserProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/NavUser/NavUserProfile/NavUserProfile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Structure/SideBar/SideBarElement/SideBarElement.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/SideBar/SideBarElement/SideBarElement.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config/Config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/Config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/NetworkIconModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/ImageModel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/NetworkModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/NetworkModel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducer/model.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducer/model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/Config.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/Config.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducer/view.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducer/view.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,102 +30,36 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/App/NavigatorUser/NavigatorUser.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="32" column="21" lean-forward="true" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
-              <folding>
-                <element signature="e#50#89#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Common/Network/Network.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="75" column="34" lean-forward="true" selection-start-line="75" selection-start-column="34" selection-end-line="75" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/UserModel.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="175" column="24" selection-start-line="175" selection-start-column="24" selection-end-line="175" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/Page/Profile/Profile.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="79" column="52" selection-start-line="79" selection-start-column="52" selection-end-line="79" selection-end-column="52" />
+            <state relative-caret-position="473">
+              <caret line="152" column="44" selection-start-line="152" selection-start-column="44" selection-end-line="152" selection-end-column="44" />
               <folding>
                 <element signature="e#50#89#0" expanded="true" />
+                <element signature="e#1392#3897#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Common/Skill/Skill.js">
+        <entry file="file://$PROJECT_DIR$/src/config/Config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="2" lean-forward="true" selection-start-line="23" selection-start-column="2" selection-end-line="23" selection-end-column="2" />
+            <state relative-caret-position="268">
+              <caret line="188" column="12" selection-start-line="188" selection-start-column="12" selection-end-line="188" selection-end-column="12" />
               <folding>
-                <element signature="e#0#26#0" expanded="true" />
+                <element signature="e#0#49#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Common/Skill/Skill.module.scss">
+        <entry file="file://$PROJECT_DIR$/src/store/reducer/view.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="33" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Common/Network/Network.module.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Page/Profile/Profile.module.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="588">
-              <caret line="154" column="13" lean-forward="true" selection-start-line="154" selection-start-column="13" selection-end-line="156" selection-end-column="33" />
-              <folding>
-                <element signature="e#1607#2025#0" />
-                <element signature="e#2115#2153#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/NetworkModel.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="935">
-              <caret line="124" column="11" selection-start-line="124" selection-start-column="11" selection-end-line="124" selection-end-column="11" />
-              <folding>
-                <element signature="e#52#90#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="268">
+              <caret line="70" column="10" lean-forward="true" selection-start-line="70" selection-start-column="10" selection-end-line="70" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -133,13 +67,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.module.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="236">
-              <caret line="212" column="11" selection-start-line="212" selection-start-column="11" selection-end-line="212" selection-end-column="11" />
+            <state relative-caret-position="323">
+              <caret line="226" column="29" selection-start-line="226" selection-start-column="29" selection-end-line="226" selection-end-column="29" />
               <folding>
-                <element signature="e#504#1884#0" />
+                <element signature="e#748#1147#0" />
                 <element signature="e#1902#2415#0" />
-                <element signature="e#2501#4515#0" />
+                <element signature="e#2433#4608#0" />
+                <element signature="e#5807#5957#0" />
+                <element signature="e#6760#7146#0" />
+                <element signature="e#5413#5522#0" />
+                <element signature="e#5555#5664#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/Page/Profile/Profile.module.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="329">
+              <caret line="213" column="15" selection-start-line="213" selection-start-column="15" selection-end-line="213" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -155,28 +102,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>img</find>
-      <find>&lt;Network</find>
-      <find>@</find>
-      <find>edit</find>
-      <find>ROUTE_PAGE_NETWORK_EDIT</find>
-      <find>getActiveNetwork</find>
-      <find>fileName</find>
-      <find>this.state.net</find>
-      <find>history.go</find>
-      <find>action</find>
-      <find>this.props.network</find>
-      <find>username</find>
-      <find>picknetwork</find>
-      <find>console.log</find>
-      <find>console.lo</find>
-      <find>defaultProps</find>
-      <find>onChange</find>
-      <find>between</find>
-      <find>username i</find>
-      <find>description</find>
-      <find>styles</find>
-      <find>FIELD_COMMON_DESCRIPTION</find>
       <find>DESCRIP</find>
       <find>icon</find>
       <find>fileType</find>
@@ -185,6 +110,28 @@
       <find>NavUser</find>
       <find>NetworkMini</find>
       <find>shape</find>
+      <find>networks</find>
+      <find>list</find>
+      <find>description</find>
+      <find>border</find>
+      <find>flowBox</find>
+      <find>flowBoxCaller</find>
+      <find>activeStep</find>
+      <find>onClose</find>
+      <find>onViewNetworkClick</find>
+      <find>this.state.activeStep</find>
+      <find>Header</find>
+      <find>computeTranslate</find>
+      <find>portfolio</find>
+      <find>portfolo</find>
+      <find>withName</find>
+      <find>Edi</find>
+      <find>setRoute</find>
+      <find>routeBack</find>
+      <find>routeBac</find>
+      <find>divider</find>
+      <find>setRouteBack</find>
+      <find>changeActiveStep</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -193,10 +140,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/components/Structure/SideBar/SideBarElement/SideBarElement.module.scss" />
-        <option value="$PROJECT_DIR$/src/store/middleware/controller.js" />
-        <option value="$PROJECT_DIR$/src/config/Config.scss" />
-        <option value="$PROJECT_DIR$/src/components/Common/Network/Network.js" />
         <option value="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManager.js" />
         <option value="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerAdd/NetworkManager.js" />
         <option value="$PROJECT_DIR$/src/components/Common/Overlay/OverlayIndividual/OverlayIndividual.module.scss" />
@@ -212,7 +155,6 @@
         <option value="$PROJECT_DIR$/src/model/NetworkIconModel.js" />
         <option value="$PROJECT_DIR$/src/components/Common/Field/File/FileField/FileField.js" />
         <option value="$PROJECT_DIR$/src/components/Common/Field/Form/Form.js" />
-        <option value="$PROJECT_DIR$/src/components/Structure/Cover/Cover.js" />
         <option value="$PROJECT_DIR$/src/components/Common/Network/Network.module.scss" />
         <option value="$PROJECT_DIR$/src/components/Structure/Cover/Cover.module.scss" />
         <option value="$PROJECT_DIR$/src/components/Page/Profile/ProfileSelf/Profile.js" />
@@ -221,7 +163,6 @@
         <option value="$PROJECT_DIR$/src/components/Page/Profile/ProfilePublic/ProfilePublic.js" />
         <option value="$PROJECT_DIR$/src/components/Structure/SideBar/SideBar.module.scss" />
         <option value="$PROJECT_DIR$/src/components/Page/Profile/ProfileSelf/ProfileSelf.js" />
-        <option value="$PROJECT_DIR$/src/components/Structure/SideBar/SideBarElement/SideBarElement.js" />
         <option value="$PROJECT_DIR$/src/components/Structure/SideBar/SideBar.js" />
         <option value="$PROJECT_DIR$/src/model/ImageModel.js" />
         <option value="$PROJECT_DIR$/src/store/reducer/model.js" />
@@ -231,18 +172,24 @@
         <option value="$PROJECT_DIR$/src/components/Page/Dashboard/Dashboard.js" />
         <option value="$PROJECT_DIR$/src/components/Page/BusinessBook/BusinessBook.js" />
         <option value="$PROJECT_DIR$/src/components/App/NavigatorUser/NavigatorUser.js" />
-        <option value="$PROJECT_DIR$/src/components/Structure/NavUser/NavUserDefault/NavUserDefault.js" />
         <option value="$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.js" />
         <option value="$PROJECT_DIR$/src/model/UserModel.js" />
-        <option value="$PROJECT_DIR$/src/config/Config.js" />
         <option value="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerAdd/NetworkManagerAdd.js" />
         <option value="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerEdit/NetworkManagerEdit.js" />
+        <option value="$PROJECT_DIR$/src/config/Config.scss" />
+        <option value="$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMiniMore/NetworkMiniMore.module.scss" />
         <option value="$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMini.js" />
-        <option value="$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.module.scss" />
-        <option value="$PROJECT_DIR$/src/components/Structure/NavUser/NavUserProfile/NavUserProfile.js" />
+        <option value="$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMiniMore/NetworkMiniMore.js" />
         <option value="$PROJECT_DIR$/src/components/Common/Skill/Skill.js" />
-        <option value="$PROJECT_DIR$/src/components/Page/Profile/Profile.module.scss" />
         <option value="$PROJECT_DIR$/src/components/Common/Skill/Skill.module.scss" />
+        <option value="$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.module.scss" />
+        <option value="$PROJECT_DIR$/src/store/reducer/view.js" />
+        <option value="$PROJECT_DIR$/src/config/Config.js" />
+        <option value="$PROJECT_DIR$/src/components/Structure/Cover/Cover.js" />
+        <option value="$PROJECT_DIR$/src/components/Structure/SideBar/SideBarElement/SideBarElement.js" />
+        <option value="$PROJECT_DIR$/src/components/Structure/NavUser/NavUserProfile/NavUserProfile.js" />
+        <option value="$PROJECT_DIR$/src/components/Structure/NavUser/NavUserDefault/NavUserDefault.js" />
+        <option value="$PROJECT_DIR$/src/components/Page/Profile/Profile.module.scss" />
         <option value="$PROJECT_DIR$/src/components/Page/Profile/Profile.js" />
       </list>
     </option>
@@ -557,7 +504,7 @@
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/Structure/NavUser/NavUserProfile" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMiniMore" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.jscs" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -573,19 +520,19 @@
     <property name="settings.editor.selected.configurable" value="Settings.JavaScript.Linters.JSLint" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/components/Structure/NavUser/NavUserProfile" />
-      <recent name="$PROJECT_DIR$/src/components/Structure/NavUser/NavUserDefault" />
-      <recent name="$PROJECT_DIR$/src/components/Common/Image" />
-      <recent name="$PROJECT_DIR$/src/components/Page/Profile" />
-      <recent name="$PROJECT_DIR$/src/assets/images" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/components/Page/Profile/ProfileSelf" />
       <recent name="$PROJECT_DIR$/src/components/Page/NetworkManager" />
       <recent name="$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerAdd" />
       <recent name="$PROJECT_DIR$/src/components/Common/Field" />
       <recent name="$PROJECT_DIR$/src/components/Common/Field/Model" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMiniMore" />
+      <recent name="$PROJECT_DIR$/src/components/Structure/NavUser/NavUserProfile" />
+      <recent name="$PROJECT_DIR$/src/components/Structure/NavUser/NavUserDefault" />
+      <recent name="$PROJECT_DIR$/src/components/Common/Image" />
+      <recent name="$PROJECT_DIR$/src/components/Page/Profile" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -615,12 +562,13 @@
       <workItem from="1562954614276" duration="68335000" />
       <workItem from="1563145337788" duration="27042000" />
       <workItem from="1563285294650" duration="30790000" />
-      <workItem from="1563446932815" duration="15270000" />
+      <workItem from="1563446932815" duration="15472000" />
+      <workItem from="1563707094158" duration="21651000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="184030000" />
+    <option name="totallyTimeSpent" value="205883000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -637,12 +585,12 @@
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.50120485" side_tool="true" weight="0.2160229" />
       <window_info id="npm" order="1" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49879518" visible="true" weight="0.2639485" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49879518" visible="true" weight="0.28040057" />
       <window_info id="Structure" order="3" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" weight="0.32891566" />
       <window_info anchor="bottom" id="Database Changes" order="1" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="3" weight="0.32891566" />
       <window_info anchor="bottom" id="Docker" order="4" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" weight="0.32891566" />
@@ -661,49 +609,12 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/Common/Field/Area/AreaField.module.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Common/Field/Area/AreaField.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="60" column="32" selection-start-line="60" selection-start-column="32" selection-end-line="60" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Common/Field/File/FileField/FileField.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="716">
-          <caret line="55" selection-start-line="55" selection-end-line="55" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Common/Field/Form/Form.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="257">
           <caret line="20" column="26" lean-forward="true" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Structure/Cover/Cover.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="710">
-          <caret line="112" column="6" lean-forward="true" selection-start-line="112" selection-start-column="6" selection-end-line="112" selection-end-column="6" />
-          <folding>
-            <element signature="e#51#94#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -730,13 +641,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="268">
           <caret line="400" column="4" selection-start-line="400" selection-start-column="4" selection-end-line="400" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Structure/SideBar/SideBarElement/SideBarElement.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="16" column="6" lean-forward="true" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -791,27 +695,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config/Config.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="103" column="14" lean-forward="true" selection-start-line="103" selection-start-column="14" selection-end-line="103" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/store/reducer/view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="54" column="5" selection-start-line="54" selection-start-column="5" selection-end-line="55" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/store/middleware/view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="35" column="50" lean-forward="true" selection-start-line="35" selection-start-column="50" selection-end-line="35" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/store/middleware/root.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -848,9 +731,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Page/Portfolio/Portfolio.module.scss">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Page/Statistics/Statistics.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -882,16 +762,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config/Config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="568">
-          <caret line="139" column="103" selection-start-line="139" selection-start-column="103" selection-end-line="139" selection-end-column="103" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Page/NetworkManager/NetworkManagerAdd/NetworkManagerAdd.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -906,27 +776,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Structure/NavUser/NavUserDefault/NavUserDefault.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="535">
-          <caret line="74" column="15" selection-start-line="74" selection-start-column="15" selection-end-line="74" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMini.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="30" column="61" lean-forward="true" selection-start-line="30" selection-start-column="61" selection-end-line="30" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMini.module.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
@@ -938,21 +787,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.module.scss">
+    <entry file="file://$PROJECT_DIR$/src/components/Common/Network/Network.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="212" column="11" selection-start-line="212" selection-start-column="11" selection-end-line="212" selection-end-column="11" />
-          <folding>
-            <element signature="e#504#1884#0" />
-            <element signature="e#1902#2415#0" />
-            <element signature="e#2501#4515#0" />
-          </folding>
+        <state relative-caret-position="1020">
+          <caret line="75" column="34" selection-start-line="75" selection-start-column="34" selection-end-line="75" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model/UserModel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
+        <state relative-caret-position="2580">
           <caret line="175" column="24" selection-start-line="175" selection-start-column="24" selection-end-line="175" selection-end-column="24" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
@@ -960,26 +804,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Structure/NavUser/NavUserProfile/NavUserProfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="72" column="51" selection-start-line="72" selection-start-column="51" selection-end-line="72" selection-end-column="51" />
-          <folding>
-            <element signature="e#50#89#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Page/Portfolio/Portfolio.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="40" column="83" lean-forward="true" selection-start-line="40" selection-start-column="83" selection-end-line="40" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/NetworkModel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="935">
+        <state relative-caret-position="1830">
           <caret line="124" column="11" selection-start-line="124" selection-start-column="11" selection-end-line="124" selection-end-column="11" />
           <folding>
             <element signature="e#52#90#0" expanded="true" />
@@ -987,64 +814,193 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Common/Network/Network.js">
+    <entry file="file://$PROJECT_DIR$/src/components/Common/Network/Network.module.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="75" column="34" lean-forward="true" selection-start-line="75" selection-start-column="34" selection-end-line="75" selection-end-column="34" />
+        <state relative-caret-position="30">
+          <caret line="2" column="9" lean-forward="true" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/App/NavigatorUser/NavigatorUser.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
-          <caret line="32" column="21" lean-forward="true" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
+          <caret line="32" column="23" lean-forward="true" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
           <folding>
             <element signature="e#50#89#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config/Config.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="124" column="3" lean-forward="true" selection-start-line="124" selection-start-column="3" selection-end-line="124" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Page/Portfolio/Portfolio.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="517">
+          <caret line="46" column="34" lean-forward="true" selection-start-line="46" selection-start-column="34" selection-end-line="46" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMiniMore/NetworkMiniMore.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" selection-start-line="8" selection-end-line="8" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMini.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="34" column="57" lean-forward="true" selection-start-line="34" selection-start-column="57" selection-end-line="34" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Common/Network/NetworkMini/NetworkMiniMore/NetworkMiniMore.module.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="45" column="24" lean-forward="true" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+          <folding>
+            <element signature="e#1037#1301#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Common/Skill/Skill.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="2" lean-forward="true" selection-start-line="23" selection-start-column="2" selection-end-line="23" selection-end-column="2" />
+        <state relative-caret-position="120">
+          <caret line="8" column="36" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Page/Profile/Profile.module.scss">
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="154" column="13" lean-forward="true" selection-start-line="154" selection-start-column="13" selection-end-line="156" selection-end-column="33" />
+        <state relative-caret-position="15">
+          <caret line="8685" column="4" selection-start-line="8685" selection-start-column="4" selection-end-line="8685" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="24" column="33" lean-forward="true" selection-start-line="24" selection-start-column="33" selection-end-line="24" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/store/middleware/view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="50" lean-forward="true" selection-start-line="35" selection-start-column="50" selection-end-line="35" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config/Config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="188" column="12" selection-start-line="188" selection-start-column="12" selection-end-line="188" selection-end-column="12" />
           <folding>
-            <element signature="e#1607#2025#0" />
-            <element signature="e#2115#2153#0" />
+            <element signature="e#0#49#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Common/Network/Network.module.scss">
+    <entry file="file://$PROJECT_DIR$/src/store/reducer/view.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="33" />
+        <state relative-caret-position="268">
+          <caret line="70" column="10" lean-forward="true" selection-start-line="70" selection-start-column="10" selection-end-line="70" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Structure/SideBar/SideBarElement/SideBarElement.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="24" column="106" selection-start-line="24" selection-start-column="106" selection-end-line="24" selection-end-column="106" />
+          <folding>
+            <element signature="e#50#89#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Common/Skill/Skill.module.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="33" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+        <state relative-caret-position="-350">
+          <caret line="46" column="26" lean-forward="true" selection-start-line="46" selection-start-column="26" selection-end-line="46" selection-end-column="26" />
+          <folding>
+            <element signature="e#188#891#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Structure/NavUser/NavUserProfile/NavUserProfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="81" column="33" lean-forward="true" selection-start-line="81" selection-start-column="33" selection-end-line="81" selection-end-column="33" />
+          <folding>
+            <element signature="e#50#89#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Structure/Cover/Cover.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="688">
+          <caret line="120" column="6" lean-forward="true" selection-start-line="119" selection-start-column="6" selection-end-line="120" selection-end-column="6" />
+          <folding>
+            <element signature="e#51#94#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Structure/NavUser/NavUserDefault/NavUserDefault.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="50" column="25" lean-forward="true" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Page/Portfolio/Portfolio.module.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="10" lean-forward="true" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Structure/NavUser/NavUser.module.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="226" column="29" selection-start-line="226" selection-start-column="29" selection-end-line="226" selection-end-column="29" />
+          <folding>
+            <element signature="e#748#1147#0" />
+            <element signature="e#1902#2415#0" />
+            <element signature="e#2433#4608#0" />
+            <element signature="e#5807#5957#0" />
+            <element signature="e#6760#7146#0" />
+            <element signature="e#5413#5522#0" />
+            <element signature="e#5555#5664#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Page/Profile/Profile.module.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="213" column="15" selection-start-line="213" selection-start-column="15" selection-end-line="213" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Page/Profile/Profile.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="79" column="52" selection-start-line="79" selection-start-column="52" selection-end-line="79" selection-end-column="52" />
+        <state relative-caret-position="473">
+          <caret line="152" column="44" selection-start-line="152" selection-start-column="44" selection-end-line="152" selection-end-column="44" />
           <folding>
             <element signature="e#50#89#0" expanded="true" />
+            <element signature="e#1392#3897#0" />
           </folding>
         </state>
       </provider>

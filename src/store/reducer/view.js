@@ -68,7 +68,8 @@ const common = (state = {}, action ) => {
 };
 
 const navigatorInitial = {
-    routeBack : Config.ROUTE_PAGE_DASHBOARD
+    routeBack : null,
+    history : []
 };
 
 
@@ -78,6 +79,9 @@ const navigator = (state = navigatorInitial, action) => {
         case Config.REDUX_ACTION_VIEW_NAVIGATOR_SET_ROUTE_BACK : {
             return {...state, routeBack: (action.payload.hasOwnProperty("reset") && action.payload.reset ? navigatorInitial.routeBack :  action.payload.routeBack)};
         }
+        case Config.REDUX_ACTION_VIEW_NAVIGATOR_SET_HISTORY : {
+            return {...state, history: (action.payload.hasOwnProperty("reset") && action.payload.reset ? [] :  [...action.payload.history])};
+        }
         default: break;
     }
 
@@ -86,7 +90,24 @@ const navigator = (state = navigatorInitial, action) => {
 
 
 
+const profile = (state = {activeStep : 0}, action) => {
+    switch (action.type) {
+        case Config.REDUX_ACTION_VIEW_PROFILE_SET_STEP: {
+            return {...state, activeStep: action.payload.activeStep};
+        }
+        default: break;
+    }
 
-const reducerUI = combineReducers({overlay : overlay, cover : cover, common : common, navigator : navigator});
+    return state;
+};
+
+
+const reducerUI = combineReducers({
+    overlay: overlay,
+    cover: cover,
+    common: common,
+    navigator: navigator,
+    profile: profile
+});
 
 export default reducerUI;

@@ -119,7 +119,7 @@ $top-mobile : "all and (max-width : #{$col-sm})";
     /** & > SideBar **/
     & > .content{
       flex: 1;
-      padding: calc(#{$sizeNavHeight} + 15px) $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard;
+      padding: calc(#{$sizeNavHeight} + 25px) $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard $sizeCanvasPaddingDashboard;
     }
 
   }

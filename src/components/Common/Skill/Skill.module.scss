@@ -8,7 +8,7 @@
    position: relative;
    cursor: pointer;
    & > .content{
-     p{
+     span{
        padding: 2px 10px;
        margin: 0 2px;
        text-align: center;
@@ -43,7 +43,7 @@
      pointer-events: none;
      opacity: 0;
      top:0;
-     margin-top: -46px;
+     margin-top: -50px;
      padding-bottom: 40px;
      position: absolute;
      display: flex;
@@ -60,7 +60,7 @@
          background: transparent;
          transition: background 0.15s;
          padding: 8px 12px;
-         p{
+         span{
            color: #ffffff;
            font-size: 10pt;
            transition: color 0.15s;
@@ -70,7 +70,7 @@
          &:hover{
            background: rgba(0,0,0,0.85);
            transition: background 0.15s;
-           p{
+           span{
              font-size: 10pt;
              color: $colorTable_Orange1;
              transition: color 0.15s;
@@ -102,7 +102,7 @@
   &:hover{
     &> .container {
       & > .content{
-        p{
+        span{
           &:after{
             background: #f5f5f5;
             transition: background 0.15s;

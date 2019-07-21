@@ -25,13 +25,14 @@
     flex-direction: row;
 
     & > .logo{
-      height: $sizeNavHeight - 16;
-      width: $sizeNavHeight - 16;
+      cursor: pointer;
+      height: $sizeNavHeight - 16 - 2;
+      width: $sizeNavHeight - 16 - 2;
       border-radius: calc((#{$sizeNavHeight} - 16px)/2);
       background: #ffffff;
       overflow: hidden;
       position: relative;
-      border: none;
+      border: 1px solid transparent;
 
       & > .default{
         height: 100%;
@@ -117,7 +118,7 @@
 
       & > .container{
         box-shadow: 0 -10px 30px 12px rgba($colorSecondary,0.3);
-        height: calc(100% - 2 * 6px);
+        height: calc(100% - 2 * 6px - 2 * 1px);
         width: auto;
         min-width: calc(160px + 2 * 6px);
         padding: 6px;
@@ -126,6 +127,7 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        border: 1px solid transparent;
 
         & > .image{
           height: 48px - 2px;
@@ -139,6 +141,7 @@
             height: 100%;
             width: 100%;
             object-fit: cover;
+            //@include fade-in(0.1s);
           }
         }
 
@@ -217,32 +220,169 @@
     }
 
     & > .container{
+      position: relative;
       & > .logo{
-        box-shadow: 0 3px 10px -2px rgba(0,0,0,0.1);
+        border: 1px solid #eee;
+        & > .back {
+          background: #f8f8f8;
+          border-radius: 50%;
+        }
+       // box-shadow: 0 3px 10px -2px rgba(0,0,0,0.1);
 
       }
       & > .content{
         display: flex;
         flex-direction: row;
+        z-index: 1;
         & > .steps{
           flex: 1;
           height: 100%;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          & > .title{
+            padding-left: 20px;
+            padding-right: 20px;
+            p{
+              font-size: 14pt;
+              font-weight: 600;
+              color: #222;
+            }
+          }
+          & > .chosen{
+            padding: 10px 10px 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-items: center;
+            border: 1px solid #eeeeee;
+            border-radius: 4px;
+            position: relative;
+            user-select: none;
+
+            &[data-flow-visible="true"]{
+              & > .icon{
+                background: #f5f5f5;
+                transition: background 0.15s;
+                i{
+                  color: darken($colorSecondary, 15%);
+
+                  transform: rotate(180deg);
+                  transition: transform 0s, color 0.1s;
+                  will-change: transform;
+                }
+              }
+            }
+
+            &[data-flow-visible="false"]{
+              & > .icon{
+                background: #fff;
+                transition: background 0.15s;
+                i{
+                  color: $colorSecondary;
+
+                  transform: rotate(0deg);
+                  transition: transform 0s, color 0.1s;
+                  will-change: transform;
+                }
+              }
+            }
+
+            & > p{
+              font-size: 12pt;
+              font-weight: 600;
+              color: $colorSecondary;
+              margin-right: 15px;
+            }
+            & > .icon{
+              height: 26px;
+              width: 26px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-radius: 13px;
+              background: #ffffff;
+              cursor: pointer;
+
+              &:hover{
+                background: #f5f5f5;
+                transition: background 0.15s;
+              }
+              i{
+                color: $colorSecondary;
+                font-size: 14pt;
+
+              }
+            }
+
+            & > .flowBox{
+              display: flex;
+              flex-direction: column;
+              position: absolute;
+              top: 50px;
+              left: 0;
+              background: #ffffff;
+              border: 1px solid #eeeeee;
+              box-shadow: 0 12px 48px -15px rgba(0,0,0,0.3);
+              width: 200px;
+              pointer-events: none;
+              opacity: 0;
+
+              & > .step{
+                padding: 15px;
+                cursor: pointer;
+                p{
+                  color: #222222;
+                  font-size: 10pt;
+                  text-align: center;
+                  font-weight: 500;
+                }
+                &:hover{
+                  background: #f5f5f5;
+                }
+                &[data-active="true"]{
+                  p{
+                    color: $colorSecondary;
+                  }
+                }
+              }
+
+              &[data-visible="true"]{
+                  pointer-events: all;
+                  opacity: 1;
+              }
+            }
+          }
+
+
 
         }
         & > .networks{
           height: $sizeNavHeight - 16px - 8px;
           padding: 4px 0;
+          opacity: 0;
+          &[data-visible="false"]{
+            opacity: 0;
+            transition: opacity 0.1s;
+            pointer-events: none;
+          }
+          &[data-visible="true"]{
+            opacity: 1;
+            transition: opacity 0.25s;
+            pointer-events: all;
+          }
           & > .list{
             height: 100%;
             display: flex;
 
-            & > .NetworkMini{
+            & > *:last-child{
+              margin-right: 0;
+            }
+
+            & > .NetworkMini, & > .NetworkMiniMore{
               height: $sizeNavHeight - 16px - 8px;
               width: $sizeNavHeight - 16px - 8px;
               margin-right: 10px;
-              &:last-child{
-                margin-right: 0;
-              }
               & > .container{
                 border: 1px solid #eee;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.02);
@@ -260,11 +400,42 @@
                 }
               }
             }
+
+            & > .NetworkMiniMore{
+              & > .container{
+                box-shadow: none;
+                &:hover{
+                  background: #f5f5f5;
+                  box-shadow: none;
+                }
+              }
+            }
           }
         }
       }
-      & > .account{
 
+      & > .account{
+        z-index: 2;
+        position: absolute;
+        opacity: 1;
+        height: 100%;
+        right: 10px;
+        & > .container{
+          height: calc(100% - 2 * 6px - 2 * 1px - 2 * 8px);
+          box-shadow: none;
+          border: 1px solid #eee;
+        }
+
+        &[data-visible="false"]{
+          opacity: 0;
+          transition: opacity 0.1s;
+          pointer-events: none;
+        }
+        &[data-visible="true"]{
+          opacity: 1;
+          transition: opacity 0.25s;
+          pointer-events: all;
+        }
       }
     }
   }

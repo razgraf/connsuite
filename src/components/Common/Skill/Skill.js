@@ -6,20 +6,20 @@ const Skill = (props) => {
 
 
     return (
-        <div className={styles.Skill}>
-            <div className={styles.container}>
-                <div className={styles.content}><p>{props.label}</p></div>
-                <div className={styles.tooltip}>
-                    <div className={styles.container}>
-                        <div className={styles.button}><p>Button 1</p></div>
-                        <div className={styles.divider}/>
-                        <div className={styles.button}><p>Button 2</p></div>
-                    </div>
-                    <div className={styles.arrow}/>
-                </div>
-            </div>
+        <span className={styles.Skill}>
+            <span className={styles.container}>
+                <span className={styles.content}><span>{props.label}</span></span>
+                <span className={styles.tooltip}>
+                    <span className={styles.container}>
+                        <span className={styles.button}><span>Button 1</span></span>
+                        <span className={styles.divider}/>
+                        <span className={styles.button}><span>Button 2</span></span>
+                    </span>
+                    <span className={styles.arrow}/>
+                </span>
+            </span>
 
-        </div>
+        </span>
     )
 };
 

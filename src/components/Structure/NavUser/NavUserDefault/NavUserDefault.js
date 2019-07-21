@@ -18,25 +18,42 @@ class NavUserDefault extends Component{
 
 
        let page = Config.getPageByPath(this.props.location.pathname);
-       let withName = !Helper.isEmpty(page) && !Helper.isEmpty(page.depth) && page.depth  > 1;
+       let withReturn = !Helper.isEmpty(page) && !Helper.isEmpty(page.depth) && page.depth  > 1;
        let routeBack = !Helper.isEmpty(page)  && !Helper.isEmpty(page.routeBack) ? page.routeBack : Config.ROUTE_PAGE_DASHBOARD;
+
+
+        let onBackClick = ()=>{ this.props.history.push(routeBack)};
+
+        if(this.props.reduxHistory.length > 0 && withReturn){
+            let h = [...this.props.reduxHistory];
+            while(h.length > 0 && h[h.length - 1 ] === this.props.location.pathname) h.pop();
+
+            if(h.length > 0){
+                onBackClick = ()=>{
+                    this.props.history.push(h[h.length - 1]);
+                    h.pop();
+                    this.props.updateHistory(h);
+                }
+            }
+
+        }
 
 
         return(
             <nav className={cx(styles.NavUser, styles.NavUserDefault)}>
                 <div className={styles.container}>
-                    <Link to={routeBack} className={styles.logo} data-back={withName}>
+                    <div onClick={onBackClick}  className={styles.logo} data-back={withReturn}>
                         <Icon image className={styles.default} source={require("../../../../assets/images/logo.png")} alt={""} />
                         {
-                            withName
+                            withReturn
                                 ? <Icon icon className={styles.back} source={"arrow_back"} alt={"Back"} />
                                 : null
                         }
-                    </Link>
+                    </div>
 
                     <div className={styles.content}>
                         {
-                            withName
+                            withReturn
                                 ? <div className={styles.title}>
                                     <Icon icon round className={styles.icon} source={"keyboard_arrow_right"} />
                                     <p>{page.title}</p>
@@ -48,7 +65,7 @@ class NavUserDefault extends Component{
                     <div className={styles.account}>
                         <div className={styles.container}>
                             <div className={styles.image}>
-                                <img alt={"User"} src={this.props.self.image.source}/>
+                                <img alt={""} src={this.props.self.image.source}/>
                             </div>
                             <div className={styles.content}>
                                 <div className={styles.label}>
@@ -77,10 +94,13 @@ export default compose( withRouter, connect(
         return {
             self : reduxState.model.user.self,
             active : reduxState.model.user.active,
+            reduxHistory : reduxState.view.navigator.history
         }
     },
     (dispatch) => {
         return {
-            onClose : (callback)=>{ console.log("Cover closing"); return dispatch({type : Config.REDUX_ACTION_CONTROLLER_COVER_CLOSE, payload: { visible : false }  }) }
+            onClose : ()=>{ console.log("Cover closing"); return dispatch({type : Config.REDUX_ACTION_CONTROLLER_COVER_CLOSE, payload: { visible : false }  }) },
+            updateHistory : (history) => {return dispatch({type : Config.REDUX_ACTION_VIEW_NAVIGATOR_SET_HISTORY, payload : {history : history}})},
+
         }
     }) )(NavUserDefault);
