@@ -1,0 +1,289 @@
+@import "../../../../config/Config";
+
+.PortfolioNavigator{
+  width: 100%;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  z-index: 5;
+  & > .container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: $sizeCanvasPaddingDashboard;
+    width: calc(100% - 2 * #{$sizeCanvasPaddingDashboard});
+    background: #fafafa;
+    & > .active{
+      flex: 1;
+      text-align: left;
+      p{
+        font-size: 12pt;
+        font-weight: 600;
+        color: $colorTable_GrayBlue_Black;
+      }
+    }
+
+    & > .categories{
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-start;
+      & > .category{
+        margin-right: 10px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        cursor: pointer;
+
+        &:last-child{margin-right: 0};
+
+        & > .content{
+          border-radius: 15px;
+          min-height: 30px;
+          padding: 0 15px;
+          border: 1px solid transparent;
+          background: #ffffff;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          transition: box-shadow 0.2s, color 0.2s;
+          & > p{
+            color: $colorTable_GrayBlue_DarkText;
+            font-size: 10pt;
+            font-weight: 500;
+            transition: color 0.2s;
+          }
+        }
+        &[data-active="false"]{
+          &:hover{
+            & > .content{
+              box-shadow: 0 2px 4px -1px rgba(#000, 0.15);
+              transition: box-shadow 0.2s, color 0.2s;
+              & > p{
+                color: darken($colorTable_GrayBlue_DarkText,10%);
+                transition: color 0.2s;
+              }
+            }
+          }
+        }
+
+        &[data-active="true"]{
+          & > .content{
+            background: $colorSecondary;
+            box-shadow: 0 5px 30px -3px rgba($colorSecondary, 0.5);
+            transition: box-shadow 0.2s, color 0.2s;
+            p{
+              color: #ffffff;
+            }
+          }
+        }
+
+        &[data-category="skill"] {
+
+          &[data-active="true"] {
+            & > .content {
+              background: $colorTable_Orange1;
+              box-shadow: 0 5px 30px -3px rgba($colorTable_Orange1, 0.5);
+              transition: box-shadow 0s, color 0s;
+
+              & > p {
+                color: #ffffff;
+                transition: color 0s;
+              }
+
+              & > .chosen {
+                & > p {
+                  color: #ffffff;
+
+                  &:after {
+                    background: #ffffff;
+                    transition: color 0s;
+                  }
+                }
+
+                & > .icon {
+                  background: rgba(255,255,255,0.2) !important;
+                  transition: background 0.2s;
+                  i {
+                    color: #ffffff !important;
+                    transition: color 0s;
+                  }
+                }
+              }
+            }
+            &:hover {
+              & > .content {
+                & > .chosen {
+                  & > .icon {
+                    background: rgba(255,255,255,0.5) !important;
+                    transition: background 0s;
+                    i{
+                      transition: color 0s;
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          &:hover {
+            & > .content {
+              & > .chosen {
+                & > .icon {
+                  background: lighten($colorTable_GrayBlue_Light, 5%) !important;
+                  transition: background 0s;
+                }
+              }
+            }
+          }
+
+
+          & > .content {
+            padding-right: 5px;
+            display: flex;
+            align-items: center;
+
+            & > p {
+              transition: color 0s;
+            }
+
+            & > .chosen {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              margin-left: 6px;
+              position: relative;
+
+              & > p {
+                color: $colorTable_GrayBlue_DarkText;
+                font-size: 10pt;
+                font-weight: 500;
+                position: relative;
+                width: 60px;
+                @include ellipsis;
+                transition: color 0s;
+
+                &:after {
+                  position: absolute;
+                  bottom: -2px;
+                  left: 0;
+                  height: 1px;
+                  width: 100%;
+                  background: $colorTable_GrayBlue_Light;
+                  transition: color 0s;
+                  //content: '';
+                }
+              }
+
+              & > .icon {
+                margin-left: 3px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 20px;
+                width: 20px;
+                border-radius: 10px;
+                background: transparent;
+                transition: background 0s;
+
+                i {
+                  font-size: 10pt;
+                  color: $colorTable_GrayBlue_DarkText;
+                  transition: color 0s;
+
+                }
+              }
+
+              & > .skillBox {
+
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 30px;
+                right: -10px;
+                background: #ffffff;
+                border: 1px solid #eeeeee;
+                box-shadow: 0 12px 48px -15px rgba(0, 0, 0, 0.3);
+                min-width: 150px;
+                max-height: 600px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                pointer-events: none;
+                opacity: 0;
+
+                & > .skill {
+                  padding: 15px;
+                  cursor: pointer;
+
+                  p {
+                    color: $colorTable_GrayBlue_DarkText;
+                    font-size: 10pt;
+                    text-align: center;
+                    font-weight: 500;
+                  }
+
+                  &:hover {
+                    background: #f5f5f5;
+                  }
+
+                  &[data-active="true"] {
+                    p {
+                      color: $colorTable_Orange1;
+                    }
+                  }
+                }
+
+                &[data-visible="true"] {
+                  pointer-events: all;
+                  opacity: 1;
+                }
+              }
+
+
+            }
+          }
+
+
+          &[data-skill-visible="true"] {
+            & > .content > .chosen {
+
+              & > .icon {
+                background: lighten($colorTable_GrayBlue_Light, 5%);
+                transition: background 0.2s;
+                user-select: none;
+
+                i {
+                  color: darken($colorTable_GrayBlue_DarkText, 15%);
+
+                  transform: rotate(180deg);
+                  transition: transform 0s, color 0.1s;
+                  will-change: transform;
+                }
+              }
+            }
+          }
+
+          &[data-skill-visible="false"] {
+            & > .content > .chosen {
+              & > .icon {
+                background: #fff;
+                transition: background 0.15s;
+
+                i {
+                  color: $colorTable_GrayBlue_DarkText;
+
+                  transform: rotate(0deg);
+                  transition: transform 0s, color 0.1s;
+                  will-change: transform;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+}

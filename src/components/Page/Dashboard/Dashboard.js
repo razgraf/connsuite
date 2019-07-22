@@ -9,7 +9,7 @@ import SideBar from "../../Structure/SideBar/SideBar";
 import Cover from "../../Structure/Cover/Cover";
 import Overlay from "../../Common/Overlay/OverlayGlobal/OverlayGlobal";
 import Config from "../../../config/Config";
-import NavUser from "../../Structure/NavUser/NavUser";
+
 
 
 class Dashboard extends Component{

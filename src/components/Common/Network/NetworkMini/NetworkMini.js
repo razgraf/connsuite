@@ -3,7 +3,6 @@
  */
 import React, {Component} from 'react';
 import styles from './NetworkMini.module.scss';
-import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Icon from "../../Icon/Icon";
 import NetworkModel from "../../../../model/NetworkModel";
@@ -13,7 +12,7 @@ import {Helper} from "../../../../config/Util";
 class NetworkMini extends Component{
 
     static propTypes ={
-        network: NetworkModel.propTypes,
+        network: PropTypes.shape(NetworkModel.propTypes),
         onClick : PropTypes.func,
         style : PropTypes.object,
         css : PropTypes.shape({

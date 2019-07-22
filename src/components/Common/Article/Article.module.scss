@@ -1,0 +1,119 @@
+@import "../../../config/Config";
+
+.Article{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  & > .container{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    & > .content{
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      & > .image{
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transform: scale(1.05);
+
+        }
+      }
+    }
+    & > .overlay{
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      cursor: pointer;
+      background: rgba(#fff, 0);
+      transition: 0.2s;
+      overflow: hidden;
+      & > .content{
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+        & > .top{
+          flex: 1;
+          width: 100%;
+        }
+        & > .bottom{
+          width: 100%;
+          & > .content{
+            width: calc(100% - 2 * 15px);
+            padding: 15px 30px;
+            margin-left: -15px;
+            background: rgba(#fff, 0.98);
+            transform: translateY(100%);
+            transition: transform 0.2s;
+            will-change: transform;
+
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            & > .title{
+              margin-bottom: 2px;
+              width: 100%;
+              text-align: left;
+              p{
+                font-size: 11pt;
+                font-weight: 600;
+                max-width: calc(100% - 80px);
+                color: $colorTable_GrayBlue_Black;
+              }
+            }
+            & > .footer{
+              display: flex;
+              flex-direction: row;
+              align-items: flex-start;
+              width: 100%;
+              & > .skills{
+                width: 100%;
+                text-align: left;
+                flex: 1;
+                padding-top: 10px;
+                p{
+                  font-size: 9pt;
+                  font-weight: 500;
+                  color: $colorTable_Orange1;
+                }
+              }
+              & > .button{
+                @include button_outline(darken($colorTable_GrayBlue_Light, 5%), $colorTable_GrayBlue_DarkText, darken($colorTable_GrayBlue_Light, 5%), $colorTable_GrayBlue_DarkText, transparent, transparent);
+
+              }
+            }
+
+          }
+        }
+      }
+    }
+
+    &:hover{
+      & > .overlay{
+        background: rgba(#fff, 0.2);
+        transition: 0.2s;
+        & > .content{
+          & > .bottom{
+            & > .content{
+              transform: translateY(0);
+              transition: transform 0.2s;
+              will-change: transform;
+            }
+          }
+        }
+      }
+    }
+  }
+}

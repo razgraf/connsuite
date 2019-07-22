@@ -54,12 +54,12 @@ class ImageModel{
 
 
 
-    static propTypes = PropTypes.shape({
+    static propTypes = {
         AID : PropTypes.string,
         source : PropTypes.string,
         name : PropTypes.string,
         file : PropTypes.object,
-    });
+    };
 
 
     static clone(icon){

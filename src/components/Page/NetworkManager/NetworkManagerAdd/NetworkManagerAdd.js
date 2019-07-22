@@ -15,7 +15,7 @@ import {Helper} from "../../../../config/Util";
 import Emoji from "../../../Common/Emoji/Emoji";
 import Form from "../../../Common/Field/Form/Form";
 import {FieldShowcase} from "../../../Common/Field";
-import NavUser from "../../../Structure/NavUser/NavUser";
+
 
 
 class NetworkManagerAdd extends Component{

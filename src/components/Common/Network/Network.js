@@ -16,7 +16,7 @@ import NetworkModel from "../../../model/NetworkModel";
 class Network extends Component{
 
     static propTypes = {
-        network : NetworkModel.propTypes,
+        network : PropTypes.shape(NetworkModel.propTypes),
         design : PropTypes.string,
         viewonly : PropTypes.bool
     };

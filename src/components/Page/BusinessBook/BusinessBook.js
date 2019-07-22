@@ -7,7 +7,7 @@ import cx from "classnames";
 import Overlay from "../../Common/Overlay/OverlayGlobal/OverlayGlobal";
 import Cover from "../../Structure/Cover/Cover";
 import SideBar from "../../Structure/SideBar/SideBar";
-import NavUser from "../../Structure/NavUser/NavUser";
+
 
 class BusinessBook extends Component{
     render() {

@@ -8,6 +8,8 @@ import Statistics from "../components/Page/Statistics/Statistics";
 import NetworkManagerEdit from "../components/Page/NetworkManager/NetworkManagerEdit/NetworkManagerEdit";
 import NetworkManagerAdd from "../components/Page/NetworkManager/NetworkManagerAdd/NetworkManagerAdd";
 import Profile from "../components/Page/Profile/Profile";
+import {ArticleCategoryModel, ArticleModel} from "../model/ArticleModel";
+import SkillModel from "../model/SkillModel";
 
 /**
  * Created by @VanSoftware on 2019-07-04.
@@ -87,6 +89,200 @@ class Config{
     })();
 
 
+    static DUMMY_SKILLS = (() => {
+        let a = [
+            {
+                AID: "#1",
+                title: "UI/UX"
+            },
+            {
+                AID: "#2",
+                title: "Branding",
+            },
+            {
+                AID: "#3",
+                title: "ReactJS"
+            },
+            {
+                AID: "#4",
+                title: "Full Stack",
+            }
+        ];
+
+        let n = [];
+
+        a.forEach(element => {
+            n.push(new SkillModel(element))
+        });
+        return n;
+
+
+    })();
+
+    static DUMMY_CATEGORIES = (() => {
+        let a = [
+            {
+                AID: "#1",
+                title: "Design"
+            },
+            {
+                AID: "#2",
+                title: "Development"
+            },
+            {
+                AID: "#3",
+                title: "Web Development"
+            }
+        ];
+
+        let n = [];
+
+        a.forEach(element => {
+            n.push(new ArticleCategoryModel(element))
+        });
+        return n;
+
+
+    })();
+
+    static DUMMY_ARTICLES = (() => {
+        let a = [
+            {
+                AID: "AA1",
+                title: "Company documents generator | Dedicated Software",
+                image: {
+                    source: require("../assets/images/project-1.png"),
+                },
+                categories: [
+                    {
+                        AID: "#1"
+                    }
+                ],
+                skills: [
+                    {
+                        AID: "#2",
+                        title: "Branding"
+                    },
+                    {
+                        AID: "#1",
+                        title: "UI/UX"
+                    },
+                    {
+                        AID: "#4",
+                        title : "Full Stack"
+                    },
+                ]
+            },
+            {
+                AID: "AA2",
+                title: "Educational Platform (Brightture) | UI / UX",
+                image: {
+                    source: require("../assets/images/project-2.png"),
+                },
+                categories: [
+                    {
+                        AID: "#1"
+                    },
+                    {
+                        AID: "#2"
+                    },
+                ],
+                skills: [
+                    {
+                        AID: "#2",
+                        title: "Branding"
+                    },
+                    {
+                        AID: "#1",
+                        title: "UI/UX"
+                    },
+                    {
+                        AID: "#3",
+                        title: "ReactJS"
+                    },
+                ]
+            },
+            {
+                AID: "AA3",
+                title: "Event Planning (Epic) | Branding & Social Media",
+                image: {
+                    source: require("../assets/images/project-3.png"),
+                },
+                categories: [
+                    {
+                        AID: "#1"
+                    },
+                    {
+                        AID: "#3"
+                    },
+                ],
+                skills: [
+                    {
+                        AID: "#1",
+                        title: "UI/UX"
+                    },
+                    {
+                        AID: "#3",
+                        title : "ReactJS"
+                    },
+                ]
+            },
+            {
+                AID: "AA4",
+                title: "Highway Maintenance Co. (MJQuinn) | Logo",
+                image: {
+                    source: require("../assets/images/project-4.png"),
+                },
+                categories: [
+                    {
+                        AID: "#1"
+                    },
+                ],
+                skills: [
+                    {
+                        AID: "#2",
+                        title: "Branding"
+                    },
+                ]
+            },
+            {
+                AID: "AA5",
+                title: "Industrial automation (Scadarama) | Web",
+                image: {
+                    source: require("../assets/images/project-5.png"),
+                },
+                categories: [
+                    {
+                        AID: "#1"
+                    },
+                    {
+                        AID: "#3"
+                    },
+                    {
+                        AID: "#2"
+                    }
+                ],
+                skills: [
+                    {
+                        AID: "#4",
+                        title : "Full-Stack"
+                    },
+                ]
+            },
+        ];
+
+
+        let n = [];
+
+        a.forEach(element => {
+            n.push(new ArticleModel(element))
+        });
+        return n;
+
+
+    })();
+
+
 
     /**
      *
@@ -110,7 +306,7 @@ class Config{
     static ROUTE_PAGE_NETWORK_EDIT = Config.ROUTE_PAGE_NETWORK_EDIT_CLEAN + ':AID';
 
 
-    static USER = {
+    static DUMMY_USERS = {
         self : {
             AID : "RAZ1",
             username : {
@@ -122,7 +318,8 @@ class Config{
             image : {
                 source :  require("../assets/images/me-1.png"),
             },
-            networks : (()=>{ return Config.DUMMY_NETWORKS.map(element => element.toObject())  })()
+            networks : (()=>{ return Config.DUMMY_NETWORKS.map(element => element.toObject())  })(),
+            articles : (()=>{ return Config.DUMMY_ARTICLES.map(element => element.toObject())  })()
         },
         others : [
             {
@@ -137,7 +334,8 @@ class Config{
                     //source :  require("../assets/images/user-1.png"),
                     source :  require("../assets/images/me-2.png"),
                 },
-                networks : (()=>{ return Config.DUMMY_NETWORKS.map(element => element.toObject())  })()
+                networks : (()=>{ return Config.DUMMY_NETWORKS.map(element => element.toObject())  })(),
+                articles : (()=>{ return Config.DUMMY_ARTICLES.map(element => element.toObject())  })()
             }
         ]
     };

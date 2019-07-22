@@ -122,7 +122,7 @@ class NetworkModel{
 
 
 
-    static propTypes =  PropTypes.shape({
+    static propTypes = {
             AID : PropTypes.string,
             title : PropTypes.string,
             type : PropTypes.oneOf([NetworkModel.TYPE_DEFAULT,NetworkModel.TYPE_CUSTOM]),
@@ -130,9 +130,9 @@ class NetworkModel{
             description : PropTypes.string,
             URL : PropTypes.string,
             identifier : PropTypes.string,
-            icon : ImageModel.propTypes,
-            thumbnail : ImageModel.propTypes,
-    });
+            icon : PropTypes.shape(ImageModel.propTypes),
+            thumbnail : PropTypes.shape(ImageModel.propTypes),
+    };
 
     static defaultProps = {
             AID: null,

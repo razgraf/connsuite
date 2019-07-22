@@ -26,7 +26,7 @@ const cover = (state = coverInitial, action) => {
  * @type {{self: UserModel, active: UserModel}}
  */
 const userInitial = {
-    self : new UserModel(Config.USER.self), //TODO
+    self : new UserModel(Config.DUMMY_USERS.self), //TODO
     active : new UserModel(null),
 };
 

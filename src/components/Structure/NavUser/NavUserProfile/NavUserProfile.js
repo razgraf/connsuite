@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import styles from './../NavUser.module.scss';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import Config from "../../../../config/Config";
 import {Helper} from "../../../../config/Util";
 import Icon from "../../../Common/Icon/Icon";
@@ -63,10 +63,6 @@ class NavUserProfile extends Component{
         try {
             if (this.flowBox === null || this.flowBoxCaller === null) return;
 
-            if(this.flowBoxCaller.current.contains(event.target)){
-                console.log("here");
-                return;
-            }
 
             let outside = !this.flowBoxCaller.current.contains(event.target);
             if (outside && this.state.isFlowBoxVisible) this.setState({isFlowBoxVisible: false});
@@ -92,8 +88,6 @@ class NavUserProfile extends Component{
     }
 
     render(){
-
-        console.log(this.props.history);
 
        let page = Config.getPageByPath(this.props.location.pathname);
        let withReturn = !Helper.isEmpty(page) && !Helper.isEmpty(page.depth) && page.depth  > 1;

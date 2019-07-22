@@ -11,7 +11,7 @@ import OverlayIndividual from "../../Common/Overlay/OverlayIndividual/OverlayInd
 import Icon from "../../Common/Icon/Icon";
 import Emoji from "../../Common/Emoji/Emoji";
 import NetworkModel from "../../../model/NetworkModel";
-import {Link, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import {compose} from "redux";
 
 class Cover extends PureComponent{

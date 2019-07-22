@@ -2,6 +2,7 @@ import {Helper} from "../config/Util";
 import ImageModel from "./ImageModel";
 import PropTypes from "prop-types";
 import NetworkModel from "./NetworkModel";
+import {ArticleModel} from "./ArticleModel";
 
 /**
  * Created by @VanSoftware on 2019-07-18.
@@ -173,10 +174,8 @@ class UserModel{
         this.self = Helper.getValue(UserModel.PARAM_SELF,object);
 
 
-        this.networks = Helper.parseArrayElementWithClass(Helper.getArray(UserModel.PARAM_NETWORKS,object), function(element){return new NetworkModel(element)});
-
-
-        this.articles = [];// Helper.parseArrayElementWithClass(Helper.getArray(UserModel.PARAM_ARTICLES,object), (element)=> new ArticleModel(element));
+        this.networks = Helper.parseArrayElementWithClass(Helper.getArray(UserModel.PARAM_NETWORKS,object), (element) => new NetworkModel(element));
+        this.articles = Helper.parseArrayElementWithClass(Helper.getArray(UserModel.PARAM_ARTICLES,object), (element)=> new ArticleModel(element));
 
 
     }
@@ -221,7 +220,19 @@ class UserModel{
                     })
                     }catch (e) {console.log(e)
                 }
+                return  n;
             })(),
+            articles :(()=>{
+            let a = {};
+            try {
+                if (!Helper.isEmpty(this.articles))
+                    this.articles.forEach((element)=>{
+                        a.push(element.toObject())
+                    })
+            }catch (e) {console.log(e)
+            }
+            return  a;
+        })(),
 
         }
     }
@@ -236,11 +247,12 @@ class UserModel{
         self : PropTypes.bool,
         description : PropTypes.string,
 
-        networks : PropTypes.arrayOf(NetworkModel.propTypes),
+        networks : PropTypes.arrayOf(PropTypes.shape(NetworkModel.propTypes)),
+        articles : PropTypes.arrayOf(PropTypes.shape(ArticleModel.propTypes)),
 
 
-        image : ImageModel.propTypes,
-        thumbnail : ImageModel.propTypes,
+        image : PropTypes.shape(ImageModel.propTypes),
+        thumbnail : PropTypes.shape(ImageModel.propTypes),
 
     });
 }

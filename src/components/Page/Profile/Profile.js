@@ -14,6 +14,10 @@ import Image from "../../Common/Image/Image";
 import Skill from "../../Common/Skill/Skill";
 import Network from "../../Common/Network/Network";
 import InView from 'react-intersection-observer'
+import PortfolioSection from "../../Common/Portfolio/PortfolioSection/PortfolioSection";
+import Emoji from "../../Common/Emoji/Emoji";
+import BusinessCardPublic from "../../Common/BusinessCard/BusinessCardPublic/BusinessCardPublic";
+import {Button, ButtonType} from "../../Common/Button/Button";
 
 class Profile extends Component{
 
@@ -23,12 +27,13 @@ class Profile extends Component{
 
         this.state = {
             scrollY : 1,
-            user : new UserModel(Config.USER.others[0]),
+            user : new UserModel(Config.DUMMY_USERS.others[0]),
         };
 
         this.props.onUserBounded(this.state.user);
 
         this.steps = [
+             React.createRef(),
              React.createRef(),
              React.createRef(),
              React.createRef(),
@@ -65,9 +70,7 @@ class Profile extends Component{
         this.setState({scrollY: window.scrollY});
         if(this.props.activeStep !== step) this.props.changeActiveStep(step);
 
-
     };
-
 
 
     render() {
@@ -95,14 +98,32 @@ class Profile extends Component{
                                         <p>Designer & Developer</p>
                                     </div>
                                     <div className={styles.name}>
-                                        <p>{this.state.user.name}</p>
+                                        <p>{this.state.user.name}<span>{"@" + this.state.user.username.main}</span></p>
                                     </div>
                                     <section>
                                         <div className={styles.divider}/>
 
 
                                         <div className={styles.description}>
-                                            <p>Hi 👋!<br/> Lorem ipsum dolor sit amet <Skill label={"ReactJS"}/> consectetur adipiscing elit. Nunc varius nulla ut tortor accumsan faucibus. Donec semper eget justo sit amet fermentum. Vivamus sed tellus fermentum, convallis nisi eget, imperdiet orci. </p>
+                                            <p>Hi <Emoji symbol={'👋'}/>!<br/> Lorem ipsum dolor sit amet <Skill label={"ReactJS"}/> consectetur adipiscing elit. Nunc varius nulla ut tortor accumsan faucibus. Donec semper eget justo sit amet fermentum. Vivamus sed tellus fermentum, convallis nisi eget, imperdiet orci. </p>
+                                        </div>
+
+                                        <div className={styles.actions}>
+                                            <div className={styles.container}>
+                                                <Button
+                                                    type={ButtonType.DEFAULT}
+                                                    onClick={()=>{alert("Contact me (+book meeting through ConnSuite)")}}
+                                                    title={"Let's talk"} />
+
+                                                <Button
+                                                    type={ButtonType.DEFAULT}
+                                                    onClick={()=>{
+
+                                                    }}
+                                                    title={"View my work"} />
+
+
+                                            </div>
                                         </div>
                                     </section>
                                 </div>
@@ -140,7 +161,7 @@ class Profile extends Component{
                 <div className={styles.main} ref={this.steps[2]}>
                     <div className={styles.positioner} id={"portfolio"}/>
                     <div className={styles.container}>
-                        <section className={cx(styles.content, styles.networks)}>
+                        <section className={cx(styles.content, styles.portfolio)}>
                             <InView>
                                 {({ inView, ref, entry }) => (
                                     <div ref={ref}  className={styles.title} data-in-view={inView}>
@@ -150,10 +171,39 @@ class Profile extends Component{
                                 )}
                             </InView>
 
-                            <div className={styles.grid}>
-                                <p>Items</p>
-                            </div>
 
+                            <PortfolioSection
+                                categories = {Config.DUMMY_CATEGORIES}
+                                skills = {Config.DUMMY_SKILLS}
+                                articles = {this.state.user.articles}
+                            />
+
+                        </section>
+                    </div>
+                </div>
+
+                <div className={styles.main} ref={this.steps[3]}>
+                    <div className={styles.positioner} id={"business"}/>
+                    <div className={styles.container}>
+                        <section className={cx(styles.content, styles.business)}>
+                            <InView>
+                                {({ inView, ref, entry }) => (
+                                    <div ref={ref}  className={styles.title} data-in-view={inView}>
+                                        <p>Business</p>
+                                    </div>
+
+                                )}
+                            </InView>
+
+
+                           <div className={styles.inner}>
+                               <div className={styles.left}>
+                                   <BusinessCardPublic user={this.state.user} />
+                               </div>
+                               <div className={styles.right}></div>
+                           </div>
+
+                            <div className={styles.background}/>
                         </section>
                     </div>
                 </div>
@@ -186,7 +236,6 @@ export default compose( withRouter, connect(
     (dispatch) => {
         return {
             onUserBounded : (user) => {
-                console.log("Cover closing");
                 return dispatch({type : Config.REDUX_ACTION_MODEL_USER_SET_ACTIVE, payload: { active : user }  })
             },
             changeActiveStep : (activeStep) => {

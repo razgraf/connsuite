@@ -19,7 +19,7 @@ class SideBar extends Component {
                     <div className={styles.divider}/>
                     <SideBarElement
                         route={Config.ROUTE_PAGE_PROFILE}
-                        target={Config.ROUTE_PAGE_PROFILE_CLEAN + Config.USER.self.username.main}
+                        target={Config.ROUTE_PAGE_PROFILE_CLEAN + Config.DUMMY_USERS.self.username.main}
                     />
                 </div>
             </div>

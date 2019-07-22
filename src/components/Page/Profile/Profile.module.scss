@@ -134,7 +134,7 @@
               p{
                 font-family: $fontSecondary;
                 font-weight: 700;
-                color: #111111;
+                color: $colorTable_GrayBlue_Black;
                 text-align: left;
                 font-size: 34pt;
 
@@ -143,11 +143,20 @@
 
             & > .name{
               p{
-                color: #222;
+                color: $colorTable_GrayBlue_Black;
                 font-family: $fontSecondary;
                 font-size: 16pt;
                 font-weight: 600;
                 text-align: left;
+
+                span{
+                  margin-left: 6px;
+                  color: $colorSecondary;
+                  font-family: $fontSecondary;
+                  font-size: 16pt;
+                  font-weight: 600;
+                  text-align: left;
+                }
               }
             }
             & > section{
@@ -186,7 +195,7 @@
               & > .description{
                   & > p, & > span{
                     font-weight: 300;
-                    color: #111111;
+                    color: $colorTable_GrayBlue_Black;
                     line-height: 1.7;
                     font-size: 12pt;
                   }
@@ -236,7 +245,7 @@
         flex-direction: column;
         justify-items: flex-start;
         flex: 1;
-        padding:  $sizeCanvasPaddingDashboard;
+        padding: 40px $sizeCanvasPaddingDashboard;
 
 
         & > .title{
@@ -244,7 +253,7 @@
           p{
             font-size: 16pt;
             font-weight: 600;
-            color: $colorSecondary;
+            color: $colorTable_GrayBlue_Black;//$colorSecondary;
             position: relative;
             span{
               margin-right: 3px;
@@ -256,8 +265,8 @@
               height: 2px;
               position: absolute;
               width: 50%;
-              background: $colorSecondary;
-              transform: translateX(50%);
+              background: $colorTable_GrayBlue_Black;//$colorSecondary;
+              transform: translateX(-50%);
               transition: transform 0.3s;
               will-change: transform;
 
@@ -275,7 +284,8 @@
         }
 
         &.networks{
-          width: 100%;
+          padding-top: 20px;
+          width: calc(100% - 2 * #{$sizeCanvasPaddingDashboard});
 
           & > .grid{
             display: grid;
@@ -287,8 +297,36 @@
         }
 
 
+        &.portfolio{
+          width: 100%;
+          padding-left: 0;
+          padding-right: 0;
+          & > .title{
+            margin-left: $sizeCanvasPaddingDashboard;
+          }
+        }
 
-      }
+        &.business {
+          position: relative;
+          width: calc(100% - 2 * #{$sizeCanvasPaddingDashboard});
+          & > .inner{
+            width: 100%;
+            z-index: 2;
+          }
+
+          & > .background{
+            z-index: 1;
+            position: absolute;
+            width: 100%;
+            height: calc(100% - 190px);
+            top: 190px;
+            left: 0;
+            background: #fafafa;
+          }
+        }
+
+
+        }
     }
   }
 

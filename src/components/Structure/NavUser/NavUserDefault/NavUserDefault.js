@@ -3,7 +3,7 @@
  */
 import React, {Component, } from 'react';
 import styles from './../NavUser.module.scss';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import Config from "../../../../config/Config";
 import {Helper} from "../../../../config/Util";
 import Icon from "../../../Common/Icon/Icon";
