@@ -13,6 +13,12 @@ import SectionHeader from "../../Common/SectionHeader/SectionHeader";
 import {ButtonType} from "../../Common/Button/Button";
 import NetworkAdd from "../../Common/Network/NetworkAdd/NetworkAdd";
 import Config from "../../../config/Config";
+import Icon from "../../Common/Icon/Icon";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {withRouter} from "react-router-dom";
+import Article from "../../Common/Article/Article";
+import Footer from "../../Structure/Footer/Footer";
 
 class Portfolio extends Component{
 
@@ -30,17 +36,44 @@ class Portfolio extends Component{
                     <div className={styles.content}>
                         <section className={styles.networks}>
                             <SectionHeader title={"My Networks"} actions={[{
-                                title : "Text",
+                                title : "Create Network",
                                 type : ButtonType.OUTLINE,
-                                icon : "home",
+                                custom : {
+                                    style : styles,
+                                    className : "button"
+                                },
+                                icon : (<Icon icon round source={"add"} className={styles.icon}/>),
                                 onClick : (e)=>{console.log("Clicked");}
                             }]}/>
 
                             <div className={styles.grid}>
                                 {
-                                    this.state.networks.map((element,index) => <Network key={index} network={element} />)
+                                    this.props.self.networks.map((element,index) => <Network key={index} network={element} />)
                                 }
                                 <NetworkAdd/>
+                            </div>
+
+
+                        </section>
+
+
+                        <section className={styles.articles}>
+                            <SectionHeader title={"My Articles"} actions={[{
+                                title : "Create Article",
+                                type : ButtonType.OUTLINE,
+                                custom : {
+                                    style : styles,
+                                    className : "button"
+                                },
+                                icon : (<Icon icon round source={"add"} className={styles.icon}/>),
+                                onClick : (e)=>{console.log("Clicked");}
+                            }]}/>
+
+                            <div className={styles.grid}>
+                                {
+                                    this.props.self.articles.map((element,index) => <Article key={index} article={element} />)
+                                }
+
                             </div>
 
 
@@ -52,6 +85,7 @@ class Portfolio extends Component{
 
                     </div>
                 </div>
+                <Footer/>
             </div>
         )
     }
@@ -60,4 +94,13 @@ class Portfolio extends Component{
 
 }
 
-export default Portfolio;
+
+export default compose( withRouter, connect(
+    (reduxState) => {
+        return {
+            self : reduxState.model.user.self,
+        }
+    },
+    (dispatch) => {
+        return {}
+    }) )(Portfolio);

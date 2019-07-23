@@ -14,6 +14,7 @@ import NetworkMini from "../../../Common/Network/NetworkMini/NetworkMini";
 import NetworkMiniMore from "../../../Common/Network/NetworkMini/NetworkMiniMore/NetworkMiniMore";
 import {HashLink} from 'react-router-hash-link';
 
+
 class NavUserProfile extends Component{
 
     static Y_TRIGGER = 40;
@@ -33,7 +34,7 @@ class NavUserProfile extends Component{
                     anchor : "#networks"
                 },
                 {
-                    title : "Portfolio",
+                    title : "Articles",
                     anchor : "#portfolio"
                 },
                 {

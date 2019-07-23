@@ -3,12 +3,17 @@
 .Portfolio{
 
   & > .container{
+    z-index: 1;
 
     & > .content{
 
       & > .networks{
         width: 100%;
-        /**Section Header**/
+
+        .button{
+          @include button_simple_gray();
+        }
+
 
         & > .grid{
           display: grid;
@@ -18,6 +23,27 @@
 
         }
 
+      }
+
+      & > .articles{
+        padding-top: 40px;
+        width: 100%;
+        padding-bottom: 100px;
+        .button{
+          @include button_simple_gray();
+        }
+
+        & > .grid {
+          width: calc(100% + 2 * #{$sizeCanvasPaddingDashboard});
+          margin-left: - $sizeCanvasPaddingDashboard;
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          z-index: 1;
+
+          & > * {
+            grid-column: span 1;
+          }
+        }
       }
 
     }

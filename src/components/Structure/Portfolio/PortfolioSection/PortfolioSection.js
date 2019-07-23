@@ -5,7 +5,7 @@
 import React, {PureComponent} from 'react';
 import styles from './PortfolioSection.module.scss'
 import PortfolioNavigator from "../PortfolioNavigator/PortfolioNavigator";
-import Article from "../../Article/Article";
+import Article from "../../../Common/Article/Article";
 import PropTypes from "prop-types";
 import {ArticleCategoryModel, ArticleModel} from "../../../../model/ArticleModel";
 import SkillModel from "../../../../model/SkillModel";
@@ -46,6 +46,23 @@ class PortfolioSection extends PureComponent{
 
 
     render() {
+
+        let fitting =  this.state.articles.filter((element) => {
+
+            if(this.state.activeCategory.AID !== PortfolioNavigator.CATEGORY_SKILL.AID){
+                if((element.categories.filter(category => category.AID === this.state.activeCategory.AID)).length === 0)
+                    return false;
+            }
+            else {
+
+                if((element.skills.filter(skill => skill.AID === this.state.activeSkill.AID)).length === 0)
+                    return false;
+            }
+
+
+            return true;
+        })
+
         return (
             <div className={styles.PortfolioSection}>
                 <PortfolioNavigator
@@ -59,22 +76,19 @@ class PortfolioSection extends PureComponent{
                 />
                 <div className={styles.grid}>
                     {
-                        this.state.articles.map((element,index) => {
-
-                          if(this.state.activeCategory.AID !== PortfolioNavigator.CATEGORY_SKILL.AID){
-                              if((element.categories.filter(category => category.AID === this.state.activeCategory.AID)).length === 0)
-                                  return null;
-                          }
-                          else {
-
-                              if((element.skills.filter(skill => skill.AID === this.state.activeSkill.AID)).length === 0)
-                                  return null;
-                          }
-
-
-
-                          return (<Article key={index} article={element} />);
-                        })
+                        fitting.map((element,index)=> (<Article key={index} article={element} />))
+                    }
+                    {
+                        fitting.length < 6
+                            ? Array.from(Array( (6 - fitting.length)).keys() ).map((element, index) => (
+                                <div key={"empty-"+index} data-empty={"true"}>
+                                    <div className={styles.shape}>
+                                        <div/>
+                                        <div/>
+                                    </div>
+                                </div>
+                            ))
+                            : null
                     }
                 </div>
             </div>

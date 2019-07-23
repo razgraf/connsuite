@@ -10,6 +10,7 @@ import NetworkManagerAdd from "../components/Page/NetworkManager/NetworkManagerA
 import Profile from "../components/Page/Profile/Profile";
 import {ArticleCategoryModel, ArticleModel} from "../model/ArticleModel";
 import SkillModel from "../model/SkillModel";
+import ArticlePreview from "../components/Page/ArticlePreview/ArticlePreview";
 
 /**
  * Created by @VanSoftware on 2019-07-04.
@@ -171,7 +172,8 @@ class Config{
                         AID: "#4",
                         title : "Full Stack"
                     },
-                ]
+                ],
+                type : ArticleModel.TYPE_INTERNAL,
             },
             {
                 AID: "AA2",
@@ -200,7 +202,9 @@ class Config{
                         AID: "#3",
                         title: "ReactJS"
                     },
-                ]
+                ],
+                type : ArticleModel.TYPE_EXTERNAL,
+                source : "behance.net/razgraf"
             },
             {
                 AID: "AA3",
@@ -225,7 +229,8 @@ class Config{
                         AID: "#3",
                         title : "ReactJS"
                     },
-                ]
+                ],
+                type : ArticleModel.TYPE_INTERNAL,
             },
             {
                 AID: "AA4",
@@ -243,7 +248,9 @@ class Config{
                         AID: "#2",
                         title: "Branding"
                     },
-                ]
+                ],
+                type : ArticleModel.TYPE_EXTERNAL,
+                source : "www.behance.net/razgraf"
             },
             {
                 AID: "AA5",
@@ -267,7 +274,9 @@ class Config{
                         AID: "#4",
                         title : "Full-Stack"
                     },
-                ]
+                ],
+                type : ArticleModel.TYPE_EXTERNAL,
+                source : "https://www.behance.net/razgraf"
             },
         ];
 
@@ -296,6 +305,9 @@ class Config{
     static ROUTE_PAGE_BUSINESS_BOOK = '/book';
     static ROUTE_PAGE_PORTFOLIO = '/portfolio';
     static ROUTE_PAGE_STATISTICS = '/statistics';
+
+    static ROUTE_PAGE_ARTICLE_CLEAN = '/article/';
+    static ROUTE_PAGE_ARTICLE = Config.ROUTE_PAGE_ARTICLE_CLEAN + ":AID/:title";
 
     static ROUTE_PAGE_PROFILE_CLEAN = '/';
     static ROUTE_PAGE_PROFILE = Config.ROUTE_PAGE_PROFILE_CLEAN + ':username';
@@ -375,9 +387,6 @@ class Config{
             icon : 'multiline_chart',
             component : () => Statistics,
         },
-
-
-
         {
             exact : true,
             route : this.ROUTE_PAGE_NETWORK_EDIT,
@@ -399,12 +408,25 @@ class Config{
 
         {
             exact : false,
+            route : this.ROUTE_PAGE_ARTICLE,
+            title : 'Article',
+            depth : 2,
+
+            routeBack : this.ROUTE_PAGE_PORTFOLIO,
+            component : () => ArticlePreview,
+            public : true,
+        },
+
+        {
+            exact : false,
             route : this.ROUTE_PAGE_PROFILE,
             title : 'Profile',
             depth : 1,
             icon : 'person',
-            component : () => Profile
+            component : () => Profile,
+            public : true,
         },
+
 
     ];
 

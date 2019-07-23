@@ -7,7 +7,7 @@ import styles from './PortfolioNavigator.module.scss'
 import PropTypes from "prop-types";
 import {ArticleCategoryModel} from "../../../../model/ArticleModel";
 import SkillModel from "../../../../model/SkillModel";
-import Icon from "../../Icon/Icon";
+import Icon from "../../../Common/Icon/Icon";
 
 class PortfolioNavigator extends Component{
 
@@ -30,7 +30,6 @@ class PortfolioNavigator extends Component{
 
         this.state = { isSkillBoxVisible : false, };
 
-        this.skillBox = React.createRef();
         this.skillBoxCaller = React.createRef();
     }
 
@@ -46,7 +45,7 @@ class PortfolioNavigator extends Component{
 
     handleSkillBox = (event) => {
         try {
-            if (this.skillBox === null || this.skillBoxCaller === null) return;
+            if (this.skillBoxCaller === null) return;
 
             let outside = !this.skillBoxCaller.current.contains(event.target);
             if (outside && this.state.isSkillBoxVisible) this.setState({isSkillBoxVisible: false});
@@ -102,7 +101,7 @@ class PortfolioNavigator extends Component{
                                         round
                                         source={"keyboard_arrow_down"}
                                         />
-                                    <div className={styles.skillBox} ref={this.skillBox} data-visible={this.state.isSkillBoxVisible}>
+                                    <div className={styles.skillBox} data-visible={this.state.isSkillBoxVisible}>
                                         {
                                             this.props.skills.map((element, index)=>(
                                                 <div

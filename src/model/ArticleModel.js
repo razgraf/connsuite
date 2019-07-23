@@ -63,6 +63,28 @@ class ArticleCategoryModel{
 
 
 class ArticleModel {
+    get titleEncoded() {
+        return this._titleEncoded;
+    }
+
+    set titleEncoded(value) {
+        this._titleEncoded = value;
+    }
+    get type() {
+        return this._type;
+    }
+
+    set type(value) {
+        this._type = value;
+    }
+
+    get source() {
+        return this._source;
+    }
+
+    set source(value) {
+        this._source = value;
+    }
     get content() {
         return this._content;
     }
@@ -152,12 +174,19 @@ class ArticleModel {
     static PARAM_CONTENT = "content";
     static PARAM_CREATED_AT = "createdAt";
     static PARAM_UPDATED_AT = "updatedAt";
+    static PARAM_TYPE = "type";
+    static PARAM_SOURCE = "source";
+    static PARAM_TITLE_ENCODED = "titleEncoded";
+
+    static TYPE_EXTERNAL = 2;
+    static TYPE_INTERNAL = 1;
 
     
     constructor(object) {
 
         this.AID = Helper.getValue(ArticleModel.PARAM_AID, object);
         this.title = Helper.getValue(ArticleModel.PARAM_TITLE, object);
+        this.titleEncoded = Helper.getValue(ArticleModel.PARAM_TITLE_ENCODED, object);
         this.image = new ImageModel(Helper.getObject(ArticleModel.PARAM_IMAGE, object));
         this.categories = Helper.parseArrayElementWithClass(Helper.getArray(ArticleModel.PARAM_CATEGORIES,object), function(element){return new ArticleCategoryModel(element)});
         this.skills = Helper.parseArrayElementWithClass(Helper.getArray(ArticleModel.PARAM_SKILLS,object), function(element){return new SkillModel(element)})
@@ -168,7 +197,11 @@ class ArticleModel {
         
         this.createdAt =  Helper.getValue(ArticleModel.PARAM_CREATED_AT, object);
         this.updatedAt =  Helper.getValue(ArticleModel.PARAM_UPDATED_AT, object);
-        
+
+        this.type = Helper.sanitize(Helper.getValue(ArticleModel.PARAM_TYPE, object), 0);
+        this.source = Helper.getValue(ArticleModel.PARAM_SOURCE, object);
+
+
     }
 
 
@@ -184,10 +217,14 @@ class ArticleModel {
         return {
             AID : this.AID,
             title : this.title,
+            titleEncoded : this.titleEncoded,
             priority : this.priority,
 
             description : this.description,
             content : this.content,
+
+            type : this.type,
+            source : this.source,
 
             createdAt : this.createdAt,
             updatedAt : this.updatedAt,
@@ -220,9 +257,14 @@ class ArticleModel {
     static propTypes = {
         AID : PropTypes.string,
         title : PropTypes.string,
+        titleEncoded : PropTypes.string,
         image : PropTypes.shape(ImageModel.propTypes),
         categories : PropTypes.arrayOf(PropTypes.shape(ArticleCategoryModel.propTypes)),
         skills : PropTypes.arrayOf(PropTypes.shape(SkillModel.propTypes)),
+
+
+        type : PropTypes.number,
+        source : PropTypes.string,
 
         description : PropTypes.string,
         content : PropTypes.string,
@@ -234,7 +276,9 @@ class ArticleModel {
 
     static defaultProps = {
         categories : [],
-        skills : []
+        skills : [],
+        type : 0,
+        titleEncoded : "Article"
     };
 
 }

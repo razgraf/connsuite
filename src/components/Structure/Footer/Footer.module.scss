@@ -1,0 +1,161 @@
+@import "../../../config/Config";
+
+
+
+.Footer{
+  width: 100%;
+  background: $colorTable_GrayBlue_Black;
+  z-index: 11;
+  height: $sizeFooterHeight;
+
+  & > .container{
+    width: calc(100% - 2 * 1px);
+    max-width: calc(#{$sizeCanvasMaxWidth} - 2 * 1px);
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+
+
+    & > .content{
+      flex: 1;
+      padding: 60px $sizeCanvasPaddingDashboard;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      & > .top{
+        margin-bottom: 40px;
+        & > .logo{
+          img{
+            height: 30px;
+            object-fit: contain;
+          }
+        }
+      }
+      & > .grid{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        width: 100%;
+        & > .map{
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          flex: 1;
+          & > *{
+            margin-right: 100px;
+            &:last-child{
+              margin-right: 0;
+            }
+          }
+         & > .column{
+           display: grid;
+           grid-template-columns: 1fr;
+           column-gap: 40px;
+           row-gap: 5px;
+           & > *{
+             margin-bottom: 15px;
+             &:last-of-type{
+               margin-bottom: 0;
+             }
+           }
+           & > .item{
+             cursor: pointer;
+             & > .content{
+               display: flex;
+               align-items: center;
+               & > .icon{
+                 margin-right: 3px;
+                 i{
+                   font-size: 12pt;
+                   color: #ffffff;
+
+                 }
+               }
+               & > p{
+                 font-size: 9pt;
+                 font-weight: 500;
+                 color: rgba(255,255,255,0.5);
+                 font-family: $fontSecondary;
+               }
+             }
+             &:hover{
+               & > .content{
+                 & > p{
+                   color: $colorTable_GrayBlue_Light;
+                 }
+                 & > .icon > i{
+                   color: $colorTable_GrayBlue_Light;
+                 }
+               }
+             }
+           }
+         }
+
+        }
+
+        & > .plug{
+          & > .container{
+            height: 100px;
+            width: 170px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            transition: background 0.2s;
+            & > .title{
+              width: 100%;
+              flex: 1;
+              padding-bottom: 15px;
+              p{
+                font-size: 9pt;
+                color: rgba(255,255,255,0.5);
+                font-weight: 400;
+              }
+            }
+            & > .action{
+              width: 100%;
+              & > .buttonPlug{
+                @include button_default(rgba(255,255,255,0.1), rgba(255,255,255,0.5));
+                & > .container{
+                  & > .icon{
+                    margin-right:10px;
+                    padding-right: 10px;
+                    position: relative;
+                    img{
+                      width: 30px;
+                      height: 30px;
+                      object-fit: contain;
+                      //filter: grayscale(100%);
+                    }
+                    &:after{
+                      content: '';
+                      position: absolute;
+                      right: - 2px;
+                      height: 100%;
+                      width: 1px;
+                      background: $colorTable_Orange1;
+                    }
+                  }
+                }
+
+              }
+            }
+            &:hover{
+              background: rgba(255,255,255,0.15);
+              transition: background 0.2s;
+            }
+          }
+        }
+
+      }
+    }
+
+  }
+
+}

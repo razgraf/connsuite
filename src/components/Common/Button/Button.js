@@ -32,12 +32,16 @@ class Button extends Component{
         mini : PropTypes.bool,
         active : PropTypes.bool,
         forbidden : PropTypes.bool,
+
+        htmlTitle : PropTypes.string,
+        reference : PropTypes.object
     };
 
     static defaultProps = {
         mini : false,
         active: true,
         forbidden: false,
+        htmlTitle: ""
     };
 
 
@@ -58,12 +62,14 @@ class Button extends Component{
 
         return(
             <div
+                ref={this.props.reference}
                 onClick={(e)=>{this.props.onClick(e)}}
                 className={buttonClass}
                 data-mini={this.props.mini}
                 data-active={this.props.active}
                 data-forbidden={this.props.forbidden}
                 data-style={!Helper.isEmpty(this.props.type) ? this.props.type : ButtonType.DEFAULT}
+                title={this.props.htmlTitle}
 
             >
                 <div className={containerClass}>

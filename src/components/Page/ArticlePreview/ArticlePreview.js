@@ -2,27 +2,25 @@
  * Created by @VanSoftware on 2019-07-13.
  */
 import React, {Component} from 'react';
-import styles from './BusinessBook.module.scss';
+import styles from './ArticlePreview.module.scss';
 import cx from "classnames";
 import Overlay from "../../Common/Overlay/OverlayGlobal/OverlayGlobal";
 import Cover from "../../Structure/Cover/Cover";
-import SideBar from "../../Structure/SideBar/SideBar";
-import Footer from "../../Structure/Footer/Footer";
 
 
-class BusinessBook extends Component{
+
+class ArticlePreview extends Component{
     render() {
         return (
-            <div className={cx(styles.Page, styles.BusinessBook)}>
+            <div className={cx(styles.Page, styles.Article)}>
                 <Overlay/>
                 <Cover/>
                 <div className={styles.container}>
-                    <SideBar/>
+
                 </div>
-                <Footer/>
             </div>
         );
     }
 }
 
-export default BusinessBook;
+export default ArticlePreview;

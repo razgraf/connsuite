@@ -7,6 +7,9 @@ import styles from './Article.module.scss'
 import {ArticleModel} from "../../../model/ArticleModel";
 import Image from "../Image/Image";
 import {Button, ButtonType} from "../Button/Button";
+import Icon from "../Icon/Icon";
+import {Link} from "react-router-dom";
+import Config from "../../../config/Config";
 
 class Article extends Component{
 
@@ -17,7 +20,7 @@ class Article extends Component{
 
     render() {
         return (
-            <div className={styles.Article}>
+            <Link to={Config.ROUTE_PAGE_ARTICLE_CLEAN + this.props.article.AID + "/" + this.props.article.titleEncoded} className={styles.Article}>
                 <div className={styles.container}>
                     <div className={styles.content}>
                         <Image
@@ -28,7 +31,13 @@ class Article extends Component{
                     <div className={styles.overlay}>
                         <div className={styles.content}>
                             <div className={styles.top}>
-
+                                {
+                                    this.props.article.type === ArticleModel.TYPE_EXTERNAL
+                                        ? <div className={styles.indicator}>
+                                            <Icon title={"External link"} icon round source={"link"} className={styles.icon}/>
+                                        </div>
+                                        : null
+                                }
                             </div>
                             <div className={styles.bottom}>
                                 <div className={styles.content}>
@@ -44,7 +53,7 @@ class Article extends Component{
                                         <Button
                                             custom={{style: styles, className: "button"}}
                                             type={ButtonType.MINI}
-                                            title={"Read more"}
+                                            title={ this.props.article.type === ArticleModel.TYPE_EXTERNAL ? "Visit article" :  "Read article"}
                                             onClick={()=>{alert("Clicky");}}
                                             />
                                         </div>
@@ -53,7 +62,7 @@ class Article extends Component{
                         </div>
                     </div>
                 </div>
-            </div>
+            </Link>
         );
     }
 }

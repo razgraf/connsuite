@@ -1,0 +1,25 @@
+@import "../../../config/Config";
+
+.Article{
+
+  & > .container{
+
+    & > .content{
+
+      & > .networks{
+        width: 100%;
+        /**Section Header**/
+
+        & > .grid{
+          display: grid;
+          width: 100%;
+          grid-template-columns: repeat(4, 1fr);
+          grid-gap: 30px;
+
+        }
+
+      }
+
+    }
+  }
+}

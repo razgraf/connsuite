@@ -1,0 +1,51 @@
+@import "../../../../config/Config";
+
+.PortfolioSection{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+
+
+  & > .grid{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    z-index: 1;
+    & > *{
+      grid-column: span 1;
+    }
+    & > *[data-empty="true"]{
+      & > .shape{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        & > div:nth-child(1){
+          height: 30px;
+          width: 1px;
+          background: lighten($colorTable_GrayBlue_Light, 3%);
+          position: absolute;
+          transform: rotate(-45deg);
+        }
+        & > div:nth-child(2){
+          height: 30px;
+          width: 1px;
+          background: lighten($colorTable_GrayBlue_Light, 3%);
+          position: absolute;
+          transform: rotate(45deg);
+        }
+        &:hover{
+          div {
+            background: lighten($colorTable_GrayBlue_Light, 1%);
+          }
+        }
+      }
+    }
+  }
+
+}

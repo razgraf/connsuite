@@ -9,6 +9,7 @@ import SideBar from "../../Structure/SideBar/SideBar";
 import Cover from "../../Structure/Cover/Cover";
 import Overlay from "../../Common/Overlay/OverlayGlobal/OverlayGlobal";
 import Config from "../../../config/Config";
+import Footer from "../../Structure/Footer/Footer";
 
 
 
@@ -32,6 +33,7 @@ class Dashboard extends Component{
 
                         </div>
                     </div>
+                    <Footer/>
                 </div>
         )
     }

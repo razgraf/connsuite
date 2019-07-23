@@ -7,6 +7,7 @@ import cx from "classnames";
 import Overlay from "../../Common/Overlay/OverlayGlobal/OverlayGlobal";
 import Cover from "../../Structure/Cover/Cover";
 import SideBar from "../../Structure/SideBar/SideBar";
+import Footer from "../../Structure/Footer/Footer";
 
 
 class Statistics extends Component{
@@ -19,6 +20,7 @@ class Statistics extends Component{
                     <div className={styles.container}>
                         <SideBar/>
                     </div>
+                    <Footer/>
                 </div>
 
 

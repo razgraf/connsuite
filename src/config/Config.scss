@@ -14,6 +14,9 @@ $sizeCanvasPaddingDashboard : 20px;
 $sizeCanvasPaddingMobile : 30px;
 $sizeSideBarWidth : 80px;
 
+
+$sizeFooterHeight : 340px;
+
 $fontPrimary : 'Quicksand',  'Montserrat', sans-serif;
 $fontSecondary : 'Montserrat', sans-serif;
 
@@ -33,6 +36,9 @@ $sizeNetworkImageMax : 90px;
 $sizeBusinessCardHeight : 240px;
 $borderRadiusBusinessCard : 26px;
 $paddingBusinessCard : $borderRadiusNetworkCard + 4px ;
+
+
+$colorProfileCanvasBorder : #f5f5f5;
 
 
 /**
@@ -103,15 +109,24 @@ $top-mobile : "all and (max-width : #{$col-sm})";
  * Styles
  */
 
+body{
+  min-height: 100vh;
+}
+
 .Page{
   order: 2;
   width: 100%;
+  min-height: 100%;
   background: $colorBackground;
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  & > * {
+    flex-shrink: 0;
+  }
   & > .container{
     width: calc(100% - 2 * 1px);
     max-width: calc(#{$sizeCanvasMaxWidth} - 2 * 1px);
-    min-height: 100%;
+
     margin: 0 auto;
     background: #ffffff;
     display: flex;
@@ -146,19 +161,27 @@ $top-mobile : "all and (max-width : #{$col-sm})";
 @mixin button_icon_component(){
   & > .icon, .icon {
     width: 20px;
+    height: 20px;
     margin-right: 6px;
     margin-left: -10px;
-    line-height: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
     i {
       font-size: 12pt;
+      position: absolute;
+
     }
   }
 }
 
-@mixin button_default($background : $colorPrimary,  $color : #ffffff, $backgroundHover : darken($background, 10%), $colorHover: $color, $transition : 0.2s){
+@mixin button_default($background : $colorSecondary,  $color : #ffffff, $backgroundHover : darken($background, 10%), $colorHover: $color, $transition : 0.2s){
   & > .container{
     background: $background;
     transition: background $transition;
+    border: 1px solid transparent;
     @include button_icon_component;
     & > .icon i, & > .label p{
       color: $color;
@@ -179,7 +202,7 @@ $top-mobile : "all and (max-width : #{$col-sm})";
 }
 
 
-@mixin button_outline($outline : $colorPrimary,  $color : $colorPrimary, $outlineHover : darken($outline, 10%), $colorHover: #ffffff, $background : transparent, $backgroundHover : $outlineHover, $transition : 0.2s){
+@mixin button_outline($outline : $colorSecondary,  $color : $colorSecondary, $outlineHover : darken($outline, 10%), $colorHover: #ffffff, $background : transparent, $backgroundHover : $outlineHover, $transition : 0.2s){
   & > .container{
     background: $background;
     border: 1px solid $outline;
@@ -204,7 +227,7 @@ $top-mobile : "all and (max-width : #{$col-sm})";
   }
 }
 
-@mixin button_simple($color : $colorPrimary, $colorHover : darken($color, 7%), $backgroundHover:transparent, $transition : 0.2s){
+@mixin button_simple($color : $colorSecondary, $colorHover : darken($color, 7%), $backgroundHover:transparent, $transition : 0.2s){
   & > .container{
     background: transparent;
     border: 1px solid transparent;
@@ -233,11 +256,12 @@ $top-mobile : "all and (max-width : #{$col-sm})";
 }
 
 @mixin button_outline_gray(){
-  @include button_outline($colorTable_GrayBlue_Light, $colorTable_GrayBlue_DarkText, darken($colorTable_GrayBlue_Light, 6%), darken($colorTable_GrayBlue_DarkText,5%) );
+  @include button_outline($colorTable_GrayBlue_Light, lighten($colorTable_GrayBlue_DarkText,5%), darken($colorTable_GrayBlue_Light, 6%), darken($colorTable_GrayBlue_DarkText,5%) );
 }
 
+
 @mixin button_simple_gray(){
-  @include button_simple($colorTable_GrayBlue_DarkText,darken($colorTable_GrayBlue_DarkText, 10%), #fafafa );
+  @include button_simple($colorTable_GrayBlue_DarkText,darken($colorTable_GrayBlue_DarkText, 5%), #fafafa );
 }
 
 
