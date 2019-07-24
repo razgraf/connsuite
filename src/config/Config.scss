@@ -25,6 +25,7 @@ $zIndexNav : 100;
 $zIndexOverlay : 80;
 $zIndexCover : 90;
 $zIndexSideBar : 10;
+$zIndexFooter : 2;
 
 
 $borderRadiusNetworkCard : 22px;
@@ -109,14 +110,12 @@ $top-mobile : "all and (max-width : #{$col-sm})";
  * Styles
  */
 
-body{
-  min-height: 100vh;
-}
+
 
 .Page{
   order: 2;
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
   background: $colorBackground;
   display: flex;
   flex-direction: column;
@@ -124,9 +123,9 @@ body{
     flex-shrink: 0;
   }
   & > .container{
+    z-index: 1;
     width: calc(100% - 2 * 1px);
     max-width: calc(#{$sizeCanvasMaxWidth} - 2 * 1px);
-
     margin: 0 auto;
     background: #ffffff;
     display: flex;

@@ -4,6 +4,41 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+
+  &[data-manager="true"]{
+    & > .container{
+      & > .overlay{
+        & > .content{
+          & > .bottom{
+            & > .content{
+              & > .footer{
+                align-items: flex-end;
+                & > .left{
+                  & > .categories{
+                    p{
+                      &:before{
+                        content : 'Categories: ';
+                        font-weight: 600;
+                      }
+                    }
+                  }
+
+                  & > .skills{
+                    p{
+                      &:before{
+                        content : 'Skills: ';
+                        font-weight: 600;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
   & > .container{
     width: 100%;
     height: 100%;
@@ -49,6 +84,7 @@
           display: flex;
           flex-direction: row;
           justify-content: flex-end;
+          align-items: flex-start;
 
           & > .indicator{
             padding: 20px;
@@ -67,6 +103,68 @@
                 transform:rotate(-15deg)
               }
             }
+          }
+
+          & > .manager{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+            margin: 10px;
+
+            & > .actions{
+              height: 40px;
+              border-radius: 20px;
+              padding: 0 6px;
+              background: #ffffff;
+              & > .container {
+                height: 100%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                & > * {
+                  margin-right: 4px;
+
+                  &:last-child {
+                    margin-right: 0
+                  }
+                }
+
+                & > .button {
+                  & > .icon {
+                    height: 28px;
+                    width: 28px;
+                    border-radius: 19px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    i {
+                      font-size: 12pt;
+                      color: $colorTable_GrayBlue_DarkText;
+                    }
+                  }
+                  &:hover{
+                    .icon{
+                      background: $colorTable_GrayBlue_Light;
+                    }
+                  }
+                  &.delete{
+                    &:hover{
+                      .icon{
+                        background: $colorTable_Red1;
+                        i{
+                          color: #fff;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
           }
         }
         & > .bottom{
@@ -95,25 +193,49 @@
                 color: $colorTable_GrayBlue_Black;
               }
             }
+
+
+
             & > .footer{
               display: flex;
               flex-direction: row;
-              align-items: flex-start;
+              align-items: flex-end;
               width: 100%;
-              & > .skills{
-                width: 100%;
-                text-align: left;
+              & > .left{
                 flex: 1;
-                padding-top: 10px;
-                p{
-                  font-size: 9pt;
-                  font-weight: 500;
-                  color: $colorTable_Orange1;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+
+                & > .skills{
+                  width: 100%;
+                  text-align: left;
+                  flex: 1;
+                  padding-bottom: 5px;
+                  p{
+                    font-size: 9pt;
+                    font-weight: 500;
+                    color: $colorTable_Orange1;
+                  }
+                }
+
+
+                & > .categories{
+                  margin-bottom: 4px;
+                  margin-top: 6px;
+                  p{
+                    color: $colorSecondary;
+                    font-size: 9pt;
+                    font-weight: 500;
+                    width: 200px;
+                    @include ellipsis
+                  }
                 }
               }
-              & > .button{
-                @include button_outline(darken($colorTable_GrayBlue_Light, 5%), $colorTable_GrayBlue_DarkText, darken($colorTable_GrayBlue_Light, 5%), $colorTable_GrayBlue_DarkText, transparent, transparent);
 
+              & > .button{
+                //@include button_outline(darken($colorTable_GrayBlue_Light, 5%), $colorTable_GrayBlue_DarkText, darken($colorTable_GrayBlue_Light, 5%), $colorTable_GrayBlue_DarkText, transparent, transparent);
+                @include button_default_gray;
               }
             }
 

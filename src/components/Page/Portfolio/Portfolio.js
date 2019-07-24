@@ -22,9 +22,18 @@ import Footer from "../../Structure/Footer/Footer";
 
 class Portfolio extends Component{
 
-    state = {
-        networks : Config.DUMMY_NETWORKS
-    };
+    constructor(props){
+        super(props);
+
+        this.state = {
+            networks : Config.DUMMY_NETWORKS,
+        };
+
+
+    }
+
+
+
 
     render() {
         return(
@@ -32,7 +41,7 @@ class Portfolio extends Component{
                 <Overlay/>
                 <Cover/>
                 <div className={styles.container}>
-                    <SideBar/>
+                    <SideBar />
                     <div className={styles.content}>
                         <section className={styles.networks}>
                             <SectionHeader title={"My Networks"} actions={[{
@@ -71,7 +80,7 @@ class Portfolio extends Component{
 
                             <div className={styles.grid}>
                                 {
-                                    this.props.self.articles.map((element,index) => <Article key={index} article={element} />)
+                                    this.props.self.articles.map((element,index) => <Article manager={true} key={index} article={element} />)
                                 }
 
                             </div>

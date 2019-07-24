@@ -308,7 +308,7 @@ class Profile extends PureComponent{
                     </div>
                 </section>
 
-                <Footer/>
+                <Footer data-design={"full"}/>
 
             </div>
         )

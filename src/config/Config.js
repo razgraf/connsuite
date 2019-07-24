@@ -156,7 +156,8 @@ class Config{
                 },
                 categories: [
                     {
-                        AID: "#1"
+                        AID: "#1",
+                        title: "Design"
                     }
                 ],
                 skills: [
@@ -183,10 +184,12 @@ class Config{
                 },
                 categories: [
                     {
-                        AID: "#1"
+                        AID: "#1",
+                        title: "Design"
                     },
                     {
-                        AID: "#2"
+                        AID: "#2",
+                        title: "Development"
                     },
                 ],
                 skills: [
@@ -214,10 +217,12 @@ class Config{
                 },
                 categories: [
                     {
-                        AID: "#1"
+                        AID: "#1",
+                        title: "Design"
                     },
                     {
-                        AID: "#3"
+                        AID: "#3",
+                        title: "Web Development"
                     },
                 ],
                 skills: [
@@ -240,7 +245,8 @@ class Config{
                 },
                 categories: [
                     {
-                        AID: "#1"
+                        AID: "#1",
+                        title: "Development"
                     },
                 ],
                 skills: [
@@ -260,13 +266,16 @@ class Config{
                 },
                 categories: [
                     {
-                        AID: "#1"
+                        AID: "#1",
+                        title: "Design"
                     },
                     {
-                        AID: "#3"
+                        AID: "#3",
+                        title: "Web Development"
                     },
                     {
-                        AID: "#2"
+                        AID: "#2",
+                        title: "Development"
                     }
                 ],
                 skills: [

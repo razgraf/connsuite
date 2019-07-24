@@ -8,14 +8,15 @@ import styles from './Footer.module.scss'
 import Image from "../../Common/Image/Image";
 import ImageModel from "../../../model/ImageModel";
 import {Button, ButtonType} from "../../Common/Button/Button";
-import Icon from "../../Common/Icon/Icon";
+import PropTypes from "prop-types";
 
 class Footer extends PureComponent{
 
+    static DESIGN_SIDEBAR = "sidebar";
 
     render() {
         return (
-            <div className={styles.Footer}>
+            <div className={styles.Footer} data-design={this.props.design}>
                 <div className={styles.container}>
                     <div className={styles.content}>
                         <div className={styles.top}>
@@ -71,6 +72,15 @@ class Footer extends PureComponent{
             </div>
         );
     }
+
+
+    static propTypes = {
+        design : PropTypes.string
+    };
+
+    static defaultProps = {
+        design : Footer.DESIGN_SIDEBAR
+    };
 }
 
 export default Footer;

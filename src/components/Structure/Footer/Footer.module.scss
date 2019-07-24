@@ -5,8 +5,16 @@
 .Footer{
   width: 100%;
   background: $colorTable_GrayBlue_Black;
-  z-index: 11;
+  z-index: $zIndexFooter;
   height: $sizeFooterHeight;
+
+  &[data-design="sidebar"]{
+    & > .container{
+      & > .content{
+        padding-left: $sizeCanvasPaddingDashboard + $sizeSideBarWidth;
+      }
+    }
+  }
 
   & > .container{
     width: calc(100% - 2 * 1px);
