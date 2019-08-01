@@ -11,6 +11,7 @@ import Profile from "../components/Page/Profile/Profile";
 import {ArticleCategoryModel, ArticleModel} from "../model/ArticleModel";
 import SkillModel from "../model/SkillModel";
 import ArticlePreview from "../components/Page/ArticlePreview/ArticlePreview";
+import ArticleManager from "../components/Page/ArticleManager/ArticleManager";
 
 /**
  * Created by @VanSoftware on 2019-07-04.
@@ -315,15 +316,21 @@ class Config{
     static ROUTE_PAGE_PORTFOLIO = '/portfolio';
     static ROUTE_PAGE_STATISTICS = '/statistics';
 
-    static ROUTE_PAGE_ARTICLE_CLEAN = '/article/';
+    static ROUTE_PAGE_ARTICLE_CLEAN = '/article/view/';
     static ROUTE_PAGE_ARTICLE = Config.ROUTE_PAGE_ARTICLE_CLEAN + ":AID/:title";
+
+    static ROUTE_PAGE_ARTICLE_ADD = '/article/add';
+
+    static ROUTE_PAGE_ARTICLE_EDIT_CLEAN = '/article/edit/';
+    static ROUTE_PAGE_ARTICLE_EDIT = Config.ROUTE_PAGE_ARTICLE_EDIT_CLEAN + ":AID/";
+
 
     static ROUTE_PAGE_PROFILE_CLEAN = '/';
     static ROUTE_PAGE_PROFILE = Config.ROUTE_PAGE_PROFILE_CLEAN + ':username';
 
-    static ROUTE_PAGE_NETWORK_ADD = '/network';
+    static ROUTE_PAGE_NETWORK_ADD = '/network/add';
 
-    static ROUTE_PAGE_NETWORK_EDIT_CLEAN = '/network/';
+    static ROUTE_PAGE_NETWORK_EDIT_CLEAN = '/network/edit/';
     static ROUTE_PAGE_NETWORK_EDIT = Config.ROUTE_PAGE_NETWORK_EDIT_CLEAN + ':AID';
 
 
@@ -352,8 +359,8 @@ class Config{
                 firstName : "Van",
                 lastName : "Software",
                 image : {
-                    //source :  require("../assets/images/user-1.png"),
-                    source :  require("../assets/images/me-2.png"),
+                    source :  require("../assets/images/user-1.png"),
+                    // source :  require("../assets/images/me-2.png"),
                 },
                 networks : (()=>{ return Config.DUMMY_NETWORKS.map(element => element.toObject())  })(),
                 articles : (()=>{ return Config.DUMMY_ARTICLES.map(element => element.toObject())  })()
@@ -414,7 +421,6 @@ class Config{
             routeBack : this.ROUTE_PAGE_PORTFOLIO,
             component : () => NetworkManagerAdd
         },
-
         {
             exact : false,
             route : this.ROUTE_PAGE_ARTICLE,
@@ -424,6 +430,25 @@ class Config{
             routeBack : this.ROUTE_PAGE_PORTFOLIO,
             component : () => ArticlePreview,
             public : true,
+        },
+
+        {
+            exact : true,
+            route : this.ROUTE_PAGE_ARTICLE_ADD,
+            title : "Create article",
+            depth : 2,
+
+            routeBack : this.ROUTE_PAGE_PORTFOLIO,
+            component : () => ArticleManager
+        },
+        {
+            exact : true,
+            route : this.ROUTE_PAGE_ARTICLE_EDIT,
+            title : "Edit Article",
+            depth : 2,
+
+            routeBack : this.ROUTE_PAGE_PORTFOLIO,
+            component : () => ArticleManager
         },
 
         {

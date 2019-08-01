@@ -52,14 +52,8 @@
       border-radius: 30px;
       min-width: calc(50px - 2 * 12px);
 
-      & > .icon {
-        margin-left: -6px;
-        margin-right: 6px;
-        i{
-          font-size: 12pt;
-        }
+      @include button_icon_component_mini;
 
-      }
 
       & > .label p{
         font-size: 9pt;

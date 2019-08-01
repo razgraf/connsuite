@@ -1,0 +1,116 @@
+@import "../../../../config/Config";
+
+
+
+.TagField{
+  & > .content{
+    min-height: 60px !important;
+    align-items: flex-start !important;
+    position: relative;
+
+    & > .box{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      position: relative;
+
+
+
+      & > li{
+        list-style-type: none;
+        &::marker{
+          display: none;
+        }
+      }
+
+      & > li.tag{
+        -webkit-appearance: none;
+        margin: 0 4px 4px 0;
+        padding: 4px 8px;
+        background: $colorTable_Orange1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        box-shadow: 0 0 5px 0 rgba($colorTable_Orange1, 0.2);
+
+        &[data-accent="blue"]{
+          background: $colorSecondary;
+          box-shadow: 0 0 5px 0 rgba($colorSecondary, 0.2);
+        }
+        &[data-accent="red"]{
+          background: $colorTable_Red1;
+          box-shadow: 0 0 5px 0 rgba($colorTable_Red1, 0.2);
+        }
+
+        span{
+          font-size: 10pt;
+          color: #ffffff;
+          font-weight: 400;
+          margin-right: 4px;
+        }
+        .icon{
+          width: 20px;
+          height: 20px;
+          border-radius: 10px;
+          background: rgba(#fff,0.2);
+          transition: background 0.1s;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          i{
+            font-size: 9pt;
+            color: #fff;
+          }
+          &:hover{
+            background: $colorTable_GrayBlue_Black;
+            transition: background 0.1s;
+          }
+        }
+
+
+      }
+      & > li.input{
+        flex: 1;
+        input{
+          font-size: 11pt;
+          color: #111;
+          font-weight: 300;
+          outline: none;
+          border: none;
+          flex: 1;
+          background: transparent;
+          padding: 3px 2px;
+          margin: 0 4px 4px 0;
+        }
+
+        @mixin placeholder {
+          -webkit-appearance: none;
+          color: darken($colorTable_GrayBlue_Light, 15%);
+          font-size: 11pt;
+          font-weight: 300;
+          opacity: 1;
+        }
+        input::placeholder {
+          @include placeholder
+        }
+
+        input::-webkit-input-placeholder {
+          @include placeholder
+        }
+
+        input::-ms-placeholder {
+          @include placeholder
+        }
+
+        input::-moz-placeholder {
+          @include placeholder
+        }
+
+      }
+    }
+  }
+}

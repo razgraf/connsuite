@@ -1,0 +1,104 @@
+@import "../../../../config/Config";
+
+
+
+.Footer{
+  width: 100%;
+  background: $colorTable_GrayBlue_Black;
+  z-index: $zIndexFooter;
+  height: $sizeFooterMiniHeight;
+
+
+  & > .container{
+    width: calc(100% - 2 * 1px);
+    max-width: calc(#{$sizeCanvasMaxWidth} - 2 * 1px);
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+
+
+    & > .content{
+      flex: 1;
+      padding: 10px 0;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+
+      & > .logo{
+        margin-right: auto;
+        img{
+          height: 30px;
+          object-fit: contain;
+        }
+      }
+        & > .plug{
+          height: 100%;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          & > .container{
+            height: calc(100% - 2 * 1px);
+            width: auto;
+            padding: 0 15px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.0);
+            border: 1px solid rgba(255,255,255,0.0);
+            border-radius: 4px;
+            transition: background 0.2s;
+            & > .title{
+              padding-bottom: 15px;
+              p{
+                font-size: 9pt;
+                color: rgba(255,255,255,0.5);
+                font-weight: 400;
+              }
+            }
+            & > .action{
+              width: 100%;
+              & > .buttonPlug{
+                @include button_default(rgba(255,255,255,0.06), rgba(255,255,255,0.5));
+                & > .container{
+                  & > .icon{
+                    margin-right:10px;
+                    padding-right: 10px;
+                    position: relative;
+                    img{
+                      width: 30px;
+                      height: 30px;
+                      object-fit: contain;
+                      //filter: grayscale(100%);
+                    }
+                    &:after{
+                      content: '';
+                      position: absolute;
+                      right: - 2px;
+                      height: 100%;
+                      width: 1px;
+                      background: $colorTable_Orange1;
+                    }
+                  }
+                }
+                &:hover{
+                  & > .container {
+                    background: rgba(255, 255, 255, 0.2);
+                    transition: background 0.2s;
+                  }
+
+              }
+            }
+
+
+            }
+          }
+        }
+
+    }
+
+  }
+
+}

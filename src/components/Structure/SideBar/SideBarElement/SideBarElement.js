@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import styles from './SideBarElement.module.scss';
-import {withRouter} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import Icon from "../../../Common/Icon/Icon";
 import Config from "../../../../config/Config";
 import {Helper} from "../../../../config/Util";
@@ -29,11 +29,11 @@ class SideBarElement extends Component {
         if(target === this.props.location.pathname) className = cx(className, styles.active);
 
         return(
-            <div
+            <Link
                 className={className}
+                to={target}
                 onClick={(event)=> {
                     if(page.route === Config.ROUTE_PAGE_PROFILE) this.props.updateHistory([...this.props.reduxHistory, this.props.location.pathname]);
-                    this.props.history.push(target);
                 }}
             >
                 <div className={styles.inner}>
@@ -46,7 +46,7 @@ class SideBarElement extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Link>
         )
     }
 

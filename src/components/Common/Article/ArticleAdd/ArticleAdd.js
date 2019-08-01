@@ -3,16 +3,16 @@
  */
 
 import React from 'react';
-import styles from './NetworkAdd.module.scss'
+import styles from './ArticleAdd.module.scss'
 import {Link} from "react-router-dom";
 import Config from "../../../../config/Config";
 
 
-const NetworkAdd = (props) => {
+const ArticleAdd = (props) => {
 
     return (
-        <Link to={{pathname : Config.ROUTE_PAGE_NETWORK_ADD}}>
-            <div className={styles.NetworkAdd}>
+        <Link to={{pathname : Config.ROUTE_PAGE_ARTICLE_ADD}}>
+            <div className={styles.ArticleAdd}>
                 <div className={styles.container}>
                     <div className={styles.content}>
                         <div className={styles.shape}>
@@ -23,11 +23,11 @@ const NetworkAdd = (props) => {
                 </div>
 
                 <div className={styles.info}>
-                    <div className={styles.title}><p>Add Network</p></div>
+                    <div className={styles.title}><p>Create Article</p></div>
                 </div>
             </div>
         </Link>
     )
 };
 
-export default NetworkAdd;
+export default ArticleAdd;

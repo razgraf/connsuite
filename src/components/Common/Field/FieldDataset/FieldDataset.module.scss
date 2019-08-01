@@ -1,0 +1,71 @@
+@import "../../../../config/Config";
+
+
+.FieldDataset{
+  position: relative;
+  width: 0;
+  height: 0;
+  display: inline-flex;
+
+  &[data-visible="true"]{
+    opacity: 1;
+    pointer-events: all;
+  }
+  &[data-visible="false"]{
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  & > .content{
+    position: absolute;
+    z-index: 15;
+    top: 0;
+    right: 0;
+    width: 200px;
+    max-height: 200px;
+    padding: 0;
+    background: #ffffff;
+    border: 1px solid $colorTable_GrayBlue_Light;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
+
+    -webkit-appearance: none;
+    list-style-type: none;
+
+
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    &:empty{
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    & > .item{
+      width: calc(100% - 2 * 14px);
+      margin: 0;
+      padding: 8px 14px;
+      text-align: left;
+      background: #ffffff;
+      transition: background 0.1s;
+      cursor: pointer;
+
+      -webkit-appearance: none;
+      list-style-type: none;
+      &::marker{display: none}
+      span{
+        color: $colorTable_GrayBlue_Black;
+        font-size: 9pt;
+        font-weight: 500;
+      }
+      &:hover, &:focus{
+        background: lighten($colorTable_GrayBlue_Light, 3%);
+        transition: background 0.1s;
+      }
+    }
+
+  }
+
+
+}

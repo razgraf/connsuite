@@ -1,0 +1,43 @@
+@import "../../../../../../config/Config";
+
+
+.codex-editor__redactor{
+  padding-bottom: 0;
+  line-height: 1.5em;
+
+  .ce-block__content{
+    max-width: calc(100% - 30px - 80px);
+    margin-left: 30px;
+    margin-right: auto;
+
+    
+
+  }
+}
+
+.ce-toolbar{
+  .ce-toolbar__content{
+    max-width: calc(100% - 30px - 80px);
+    margin-left: 30px;
+    margin-right: auto;
+
+
+
+  }
+}
+
+
+
+
+.codex-editor--empty .ce-block:first-child .ce-paragraph[data-placeholder]:empty::before{
+  color: darken($colorTable_GrayBlue_Light, 15%);
+  font-size: 12pt;
+  font-weight: 300;
+  font-family: $fontSecondary;
+  opacity: 1;
+}
+body {
+  .ce-toolbar__plus {
+    transform: translate3d(0px, calc(-50% + 22px), 0px) scale(.8) !important;
+  }
+}

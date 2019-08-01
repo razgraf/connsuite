@@ -13,7 +13,8 @@ class OverlayIndividual extends Component{
     static propTypes ={
         zIndex : PropTypes.number, /** Usually, the zIndex will be defined in the parent component's CSS, using data-alias */
         visible : PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
-        onClose : PropTypes.func
+        onClose : PropTypes.func,
+        styles  : PropTypes.object
     };
 
     static defaultProps = {
@@ -23,11 +24,11 @@ class OverlayIndividual extends Component{
 
     render() {
 
-        let style = !Helper.isEmpty(this.props.zIndex) ? {zIndex : this.props.zIndex} : {};
+
 
         return(
-            <div style={style} className={styles.Overlay} data-alias={"Overlay"} data-visible={this.props.visible}>
-                <div className={styles.container} onClick={this.props.onClose} />
+            <div style={!Helper.isEmpty(this.props.zIndex) ? {zIndex : this.props.zIndex} : null} className={Helper.dynamicClass(styles, this.props.styles, "Overlay")} data-alias={"Overlay"} data-visible={this.props.visible}>
+                <div className={Helper.dynamicClass(styles, this.props.styles, "container")} onClick={this.props.onClose} />
             </div>
         )
     }

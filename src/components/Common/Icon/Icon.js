@@ -11,11 +11,17 @@ const Icon = (props) => {
     const className =  Helper.isEmpty(props.className) ? "icon image" : props.className;
     const source = !Helper.isEmpty(props.source) ? props.source : props.placeholder;
 
-    if(props.hasOwnProperty("image")) return <div title={props.title} className={className}><img  nopin="nopin" alt={props.alt} src={source}/></div>;
-    if(props.hasOwnProperty("icon")) return <div title={props.title} className={className}><i className={props.round ? "material-icons-round" : props.outline ? "material-icons-outlined" :  "material-icons"}>{props.source}</i></div>;
-    if(props.hasOwnProperty("icon")) return <div title={props.title} className={className}><Emoji symbol={source} label={props.alt} /></div>;
+    let element = <span>Icon-less</span>;
 
-    return <div className={className}><span>Icon-less</span></div>
+    if(props.hasOwnProperty("image")) element = <img  nopin="nopin" alt={props.alt} src={source}/>;
+    else if(props.hasOwnProperty("icon")) element =  <i className={props.round ? "material-icons-round" : props.outline ? "material-icons-outlined" :  "material-icons"}>{props.source}</i>;
+    else if(props.hasOwnProperty("emoji")) element =  <Emoji symbol={source} label={props.alt} />;
+
+    return(
+        <div title={props.title} className={className} onClick={props.onClick}>
+            {element}
+        </div>
+    )
 };
 
 Icon.propTypes = {
@@ -28,11 +34,15 @@ Icon.propTypes = {
     outline : PropTypes.any,
     placeholder : PropTypes.string,
     title : PropTypes.string,
+
+
+    onClick : PropTypes.func
 };
 
 Icon.defaultProps = {
     alt : "",
-    placeholder : require("../../../assets/images/networks/normal/icon_default.png")
+    placeholder : require("../../../assets/images/networks/normal/icon_default.png"),
+    onClick : ()=>{}
 };
 
 export default Icon;

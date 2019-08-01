@@ -15,10 +15,11 @@ import {Helper} from "../../../../config/Util";
 import Emoji from "../../../Common/Emoji/Emoji";
 import Form from "../../../Common/Field/Form/Form";
 import {FieldShowcase} from "../../../Common/Field";
+import BasePage from "../../BasePage";
 
 
 
-class NetworkManagerAdd extends Component{
+class NetworkManagerAdd extends BasePage{
 
     static FIELD_CUSTOM_TITLE = "F_NetworkName";
     static FIELD_CUSTOM_IMAGE = "F_NetworkImage";
@@ -76,6 +77,7 @@ class NetworkManagerAdd extends Component{
 
 
     componentDidMount() {
+        super.componentDidMount();
         this.pickSection(0);
 
         let e = (document.scrollingElement || document.documentElement);
@@ -151,6 +153,7 @@ class NetworkManagerAdd extends Component{
                                                                 ID: NetworkManagerAdd.FIELD_CUSTOM_TITLE,
                                                                 type: 'Text',
                                                                 placeholder: "e.g. My personal website",
+                                                                value : active.title,
                                                                 length: [3, 20],
                                                                 label: {
                                                                     value: "Title",
@@ -166,6 +169,7 @@ class NetworkManagerAdd extends Component{
                                                                 ID: NetworkManagerAdd.FIELD_CUSTOM_IMAGE,
                                                                 type: 'File',
                                                                 fileType: "image",
+                                                                fileName: active.icon.name,
                                                                 label: {
                                                                     value: "Network Icon",
                                                                     help: "Provide a logo or an icon to make this stand out",

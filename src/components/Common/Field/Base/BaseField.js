@@ -49,7 +49,7 @@ class BaseField extends Component{
 
     render() {
         return (
-            <div className={styles.Base} data-warn={this.props.data.warn.value} ref={this.element.container}  style={{gridColumn : "span " + this.props.columnSpan}}>
+            <div className={styles.Base} data-warn={this.props.data.warn.value} ref={this.element.container}  style={{gridColumn : "span " + this.props.columnSpan}} data-visible={this.props.visible} data-style_type={this.props.styleType}>
                 <div className={styles.container}>
                     <FieldLabel data = {{ ...this.props.data.label, warn :this.props.data.warn.value} } referece={this.element.label} />
                     {this.field()}

@@ -1,0 +1,127 @@
+@import "../../../config/Config";
+
+
+
+.Modal{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: $zIndexModal;
+  & > .container{
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & > .card{
+      width: calc(100% - 2 * #{$sizeCanvasPaddingDashboard});
+      max-width: calc(#{$sizeModalMaxWidth} - 2 * #{$sizeCanvasPaddingDashboard});
+      & > .content{
+        width: 100%;
+        border-radius: $sizeModalBorderRadius;
+        overflow: hidden;
+        & > .modal-header{
+          background: #ffffff;
+          width: calc(100% - 2 * #{$sizeModalPadding});
+          padding: $sizeModalPadding;
+          display: flex;
+          align-items: center;
+          border-bottom: 1px solid $colorTable_GrayBlue_Light;
+          & > .title{
+            flex: 1;
+            padding-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            p{
+              font-size: 14pt;
+              color: $colorTable_GrayBlue_Black;
+              font-weight: 500;
+            }
+          }
+          & > .action{
+            & > .close {
+              cursor: pointer;
+               & > .icon{
+                 height: 36px;
+                 width: 36px;
+                 border-radius: 18px;
+                 background: lighten($colorTable_GrayBlue_Light, 5%);
+                 display: flex;
+                 align-items: center;
+                 justify-content: center;
+                 transition: background 0.2s;
+
+                 i{
+                   color: $colorTable_GrayBlue_Dark;
+                   font-size: 12pt;
+                   transition: color 0.2s;
+                 }
+
+                 &:hover, &:active{
+                   background: lighten($colorTable_GrayBlue_Light, 0%);
+                   transition: background 0.2s;
+                   i{
+                     color: $colorTable_Red1;
+                     transition: color 0.2s;
+                   }
+                 }
+               }
+            }
+          }
+        }
+
+        & > .modal-body{
+          width: 100%;
+        }
+        & > .modal-footer{
+          border-top: 1px solid $colorTable_GrayBlue_Light;
+          width: calc(100% - 2 * #{$sizeModalPadding});
+          background: #ffffff;
+          padding: $sizeModalPadding;
+
+
+          & > .content{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+
+            & > *{
+              margin-right: 10px;
+              &:last-child{
+                margin-right: 0;
+              }
+            }
+
+            & > .modal-buttonClose{
+              @include button_simple_gray;
+            }
+          }
+
+        }
+      }
+    }
+  }
+
+
+  &[data-visible="true"]{
+    pointer-events: all;
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.2s, opacity 0.15s;
+    will-change: transform, opacity;
+  }
+  &[data-visible="false"]{
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: transform 0.2s, opacity 0.15s;
+    will-change: transform, opacity;
+  }
+}

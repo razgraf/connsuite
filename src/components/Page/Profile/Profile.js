@@ -1,7 +1,7 @@
 /**
  * Created by @VanSoftware on 2019-07-17.
  */
-import React, {PureComponent} from 'react';
+import React from 'react';
 import cx from "classnames";
 import styles from "./Profile.module.scss";
 import Cover from "../../Structure/Cover/Cover";
@@ -21,8 +21,9 @@ import {Button, ButtonType} from "../../Common/Button/Button";
 import {Helper} from "../../../config/Util";
 import Icon from "../../Common/Icon/Icon";
 import Footer from "../../Structure/Footer/Footer";
+import BasePage from "../BasePage";
 
-class Profile extends PureComponent{
+class Profile extends BasePage{
 
 
     constructor(props){
@@ -51,6 +52,7 @@ class Profile extends PureComponent{
 
 
     componentDidMount() {
+        super.componentDidMount();
         window.addEventListener("scroll",this.watchScroll);
         this.watchScroll();
     }
@@ -308,7 +310,7 @@ class Profile extends PureComponent{
                     </div>
                 </section>
 
-                <Footer data-design={"full"}/>
+                <Footer design={"full"}/>
 
             </div>
         )

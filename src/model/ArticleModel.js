@@ -123,7 +123,7 @@ class ArticleModel {
         this._priority = value;
     }
     get skills() {
-        return this._skills;
+        return this._skills ? this._skills : [];
     }
 
     set skills(value) {
@@ -146,7 +146,7 @@ class ArticleModel {
     }
 
     get categories() {
-        return this._categories;
+        return this._categories ? this._categories : [];
     }
 
     set categories(value) {
@@ -193,7 +193,7 @@ class ArticleModel {
         this.priority = Helper.getValue(ArticleModel.PARAM_PRIORITY, object);
         
         this.description = Helper.getValue(ArticleModel.PARAM_DESCRIPTION, object);
-        this.content = Helper.getValue(ArticleModel.PARAM_CONTENT, object);
+        this.content = Helper.sanitize(Helper.getValue(ArticleModel.PARAM_CONTENT, object),{});
         
         this.createdAt =  Helper.getValue(ArticleModel.PARAM_CREATED_AT, object);
         this.updatedAt =  Helper.getValue(ArticleModel.PARAM_UPDATED_AT, object);
@@ -267,7 +267,7 @@ class ArticleModel {
         source : PropTypes.string,
 
         description : PropTypes.string,
-        content : PropTypes.string,
+        content : PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 
         createdAt : PropTypes.string,
         updatedAt : PropTypes.string,

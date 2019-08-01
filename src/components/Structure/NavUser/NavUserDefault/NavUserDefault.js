@@ -14,6 +14,7 @@ import cx from 'classnames'
 
 class NavUserDefault extends Component{
 
+
     render(){
 
 
@@ -38,11 +39,10 @@ class NavUserDefault extends Component{
 
         }
 
-
         return(
             <nav className={cx(styles.NavUser, styles.NavUserDefault)}>
                 <div className={styles.container}>
-                    <div onClick={onBackClick}  className={styles.logo} data-back={withReturn}>
+                    <div onClick={onBackClick}  className={styles.logo} data-back={withReturn} data-section={"logo"}>
                         <Icon image className={styles.default} source={require("../../../../assets/images/logo.png")} alt={""} />
                         {
                             withReturn
@@ -51,7 +51,7 @@ class NavUserDefault extends Component{
                         }
                     </div>
 
-                    <div className={styles.content}>
+                    <div className={styles.content} data-section={"content"}>
                         {
                             withReturn
                                 ? <div className={styles.title}>
@@ -62,7 +62,7 @@ class NavUserDefault extends Component{
                         }
                     </div>
 
-                    <div className={styles.account}>
+                    <div className={styles.account} data-section={"account"}>
                         <div className={styles.container}>
                             <div className={styles.image}>
                                 <img alt={""} src={this.props.self.image.source}/>

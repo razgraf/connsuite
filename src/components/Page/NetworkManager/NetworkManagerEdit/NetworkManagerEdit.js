@@ -2,7 +2,7 @@
  * Created by @VanSoftware on 2019-07-12.
  */
 
-import React, {Component} from 'react';
+import React from 'react';
 import styles from './../NetworkManager.module.scss'
 import cx from "classnames";
 import Icon from "../../../Common/Icon/Icon";
@@ -13,11 +13,12 @@ import NetworkMini from "../../../Common/Network/NetworkMini/NetworkMini";
 import Config from "../../../../config/Config";
 import {Helper} from "../../../../config/Util";
 import Form from "../../../Common/Field/Form/Form";
+import BasePage from "../../BasePage";
 
 
 
 
-class NetworkManagerEdit extends Component{
+class NetworkManagerEdit extends BasePage{
 
     static FIELD_CUSTOM_TITLE = "F_NetworkName";
     static FIELD_CUSTOM_IMAGE = "F_NetworkImage";
@@ -56,6 +57,7 @@ class NetworkManagerEdit extends Component{
 
 
     componentDidMount() {
+        super.componentDidMount();
         this.pickSection(this.state.activeSection);
         let e = (document.scrollingElement || document.documentElement);
         if (!Helper.isEmpty(e)) e.scrollTop = 0;

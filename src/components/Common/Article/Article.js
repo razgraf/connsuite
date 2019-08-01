@@ -96,15 +96,25 @@ class Article extends Component{
                                            {
                                                this.props.manager
                                                    ? (<div className={styles.categories}>
+                                                        {/*<Icon className={styles.icon} icon round source={"work"} />*/}
                                                        <p>{this.props.article.categories.map((element, index) => (index !== 0 ? ", " : "") + element.title)}</p>
                                                    </div>)
                                                    : null
                                            }
 
                                            <div className={styles.skills}>
-                                               <p>{this.props.article.skills.map((element,key)=>{
-                                                   return (key === 0 ? "" : ", ") + element.title;
-                                               })}</p>
+                                               {/*{*/}
+                                               {/*    this.props.manager ? (*/}
+                                               {/*        <Icon className={styles.icon} icon round*/}
+                                               {/*              source={"category"}/>) : null*/}
+                                               {/*}*/}
+                                               <p>
+                                                   {
+                                                       this.props.article.skills.map((element, key) => {
+                                                           return (key === 0 ? "" : ", ") + element.title;
+                                                       })
+                                                   }
+                                               </p>
                                            </div>
                                        </div>
                                         <Button

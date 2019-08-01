@@ -147,6 +147,7 @@ class BaseFieldModel{
         action :{
             callback : PropTypes.shape({
                 onClick : PropTypes.func,
+                onReady  :PropTypes.func,
                 onChange : PropTypes.func,
                 onInitialized : PropTypes.func,
             }),
@@ -175,6 +176,7 @@ class BaseFieldModel{
 
             callback : {
                 onClick : ()=>{},
+                onReady : ()=>{},
                 onChange : (scope)=>{},
                 onInitialized : ()=>{}
             },

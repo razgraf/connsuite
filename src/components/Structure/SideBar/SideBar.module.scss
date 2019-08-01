@@ -6,25 +6,15 @@
   width: $sizeSideBarWidth;
   position: relative;
   z-index: $zIndexSideBar;
-
-  &[data-bottom="true"]{
-    & > .container{
-      bottom: 0;
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-  }
+  border-right: 1px solid #f5f5f5;
 
 
   & > .container{
     position: fixed;
-    height: calc(100% - calc(#{$sizeNavHeight} + 10px));
+    //height: calc(100% - calc(#{$sizeNavHeight} + 10px));
+    height: auto;
     padding-top: calc(#{$sizeNavHeight} + 10px);
-    border-right: 1px solid #f5f5f5;
     background: #fff;
-
 
 
     & > .divider{

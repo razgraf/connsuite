@@ -33,18 +33,15 @@ class SideBar extends Component {
 
 
 
-
-
     watchScroll = (event) => {
-        let isBottomReached = (window.innerHeight + window.pageYOffset + 33) >= document.body.offsetHeight;
-        if(isBottomReached !== this.state.isBottomReached)
-            this.setState({isBottomReached : isBottomReached});
+
+
     };
 
 
     render() {
         return(
-            <div ref={this.refToSideBar} className={styles.SideBar} data-bottom={this.state.isBottomReached}>
+            <div  className={styles.SideBar}>
                 <div className={styles.container}>
                     <SideBarElement route={Config.ROUTE_PAGE_DASHBOARD} />
                     <SideBarElement route={Config.ROUTE_PAGE_PORTFOLIO}  />

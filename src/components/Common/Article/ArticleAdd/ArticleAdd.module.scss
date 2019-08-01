@@ -1,0 +1,108 @@
+@import "../../../../config/Config";
+
+
+.ArticleAdd{
+  grid-column: span 1;
+  $colorNetworkAddDetails : #e5e5e5;
+  $colorNetworkAddDetailsHover : #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  & > .container {
+    position: relative;
+    width: calc(100% - 2 * 20px);
+    padding: 20px;
+    flex: 1;
+    display: flex;
+
+
+    & > .content {
+      z-index: 1;
+      position: relative;
+      width: calc(100% -  2 * 1px);
+      height: calc(100% -  2 * 1px);
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 4px;
+      border: 1px solid $colorTable_GrayBlue_Light;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s, border 0.2s;
+
+      & > .shape{
+        width: calc(100% - 2 * 60px);
+        height: calc(100% - 2 * 60px);
+        padding: 60px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & > div.vert{
+          height: 100px;
+          width: 1px;
+          background: $colorTable_GrayBlue_Light;
+          position: absolute;
+          transition: background 0.2s;
+        }
+        & > div.horiz{
+          width: 100px;
+          height: 1px;
+          background: $colorTable_GrayBlue_Light;
+          position: absolute;
+          z-index: 1;
+          transition: background 0.2s;
+        }
+      }
+
+
+    }
+  }
+
+  & > .info{
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 45px;
+    & > .title{
+      p{
+        font-size: 10pt;
+        font-weight: 400;
+        font-family: $fontSecondary;
+        color: darken($colorTable_GrayBlue_Light, 10%);
+        transition: color 0.2s;
+      }
+    }
+  }
+
+
+  &:hover{
+    & > .container {
+      & > .content {
+        border: 1px solid darken($colorTable_GrayBlue_Light, 10%);
+        transition: box-shadow 0.2s, border 0.2s;
+
+        & > .shape {
+          & > div.vert, & > div.horiz {
+            background: darken($colorTable_GrayBlue_Light, 10%);
+            transition: background 0.2s;
+          }
+        }
+      }
+    }
+    & > .info{
+      & > .title{
+        p{
+          color: darken($colorTable_GrayBlue_Light, 20%);
+          transition: color 0.2s;
+
+        }
+      }
+    }
+
+  }
+}

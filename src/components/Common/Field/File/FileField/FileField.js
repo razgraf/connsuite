@@ -33,6 +33,12 @@ class FileField extends BaseField{
     };
 
 
+    constructor(props){
+        super(props);
+
+        this.element.button = React.createRef();
+    }
+
     componentDidMount() {
         super.componentDidMount();
         this.setState({
@@ -74,6 +80,7 @@ class FileField extends BaseField{
                 <Button custom={{ style: stylesSpecific, className: "buttonUpload"}}
                         title={Helper.isEmpty(this.state.fileName) ? "Choose" : "Change"}
                         mini={true}
+                        reference={this.element.button}
                         type={ButtonType.MINI}
                         onClick={() => {}}
                 />

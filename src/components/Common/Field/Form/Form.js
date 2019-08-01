@@ -1,8 +1,16 @@
 import React, {Component} from 'react';
 import styles from './Form.module.scss'
 import {Helper} from '../../../../config/Util'
-import {TextField, FileField, URLField, AreaField} from './../index';
+import {
+    TextField,
+    FileField,
+    URLField,
+    AreaField,
+    TagField,
+    EditorJSField,
+} from './../index';
 import PropTypes from "prop-types";
+
 
 
 class Form extends Component{
@@ -84,7 +92,7 @@ class Form extends Component{
             data.height = Helper.getValue( "height",element);
 
 
-
+            data.source =  Helper.getArray("source",element);
 
 
             action.callback = {};
@@ -92,6 +100,7 @@ class Form extends Component{
                 let elementCallback = Helper.getObject("callback",element);
                 action.callback.onClick = Helper.getValue("onClick",elementCallback);
                 action.callback.onChange = Helper.getValue( "onChange",elementCallback);
+                action.callback.onReady = Helper.getValue( "onReady",elementCallback);
             }
             action.onChange = this.doUpdateFieldValue.bind(this);
             action.onUpdateWarn = this.doUpdateFieldWarnValue.bind(this);
@@ -103,7 +112,12 @@ class Form extends Component{
 
 
             field.type = Helper.getValue("type",element);
-            field.columnSpan  =Helper.getValue("columnSpan",element);
+            field.columnSpan  = Helper.getValue("columnSpan",element);
+            field.accentColor = Helper.getValue("accentColor",element);
+            field.visible = Helper.getValue("visible",element);
+
+
+            field.styleType = Helper.getValue("styleType",element);
 
             field.data = data;
             field.action = action;
@@ -120,14 +134,22 @@ class Form extends Component{
 
         let updated = [...this.state.fields];
         let e = null;
-        updated.forEach((element)=> {
-            if(element.data.ID === fieldID) {
-                e = element;
-                element.data.value = value;
+
+        for(let i = 0; i < updated.length; i++){
+            if(updated[i].data.ID === fieldID){
+                e = updated[i];
+                updated[i].data.value = null;
+                updated[i].data.value = value;
+                break;
             }
-        });
+        }
+
+
+
+
+
         this.setState({fields: updated});
-        if(!Helper.isEmpty(e.action.callback.onChange)) e.action.callback.onChange(e, this);
+        if(e !== null &&  !Helper.isEmpty(e.action.callback.onChange)) e.action.callback.onChange(e, this);
 
         this.onUpdate();
 
@@ -201,9 +223,10 @@ class Form extends Component{
 
                             let configuration = {
                                 key : index,
-                                data : element.data,
-                                action : element.action,
-                                columnSpan : element.columnSpan
+                                // data : element.data,
+                                // action : element.action,
+                                // columnSpan : element.columnSpan
+                                ...element
                             };
 
                             switch (element.type) {
@@ -212,6 +235,8 @@ class Form extends Component{
                                 case 'File' : return <FileField {...configuration} />;
                                 case 'URL' : return <URLField {...configuration} />;
                                 case 'Area' : return <AreaField {...configuration} />;
+                                case 'Tag' : return <TagField {...configuration} />;
+                                case 'EditorJSField' : return <EditorJSField {...configuration} />;
                                 default : return <div key={index}/>
                             }
                         })
