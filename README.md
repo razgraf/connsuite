@@ -1,2 +1,3 @@
 # connsuite
-Connsuite v2
+
+Connsuite (ALPHA)
