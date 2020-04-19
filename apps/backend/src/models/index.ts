@@ -1,3 +1,5 @@
+export * from "./network";
+
 export interface Route {
   root: string; // root for router e.g. /networks
   get: string; // get single item

@@ -1,4 +1,4 @@
-import { Route } from "../interfaces";
+import { Route } from "../models";
 
 export const routes: { [key: string]: Route } = {
   network: {
