@@ -1,7 +1,1 @@
-import network from "./network";
-
-const controllers = {
-  network,
-};
-
-export default controllers;
+export { default as NetworkController } from "./network";

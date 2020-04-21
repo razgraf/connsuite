@@ -17,7 +17,7 @@ export const routes: { [key: string]: Route } = {
   },
 };
 
-const constants: object = {
+const constants = {
   routes,
 };
 

@@ -5,7 +5,7 @@ export enum NetworkType {
   Custom = "custom",
 }
 
-export class NetworkSchema {
+export class Network {
   @prop({ required: true })
   description!: string;
 
@@ -23,4 +23,4 @@ export class NetworkSchema {
   username!: string;
 }
 
-export const Network = getModelForClass(NetworkSchema);
+export const NetworkModel = getModelForClass(Network);

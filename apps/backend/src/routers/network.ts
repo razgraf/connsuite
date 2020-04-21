@@ -1,13 +1,13 @@
 import express from "express";
 import { routes } from "../constants";
-import controllers from "../controllers";
+import { NetworkController } from "../controllers";
 
-const router = express.Router();
+const NetworkRouter = express.Router();
 
-router.get(routes.network.get, controllers.network.get);
-router.post(routes.network.create, controllers.network.create);
-router.patch(routes.network.update, controllers.network.update);
-router.patch(routes.network.remove, controllers.network.remove);
-router.get(routes.network.list, controllers.network.list);
+NetworkRouter.get(routes.network.get, NetworkController.get);
+NetworkRouter.post(routes.network.create, NetworkController.create);
+NetworkRouter.patch(routes.network.update, NetworkController.update);
+NetworkRouter.patch(routes.network.remove, NetworkController.remove);
+NetworkRouter.get(routes.network.list, NetworkController.list);
 
-export default router;
+export default NetworkRouter;

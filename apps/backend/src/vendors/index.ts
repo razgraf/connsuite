@@ -1,7 +1,2 @@
-import mongo from "./mongo";
-
-const vendors = {
-  mongo,
-};
-
-export default vendors;
+export { default as mongo } from "./mongo";
+export * as dotenv from "dotenv";

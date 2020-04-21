@@ -30,11 +30,11 @@
     "typescript": "^3.8.3"
   },
   "license": "ISC",
-  "main": "src/server.js",
+  "main": "src/app.js",
   "scripts": {
     "build": "tsc -p .",
-    "dev": "PORT=3002 nodemon src/server.ts",
-    "start": "PORT=3002 node dist/server.js",
+    "dev": "PORT=3002 nodemon src/app.ts",
+    "start": "PORT=3002 node dist/app.js",
     "u-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "u-lint": "eslint . --ext .ts"
   }
