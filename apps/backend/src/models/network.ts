@@ -23,4 +23,4 @@ export class Network {
   username!: string;
 }
 
-export const NetworkModel = getModelForClass(Network);
+export const NetworkModel = getModelForClass(Network, { schemaOptions: { timestamps: true } });

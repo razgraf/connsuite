@@ -8,4 +8,6 @@ abstract class BaseController {
   public static list: (req: Request, res: Response) => Promise<void>;
 }
 
+export abstract class ManagerController {}
+
 export default BaseController;
