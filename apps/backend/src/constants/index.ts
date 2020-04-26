@@ -21,23 +21,19 @@ export const routes = {
 
     google: {
       root: "/google",
-      redirect: "/google/redirect",
+      redirect: "/google/redirect", // required by the old passport js implementation
     },
     facebook: {
       root: "/facebook",
-      redirect: "/facebook/redirect",
     },
     linkedin: {
       root: "/linkedin",
-      redirect: "/linkedin/redirect",
     },
     twitter: {
       root: "/twitter",
-      redirect: "/twitter/redirect",
     },
     local: {
       root: "/local",
-      redirect: "/local/redirect",
     },
 
     /** UTILITY **/

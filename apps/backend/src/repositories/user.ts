@@ -1,6 +1,8 @@
 import _ from "lodash";
 import BaseRepository from "./base";
-import { Strategy, User, Username, UserModel } from "../models";
+import UsernameRepository from "./username";
+import { defaults } from "../constants";
+import { Strategy, User, Username, UserModel, Name } from "../models";
 
 export default class UserRepository extends BaseRepository<User> {
   private static instance: UserRepository;
@@ -54,5 +56,31 @@ export default class UserRepository extends BaseRepository<User> {
       return user ? true : false;
     }
     return false;
+  }
+
+  public async createFromGoogle(payload: any): Promise<User | null> {
+    const { firstName, lastName, email, sub: googleId } = payload;
+
+    const name: Name = {
+      first: firstName,
+      last: lastName,
+    };
+
+    const user: User = await UserRepository.getInstance().create({
+      name,
+      email,
+      description: defaults.description,
+      googleId,
+    });
+
+    const value = (await UsernameRepository.getInstance().generateFromName(name)) || defaults.username;
+    const username: Username = await UsernameRepository.getInstance().create({
+      isPrimary: true,
+      user,
+      value,
+    });
+
+    user.usernames?.push(username);
+    return user;
   }
 }
