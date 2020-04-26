@@ -3,8 +3,7 @@ module.exports = {
     browser: true,
     es6: true,
   },
-
-  extends: ["react-app", "plugin:react/recommended", "prettier", "airbnb"],
+  extends: ["plugin:react/recommended", "prettier", "airbnb", "airbnb/hooks"],
   globals: {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly",
@@ -16,7 +15,6 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: "module",
   },
-
   plugins: ["react"],
   rules: {
     "arrow-body-style": "off",
