@@ -5,6 +5,8 @@ const sizes = {
 
   buttonTitle: "10pt",
   buttonTitleMini: "9pt",
+
+  sectionTitle: "18pt",
 };
 
 export default sizes;

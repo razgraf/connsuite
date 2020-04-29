@@ -31,10 +31,12 @@ export const comeUp = keyframes`
 
 export const gradientMovement = keyframes`
   from{
-    background-size: 300%;
+    background-size: 200vw;
+    background-position: 0;
   } 
   to{
-    background-size: 100%;
+    background-size: 200vw;
+    background-position: -100vw;
   }
 `;
 
@@ -67,13 +69,12 @@ export const fadeInComeUpCss = css`
 `;
 
 export const gradientMovementCss = css`
-  background-size: 200%;
   animation-name: ${gradientMovement};
-  animation-duration: 2000ms;
+  animation-duration: 3000ms;
   animation-iteration-count: infinite;
   animation-direction: alternate;
   animation-fill-mode: forwards;
-  animation-timing-function: ease-in;
+  animation-timing-function: ease-in-out;
 `;
 
 const animations = {

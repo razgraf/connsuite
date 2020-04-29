@@ -34,11 +34,6 @@ export default class Document extends NextDocument {
         <Head>
           <link
             as="font"
-            href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Round|Material+Icons+Outlined"
-            rel="preload"
-          />
-          <link
-            as="font"
             href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
             rel="preload"
           />

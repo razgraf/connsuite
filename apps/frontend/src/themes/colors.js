@@ -5,14 +5,30 @@ const colors = {
   black: "#000000",
   dark: "#1f2133",
 
-  blue: "#2979FF",
-
   grayGhost: "#fcfcfc",
   grayLight: "#f5f5f5",
   grayAccent: "#eeeeee",
   grayClear: "#dddddd",
+  grayBlueBlack: "#40474f",
+  grayBlueDark: "#8B9AAC",
+  grayBlueMedium: "#b3bed5",
+  grayBlueNormal: "#d5dbe1",
+  grayBlueLight: "#e4e8f0",
+  grayBlueGhost: "#F6F9FE",
 
   transparent: "transparent",
+
+  blue: "#2979FF",
+  blueSuite: "#04BEFE",
+  blueFaded: "#03A0DC",
+  purple: "#7F00FF",
+  pink: "#E100FF",
+  red: "#F44336",
+  green: "#4CAF50",
+  yellow: "#FFEB3B",
+  orange: "#FF9800",
+
+  google: "#E13F2A",
 };
 
 export const gradients = {

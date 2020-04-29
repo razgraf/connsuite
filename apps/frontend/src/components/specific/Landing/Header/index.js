@@ -4,6 +4,7 @@ import styled from "styled-components";
 import AssetWave from "../../../../assets/shape/wave.svg";
 
 import { Button, Emoji } from "../../../atoms";
+import { pages } from "../../../../constants";
 import { components } from "../../../../themes";
 
 const Wrapper = styled.div`
@@ -114,7 +115,7 @@ function Header() {
           <Actions>
             <Button
               type={t => t.router}
-              to="#connect"
+              to={`${pages.landing.root}#connect`}
               title={
                 <>
                   <Emoji label="!" symbol="⭐️" /> Let&apos;s do it!
@@ -123,7 +124,13 @@ function Header() {
               appearance={t => t.solid}
               accent={t => t.dark}
             />
-            <Button type={t => t.router} to="#learn" title="Learn more" appearance={t => t.outline} accent={t => t.white} />
+            <Button
+              type={t => t.router}
+              to={`${pages.landing.root}#learn`}
+              title="Learn more"
+              appearance={t => t.outline}
+              accent={t => t.white}
+            />
           </Actions>
         </Left>
         <Right />

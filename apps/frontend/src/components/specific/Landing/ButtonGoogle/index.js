@@ -1,29 +1,40 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
 import { GoogleLogin } from "react-google-login";
 import { google } from "../../../../vendors";
+import { Button } from "../../../atoms";
 
-function ButtonGoogle() {
+function ButtonGoogle({ isDisabled }) {
   return (
     <GoogleLogin
       clientId={google.configuration.clientId}
-      render={renderProps => (
-        <button onClick={renderProps.onClick} disabled={renderProps.disabled}>
-          This is my custom Google button
-        </button>
+      render={({ onClick, disabled }) => (
+        <Button
+          type={t => t.button}
+          title="Connect with Google"
+          appearance={t => t.solid}
+          accent={t => t.google}
+          onClick={onClick}
+          isDisabled={disabled || isDisabled}
+        />
       )}
       buttonText="Login"
       onSuccess={({ tokenId }) => {
-        console.log("success");
-        //send this to server
+        console.log("success", tokenId);
       }}
       onFailure={(error, details) => {
         console.log("fail", error, details);
       }}
-      cookiePolicy={"single_host_origin"}
+      cookiePolicy="single_host_origin"
     />
   );
 }
+
+ButtonGoogle.propTypes = {
+  isDisabled: PropTypes.bool,
+};
+ButtonGoogle.defaultProps = {
+  isDisabled: false,
+};
 
 export default ButtonGoogle;

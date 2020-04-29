@@ -1,4 +1,8 @@
-export const pages = {};
+export const pages = {
+  landing: {
+    root: "/",
+  },
+};
 
 export const subpages = {};
 
@@ -12,27 +16,6 @@ export const types = {
   nav: {
     platform: "platform",
     presentation: "presentation",
-  },
-  button: {
-    appearance: {
-      solid: "solid",
-      outline: "outline",
-      gradient: "gradient",
-    },
-    accent: {
-      white: "white",
-      whiteToPrimary: "whiteToPrimary",
-      primary: "primary",
-      secondary: "secondary",
-      darkGray: "darkGray",
-    },
-    type: {
-      button: "button",
-      lin: "link",
-      router: "router",
-      routerDecorator: "router-decorator",
-      hashRouter: "hash-router",
-    },
   },
 };
 

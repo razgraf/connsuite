@@ -83,10 +83,10 @@ function Title({ design, isMini, parent, title, titleMedium, titleShort }) {
 Title.propTypes = {
   design: PropTypes.shape({}).isRequired,
   isMini: PropTypes.bool,
-  parent: PropTypes.shape({}).isRequired,
-  title: PropTypes.string.isRequired,
-  titleShort: PropTypes.string, // empty string will hide the title on small screens
-  titleMedium: PropTypes.string, // empty string will hide the title on medium screens
+  parent: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  titleShort: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // empty string will hide the title on small screens
+  titleMedium: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // empty string will hide the title on medium screens
 };
 
 Title.defaultProps = {

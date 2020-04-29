@@ -1,19 +1,19 @@
-import typy from "typy";
+import _ from "lodash";
 
 export function getAsset({ type, source }) {
   let asset = null;
   try {
     switch (type) {
       case "cover": {
-        if (typy(source, "cover.content").isTruthy) {
-          const name = `projects/${typy(source, "id").safeString}/${typy(source, "cover.content").safeString}`;
+        if (_.get(source, "cover.content")) {
+          const name = `projects/${_.get(source, "id")}/${_.get(source, "cover.content")}`;
           asset = `/images/${name}`;
         }
         break;
       }
       case "part": {
-        if (typy(source, "content").isTruthy) {
-          const name = `projects/${typy(source, "id").safeString}/${typy(source, "content").safeString}`;
+        if (_.get(source, "content")) {
+          const name = `projects/${_.get(source, "id")}/${_.get(source, "content")}`;
           asset = `/images/${name}`;
         }
         break;

@@ -6,9 +6,8 @@ import Router from "next/router";
 import Link from "next/link";
 import { darken } from "polished";
 
-import { types } from "../../../constants";
 import Title from "./Title";
-import { useDesigner } from "./designer";
+import { types, useDesigner } from "./designer";
 
 const wrapperCss = css`
   ${props => props.theme.flexRowNoWrap};
@@ -118,17 +117,6 @@ const ButtonWrapper = styled.div`
   ${wrapperCss};
 `;
 
-const RouterWrapper = props => {
-  const { to } = props;
-  return (
-    <Link href={to}>
-      <ButtonWrapper {...props} />
-    </Link>
-  );
-};
-
-const HashRouterWrapper = RouterWrapper;
-
 const LoaderWrapper = styled.div`
   position: absolute;
   right: 1rem;
@@ -236,16 +224,13 @@ function Button({
       );
     case types.button.type.router:
       return (
-        <RouterWrapper className={className} shared={sharedProps} to={to} onClick={onFinalClick}>
-          {renderBody(RouterWrapper)}
-        </RouterWrapper>
+        <Link href={to}>
+          <ButtonWrapper className={className} shared={sharedProps} onClick={onFinalClick}>
+            {renderBody(ButtonWrapper)}
+          </ButtonWrapper>
+        </Link>
       );
-    case types.button.type.hashRouter:
-      return (
-        <HashRouterWrapper className={className} smooth shared={sharedProps} to={to} onClick={onFinalClick}>
-          {renderBody(HashRouterWrapper)}
-        </HashRouterWrapper>
-      );
+
     default:
       return (
         <ButtonWrapper className={className} shared={sharedProps} onClick={onFinalClick}>
@@ -288,9 +273,18 @@ Button.propTypes = {
   isMini: PropTypes.bool,
   onClick: PropTypes.func,
   target: PropTypes.string,
-  title: PropTypes.string,
-  titleShort: PropTypes.string, // empty string will hide the title on small screens
-  titleMedium: PropTypes.string, // empty string will hide the title on medium screens
+  /**
+   * @param {string|object} title Default title for the button
+   */
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  /**
+   * @param {string|object} titleShort Adaptation of the title for small screens. Empty string will hide the title on small screens
+   */
+  titleShort: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  /**
+   * @param {string|object} titleMedium Adaptation of the title for medium screens. Empty string will hide the title on medium screens
+   */
+  titleMedium: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   to: PropTypes.string,
   /**
    * @param {string|ValueGenerator} type The type/behaviour of the button (router, _blank anchor, ...)

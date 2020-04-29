@@ -1,7 +1,7 @@
 import React from "react";
 import { ThemeProvider as Provider, createGlobalStyle } from "styled-components";
 
-import animations from "./animations";
+import animations, { fadeInCss } from "./animations";
 import colors, { gradients } from "./colors";
 import components from "./components";
 import fonts from "./fonts";

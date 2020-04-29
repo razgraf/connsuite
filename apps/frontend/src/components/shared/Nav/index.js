@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import AssetLogo from "../../../assets/logo/logo_horiz_white.png";
-import { types } from "../../../constants";
+import { types, pages } from "../../../constants";
 import { components } from "../../../themes";
 import { Button } from "../../atoms";
 
@@ -103,7 +103,14 @@ export function NavPresentation({ accent }) {
             <ActionItemContent>About</ActionItemContent>
             <ActionItemLine />
           </ActionItem>
-          <ActionButton appearance={t => t.outline} accent={t => t.whiteToPrimary} title="Connect" isMini />
+          <ActionButton
+            to={`${pages.landing.root}#connect`}
+            appearance={t => t.outline}
+            accent={t => t.whiteToPrimary}
+            title="Connect"
+            type="router"
+            isMini
+          />
         </Actions>
       </Content>
     </Wrapper>

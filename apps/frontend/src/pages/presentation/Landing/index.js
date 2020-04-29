@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import Nav from "../../../components/shared/Nav";
-import { Header } from "../../../components/specific/Landing";
+import { Header, Value, Finder, Connect } from "../../../components/specific/Landing";
 import { types } from "../../../constants";
 
 const Page = styled.div`
@@ -26,6 +26,11 @@ const TopUnderlay = styled.div`
   position: absolute;
 `;
 
+const Main = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
 function Landing() {
   return (
     <Page>
@@ -36,6 +41,11 @@ function Landing() {
         </TopContent>
         <TopUnderlay />
       </Top>
+      <Main>
+        <Value />
+        <Finder />
+        <Connect />
+      </Main>
     </Page>
   );
 }
