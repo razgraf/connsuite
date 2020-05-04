@@ -62,7 +62,6 @@ export const useDesigner = (accent, appearance) => {
         case types.button.accent.white:
           return { ...baseSolid(colors.white, colors.dark) };
         case types.button.accent.google:
-          console.log(baseSolid(colors.google, colors.white));
           return { ...baseSolid(colors.google, colors.white) };
         default:
           break;

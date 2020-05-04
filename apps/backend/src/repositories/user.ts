@@ -2,7 +2,7 @@ import _ from "lodash";
 import BaseRepository from "./base";
 import UsernameRepository from "./username";
 import { defaults } from "../constants";
-import { Strategy, User, Username, UserModel, Name } from "../models";
+import { Vendor, User, Username, UserModel, Name } from "../models";
 
 export default class UserRepository extends BaseRepository<User> {
   private static instance: UserRepository;
@@ -49,10 +49,16 @@ export default class UserRepository extends BaseRepository<User> {
     });
   }
 
-  public async isAlreadyRegistered(payload: any, strategy: Strategy): Promise<boolean> {
-    if (strategy === Strategy.Google) {
+  public async isAlreadyRegistered(payload: any, vendor: Vendor): Promise<boolean> {
+    if (vendor === Vendor.GOOGLE) {
       const googleId = _.get(payload, "googleId");
+      if (!googleId) return false;
       const user = await this.getByGoogleId(googleId);
+      return user ? true : false;
+    } else if (vendor === Vendor.CLASSIC) {
+      const email = _.get(payload, "email");
+      if (!email) return false;
+      const user = await this.getByEmail(email);
       return user ? true : false;
     }
     return false;

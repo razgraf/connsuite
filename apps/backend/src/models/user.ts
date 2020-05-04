@@ -1,5 +1,5 @@
-import { prop, arrayProp, getModelForClass, Ref } from "@typegoose/typegoose";
 import mongoose from "mongoose";
+import { prop, arrayProp, getModelForClass, Ref } from "@typegoose/typegoose";
 import { Name } from "./atom";
 import { Username } from "./username";
 
@@ -22,6 +22,9 @@ export class User {
 
   @arrayProp({ itemsRef: Username })
   usernames?: Ref<Username>[];
+
+  readonly createdAt?: mongoose.Schema.Types.Date | string;
+  readonly updatedAt?: mongoose.Schema.Types.Date | string;
 }
 
 export const UserModel = getModelForClass(User, { schemaOptions: { timestamps: true } });

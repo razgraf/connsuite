@@ -43,7 +43,7 @@ export default class UsernameRepository extends BaseRepository<Username> {
     return await UsernameModel.findOne({ value });
   }
 
-  public async getByUser(user: User): Promise<Username[]> {
+  public async listByUser(user: User): Promise<Username[]> {
     return (await UsernameModel.find({ user })) || [];
   }
 

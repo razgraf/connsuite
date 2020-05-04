@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
@@ -82,8 +82,13 @@ const Terms = styled.div`
   }
 `;
 
-function Login({ className }) {
+function Login({ className, machine }) {
   const [text, setText] = useState(null);
+
+  useEffect(() => {
+    console.log(machine.current.value);
+  }, [machine.current.value]);
+
   return (
     <Wrapper className={className}>
       <Fields>
@@ -110,7 +115,15 @@ function Login({ className }) {
       </Actions>
       <Divider />
       <Alternative>
-        <ButtonGoogle />
+        <ButtonGoogle
+          isDisabled={![machine.states.idle, machine.states.failure].includes(machine.current.value)}
+          onClick={() => {
+            machine.send("RESET");
+            machine.send("INITIALIZE", { vendor: "GOOGLE" });
+          }}
+          onSuccess={payload => machine.send("SUCCESS", { payload })}
+          onFailure={payload => machine.send("FAILURE", { payload })}
+        />
       </Alternative>
       <Terms>
         <Link href="/terms">
@@ -125,6 +138,11 @@ function Login({ className }) {
 
 Login.propTypes = {
   className: PropTypes.string,
+  machine: PropTypes.shape({
+    current: PropTypes.shape.isRequired,
+    send: PropTypes.func.isRequired,
+    states: PropTypes.shape.isRequired,
+  }).isRequired,
 };
 
 Login.defaultProps = {

@@ -15,8 +15,8 @@ export default class NetworkController extends BaseController {
 
       const us2 = { _id: us._id } as User;
 
-      const uname = await UsernameRepository.getInstance().getByUser(us2);
-      res.send(JSON.stringify({ uname, us2 }));
+      const unames = await UsernameRepository.getInstance().listByUser(us2);
+      res.send(JSON.stringify({ unames, us2 }));
       return;
 
       const user: User = {

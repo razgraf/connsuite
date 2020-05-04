@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { prop, getModelForClass } from "@typegoose/typegoose";
 
 export enum NetworkType {
@@ -6,6 +7,8 @@ export enum NetworkType {
 }
 
 export class Network {
+  readonly _id?: mongoose.Schema.Types.ObjectId | string;
+
   @prop({ required: true })
   description!: string;
 
@@ -21,6 +24,9 @@ export class Network {
 
   @prop({ required: true })
   username!: string;
+
+  readonly createdAt?: mongoose.Schema.Types.Date | string;
+  readonly updatedAt?: mongoose.Schema.Types.Date | string;
 }
 
 export const NetworkModel = getModelForClass(Network, { schemaOptions: { timestamps: true } });

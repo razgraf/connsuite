@@ -19,21 +19,11 @@ export const routes = {
     root: "/auth",
     /** PROVIDERS **/
 
-    google: {
-      root: "/google",
-      redirect: "/google/redirect", // required by the old passport js implementation
-    },
-    facebook: {
-      root: "/facebook",
-    },
-    linkedin: {
-      root: "/linkedin",
-    },
-    twitter: {
-      root: "/twitter",
-    },
-    local: {
-      root: "/local",
+    google: "/google",
+
+    classic: {
+      login: "/classic/login",
+      register: "/classic/register",
     },
 
     /** UTILITY **/

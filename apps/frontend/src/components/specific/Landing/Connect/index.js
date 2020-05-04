@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { rgba } from "polished";
+import { useMachine } from "@xstate/react";
 import IconFlashOn from "@material-ui/icons/FlashOnRounded";
 import IconHowToReg from "@material-ui/icons/HowToRegRounded";
 import { components } from "../../../../themes";
+import { connectMachines } from "../../../../machines";
+
 import Title from "../Title";
 import Login from "./Login";
 import Register from "./Register";
@@ -177,6 +180,7 @@ const StyledRegister = styled(Register)`
 
 function Connect() {
   const [isLogin, setIsLogin] = useState(true);
+  const [loginMachine, sendToLoginMachine] = useMachine(connectMachines.login);
 
   return (
     <Wrapper id="connect">
@@ -202,7 +206,11 @@ function Connect() {
                 </CardHeaderFace>
               </CardHeader>
               <CardMain>
-                <StyledLogin isActive={isLogin} />
+                <StyledLogin
+                  machine={{ current: loginMachine, send: sendToLoginMachine, states: connectMachines.states.login }}
+                  sendToMachine={sendToLoginMachine}
+                  isActive={isLogin}
+                />
                 <StyledRegister isActive={!isLogin} />
               </CardMain>
             </CardContent>

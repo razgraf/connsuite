@@ -108,7 +108,7 @@ function Register({ className }) {
       <Actions>
         <Button type={t => t.button} title="Register a new profile" appearance={t => t.outline} accent={t => t.secondary} />
         <p>or</p>
-        <ButtonGoogle />
+        <ButtonGoogle onClick={() => {}} onFailure={() => {}} onSuccess={() => {}} />
       </Actions>
       <Divider />
       <Terms>

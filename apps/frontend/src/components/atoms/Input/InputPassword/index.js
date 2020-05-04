@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
@@ -54,7 +55,7 @@ function InputPassword({ className, id, help, label, onUpdate, placeholder, inpu
         placeholder={placeholder}
         ref={inputRef}
         type={isVisible ? "text" : "password"}
-        defaultValue={value}
+        defaultValue={_.isNil(value) ? "" : value}
       />
       <VisibleIcon
         data-visible={isVisible}

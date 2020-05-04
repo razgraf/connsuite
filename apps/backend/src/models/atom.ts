@@ -11,7 +11,7 @@ export class Name {
   last!: string;
 }
 
-export enum Strategy {
-  Google = "google",
-  Local = "local",
+export enum Vendor {
+  GOOGLE = "GOOGLE",
+  CLASSIC = "CLASSIC",
 }
