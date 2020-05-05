@@ -15,6 +15,9 @@ export class User {
   email!: string;
 
   @prop()
+  password?: string;
+
+  @prop()
   googleId?: string | number;
 
   @prop({ required: true })

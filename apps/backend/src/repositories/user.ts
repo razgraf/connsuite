@@ -1,8 +1,9 @@
 import _ from "lodash";
+import bcrypt from "bcrypt";
 import BaseRepository from "./base";
 import UsernameRepository from "./username";
 import { defaults } from "../constants";
-import { Vendor, User, Username, UserModel, Name } from "../models";
+import { Vendor, User, Username, UserModel, Name, Request } from "../models";
 
 export default class UserRepository extends BaseRepository<User> {
   private static instance: UserRepository;
@@ -42,14 +43,20 @@ export default class UserRepository extends BaseRepository<User> {
   }
 
   public async addUsername(userId: string, username: Username): Promise<void> {
-    await UserModel.findByIdAndUpdate(userId, {
-      $push: {
-        usernames: username,
+    await UserModel.findByIdAndUpdate(
+      userId,
+      {
+        $push: {
+          usernames: username,
+        },
       },
-    });
+      {
+        upsert: true,
+      },
+    );
   }
 
-  public async isAlreadyRegistered(payload: any, vendor: Vendor): Promise<boolean> {
+  public async isAlreadyRegistered(payload: { googleId?: string; email?: string }, vendor: Vendor): Promise<boolean> {
     if (vendor === Vendor.GOOGLE) {
       const googleId = _.get(payload, "googleId");
       if (!googleId) return false;
@@ -64,19 +71,28 @@ export default class UserRepository extends BaseRepository<User> {
     return false;
   }
 
-  public async createFromGoogle(payload: any): Promise<User | null> {
-    const { firstName, lastName, email, sub: googleId } = payload;
+  public async isPasswordMatching(user: User, clear: string): Promise<boolean> {
+    if (!_.get(user, "password")) return false;
+    return this._comparePassword(clear, user.password || "");
+  }
 
+  /**
+   * Create a user from the Google object
+   * [!] - Run a conflict check for username uniqueness prior to creating the user
+   *
+   * @param payload Google object containint the base user information
+   */
+  public async createFromGoogle(payload: Request.ConnectGoogle): Promise<User | null> {
     const name: Name = {
-      first: firstName,
-      last: lastName,
+      first: payload.firstName,
+      last: payload.lastName,
     };
 
     const user: User = await UserRepository.getInstance().create({
       name,
-      email,
+      email: payload.email,
       description: defaults.description,
-      googleId,
+      googleId: payload.googleId,
     });
 
     const value = (await UsernameRepository.getInstance().generateFromName(name)) || defaults.username;
@@ -88,5 +104,51 @@ export default class UserRepository extends BaseRepository<User> {
 
     user.usernames?.push(username);
     return user;
+  }
+
+  /**
+   * Create a user from the Google object
+   * [!] - Run a conflict check for username uniqueness prior to creating the user
+   *
+   * @param payload Google object containint the base user information
+   */
+  public async createFromClassic(payload: Request.RegisterClassic): Promise<User | null> {
+    const password = this._hashPassword(payload.password);
+
+    const name: Name = {
+      first: payload.firstName,
+      last: payload.lastName,
+    };
+
+    const user: User = await UserRepository.getInstance().create({
+      name,
+      email: payload.email,
+      description: defaults.description,
+      password,
+    });
+
+    const value = payload.username || defaults.username;
+
+    const username: Username = await UsernameRepository.getInstance().create(
+      {
+        isPrimary: true,
+        user,
+        value,
+      },
+      { alter: false },
+    );
+
+    user.usernames?.push(username);
+    return user;
+  }
+
+  /********/
+
+  private _hashPassword(clear: string): string {
+    return bcrypt.hashSync(clear, 10);
+  }
+
+  private _comparePassword(clear: string, hash: string): boolean {
+    return bcrypt.compareSync(clear, hash);
   }
 }

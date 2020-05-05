@@ -15,6 +15,9 @@ export class Usersafe {
   @prop({ required: true })
   safe!: string;
 
+  @prop()
+  agent?: string;
+
   readonly createdAt?: mongoose.Schema.Types.Date | string;
   readonly updatedAt?: mongoose.Schema.Types.Date | string;
 }

@@ -3,6 +3,7 @@ import randomstring from "randomstring";
 import BaseRepository from "./base";
 import { UsersafeError } from "../errors";
 import { User, Usersafe, UsersafeModel } from "../models";
+import { defaults } from "../constants";
 
 export default class UsersafeRepository extends BaseRepository<Usersafe> {
   private static instance: UsersafeRepository;
@@ -15,10 +16,11 @@ export default class UsersafeRepository extends BaseRepository<Usersafe> {
     return await UsersafeModel.findOne({ _id: id });
   }
 
-  public async create(user: User): Promise<Usersafe> {
+  public async create(user: User, agent = defaults.agent): Promise<Usersafe> {
     if (_.isNil(user)) throw new UsersafeError.MissingParams("User");
 
     const usersafe: Usersafe = await UsersafeModel.create({
+      agent,
       user,
       safe: randomstring.generate(),
     });

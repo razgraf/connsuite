@@ -6,6 +6,7 @@ import UsersafeRepository from "./usersafe";
 import { ManagerRepository } from "./base";
 import { AuthError } from "../errors";
 import { User, Usersafe } from "../models";
+import { defaults } from "../constants";
 
 export default class TokenRepository extends ManagerRepository {
   private static instance: TokenRepository;
@@ -14,14 +15,11 @@ export default class TokenRepository extends ManagerRepository {
     return TokenRepository.instance || (TokenRepository.instance = new TokenRepository());
   }
 
-  public async generateToken(user: User): Promise<string> {
+  public async generateToken(user: User, agent = defaults.agent): Promise<string> {
     if (_.isNil(user) || _.isNil(user._id)) throw new AuthError.MissingParams("User");
 
-    const usersafe: Usersafe = await UsersafeRepository.getInstance().create(user);
-    console.log("1. Usersafe:", usersafe);
-
+    const usersafe: Usersafe = await UsersafeRepository.getInstance().create(user, agent);
     const encrypted = await this._encryptToken(String(user._id), usersafe.safe);
-    console.log("2. Encrypted:", encrypted);
 
     return encrypted;
   }

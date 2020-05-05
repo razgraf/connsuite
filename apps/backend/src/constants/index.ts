@@ -33,6 +33,7 @@ export const routes = {
 };
 
 export const defaults = {
+  agent: "Unknown",
   username: "rockstar",
   description: "ConnSuite Rockstar",
 };

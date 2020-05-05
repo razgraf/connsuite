@@ -18,8 +18,8 @@ export default class UsernameRepository extends BaseRepository<Username> {
   public async create(payload: Username, options = { alter: true as boolean }): Promise<Username> {
     if (_.isNil(payload) || !_.get(payload, "user")) throw new UsernameError.MissingParams(JSON.stringify(payload));
 
-    const username: Username = await this.addToDocument(payload, options);
-    await this.bindToUser(username);
+    const username: Username = await this._create(payload, options);
+    await this._bind(username);
 
     return username;
   }
@@ -59,20 +59,23 @@ export default class UsernameRepository extends BaseRepository<Username> {
 
   /** ************* **/
 
-  private async addToDocument(payload: Username, options = { alter: true as boolean }): Promise<Username> {
+  private async _create(payload: Username, options = { alter: true as boolean }): Promise<Username> {
     const { value } = payload;
     let counter = 0;
 
-    const isUnique = await this.getByValue(value);
+    let isUnique = _.isNil(await this.getByValue(value));
     if (!options.alter && !isUnique) throw new UsernameError.NotUnique(value);
 
-    do {
-      counter += 1;
-    } while (!(await this.getByValue(value + String(counter))));
+    if (!isUnique)
+      do {
+        counter += 1;
+        if (counter === 500) throw new UsernameError.NotCreated(">500");
+        isUnique = _.isNil(await this.getByValue(value + String(counter)));
+      } while (!isUnique);
 
     const username: Username = await UsernameModel.create({
       ...payload,
-      value: value + String(counter),
+      value: counter === 0 ? value : value + String(counter),
     });
 
     if (!username) throw new UsernameError.NotCreated(JSON.stringify(username));
@@ -80,7 +83,7 @@ export default class UsernameRepository extends BaseRepository<Username> {
     return username;
   }
 
-  private async bindToUser(username: Username): Promise<void> {
+  private async _bind(username: Username): Promise<void> {
     await UserRepository.getInstance().addUsername(String(username.user), username);
   }
 }
