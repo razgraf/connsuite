@@ -1,7 +1,7 @@
 import _ from "lodash";
 import BaseRepository from "./base";
 import UserRepository from "./user";
-import { UsernameError } from "../errors";
+import { ParamsError, UsernameError } from "../errors";
 import { Name, User, Username, UsernameModel } from "../models";
 
 export default class UsernameRepository extends BaseRepository<Username> {
@@ -16,7 +16,7 @@ export default class UsernameRepository extends BaseRepository<Username> {
   }
 
   public async create(payload: Username, options = { alter: true as boolean }): Promise<Username> {
-    if (_.isNil(payload) || !_.get(payload, "user")) throw new UsernameError.MissingParams(JSON.stringify(payload));
+    if (_.isNil(payload) || !_.get(payload, "user")) throw new ParamsError.Missing(JSON.stringify(payload));
 
     const username: Username = await this._create(payload, options);
     await this._bind(username);
@@ -61,12 +61,12 @@ export default class UsernameRepository extends BaseRepository<Username> {
     let counter = 0;
 
     let isUnique = _.isNil(await this.getByValue(value));
-    if (!options.alter && !isUnique) throw new UsernameError.NotUnique(value);
+    if (!options.alter && !isUnique) throw new ParamsError.Conflict(value);
 
     if (!isUnique)
       do {
         counter += 1;
-        if (counter === 500) throw new UsernameError.NotCreated(">500");
+        if (counter === 500) throw new UsernameError.Failed("Please contact support.");
         isUnique = _.isNil(await this.getByValue(value + String(counter)));
       } while (!isUnique);
 
@@ -75,7 +75,7 @@ export default class UsernameRepository extends BaseRepository<Username> {
       value: counter === 0 ? value : value + String(counter),
     });
 
-    if (!username) throw new UsernameError.NotCreated(JSON.stringify(username));
+    if (!username) throw new UsernameError.Failed("Username couldn't be created.");
 
     return username;
   }

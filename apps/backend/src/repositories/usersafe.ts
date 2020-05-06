@@ -17,7 +17,7 @@ export default class UsersafeRepository extends BaseRepository<Usersafe> {
   }
 
   public async create(user: User, agent = defaults.agent): Promise<Usersafe> {
-    if (_.isNil(user)) throw new UsersafeError.MissingParams("User");
+    if (_.isNil(user)) throw new UsersafeError.Failed();
 
     const usersafe: Usersafe = await UsersafeModel.create({
       agent,
@@ -25,7 +25,7 @@ export default class UsersafeRepository extends BaseRepository<Usersafe> {
       safe: randomstring.generate(),
     });
 
-    if (!usersafe) throw new UsersafeError.NotCreated(JSON.stringify(usersafe));
+    if (!usersafe) throw new UsersafeError.Failed();
 
     return usersafe;
   }

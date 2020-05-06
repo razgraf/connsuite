@@ -7,7 +7,7 @@ import UsersafeRepository from "./usersafe";
 import TokenRepository from "./token";
 import { google } from "../vendors";
 import { ManagerRepository } from "./base";
-import { AuthError } from "../errors";
+import { ParamsError, AuthError } from "../errors";
 import { User, Vendor, Request, Usersafe } from "../models";
 
 export default class AuthRepository extends ManagerRepository {
@@ -18,7 +18,7 @@ export default class AuthRepository extends ManagerRepository {
   }
 
   public async google(body: any): Promise<string> {
-    if (_.isNil(body) || !_.get(body, "identity")) throw new AuthError.MissingParams("Google Auth Token");
+    if (_.isNil(body) || !_.get(body, "identity")) throw new ParamsError.Missing("Google Auth Token");
 
     const ticket = await google.getTicket(body.identity);
 
@@ -47,7 +47,7 @@ export default class AuthRepository extends ManagerRepository {
       user = (await UserRepository.getInstance().createFromGoogle(googleData)) as User;
     } else user = (await UserRepository.getInstance().getByGoogleId(googleData.googleId)) as User;
 
-    if (!user) throw new AuthError.RegistrationError("ConnectGoogle");
+    if (!user) throw new AuthError.Failed("Could not create an account with Google. Try another method.");
 
     const safe = await TokenRepository.getInstance().generateToken(user, body.agent);
 
@@ -55,30 +55,28 @@ export default class AuthRepository extends ManagerRepository {
   }
 
   public async register(body: Request.RegisterClassic): Promise<string> {
-    if (_.isNil(body)) throw new AuthError.MissingParams("All");
-    if (!_.get(body, "firstName")) throw new AuthError.MissingParams("Missing First Name.");
-    if (!_.get(body, "lastName")) throw new AuthError.MissingParams("Missing Last Name.");
-    if (!_.get(body, "email")) throw new AuthError.MissingParams("Missing Email.");
-    if (!_.get(body, "password")) throw new AuthError.MissingParams("Missing Password.");
-    if (!_.get(body, "username")) throw new AuthError.MissingParams("Missing Username.");
+    if (_.isNil(body)) throw new ParamsError.Missing("All");
+    if (!_.get(body, "firstName")) throw new ParamsError.Missing("Missing First Name.");
+    if (!_.get(body, "lastName")) throw new ParamsError.Missing("Missing Last Name.");
+    if (!_.get(body, "email")) throw new ParamsError.Missing("Missing Email.");
+    if (!_.get(body, "password")) throw new ParamsError.Missing("Missing Password.");
+    if (!_.get(body, "username")) throw new ParamsError.Missing("Missing Username.");
 
-    if (!gates.isNameAcceptable(body.firstName)) throw new AuthError.WrongRegistrationParams(policy.name);
-    if (!gates.isNameAcceptable(body.lastName)) throw new AuthError.WrongRegistrationParams(policy.name);
-    if (!gates.isUsernameAcceptable(body.username)) throw new AuthError.WrongRegistrationParams(policy.username);
-    if (!gates.isEmailAcceptable(body.email)) throw new AuthError.WrongRegistrationParams(policy.email);
-    if (!gates.isPasswordAcceptable(body.password)) throw new AuthError.WrongRegistrationParams(policy.password);
+    if (!gates.isNameAcceptable(body.firstName)) throw new ParamsError.Invalid(policy.name);
+    if (!gates.isNameAcceptable(body.lastName)) throw new ParamsError.Invalid(policy.name);
+    if (!gates.isUsernameAcceptable(body.username)) throw new ParamsError.Invalid(policy.username);
+    if (!gates.isEmailAcceptable(body.email)) throw new ParamsError.Invalid(policy.email);
+    if (!gates.isPasswordAcceptable(body.password)) throw new ParamsError.Invalid(policy.password);
 
     const isAlreadyRegistered: boolean = await UserRepository.getInstance().isAlreadyRegistered(body, Vendor.CLASSIC);
-    if (isAlreadyRegistered)
-      throw new AuthError.CredentialsNotUnique(`The email ${body.email} is already linked to an account`);
+    if (isAlreadyRegistered) throw new ParamsError.Conflict(`The email ${body.email} is already linked to an account`);
 
     const isUsernameTaken: boolean = (await UsernameRepository.getInstance().getByValue(body.username)) !== null;
-    if (isUsernameTaken)
-      throw new AuthError.CredentialsNotUnique(`The username ${body.username} is already used by someone.`);
+    if (isUsernameTaken) throw new ParamsError.Conflict(`The username ${body.username} is already used by someone.`);
 
     const user: User = (await UserRepository.getInstance().createFromClassic(body)) as User;
 
-    if (!user) throw new AuthError.RegistrationError("RegisterClassic");
+    if (!user) throw new AuthError.Failed("Could not create a new account. Please try again.");
 
     const safe = await TokenRepository.getInstance().generateToken(user, body.agent);
 
@@ -87,25 +85,25 @@ export default class AuthRepository extends ManagerRepository {
 
   /** [BAD_REQUEST, NOT_ACCEPTABLE, NOT_FOUND, CONFLICT] */
   public async login(body: Request.LoginClassic): Promise<string> {
-    if (_.isNil(body)) throw new AuthError.MissingParams("All");
+    if (_.isNil(body)) throw new ParamsError.Missing("No parameteres have been provided.");
 
-    if (!_.get(body, "email")) throw new AuthError.MissingParams("Missing Email.");
-    if (!_.get(body, "password")) throw new AuthError.MissingParams("Missing Password.");
+    if (!_.get(body, "email")) throw new ParamsError.Missing("Missing Email.");
+    if (!_.get(body, "password")) throw new ParamsError.Missing("Missing Password.");
 
-    if (!gates.isEmailAcceptable(body.email)) throw new AuthError.WrongRegistrationParams(policy.email);
-    if (!gates.isPasswordAcceptable(body.password)) throw new AuthError.WrongRegistrationParams(policy.password);
+    if (!gates.isEmailAcceptable(body.email)) throw new ParamsError.Invalid(policy.email);
+    if (!gates.isPasswordAcceptable(body.password)) throw new ParamsError.Invalid(policy.password);
 
     const user: User = (await UserRepository.getInstance().getByEmail(body.email)) as User;
 
     if (!user) throw new AuthError.UserNotFound("This email doesn't belong to any of our users.");
 
     if (!user.password)
-      throw new AuthError.UserNotClassic(
-        "This account was registered with a custom provider (e.g. Google). Try connecting with that provider.",
+      throw new AuthError.UserNotFound(
+        "This account was created with a provider (e.g. Google). Try again with that provider.",
       );
 
     if (!(await UserRepository.getInstance().isPasswordMatching(user, body.password)))
-      throw new AuthError.InvalidRegistrationParams("Email and password do not match. Please try again.");
+      throw new AuthError.UserNotFound("Email and password do not match. Please try again.");
 
     const safe = await TokenRepository.getInstance().generateToken(user, body.agent);
 
@@ -114,7 +112,7 @@ export default class AuthRepository extends ManagerRepository {
 
   public async validate(token: string): Promise<Usersafe> {
     const payload = await TokenRepository.getInstance().verifyToken(token);
-    if (!payload) throw new AuthError.AbnormalToken();
+    if (!payload) throw new AuthError.InvalidToken("Unreachable payload.");
     // JWT integrity gate passed
 
     const usersafe: Usersafe = {
@@ -125,9 +123,14 @@ export default class AuthRepository extends ManagerRepository {
     const entry = await UsersafeRepository.getInstance().getByUserAndSafe(usersafe);
     if (!entry) {
       UsersafeRepository.getInstance().removeByUserAndSafe(usersafe);
-      throw new AuthError.AbnormalToken("Unauthorized based on Bearer payload.");
+      throw new AuthError.InvalidToken("Unauthorized based on Bearer payload.");
     }
+    // User-Safe match gate passed
 
     return usersafe;
+  }
+
+  public async logout(payload: Usersafe): Promise<void> {
+    return UsersafeRepository.getInstance().removeByUserAndSafe(payload);
   }
 }
