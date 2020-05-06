@@ -26,6 +26,10 @@ export const types = {
 export const API = {
   root: "http://localhost:3002",
   authGoogle: () => `${API.root}/auth/google`,
+  authStatus: () => `${API.root}/auth/status`,
+  authRegister: () => `${API.root}/auth/classic/register`,
+  authLogin: () => `${API.root}/auth/classic/login`,
+  authLogout: () => `${API.root}/auth/logout`,
 };
 
 const constants = {

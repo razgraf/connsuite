@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { Machine, assign } from "xstate";
-import { userReq } from "../../requests";
+import { AuthRequest } from "../../requests";
 
 const states = {
   idle: "idle",
@@ -16,13 +16,13 @@ async function requestUserProfile({ context, event }) {
   };
 
   if (_.get(context, "vendor") === "GOOGLE")
-    return userReq.authGoogle({
+    return AuthRequest.google({
       ...payload,
       identity: _.get(context, "identity.tokenId"),
     });
 
   if (_.get(context, "vendor") === "CLASSIC")
-    return userReq.authClassic({
+    return AuthRequest.register({
       ...payload,
       identity: event.identity,
     });

@@ -1,3 +1,2 @@
-import * as userReq from "./userReq";
-
-export { userReq };
+export { default as AuthRequest } from "./auth";
+export { default as UserRequest } from "./user";
