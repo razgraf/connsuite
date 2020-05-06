@@ -51,11 +51,13 @@ export default class AuthController extends ManagerController {
   }
   public static async status(req: Request, res: Response): Promise<void> {
     try {
-      const user: User = (await UserRepository.getInstance().getById(req.body.userId)) as User;
-      const token: string = await TokenRepository.getInstance().generateToken(user);
+      const header = req.headers["authorization"];
+      const token = header?.split(" ")[1] || "";
+
+      const isOk = await AuthRepository.getInstance().validate(token);
 
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Authenthicated and Authorized", token });
+      res.json({ message: "Validated", token, isOk });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });

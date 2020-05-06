@@ -30,14 +30,12 @@ export default class UsersafeRepository extends BaseRepository<Usersafe> {
     return usersafe;
   }
 
-  public async update(id: string, payload: any): Promise<void> {
-    console.log("NOT IMPLEMENTED YET", id, payload);
-    return;
+  public async update(id: string, payload: Usersafe): Promise<Usersafe | null> {
+    return UsersafeModel.findByIdAndUpdate(id, payload || {}, { new: true });
   }
 
   public async remove(id: string): Promise<void> {
-    console.log(id);
-    return;
+    await UsersafeModel.findByIdAndRemove(id);
   }
   public async list(filters: { [key: string]: unknown }): Promise<Usersafe[]> {
     return UsersafeModel.find(filters) || [];
@@ -46,10 +44,17 @@ export default class UsersafeRepository extends BaseRepository<Usersafe> {
   /** ************* **/
 
   public async getByUserAndSafe(usersafe: Usersafe): Promise<Usersafe | null> {
-    return await UsersafeModel.findOne({ user: usersafe.user, safe: usersafe.safe });
+    return UsersafeModel.findOne({ user: usersafe.user, safe: usersafe.safe });
   }
 
   public async listByUser(user: User): Promise<Usersafe[]> {
     return this.list({ user }) || [];
+  }
+
+  public async removeByUserAndSafe(usersafe: Usersafe): Promise<void> {
+    await UsersafeModel.findOneAndDelete({
+      user: usersafe.user,
+      safe: usersafe.safe,
+    });
   }
 }

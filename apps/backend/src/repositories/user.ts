@@ -19,17 +19,14 @@ export default class UserRepository extends BaseRepository<User> {
   public async create(payload: User): Promise<User> {
     return await UserModel.create(payload);
   }
-  public async update(id: string, payload: User): Promise<void> {
-    console.log(id, payload);
-    return;
+  public async update(id: string, payload: User): Promise<User | null> {
+    return UserModel.findByIdAndUpdate(id, payload, { new: true });
   }
   public async remove(id: string): Promise<void> {
-    console.log(id);
-    return;
+    await UserModel.findByIdAndRemove(id);
   }
   public async list(filters: { [key: string]: unknown }): Promise<User[]> {
-    console.log(filters);
-    return [];
+    return (await UserModel.find(filters)) || [];
   }
 
   /** ************* **/

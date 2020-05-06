@@ -15,3 +15,8 @@ export enum Vendor {
   GOOGLE = "GOOGLE",
   CLASSIC = "CLASSIC",
 }
+
+export type Token = {
+  userId: string;
+  safe: string;
+};

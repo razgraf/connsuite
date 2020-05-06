@@ -1,13 +1,14 @@
 import _ from "lodash";
-
+import { ObjectId } from "mongodb";
 import gates, { policy } from "../gates";
+import UsernameRepository from "./username";
 import UserRepository from "./user";
+import UsersafeRepository from "./usersafe";
 import TokenRepository from "./token";
 import { google } from "../vendors";
 import { ManagerRepository } from "./base";
 import { AuthError } from "../errors";
-import { User, Vendor, Request, UsernameModel } from "../models";
-import { UsernameRepository } from ".";
+import { User, Vendor, Request, Usersafe } from "../models";
 
 export default class AuthRepository extends ManagerRepository {
   private static instance: AuthRepository;
@@ -109,5 +110,24 @@ export default class AuthRepository extends ManagerRepository {
     const safe = await TokenRepository.getInstance().generateToken(user, body.agent);
 
     return safe;
+  }
+
+  public async validate(token: string): Promise<Usersafe> {
+    const payload = await TokenRepository.getInstance().verifyToken(token);
+    if (!payload) throw new AuthError.AbnormalToken();
+    // JWT integrity gate passed
+
+    const usersafe: Usersafe = {
+      user: new ObjectId(payload.userId),
+      safe: payload.safe,
+    };
+
+    const entry = await UsersafeRepository.getInstance().getByUserAndSafe(usersafe);
+    if (!entry) {
+      UsersafeRepository.getInstance().removeByUserAndSafe(usersafe);
+      throw new AuthError.AbnormalToken("Unauthorized based on Bearer payload.");
+    }
+
+    return usersafe;
   }
 }

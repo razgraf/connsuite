@@ -24,23 +24,20 @@ export default class UsernameRepository extends BaseRepository<Username> {
     return username;
   }
 
-  public async update(id: string, payload: any): Promise<void> {
-    console.log(id, payload);
-    return;
+  public async update(id: string, payload: any): Promise<Username | null> {
+    return UsernameModel.findByIdAndUpdate(id, payload, { new: true });
   }
   public async remove(id: string): Promise<void> {
-    console.log(id);
-    return;
+    await UsernameModel.findByIdAndRemove(id);
   }
   public async list(filters: { [key: string]: unknown }): Promise<Username[]> {
-    console.log(filters);
-    return [];
+    return (await UsernameModel.find(filters)) || [];
   }
 
   /** ************* **/
 
   public async getByValue(value: string): Promise<Username | null> {
-    return await UsernameModel.findOne({ value });
+    return UsernameModel.findOne({ value });
   }
 
   public async listByUser(user: User): Promise<Username[]> {

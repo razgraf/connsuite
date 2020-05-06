@@ -5,7 +5,7 @@ import JWT from "jsonwebtoken";
 import UsersafeRepository from "./usersafe";
 import { ManagerRepository } from "./base";
 import { AuthError } from "../errors";
-import { User, Usersafe } from "../models";
+import { User, Usersafe, Token } from "../models";
 import { defaults } from "../constants";
 
 export default class TokenRepository extends ManagerRepository {
@@ -24,33 +24,26 @@ export default class TokenRepository extends ManagerRepository {
     return encrypted;
   }
 
-  public async decodeToken(token: string): Promise<any> {
+  public async decodeToken(token: string): Promise<Token | null> {
     const decrypted = await this._decryptToken(token);
     try {
-      const decoded = JWT.verify(decrypted, process.env.CONN_BACK_JWT_SECRET || "");
-      return {
-        header: _.get(decoded, "header"),
-        payload: _.get(decoded, "payload"),
-      };
+      const payload = JWT.decode(decrypted) as Token;
+      return payload;
     } catch (e) {
       console.error(e);
     }
     return null;
   }
 
-  public async verifyToken(token: string): Promise<any> {
+  public async verifyToken(token: string): Promise<Token | null> {
     const decrypted = await this._decryptToken(token);
     try {
-      const decoded = JWT.decode(decrypted);
-      const payload = _.get(decoded, "payload");
+      const payload = JWT.verify(decrypted, process.env.CONN_BACK_JWT_SECRET || "") as Token;
 
       if (_.isNil(payload) || !_.get(payload, "userId") || !_.get(payload, "safe"))
         throw new AuthError.AbnormalToken("Missing correct payload");
 
-      return {
-        header: _.get(decoded, "header"),
-        payload,
-      };
+      return payload;
     } catch (e) {
       if (e) throw new AuthError.AbnormalToken(e.message);
     }
