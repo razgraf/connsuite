@@ -38,7 +38,7 @@ export default class NetworkController extends BaseController {
 
       res.send(JSON.stringify({ user: u, username: un }));
     } catch (e) {
-      console.log(e);
+      console.error(e);
       res.send("Nope");
     }
   }

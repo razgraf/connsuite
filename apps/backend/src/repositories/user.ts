@@ -1,6 +1,6 @@
 import _ from "lodash";
 import bcrypt from "bcrypt";
-import BaseRepository from "./base";
+import BaseRepository, { BaseOptions } from "./base";
 import UsernameRepository from "./username";
 import { defaults } from "../constants";
 import { Vendor, User, Username, UserModel, Name, Request } from "../models";
@@ -12,12 +12,13 @@ export default class UserRepository extends BaseRepository<User> {
     return UserRepository.instance || (UserRepository.instance = new UserRepository());
   }
 
-  public async getById(id: string): Promise<User | null> {
-    return await UserModel.findOne({ _id: id });
+  public async getById(id: string, options?: BaseOptions): Promise<User | null> {
+    if (options && options.populate) return UserModel.findOne({ _id: id }).populate("usernames");
+    return UserModel.findOne({ _id: id });
   }
 
   public async create(payload: User): Promise<User> {
-    return await UserModel.create(payload);
+    return UserModel.create(payload);
   }
   public async update(id: string, payload: User): Promise<User | null> {
     return UserModel.findByIdAndUpdate(id, payload, { new: true });
@@ -31,11 +32,13 @@ export default class UserRepository extends BaseRepository<User> {
 
   /** ************* **/
 
-  public async getByEmail(email: string): Promise<User | null> {
+  public async getByEmail(email: string, options?: BaseOptions): Promise<User | null> {
+    if (options && options.populate) return UserModel.findOne({ email }).populate("usernames");
     return await UserModel.findOne({ email });
   }
 
-  public async getByGoogleId(googleId: string): Promise<User | null> {
+  public async getByGoogleId(googleId: string, options?: BaseOptions): Promise<User | null> {
+    if (options && options.populate) return UserModel.findOne({ googleId }).populate("usernames");
     return await UserModel.findOne({ googleId });
   }
 
