@@ -2,7 +2,7 @@ import _ from "lodash";
 import { Machine, assign } from "xstate";
 import { AuthRequest } from "../../requests";
 
-const states = {
+const mStates = {
   idle: "idle",
   identify: "identify",
   connect: "connect",
@@ -10,17 +10,22 @@ const states = {
   failure: "failure",
 };
 
-async function requestUserProfile({ context, event }) {
+/** Only the named actions coming from the prop chain */
+const mActions = {
+  approve: "approve",
+};
+
+async function attemptToConnect({ context, event }) {
   const payload = {
     vendor: _.get(context, "vendor"),
   };
 
-  if (_.get(context, "vendor") === "GOOGLE")
+  if (_.get(context, "vendor") === "GOOGLE") {
     return AuthRequest.google({
       ...payload,
       identity: _.get(context, "identity.tokenId"),
     });
-
+  }
   if (_.get(context, "vendor") === "CLASSIC")
     return AuthRequest.register({
       ...payload,
@@ -45,7 +50,7 @@ const INVALIDATE = {
   }),
 };
 
-const login = Machine(
+const mLogin = Machine(
   {
     id: "connectLoginMachine",
     initial: "idle",
@@ -53,19 +58,19 @@ const login = Machine(
       error: null,
       identity: null,
       vendor: null,
-      user: null,
+      data: null,
     },
     states: {
-      [states.idle]: {
+      [mStates.idle]: {
         on: {
           INITIALIZE: [
             {
               cond: "isVendorGoogle",
-              target: states.identify,
+              target: mStates.identify,
             },
             {
               cond: "isVendorClassic",
-              target: states.connect,
+              target: mStates.connect,
             },
             /** All identifier gates failed */
             { ...INVALIDATE },
@@ -75,16 +80,13 @@ const login = Machine(
           vendor: (__, event) => event.vendor,
         }),
       },
-      [states.identify]: {
+      [mStates.identify]: {
         on: {
           SUCCESS: {
             actions: assign({
-              identity: (__, event) => {
-                console.log("identify.success.identity", event);
-                return event.payload;
-              },
+              identity: (__, event) => event.payload,
             }),
-            target: states.connect,
+            target: mStates.connect,
           },
           FAILURE: {
             actions: assign({
@@ -93,35 +95,36 @@ const login = Machine(
                 return event.error;
               },
             }),
-            target: states.failure,
+            target: mStates.failure,
           },
         },
       },
-      [states.connect]: {
+      [mStates.connect]: {
         invoke: {
-          src: (context, event) => requestUserProfile({ context, event }),
+          src: (context, event) => attemptToConnect({ context, event }),
           onDone: {
             actions: assign({
-              user: (context, event) => event.data,
+              data: (context, event) => event.data,
             }),
-            target: states.success,
+            target: mStates.success,
           },
           onError: {
             actions: assign({
               error: (context, event) => event.data,
             }),
-            target: states.error,
+            target: mStates.error,
           },
         },
       },
-      [states.success]: {
+      [mStates.success]: {
+        entry: [mActions.approve],
         on: {
-          RESET: states.idle,
+          RESET: mStates.idle,
         },
       },
-      [states.failure]: {
+      [mStates.failure]: {
         on: {
-          RESET: states.idle,
+          RESET: mStates.idle,
         },
       },
     },
@@ -135,5 +138,5 @@ const login = Machine(
   },
 );
 
-export default login;
-export { states };
+export { mActions, mStates };
+export default mLogin;

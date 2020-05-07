@@ -1,10 +1,14 @@
-import login, { states as loginStates } from "./login";
+import mLogin, { mActions as mActionsLogin, mStates as mStatesLogin } from "./login";
 
 const connect = {
-  login,
+  mLogin,
 
-  states: {
-    login: loginStates,
+  mActions: {
+    login: mActionsLogin,
+  },
+
+  mStates: {
+    login: mStatesLogin,
   },
 };
 

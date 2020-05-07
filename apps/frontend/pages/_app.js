@@ -1,20 +1,31 @@
 import React from "react";
 import NextApp from "next/app";
-// import { DataStore, DataProvider } from "../src/store";
+import { Provider } from "react-redux";
+import withRedux from "next-redux-wrapper";
+import { PersistGate } from "redux-persist/integration/react";
+
 import { ThemeProvider, GlobalStyle } from "../src/themes";
+import reduxStore from "../src/store";
 
 class App extends NextApp {
+  static async getInitialProps({ Component, ctx }) {
+    const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+    return { pageProps };
+  }
+
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, store } = this.props;
     return (
-      // <DataProvider store={DataStore}>
-      <ThemeProvider>
-        <GlobalStyle />
-        <Component {...pageProps} />
-      </ThemeProvider>
-      // </DataProvider>
+      <Provider store={store}>
+        <PersistGate persistor={store.__PERSISTOR} loading={null}>
+          <ThemeProvider>
+            <GlobalStyle />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </PersistGate>
+      </Provider>
     );
   }
 }
 
-export default App;
+export default withRedux(reduxStore)(App);

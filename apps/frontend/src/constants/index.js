@@ -14,6 +14,14 @@ export const vendors = {};
 
 export const actions = {
   SET: "SET",
+  CHECK: "CHECK",
+
+  AUTH_USER_SET: "AUTH_USER_SET",
+  AUTH_TOKEN_SET: "AUTH_TOKEN_SET",
+};
+
+export const sagas = {
+  TEST: "TEST",
 };
 
 export const types = {
@@ -38,6 +46,7 @@ const constants = {
   pages,
   subpages,
   types,
+  sagas,
   status,
   vendors,
 };

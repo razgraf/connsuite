@@ -23,6 +23,7 @@ module.exports = {
     "object-curly-newline": "off",
     "nonblock-statement-body-position": "off",
     "no-else-return": "off",
+    "no-underscore-dangle": "off",
     curly: "off",
     "max-len": "off",
     indent: "off",
