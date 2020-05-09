@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { rgba } from "polished";
 import AssetLogoCircle from "../../../../assets/logo/logo.png";
 import { components } from "../../../../themes";
 import { Account } from "../atoms";
@@ -12,7 +13,7 @@ const Wrapper = styled.div`
 
   width: 100%;
   background: ${props => props.theme.gradients.primary};
-  box-shadow: 0 -10px 30px 12px rgba($colorSecondary, 0.3);
+  box-shadow: 0 -10px 30px 12px ${props => rgba(props.theme.colors.secondary, 0.3)};
 `;
 const Content = styled(components.Canvas)`
   display: flex;
@@ -52,9 +53,7 @@ function NavPlatform() {
         <LogoWrapper>
           <Logo src={AssetLogoCircle} alt="" />
         </LogoWrapper>
-        <Main>
-          <p>Empty</p>
-        </Main>
+        <Main />
         <AccountWrapper>
           <Account />
         </AccountWrapper>

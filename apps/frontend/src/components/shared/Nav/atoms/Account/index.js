@@ -25,7 +25,6 @@ const Content = styled.div`
   width: auto;
   min-width: 160px;
   padding: calc(${props => props.theme.sizes.edge} * 1 / 3);
-
   background: #ffffff;
   border-radius: calc(${props => props.theme.sizes.navHeight} - 2 * ${props => props.theme.sizes.navVerticalEdge});
   border: 1px solid ${props => props.theme.colors.grayBlueLight};

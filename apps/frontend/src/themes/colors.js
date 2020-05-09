@@ -17,6 +17,7 @@ const colors = {
   grayBlueGhost: "#F6F9FE",
 
   transparent: "transparent",
+  background: "#f3f8fa",
 
   blue: "#2979FF",
   blueSuite: "#04BEFE",
