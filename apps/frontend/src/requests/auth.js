@@ -11,7 +11,6 @@ import { buildHeaders } from "../utils";
  */
 
 async function google(payload) {
-  console.log(buildHeaders());
   const response = await fetch(API.authGoogle(), {
     method: "POST",
     headers: buildHeaders(),

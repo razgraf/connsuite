@@ -7,6 +7,13 @@ const Wrapper = styled.div`
   min-height: 20px;
   margin-top: 3px;
   overflow: hidden;
+  &[data-centered="true"] {
+    width: 100%;
+    text-align: center !important;
+    & > p {
+      text-align: center !important;
+    }
+  }
 `;
 
 const Text = styled.p`
@@ -25,9 +32,9 @@ const Text = styled.p`
   }
 `;
 
-function Warning({ className, value }) {
+function Warning({ className, value, isCentered }) {
   return (
-    <Wrapper className={className}>
+    <Wrapper className={className} data-centered={isCentered}>
       <Text data-visible={!_.isNil(value) && _.isString(value)}>{value}</Text>
     </Wrapper>
   );

@@ -1,14 +1,13 @@
 import _ from "lodash";
 import { useMemo } from "react";
 import { useMachine } from "@xstate/react";
-import { loginX } from "../xstates";
+import { connectX } from "../xstates";
 import { redirectTo } from "../utils";
 import { redux, pages } from "../constants";
 
-function loginActions(dispatch) {
+function connectActions(dispatch) {
   return {
-    [loginX.actions.approve]: mContext => {
-      console.log(mContext);
+    [connectX.actions.approve]: mContext => {
       dispatch({ type: redux.AUTH_USER_SET, payload: _.get(mContext, "data.user") || {} });
       dispatch({ type: redux.AUTH_TOKEN_SET, payload: { value: _.get(mContext, "data.token") } || {} });
       redirectTo(pages.dashboard.root);
@@ -16,11 +15,11 @@ function loginActions(dispatch) {
   };
 }
 
-export function useLoginMachine(store) {
-  const piece = useMachine(loginX.machine, { actions: loginActions(store.dispatch) });
+export function useConnectMachine(store, type = "LOGIN") {
+  const piece = useMachine(connectX.machine, { actions: connectActions(store.dispatch), context: { type } });
   const machine = useMemo(
     () => ({
-      ...loginX,
+      ...connectX,
       current: piece[0],
       send: piece[1],
     }),

@@ -1,1 +1,1 @@
-export * from "./connect";
+export { default as connectX } from "./connect";

@@ -18,7 +18,15 @@ const Input = styled.input`
 function InputText({ className, id, help, label, onUpdate, placeholder, inputRef, value, warning }) {
   return (
     <Frame className={className} id={id} label={label} warning={warning} help={help}>
-      <Input id={id} onBlur={onUpdate} placeholder={placeholder} ref={inputRef} type="text" defaultValue={_.isNil(value) ? "" : value} />
+      <Input
+        id={id}
+        onBlur={onUpdate}
+        placeholder={placeholder}
+        ref={inputRef}
+        type="text"
+        defaultValue={_.isNil(value) ? "" : value}
+        autocomplete="on"
+      />
     </Frame>
   );
 }

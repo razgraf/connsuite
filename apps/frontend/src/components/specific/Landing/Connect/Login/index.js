@@ -1,14 +1,14 @@
 import _ from "lodash";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
 import { useStore } from "react-redux";
 
-import { useLoginReducer, useLoginMachine } from "../../../../../hooks";
+import { useLoginReducer, useConnectMachine } from "../../../../../hooks";
 
 import gates, { policy } from "../../../../../gates";
-import { Button, InputText, InputPassword } from "../../../../atoms";
+import { Button, InputText, InputPassword, Warning } from "../../../../atoms";
 import ButtonGoogle from "../../ButtonGoogle";
 
 const Wrapper = styled.div`
@@ -50,18 +50,19 @@ const Divider = styled.div`
   width: 100%;
   margin: 0 auto;
 
-  margin-bottom: calc(${props => props.theme.sizes.edge} * 2);
+  margin-bottom: calc(${props => props.theme.sizes.edge} * 1.5);
   background-color: ${props => props.theme.colors.grayBlueLight};
 `;
 
 const Alternative = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  flex: 1;
+  justify-content: flex-start;
   width: 100%;
-  padding-bottom: calc(${props => props.theme.sizes.edge} * 2);
+  padding-top: calc(${props => props.theme.sizes.edge} * 1);
+  padding-bottom: calc(${props => props.theme.sizes.edge} * 1);
   & > p {
     color: ${props => props.theme.colors.grayBlueDark};
     margin: 0 0 ${props => props.theme.sizes.edge} 0;
@@ -88,15 +89,27 @@ const Terms = styled.div`
   }
 `;
 
+const StyledWarning = styled(Warning)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+
+  & > p {
+    font-size: 10pt;
+    margin: 0;
+  }
+`;
+
 function Login({ className }) {
   const store = useStore();
 
   const reducer = useLoginReducer();
-  const machine = useLoginMachine(store);
+  const machine = useConnectMachine(store, "LOGIN");
 
-  useEffect(() => {
-    console.log(machine.current.value);
-  }, [machine.current.value]);
+  const isFormValid = useMemo(() => {
+    return reducer.helper.isValid(reducer.state);
+  }, [reducer.state]);
 
   return (
     <Wrapper className={className}>
@@ -132,14 +145,32 @@ function Login({ className }) {
             });
           }}
           placeholder="Your strongest password"
-          value={reducer.state.email.password}
-          warning={reducer.state.email.password}
+          value={reducer.state.password.value}
+          warning={reducer.state.password.error}
         />
       </Fields>
       <Actions>
-        <Button type={t => t.button} title="Connect" appearance={t => t.outline} accent={t => t.secondary} />
+        <Button
+          type={t => t.button}
+          title="Connect"
+          appearance={t => t.outline}
+          accent={t => t.secondary}
+          isDisabledSoft={!isFormValid}
+          isDisabled={![machine.states.idle, machine.states.failure].includes(machine.current.value)}
+          onClick={() => {
+            if (!isFormValid) return;
+            machine.send(machine.events.initialize, {
+              vendor: "CLASSIC",
+              identity: {
+                email: reducer.state.email.value,
+                password: reducer.state.password.value,
+              },
+            });
+          }}
+        />
       </Actions>
       <Divider />
+      <StyledWarning isCentered value={_.toString(machine.current.context.error)} />
       <Alternative>
         <ButtonGoogle
           isDisabled={![machine.states.idle, machine.states.failure].includes(machine.current.value)}
@@ -147,7 +178,7 @@ function Login({ className }) {
             machine.send(machine.events.initialize, { vendor: "GOOGLE" });
           }}
           onSuccess={payload => machine.send(machine.events.success, { payload })}
-          onFailure={payload => machine.send(machine.events.failure, { payload })}
+          onFailure={error => machine.send(machine.events.failure, { error })}
         />
       </Alternative>
       <Terms>

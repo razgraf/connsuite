@@ -1,7 +1,12 @@
 import { useReducer } from "react";
-import { loginReducer } from "../reducers";
+import { loginReducer, registerReducer } from "../reducers";
 
 export function useLoginReducer() {
   const [state, dispatch] = useReducer(loginReducer.reducer, loginReducer.initial);
-  return { state, dispatch, actions: loginReducer.actions };
+  return { ...loginReducer, state, dispatch };
+}
+
+export function useRegisterReducer() {
+  const [state, dispatch] = useReducer(registerReducer.reducer, registerReducer.initial);
+  return { ...registerReducer, state, dispatch };
 }

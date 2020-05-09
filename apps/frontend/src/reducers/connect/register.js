@@ -2,12 +2,18 @@ import _ from "lodash";
 import { StateInputText, StateInputPassword } from "../../components/atoms/Input/state";
 
 export const initial = {
-  email: { ...StateInputText },
-  password: { ...StateInputPassword },
+  firstName: { ...StateInputText, value: "Van" },
+  lastName: { ...StateInputText, value: "Software" },
+  username: { ...StateInputText, value: "vansoftware" },
+  email: { ...StateInputText, value: "vansoftwarero@gmail.com" },
+  password: { ...StateInputPassword, value: "Anaaremerede1$" },
 };
 
 export const actions = {
   RESET: "RESET",
+  UPDATE_FIRST_NAME: "UPDATE_FIRST_NAME",
+  UPDATE_LAST_NAME: "UPDATE_LAST_NAME",
+  UPDATE_USERNAME: "UPDATE_USERNAME",
   UPDATE_EMAIL: "UPDATE_EMAIL",
   UPDATE_PASSWORD: "UPDATE_PASSWORD",
 };
@@ -16,6 +22,21 @@ export function reducer(state, { type, payload }) {
   switch (type) {
     case actions.RESET:
       return initial;
+    case actions.UPDATE_FIRST_NAME:
+      return {
+        ...state,
+        firstName: payload,
+      };
+    case actions.UPDATE_LAST_NAME:
+      return {
+        ...state,
+        lastName: payload,
+      };
+    case actions.UPDATE_USERNAME:
+      return {
+        ...state,
+        username: payload,
+      };
     case actions.UPDATE_EMAIL:
       return {
         ...state,

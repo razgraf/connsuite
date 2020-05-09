@@ -44,14 +44,16 @@ const Warning = {
   propTypes: {
     className: PropTypes.string,
     value: PropTypes.string,
+    centered: PropTypes.bool,
   },
   defaultProps: {
     className: null,
+    isCentered: false,
     value: null,
   },
 };
 
-const { className: _warningCN, ...WarningClean } = Warning;
+const { className: _warningCN, isCentered: _warningCT, ...WarningClean } = Warning;
 
 const Frame = {
   propTypes: {

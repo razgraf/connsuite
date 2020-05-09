@@ -1,17 +1,17 @@
 import React from "react";
 import styled from "styled-components";
+import { useStore } from "react-redux";
 import Nav from "../../../components/shared/Nav";
 import { Button } from "../../../components/atoms";
 import { types } from "../../../constants";
 import { logout } from "../../../utils";
-import { useAuth } from "../../../hooks/auth";
 
 const Page = styled.div`
   width: 100%;
 `;
 
 function Dashboard() {
-  useAuth("private");
+  const store = useStore();
 
   return (
     <Page>
