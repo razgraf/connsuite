@@ -11,11 +11,25 @@ export const MIN_USERNAME_LENGTH = 3;
 export const MAX_USERNAME_LENGTH = 50;
 
 export const policy = {
-  password:
-    "Passwords must contain at least 8 charaters of which at least one uppercase letter, one lowercase letter, one digit and one special character (?=.*?[#?!@$%^&*-]).",
-  name: "Names must contain between 2 and 50 characters.",
-  username: "Usernames must contain between 3 and 50 characters and must be unique.",
-  email: "Emails must have a valid format",
+  password: {
+    root:
+      "Passwords must contain at least 8 charaters of which at least one uppercase letter, one lowercase letter, one digit and one special character (#?!@$%^&*-).",
+    1: "Please use At least 8 characters (max 50)",
+    2: "Please use 1 uppercase letter & 1 lowercase",
+    3: "Please use at least 1 digit & 1 special sign",
+  },
+  name: {
+    root: "Names must contain between 2 and 50 characters.",
+    1: "Please use between 2 and 50 characters.",
+  },
+  username: {
+    root: "Usernames must contain between 3 and 50 characters and must be unique.",
+    1: "Please use between 3 and 50 characters. Make it unique.",
+  },
+  email: {
+    root: "Emails must have a valid format",
+    1: "Please use a valid email",
+  },
 };
 
 function isPasswordAcceptable(password: string): boolean {

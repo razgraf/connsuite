@@ -26,8 +26,6 @@ export default class AuthRepository extends ManagerRepository {
 
     const payload = ticket.getPayload();
 
-    console.log(payload);
-
     if (_.isNil(payload)) throw new AuthError.MissingVendorResponse("Google Payload");
     if (!_.get(payload, "sub")) throw new AuthError.MissingVendorResponse("Google Id");
     if (!_.get(payload, "given_name")) throw new AuthError.MissingVendorResponse("Google First Name");
@@ -67,11 +65,11 @@ export default class AuthRepository extends ManagerRepository {
     if (!_.get(body, "password")) throw new ParamsError.Missing("Missing Password.");
     if (!_.get(body, "username")) throw new ParamsError.Missing("Missing Username.");
 
-    if (!gates.isNameAcceptable(body.firstName)) throw new ParamsError.Invalid(policy.name);
-    if (!gates.isNameAcceptable(body.lastName)) throw new ParamsError.Invalid(policy.name);
-    if (!gates.isUsernameAcceptable(body.username)) throw new ParamsError.Invalid(policy.username);
-    if (!gates.isEmailAcceptable(body.email)) throw new ParamsError.Invalid(policy.email);
-    if (!gates.isPasswordAcceptable(body.password)) throw new ParamsError.Invalid(policy.password);
+    if (!gates.isNameAcceptable(body.firstName)) throw new ParamsError.Invalid(policy.name.root);
+    if (!gates.isNameAcceptable(body.lastName)) throw new ParamsError.Invalid(policy.name.root);
+    if (!gates.isUsernameAcceptable(body.username)) throw new ParamsError.Invalid(policy.username.root);
+    if (!gates.isEmailAcceptable(body.email)) throw new ParamsError.Invalid(policy.email.root);
+    if (!gates.isPasswordAcceptable(body.password)) throw new ParamsError.Invalid(policy.password.root);
 
     const isAlreadyRegistered: boolean = await UserRepository.getInstance().isAlreadyRegistered(body, Vendor.CLASSIC);
     if (isAlreadyRegistered) throw new ParamsError.Conflict(`The email ${body.email} is already linked to an account`);
@@ -97,8 +95,8 @@ export default class AuthRepository extends ManagerRepository {
     if (!_.get(body, "email")) throw new ParamsError.Missing("Missing Email.");
     if (!_.get(body, "password")) throw new ParamsError.Missing("Missing Password.");
 
-    if (!gates.isEmailAcceptable(body.email)) throw new ParamsError.Invalid(policy.email);
-    if (!gates.isPasswordAcceptable(body.password)) throw new ParamsError.Invalid(policy.password);
+    if (!gates.isEmailAcceptable(body.email)) throw new ParamsError.Invalid(policy.email.root);
+    if (!gates.isPasswordAcceptable(body.password)) throw new ParamsError.Invalid(policy.password.root);
 
     const user: User = (await UserRepository.getInstance().getByEmail(body.email, { populate: true })) as User;
 
