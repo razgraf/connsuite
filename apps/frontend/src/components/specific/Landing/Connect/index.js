@@ -2,14 +2,9 @@ import _ from "lodash";
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { rgba } from "polished";
-import { useDispatch } from "react-redux";
-import { useMachine } from "@xstate/react";
 import IconFlashOn from "@material-ui/icons/FlashOnRounded";
 import IconHowToReg from "@material-ui/icons/HowToRegRounded";
-import { actions } from "../../../../constants";
 import { components } from "../../../../themes";
-import { connectMachines } from "../../../../machines";
-
 import Title from "../Title";
 import Login from "./Login";
 import Register from "./Register";
@@ -181,19 +176,8 @@ const StyledRegister = styled(Register)`
   ${StyledFaceCss};
 `;
 
-function loginActions(dispatch) {
-  return {
-    [connectMachines.mActions.login.approve]: context => {
-      dispatch({ type: actions.AUTH_USER_SET, payload: _.get(context, "data.user") || {} });
-      dispatch({ type: actions.AUTH_TOKEN_SET, payload: { value: _.get(context, "data.token") } || {} });
-    },
-  };
-}
-
 function Connect() {
-  const dispatch = useDispatch();
   const [isLogin, setIsLogin] = useState(true);
-  const [loginMachine, sendToLoginMachine] = useMachine(connectMachines.mLogin, { actions: loginActions(dispatch) });
 
   return (
     <Wrapper id="connect">
@@ -219,11 +203,7 @@ function Connect() {
                 </CardHeaderFace>
               </CardHeader>
               <CardMain>
-                <StyledLogin
-                  machine={{ current: loginMachine, send: sendToLoginMachine, states: connectMachines.mStates.login }}
-                  sendToMachine={sendToLoginMachine}
-                  isActive={isLogin}
-                />
+                <StyledLogin isActive={isLogin} />
                 <StyledRegister isActive={!isLogin} />
               </CardMain>
             </CardContent>

@@ -6,13 +6,19 @@ export const pages = {
   landing: {
     root: "/",
   },
+  profile: {
+    root: "/:id",
+  },
+  dashboard: {
+    root: "/dashboard",
+  },
 };
 
 export const subpages = {};
 
 export const vendors = {};
 
-export const actions = {
+export const redux = {
   SET: "SET",
   CHECK: "CHECK",
 
@@ -42,7 +48,7 @@ export const API = {
 
 const constants = {
   API,
-  actions,
+  redux,
   pages,
   subpages,
   types,

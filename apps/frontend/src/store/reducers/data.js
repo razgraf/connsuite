@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { PURGE } from "redux-persist";
-import { actions } from "../../constants";
+import { redux } from "../../constants";
 
 const initialPortfolio = {
   networks: [],
@@ -8,11 +8,11 @@ const initialPortfolio = {
 
 const portfolio = (state = initialPortfolio, action) => {
   switch (action.type) {
-    case actions.CHECK: {
+    case redux.CHECK: {
       return { ...state, networks: action.payload.networks };
     }
     case PURGE:
-      return {};
+      return initialPortfolio;
 
     default:
       return state;

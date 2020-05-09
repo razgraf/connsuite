@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from "react";
+import _ from "lodash";
+import React, { useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
+import { useStore } from "react-redux";
+
+import { useLoginReducer, useLoginMachine } from "../../../../../hooks";
+
+import gates, { policy } from "../../../../../gates";
 import { Button, InputText, InputPassword } from "../../../../atoms";
 import ButtonGoogle from "../../ButtonGoogle";
 
@@ -82,8 +88,11 @@ const Terms = styled.div`
   }
 `;
 
-function Login({ className, machine }) {
-  const [text, setText] = useState(null);
+function Login({ className }) {
+  const store = useStore();
+
+  const reducer = useLoginReducer();
+  const machine = useLoginMachine(store);
 
   useEffect(() => {
     console.log(machine.current.value);
@@ -93,21 +102,38 @@ function Login({ className, machine }) {
     <Wrapper className={className}>
       <Fields>
         <InputText
-          help={{ value: "Some Help here" }}
-          id="login"
+          help={{ value: policy.email.root }}
+          id="loginEmail"
           label="Email"
-          onUpdate={e => setText(e.target.value)}
-          placeholder="Placeholder"
-          value={text}
-          //   warning={!_.isNil(text) && !text.includes("1") ? "Must contain a digit with value=1" : null}
+          onUpdate={e => {
+            reducer.dispatch({
+              type: reducer.actions.UPDATE_EMAIL,
+              payload: {
+                value: e.target.value,
+                error: gates.interpret(gates.isEmailAcceptable, e.target.value),
+              },
+            });
+          }}
+          placeholder="john.doe@gmail.com"
+          value={reducer.state.email.value}
+          warning={reducer.state.email.error}
         />
         <InputPassword
-          help={{ value: "Some Help here" }}
-          id="password"
+          help={{ value: policy.password.root }}
+          id="loginPassword"
           label="Password"
-          onUpdate={e => setText(e.target.value)}
-          placeholder="Placeholder"
-          value={text}
+          onUpdate={e => {
+            reducer.dispatch({
+              type: reducer.actions.UPDATE_PASSWORD,
+              payload: {
+                value: e.target.value,
+                error: gates.interpret(gates.isPasswordAcceptable, e.target.value),
+              },
+            });
+          }}
+          placeholder="Your strongest password"
+          value={reducer.state.email.password}
+          warning={reducer.state.email.password}
         />
       </Fields>
       <Actions>
@@ -118,11 +144,10 @@ function Login({ className, machine }) {
         <ButtonGoogle
           isDisabled={![machine.states.idle, machine.states.failure].includes(machine.current.value)}
           onClick={() => {
-            machine.send("RESET");
-            machine.send("INITIALIZE", { vendor: "GOOGLE" });
+            machine.send(machine.events.initialize, { vendor: "GOOGLE" });
           }}
-          onSuccess={payload => machine.send("SUCCESS", { payload })}
-          onFailure={payload => machine.send("FAILURE", { payload })}
+          onSuccess={payload => machine.send(machine.events.success, { payload })}
+          onFailure={payload => machine.send(machine.events.failure, { payload })}
         />
       </Alternative>
       <Terms>
@@ -138,11 +163,6 @@ function Login({ className, machine }) {
 
 Login.propTypes = {
   className: PropTypes.string,
-  machine: PropTypes.shape({
-    current: PropTypes.shape.isRequired,
-    send: PropTypes.func.isRequired,
-    states: PropTypes.shape.isRequired,
-  }).isRequired,
 };
 
 Login.defaultProps = {

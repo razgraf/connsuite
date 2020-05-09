@@ -1,6 +1,7 @@
 import _ from "lodash";
-import fetch from "isomorphic-unfetch";
+import fetch from "cross-fetch";
 import { API, status } from "../constants";
+import { buildHeaders } from "../utils";
 
 /**
  * Create a new user with the Google System
@@ -10,23 +11,19 @@ import { API, status } from "../constants";
  */
 
 async function google(payload) {
-  console.log(payload);
-  const endpoint = new URL(API.authGoogle());
-  const response = await fetch(endpoint, {
+  console.log(buildHeaders());
+  const response = await fetch(API.authGoogle(), {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: buildHeaders(),
+    credentials: "omit",
     body: JSON.stringify(payload),
   });
-
-  console.log(response.status);
 
   if (response.status === status.OK) {
     return response.json();
   } else {
     const error = await _.attempt(async () => response.json());
-    console.log(error);
+    console.error(error);
     if (!_.isError(error) && _.has(error, "message")) throw new Error(error.message);
     throw new Error("Connection error.");
   }
@@ -48,9 +45,8 @@ async function register(payload) {
   const endpoint = new URL(API.authRegister());
   const response = await fetch(endpoint, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: buildHeaders(),
+    credentials: "omit",
     body: JSON.stringify(payload),
   });
 
@@ -67,18 +63,31 @@ async function register(payload) {
  * Check if the user is authorized based on the Bearer Token
  * @throws ...
  */
-async function isAuthorized() {
-  const endpoint = new URL(API.authStatus());
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer INSERT_HERE TODO",
-    },
-    body: JSON.stringify({ todo: 0 }),
+async function isAuthorized(store) {
+  const response = await fetch(API.authStatus(), {
+    method: "GET",
+    headers: buildHeaders({ store }),
+    credentials: "omit",
   });
 
-  return response.status === status.OK;
+  if (response.status === status.OK) {
+    return response.json();
+  } else {
+    return false;
+  }
+}
+
+async function isShallowAuthorized(store) {
+  try {
+    const state = store.getState();
+    const token = _.get(state, "auth.token.value");
+
+    return !_.isNil(token) && !_.isEmpty(token);
+  } catch (e) {
+    console.error(e);
+  }
+
+  return false;
 }
 
 /**
@@ -94,10 +103,9 @@ async function login(payload) {
   const endpoint = new URL(API.authLogin());
   const response = await fetch(endpoint, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: buildHeaders(),
     body: JSON.stringify(payload),
+    credentials: "omit",
   });
 
   if (response.status === status.OK) {
@@ -112,13 +120,18 @@ async function login(payload) {
 /**
  * Disconnect a user
  */
-async function logout() {
-  console.error("Not implemented yet");
-  return null;
+async function logout(store) {
+  const endpoint = new URL(API.authLogout());
+  await fetch(endpoint, {
+    method: "POST",
+    headers: buildHeaders({ store }),
+    credentials: "omit",
+  });
 }
 
 const AuthRequest = {
   isAuthorized,
+  isShallowAuthorized,
 
   google,
   login,

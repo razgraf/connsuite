@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { combineReducers } from "redux";
 import { PURGE } from "redux-persist";
-import { actions } from "../../constants";
+import { redux } from "../../constants";
 
 const initialUser = {
   description: null,
@@ -15,7 +15,7 @@ const initialUser = {
 
 const user = (state = initialUser, action) => {
   switch (action.type) {
-    case actions.AUTH_USER_SET: {
+    case redux.AUTH_USER_SET: {
       const data = { ...initialUser };
       data.description = _.get(action.payload, "description");
       data.usernames = _.get(action.payload, "usernames") || [];
@@ -26,7 +26,7 @@ const user = (state = initialUser, action) => {
       return { ...state, ...data };
     }
     case PURGE:
-      return {};
+      return initialUser;
 
     default:
       return state;
@@ -39,12 +39,11 @@ const initalToken = {
 
 const token = (state = initalToken, action) => {
   switch (action.type) {
-    case actions.AUTH_TOKEN_SET: {
-      console.log(action.payload);
+    case redux.AUTH_TOKEN_SET: {
       return { ...state, ...action.payload };
     }
     case PURGE:
-      return {};
+      return initalToken;
 
     default:
       return state;

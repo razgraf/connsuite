@@ -15,6 +15,7 @@ const types = {
       primary: "primary",
       secondary: "secondary",
       darkGray: "darkGray",
+      red: "red",
       google: "google",
     },
     type: {
@@ -61,6 +62,8 @@ export const useDesigner = (accent, appearance) => {
           return { ...baseSolid(colors.dark) };
         case types.button.accent.white:
           return { ...baseSolid(colors.white, colors.dark) };
+        case types.button.accent.red:
+          return { ...baseSolid(colors.red, colors.white) };
         case types.button.accent.google:
           return { ...baseSolid(colors.google, colors.white) };
         default:

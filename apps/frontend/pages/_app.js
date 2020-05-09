@@ -1,7 +1,7 @@
 import React from "react";
 import NextApp from "next/app";
 import { Provider } from "react-redux";
-import withRedux from "next-redux-wrapper";
+import { withReduxCookiePersist } from "next-redux-cookie-wrapper";
 import { PersistGate } from "redux-persist/integration/react";
 
 import { ThemeProvider, GlobalStyle } from "../src/themes";
@@ -15,6 +15,7 @@ class App extends NextApp {
 
   render() {
     const { Component, pageProps, store } = this.props;
+
     return (
       <Provider store={store}>
         <PersistGate persistor={store.__PERSISTOR} loading={null}>
@@ -28,4 +29,4 @@ class App extends NextApp {
   }
 }
 
-export default withRedux(reduxStore)(App);
+export default withReduxCookiePersist(reduxStore)(App);

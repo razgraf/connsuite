@@ -28,7 +28,7 @@ const Text = styled.p`
 function Warning({ className, value }) {
   return (
     <Wrapper className={className}>
-      <Text data-visible={!_.isNil(value)}>{value}</Text>
+      <Text data-visible={!_.isNil(value) && _.isString(value)}>{value}</Text>
     </Wrapper>
   );
 }
