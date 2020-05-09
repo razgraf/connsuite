@@ -5,12 +5,19 @@ export { status };
 export const pages = {
   landing: {
     root: "/",
+    title: "Landing",
   },
   profile: {
     root: "/:id",
+    title: "Profile",
   },
   dashboard: {
     root: "/dashboard",
+    title: "Dashboard",
+  },
+  about: {
+    root: "/about",
+    title: "About",
   },
 };
 
@@ -34,6 +41,7 @@ export const types = {
   nav: {
     platform: "platform",
     presentation: "presentation",
+    profile: "profile",
   },
 };
 

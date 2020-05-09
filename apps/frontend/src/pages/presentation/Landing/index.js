@@ -39,7 +39,7 @@ function Landing() {
     <Page>
       <Top>
         <TopContent>
-          <Nav type={types.nav.presentation} />
+          <Nav appearance={types.nav.presentation} />
           <Header />
         </TopContent>
         <TopUnderlay />
