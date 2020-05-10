@@ -17,6 +17,8 @@ const types = {
       secondary: "secondary",
       grayBlueDark: "grayBlueDark",
       grayBlueMedium: "grayBlueMedium",
+      grayBlueNormal: "grayBlueNormal",
+      grayBlueLight: "grayBlueLight",
       red: "red",
       google: "google",
     },
@@ -30,13 +32,13 @@ const types = {
   },
 };
 
-const baseSolid = (b = colors.dark, c = colors.dark) => ({
+const baseSolid = (b = colors.dark, c = colors.white) => ({
   background: b,
   backgroundHover: lighten(0.05, b),
   appearance: types.button.appearance.solid,
   border: null,
   borderHover: null,
-  color: colors.white,
+  color: c,
   colorHover: null,
   shadow: null,
   shadowHover: null,
@@ -72,6 +74,12 @@ export const useDesigner = (accent, appearance) => {
           return { ...baseSolid(rgba(colors.white, 0.1), rgba(colors.white, 0.5)), backgroundHover: rgba(colors.white, 0.3) };
         case types.button.accent.grayBlueDark:
           return { ...baseSolid(colors.grayBlueDark, colors.dark) };
+        case types.button.accent.grayBlueMedium:
+          return { ...baseSolid(colors.grayBlueMedium, colors.white) };
+        case types.button.accent.grayBlueNormal:
+          return { ...baseSolid(colors.grayBlueNormal, colors.grayBlueDark) };
+        case types.button.accent.grayBlueLight:
+          return { ...baseSolid(colors.grayBlueLight, colors.grayBlueDark) };
         default:
           break;
       }

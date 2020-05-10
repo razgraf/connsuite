@@ -16,11 +16,13 @@ const SectionActions = styled(components.SectionActions)``;
 const SectionNetworks = styled(components.Section)`
   padding: 0 calc(${props => props.theme.sizes.edge} * 1.5);
   overflow-x: hidden;
+  margin-bottom: ${props => props.theme.sizes.edge};
 `;
 
 const SectionArticles = styled(components.Section)`
   padding: 0;
   overflow-x: hidden;
+  margin-bottom: ${props => props.theme.sizes.edge};
 `;
 
 const SectionHeaderArticles = styled(SectionHeader)`
@@ -50,8 +52,9 @@ const GridArticles = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(auto-fill, 25vw);
+  grid-template-rows: repeat(auto-fill, 310px);
   grid-gap: 0;
+  overflow: hidden;
   & > * {
     grid-column: span 1;
   }
