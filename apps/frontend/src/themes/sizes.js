@@ -14,6 +14,9 @@ const sizes = {
   sideBarElevation: "200",
   sideBarHorizontalEdge: "15px",
 
+  networkEdge: "20px",
+  networkIconMaxSize: "90px",
+
   buttonTitle: "10pt",
   buttonTitleMini: "9pt",
 

@@ -20,3 +20,19 @@ export function parseFullName(store, max = null, ellipsis = false) {
     return null;
   }
 }
+
+export function ellipsis(value, max = null) {
+  try {
+    const material = _.toString(value);
+    if (_.isNil(material) || _.isEmpty(material)) throw new Error("Data Missing");
+
+    if (!_.isNil(max)) {
+      if (material.length <= max) return material;
+      return `${material.slice(0, max - 3)}...`;
+    }
+
+    return material;
+  } catch (e) {
+    return "";
+  }
+}

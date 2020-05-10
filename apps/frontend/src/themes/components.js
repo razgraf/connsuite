@@ -68,11 +68,10 @@ const Line = styled.div.attrs(props => ({
     css`
       height: 100%;
       width: 1px;
-      ${props =>
-        props.extend &&
-        css`
-          height: calc(100% + ${props.extend});
-        `}
+      ${props.extend &&
+      css`
+        height: calc(100% + ${props.extend});
+      `}
     `}
 `;
 
@@ -87,7 +86,7 @@ const SectionHeader = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  padding: calc(${props => props.theme.sizes.edge} * 1) 0;
+  padding: calc(${props => props.theme.sizes.edge} * 2) 0;
 `;
 
 const SectionTitle = styled.p`

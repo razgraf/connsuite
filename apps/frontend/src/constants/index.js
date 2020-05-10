@@ -18,6 +18,7 @@ export const pages = {
     Icon: IconProfile,
     root: "/",
     route: "/:id",
+    builder: id => `/${id}`,
     title: "Profile",
     isPrefetched: true,
   },
@@ -51,14 +52,31 @@ export const pages = {
     title: "About",
   },
   network: {
-    route: "/:id",
     root: "/network",
     create: {
       root: "/network",
     },
     edit: {
-      root: "/network",
-      route: "/network/:id",
+      root: "/network/edit",
+      route: "/network/edit/:id",
+      builder: id => `/network/edit/${id}`,
+    },
+  },
+  article: {
+    route: "/:id",
+    root: "/article",
+    create: {
+      root: "/article",
+    },
+    view: {
+      root: "/article",
+      route: "/article/:id",
+      builder: id => `/article/${id}`,
+    },
+    edit: {
+      root: "/article/edit",
+      route: "/article/edit/:id",
+      builder: id => `/article/edit/${id}`,
     },
   },
 };
@@ -143,6 +161,248 @@ export const footer = [
     },
   ],
 ];
+
+export const DUMMY = {
+  NETWORKS: [
+    {
+      _id: "NET1",
+      title: "Facebook 😅👨‍💻",
+      type: "default",
+      URL: "https://facebook.com/",
+      icon: {
+        source: require("../assets/networks/normal/icon_facebook.png"),
+      },
+      username: "razgraf",
+    },
+    {
+      _id: "NET2",
+      title: "Twitter",
+      type: "default",
+      URL: "https://twitter.com/",
+      icon: {
+        source: require("../assets/networks/normal/icon_twitter.png"),
+      },
+      username: "razgraf",
+    },
+    {
+      _id: "NET3",
+      title: "Behance",
+      type: "default",
+      URL: "https://behance.com/",
+      icon: {
+        source: require("../assets/networks/normal/icon_behance.png"),
+      },
+      username: "razgraf",
+    },
+    {
+      _id: "NET4",
+      title: "Pinterest",
+      type: "default",
+      URL: "https://pinterest.com/",
+      icon: {
+        source: require("../assets/networks/normal/icon_pinterest.png"),
+      },
+      username: "razgraf",
+    },
+    {
+      _id: "NET5",
+      URL: "https://github.com/",
+      type: "default",
+      title: "GitHub  LALALALLALALL lalas dlsaldsald lsal",
+      icon: {
+        source: require("../assets/networks/normal/icon_github.png"),
+      },
+      username: "razgraf",
+    },
+    {
+      _id: "NET6C",
+      URL: "https://www.vansoftware.ro/",
+      type: "custom",
+      title: "Van Software",
+      icon: {
+        name: "icon_custom.png",
+        source: require("../assets/networks/normal/icon_github.png"),
+      },
+      username: "@Razvan",
+    },
+  ],
+
+  ARTICLES: [
+    {
+      _id: "AA1",
+      title: "Company documents generator | Dedicated Software",
+      image: {
+        source: require("../assets/projects/project-1.png"),
+      },
+      categories: [
+        {
+          _id: "#1",
+          title: "Design",
+        },
+      ],
+      skills: [
+        {
+          _id: "#2",
+          title: "Branding",
+        },
+        {
+          _id: "#1",
+          title: "UI/UX",
+        },
+        {
+          _id: "#4",
+          title: "Full Stack",
+        },
+      ],
+      type: "internal",
+    },
+    {
+      _id: "AA2",
+      title: "Educational Platform (Brightture) | UI / UX",
+      image: {
+        source: require("../assets/projects/project-2.png"),
+      },
+      categories: [
+        {
+          _id: "#1",
+          title: "Design",
+        },
+        {
+          _id: "#2",
+          title: "Development",
+        },
+      ],
+      skills: [
+        {
+          _id: "#2",
+          title: "Branding",
+        },
+        {
+          _id: "#1",
+          title: "UI/UX",
+        },
+        {
+          _id: "#3",
+          title: "ReactJS",
+        },
+      ],
+      type: "external",
+      source: "behance.net/razgraf",
+    },
+    {
+      _id: "AA3",
+      title: "Event Planning (Epic) | Branding & Social Media",
+      image: {
+        source: require("../assets/projects/project-3.png"),
+      },
+      categories: [
+        {
+          _id: "#1",
+          title: "Design",
+        },
+        {
+          _id: "#3",
+          title: "Web Development",
+        },
+      ],
+      skills: [
+        {
+          _id: "#1",
+          title: "UI/UX",
+        },
+        {
+          _id: "#3",
+          title: "ReactJS",
+        },
+      ],
+      type: "internal",
+    },
+    {
+      _id: "AA4",
+      title: "Highway Maintenance Co. (MJQuinn) | Logo",
+      image: {
+        source: require("../assets/projects/project-4.png"),
+      },
+      categories: [
+        {
+          _id: "#1",
+          title: "Development",
+        },
+      ],
+      skills: [
+        {
+          _id: "#2",
+          title: "Branding",
+        },
+      ],
+      type: "external",
+      source: "www.behance.net/razgraf",
+    },
+    {
+      _id: "AA5",
+      title: "Industrial automation (Scadarama) | Web",
+      image: {
+        source: require("../assets/projects/project-5.png"),
+      },
+      categories: [
+        {
+          _id: "#1",
+          title: "Design",
+        },
+        {
+          _id: "#3",
+          title: "Web Development",
+        },
+        {
+          _id: "#2",
+          title: "Development",
+        },
+      ],
+      skills: [
+        {
+          _id: "#4",
+          title: "Full-Stack",
+        },
+      ],
+      type: "external",
+      source: "https://www.behance.net/razgraf",
+    },
+  ],
+
+  CATEGORIES: [
+    {
+      _id: "#1",
+      title: "Design",
+    },
+    {
+      _id: "#2",
+      title: "Development",
+    },
+    {
+      _id: "#3",
+      title: "Web Development",
+    },
+  ],
+
+  SKILLS: [
+    {
+      _id: "#1",
+      title: "UI/UX",
+    },
+    {
+      _id: "#2",
+      title: "Branding",
+    },
+    {
+      _id: "#3",
+      title: "ReactJS",
+    },
+    {
+      _id: "#4",
+      title: "Full Stack",
+    },
+  ],
+};
 
 const constants = {
   API,

@@ -16,6 +16,7 @@ const types = {
       primary: "primary",
       secondary: "secondary",
       grayBlueDark: "grayBlueDark",
+      grayBlueMedium: "grayBlueMedium",
       red: "red",
       google: "google",
     },
@@ -114,6 +115,11 @@ export const useDesigner = (accent, appearance) => {
         case types.button.accent.grayBlueDark:
           return {
             ...baseOutline(colors.grayBlueDark, colors.grayBlueDark),
+            backgroundHover: rgba(colors.grayBlueDark, 0.2),
+          };
+        case types.button.accent.grayBlueMedium:
+          return {
+            ...baseOutline(colors.grayBlueMedium, colors.grayBlueDark),
             backgroundHover: rgba(colors.grayBlueDark, 0.2),
           };
 

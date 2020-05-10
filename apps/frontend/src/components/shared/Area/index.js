@@ -24,6 +24,7 @@ const Canvas = styled(components.Canvas)`
   background: ${props => props.theme.colors.white};
   border-left: 1px solid ${props => lighten(0.04, props.theme.colors.grayBlueLight)};
   border-right: 1px solid ${props => lighten(0.04, props.theme.colors.grayBlueLight)};
+  padding: 0;
 `;
 
 const Content = styled.div`
@@ -34,9 +35,9 @@ const Content = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   min-height: 100vh;
-  flex: 1;
-  padding: calc(${props => props.theme.sizes.navHeight} + ${props => props.theme.sizes.edge}) ${props => props.theme.sizes.edge}
-    ${props => props.theme.sizes.edge} calc(${props => props.theme.sizes.sideBarWidth} + ${props => props.theme.sizes.edge});
+  width: 100%;
+  padding-top: ${props => props.theme.sizes.navHeight};
+  padding-left: ${props => props.theme.sizes.sideBarWidth};
 `;
 
 const StyledSideBar = styled(SideBar)`

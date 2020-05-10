@@ -21,7 +21,7 @@ const Content = styled(components.Canvas)`
   justify-content: center;
   height: ${props => props.theme.sizes.navHeight};
   padding: 0 ${props => props.theme.sizes.navHorizontalEdge};
-  max-width: calc(${props => props.theme.sizes.canvasMaxWidth} + 10px);
+  max-width: calc(${props => props.theme.sizes.canvasMaxWidth} + 15px);
 `;
 
 const LogoWrapper = styled.div`
