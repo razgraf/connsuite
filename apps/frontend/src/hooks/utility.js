@@ -42,5 +42,5 @@ export function useIntersection({ root = null, rootMargin, threshold = 0 }) {
     return () => currentObserver.disconnect();
   }, [node]);
 
-  return [setNode, entry];
+  return [setNode, entry, node];
 }

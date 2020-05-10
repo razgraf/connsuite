@@ -12,15 +12,16 @@ const types = {
     accent: {
       white: "white",
       whiteToPrimary: "whiteToPrimary",
+      whiteTransparent: "whiteTransparent",
       primary: "primary",
       secondary: "secondary",
-      darkGray: "darkGray",
+      grayBlueDark: "grayBlueDark",
       red: "red",
       google: "google",
     },
     type: {
       button: "button",
-      lin: "link",
+      link: "link",
       router: "router",
       routerDecorator: "router-decorator",
       hashRouter: "hash-router",
@@ -66,6 +67,10 @@ export const useDesigner = (accent, appearance) => {
           return { ...baseSolid(colors.red, colors.white) };
         case types.button.accent.google:
           return { ...baseSolid(colors.google, colors.white) };
+        case types.button.accent.whiteTransparent:
+          return { ...baseSolid(rgba(colors.white, 0.1), rgba(colors.white, 0.5)), backgroundHover: rgba(colors.white, 0.3) };
+        case types.button.accent.grayBlueDark:
+          return { ...baseSolid(colors.grayBlueDark, colors.dark) };
         default:
           break;
       }
@@ -105,6 +110,11 @@ export const useDesigner = (accent, appearance) => {
             background: colors.transparent,
             backgroundHover: colors.white,
             colorHover: colors.primary,
+          };
+        case types.button.accent.grayBlueDark:
+          return {
+            ...baseOutline(colors.grayBlueDark, colors.grayBlueDark),
+            backgroundHover: rgba(colors.grayBlueDark, 0.2),
           };
 
         default:

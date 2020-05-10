@@ -18,10 +18,16 @@ const Wrapper = styled.div`
 const Content = styled(components.Canvas)`
   display: flex;
   align-items: center;
+  justify-content: center;
   height: ${props => props.theme.sizes.navHeight};
+  padding: 0 ${props => props.theme.sizes.navHorizontalEdge};
+  max-width: calc(${props => props.theme.sizes.canvasMaxWidth} + 10px);
 `;
 
 const LogoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: calc(${props => props.theme.sizes.navHeight} - 2 * ${props => props.theme.sizes.navVerticalEdge});
   width: calc(${props => props.theme.sizes.navHeight} - 2 * ${props => props.theme.sizes.navVerticalEdge});
   border-radius: 50%;

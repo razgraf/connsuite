@@ -4,7 +4,15 @@ const sizes = {
 
   navHeight: "80px",
   navVerticalEdge: "10px",
-  navElevation: "100",
+  navHorizontalEdge: "15px",
+  navElevation: "500",
+
+  areaElevation: "300",
+  areaContentElevation: "100",
+
+  sideBarWidth: "90px",
+  sideBarElevation: "200",
+  sideBarHorizontalEdge: "15px",
 
   buttonTitle: "10pt",
   buttonTitleMini: "9pt",

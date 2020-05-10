@@ -34,6 +34,7 @@ const colors = {
 
 export const gradients = {
   primary: `linear-gradient(25deg, ${colors.secondary} 30%, ${colors.primary})`,
+  gold: `linear-gradient(25deg, ${colors.orange} 30%, ${colors.yellow})`,
 };
 
 export default colors;

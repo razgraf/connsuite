@@ -67,14 +67,23 @@ const wrapperCss = css`
  ${props => {
    const { design } = props.shared;
 
+   const color = css`
+     color: ${_.get(design, "color") || props.theme.white};
+     &:hover,
+     &:active {
+       ${_.has(design, "colorHover") && `color: ${_.get(design, "colorHover")}; transition: color 250ms;`}
+     }
+   `;
+
    switch (design.appearance) {
      case types.button.appearance.outline:
      case types.button.appearance.solid:
        return css`
+         ${color}
          ${design.border && `border: 1px solid ${design.border};`}
          ${design.shadow && `box-shadow: ${design.shadow};`}
          ${design.background && `background: ${design.background};`}
-         transition: background 250ms, box-shadow 250ms, border 250ms;
+         transition: background 250ms, box-shadow 250ms, border 250ms, color 250ms;
          &:hover {
           ${design.borderHover && `border: 1px solid ${design.borderHover};`}
            ${design.shadowHover && `box-shadow: ${design.shadowHover};`}
@@ -82,11 +91,12 @@ const wrapperCss = css`
              (design.backgroundHover && `background: ${design.backgroundHover};`) ||
              (design.background && `background: ${darken(0.1, design.background)};`)
            } 
-            transition: background 250ms, box-shadow 250ms, border 250ms;
+            transition: background 250ms, box-shadow 250ms, border 250ms, color 250ms;
          }
        `;
      case types.button.appearance.gradient:
        return css`
+         ${color}
          ${design.background};
          background-position-y: 0%;
          background-position-x: 0%;
@@ -139,6 +149,7 @@ function Button({
   isLoading,
   isMini,
   onClick,
+  prefetch,
   target,
   title,
   titleMedium,
@@ -224,7 +235,7 @@ function Button({
       );
     case types.button.type.router:
       return (
-        <Link href={to}>
+        <Link href={to} prefetch={prefetch}>
           <ButtonWrapper className={className} shared={sharedProps} onClick={onFinalClick}>
             {renderBody(ButtonWrapper)}
           </ButtonWrapper>
@@ -272,6 +283,10 @@ Button.propTypes = {
   isLoading: PropTypes.bool,
   isMini: PropTypes.bool,
   onClick: PropTypes.func,
+  /**
+   * @param {boolean} prefetch Attribute for Button[type="link"] to force a prefetch of the page
+   */
+  prefetch: PropTypes.bool,
   target: PropTypes.string,
   /**
    * @param {string|object} title Default title for the button
@@ -305,6 +320,7 @@ Button.defaultProps = {
   isLoading: false,
   isMini: false,
   onClick: () => {},
+  prefetch: false,
   target: "_blank",
   title: "",
   titleShort: null,

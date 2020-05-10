@@ -76,10 +76,51 @@ const Line = styled.div.attrs(props => ({
     `}
 `;
 
+const Section = styled.section`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+`;
+const SectionHeader = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: calc(${props => props.theme.sizes.edge} * 1) 0;
+`;
+
+const SectionTitle = styled.p`
+  margin: 0;
+  flex: 1;
+  text-align: left;
+  color: ${props => props.theme.colors.secondary};
+  font-family: ${props => props.theme.fonts.primary};
+  font-size: 13pt;
+  font-weight: 400;
+`;
+
+const SectionActions = styled.div`
+  display: flex;
+  align-items: center;
+  padding-left: calc(${props => props.theme.sizes.edge} * 1);
+  & > * {
+    margin-right: calc(${props => props.theme.sizes.edge} * 1);
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+`;
+
 const components = {
   Canvas,
   Circle,
   Line,
+
+  Section,
+  SectionHeader,
+  SectionTitle,
+  SectionActions,
 };
 
 export default components;

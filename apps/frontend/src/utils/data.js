@@ -3,7 +3,6 @@ import _ from "lodash";
 export function parseFullName(store, max = null, ellipsis = false) {
   try {
     const state = store.getState();
-    console.log(state);
     const first = _.get(state, "auth.user.name.first");
     const last = _.get(state, "auth.user.name.last");
     if (!first || !last) throw new Error("Data Missing");

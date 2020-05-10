@@ -4,10 +4,6 @@ import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 
 const TitleWrapperPartial = styled.div`
-  color: ${props => _.get(props, "design.color") || props.theme.white};
-  ${props => css`
-    ${_.has(props, "design.colorHover") && "transition: 250ms"}
-  `}
   z-index: 2;
 `;
 
@@ -44,15 +40,15 @@ const ShortTitleLabel = styled(TitleLabel)`
 `;
 
 const TitleWrapper = styled(TitleWrapperPartial)`
-  ${props => css`
-    ${props.parent}:hover > & > ${TitleLabel}, 
-    ${props.parent}:active > & > ${TitleLabel}{
-      ${_.has(props, "design.colorHover") && `color: ${_.get(props, "design.colorHover")}; transition: color 250ms;`}
-    }
-  `}
+  color: currentColor;
 
-  &[data-mini="true"] > ${TitleLabel}{
+  ${props => props.parent} > * {
+    color: currentColor;
+  }
+
+  &[data-mini="true"] > ${TitleLabel} {
     font-size: ${props => props.theme.sizes.buttonTitleMini};
+    font-weight: 600;
   }
 `;
 
