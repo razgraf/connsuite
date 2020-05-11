@@ -1,11 +1,11 @@
 import React from "react";
 import { ThemeProvider as Provider, createGlobalStyle } from "styled-components";
 
-import animations, { fadeInCss } from "./animations";
+import animations from "./animations";
 import colors, { gradients } from "./colors";
 import components from "./components";
 import fonts from "./fonts";
-import media from "./media";
+import medias from "./medias";
 import sizes from "./sizes";
 
 const GlobalStyle = createGlobalStyle`
@@ -78,7 +78,7 @@ function ThemeProvider({ children }) {
         gradients,
         components,
         fonts,
-        media,
+        medias,
         sizes,
       }}
     >
@@ -87,4 +87,4 @@ function ThemeProvider({ children }) {
   );
 }
 
-export { animations, colors, components, fonts, gradients, media, sizes, GlobalStyle, ThemeProvider };
+export { animations, colors, components, fonts, gradients, medias, sizes, GlobalStyle, ThemeProvider };

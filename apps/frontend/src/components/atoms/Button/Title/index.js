@@ -13,7 +13,7 @@ const TitleLabel = styled.p`
   margin: 0px 2px;
   text-align: center;
 
-  @media all and (max-width: ${props => props.theme.media.medium}) {
+  @media all and (max-width: ${props => props.theme.medias.medium}) {
     display: none;
     margin: 0px 4px;
   }
@@ -22,11 +22,11 @@ const TitleLabel = styled.p`
 const MediumTitleLabel = styled(TitleLabel)`
   display: none;
 
-  @media all and (max-width: ${props => props.theme.media.medium}) {
+  @media all and (max-width: ${props => props.theme.medias.medium}) {
     display: flex;
   }
 
-  @media all and (max-width: ${props => props.theme.media.medium}) {
+  @media all and (max-width: ${props => props.theme.medias.medium}) {
     display: none;
   }
 `;
@@ -34,7 +34,7 @@ const MediumTitleLabel = styled(TitleLabel)`
 const ShortTitleLabel = styled(TitleLabel)`
   display: none;
 
-  @media all and (max-width: ${props => props.theme.media.medium}) {
+  @media all and (max-width: ${props => props.theme.medias.medium}) {
     display: flex !important;
   }
 `;

@@ -15,8 +15,8 @@ function connectActions(dispatch) {
   };
 }
 
-export function useConnectMachine(store, type = "LOGIN") {
-  const piece = useMachine(connectX.machine, { actions: connectActions(store.dispatch), context: { type } });
+export function useConnectMachine(dispatch, type = "LOGIN") {
+  const piece = useMachine(connectX.machine, { actions: connectActions(dispatch), context: { type } });
   const machine = useMemo(
     () => ({
       ...connectX,

@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
-import { useStore } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { useLoginReducer, useConnectMachine } from "../../../../../hooks";
 
@@ -102,10 +102,10 @@ const StyledWarning = styled(Warning)`
 `;
 
 function Login({ className }) {
-  const store = useStore();
+  const dispatch = useDispatch();
 
   const reducer = useLoginReducer();
-  const machine = useConnectMachine(store, "LOGIN");
+  const machine = useConnectMachine(dispatch, "LOGIN");
 
   const isFormValid = useMemo(() => {
     return reducer.helper.isValid(reducer.state);

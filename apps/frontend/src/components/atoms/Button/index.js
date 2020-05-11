@@ -55,7 +55,7 @@ const wrapperCss = css`
       width: 100%;
     `};
 
-  @media all and (max-width: ${props => props.theme.media.medium}){
+  @media all and (max-width: ${props => props.theme.medias.medium}){
     padding: 15px 10px;
     ${props =>
       props.isMini &&
@@ -149,7 +149,6 @@ function Button({
   isLoading,
   isMini,
   onClick,
-  prefetch,
   target,
   title,
   titleMedium,
@@ -235,7 +234,7 @@ function Button({
       );
     case types.button.type.router:
       return (
-        <Link href={to} prefetch={prefetch}>
+        <Link href={to}>
           <ButtonWrapper className={className} shared={sharedProps} onClick={onFinalClick}>
             {renderBody(ButtonWrapper)}
           </ButtonWrapper>
@@ -283,10 +282,6 @@ Button.propTypes = {
   isLoading: PropTypes.bool,
   isMini: PropTypes.bool,
   onClick: PropTypes.func,
-  /**
-   * @param {boolean} prefetch Attribute for Button[type="link"] to force a prefetch of the page
-   */
-  prefetch: PropTypes.bool,
   target: PropTypes.string,
   /**
    * @param {string|object} title Default title for the button
@@ -320,7 +315,6 @@ Button.defaultProps = {
   isLoading: false,
   isMini: false,
   onClick: () => {},
-  prefetch: false,
   target: "_blank",
   title: "",
   titleShort: null,

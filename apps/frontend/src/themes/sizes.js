@@ -14,6 +14,8 @@ const sizes = {
   sideBarElevation: "200",
   sideBarHorizontalEdge: "15px",
 
+  sectionEdge: "22.5px",
+
   networkEdge: "20px",
   networkIconMaxSize: "90px",
 
@@ -21,6 +23,8 @@ const sizes = {
   buttonTitleMini: "9pt",
 
   sectionTitle: "18pt",
+
+  coverElevation: "400",
 };
 
 export default sizes;

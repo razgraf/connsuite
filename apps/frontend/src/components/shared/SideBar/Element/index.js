@@ -85,9 +85,9 @@ const Bubble = styled(BubblePartial)`
   }
 `;
 
-function Element({ Icon, title, root, isActive, isPrivate, isPrefetched }) {
+function Element({ Icon, title, root, isActive, isPrivate }) {
   return (
-    <Link href={root} prefetch={isPrefetched}>
+    <Link href={root}>
       <Wrapper>
         <Bubble data-private={isPrivate} data-active={isActive}>
           <Icon style={{ fontSize: "18pt" }} />
@@ -106,13 +106,11 @@ Element.propTypes = {
   root: PropTypes.string.isRequired,
   isPrivate: PropTypes.bool,
   isActive: PropTypes.bool,
-  isPrefetched: PropTypes.bool,
 };
 
 Element.defaultProps = {
   isPrivate: false,
   isActive: false,
-  isPrefetched: false,
 };
 
 export default Element;

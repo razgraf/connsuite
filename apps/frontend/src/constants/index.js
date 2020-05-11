@@ -20,25 +20,21 @@ export const pages = {
     route: "/:id",
     builder: id => `/${id}`,
     title: "Profile",
-    isPrefetched: true,
   },
   dashboard: {
     Icon: IconDashboard,
     root: "/dashboard",
     title: "Dashboard",
-    isPrefetched: true,
   },
   portfolio: {
     Icon: IconPortfolio,
     root: "/portfolio",
     title: "Portfolio",
-    isPrefetched: true,
   },
   business: {
     Icon: IconBusiness,
     root: "/business",
     title: "Business Book",
-    isPrefetched: true,
   },
   statistics: {
     Icon: IconStatistics,
@@ -91,6 +87,12 @@ export const redux = {
 
   AUTH_USER_SET: "AUTH_USER_SET",
   AUTH_TOKEN_SET: "AUTH_TOKEN_SET",
+
+  COVER_OPEN: "COVER_OPEN",
+  COVER_CLOSE: "COVER_CLOSE",
+  COVER_TOGGLE: "COVER_TOGGLE",
+  COVER_NETWORK_CLEAR: "COVER_NETWORK_CLEAR",
+  COVER_NETWORK_SET: "COVER_NETWORK_SET",
 };
 
 export const sagas = {
@@ -168,6 +170,7 @@ export const DUMMY = {
       _id: "NET1",
       title: "Facebook 😅👨‍💻",
       type: "default",
+      description: "Hi 👋! You can also find me on Facebook.",
       URL: "https://facebook.com/",
       icon: {
         source: require("../assets/networks/normal/icon_facebook.png"),

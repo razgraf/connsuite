@@ -1,17 +1,14 @@
-import { useEffect } from "react";
-import { useStore } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { validateAuth } from "../utils";
 
 /**
  *
- * @param {{ store: * }}
  * @param {("public"|"private"|"shared")} visibility - public ONLY (redirect to private is user allowed), private ONLY (redirect to public if user is not allowed), shared (don't redirect, but identify user)
+ * @param {boolean} shallow - it false, wait for the backend confirmation of authenthicity too
  */
 export function useAuth(visibility, shallow = true) {
-  const store = useStore();
+  const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    validateAuth({ store }, visibility, shallow);
-    return () => {};
-  }, [store, visibility, shallow]);
+  validateAuth({ state: { auth }, dispatch }, visibility, shallow);
 }

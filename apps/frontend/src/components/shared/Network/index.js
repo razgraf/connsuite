@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
@@ -8,6 +8,7 @@ import { rgba } from "polished";
 import { pages } from "../../../constants";
 import { ellipsis } from "../../../utils";
 import { Button } from "../../atoms";
+import { useCover } from "../../../hooks";
 
 const WrapperPartial = styled.div`
   grid-column: span 1;
@@ -293,9 +294,20 @@ const Wrapper = styled(WrapperPartial)`
   }
 `;
 
-function Network({ className, _id, isViewOnly, isFocused, title, username, icon }) {
+function Network({ className, isViewOnly, isFocused, ...network }) {
+  const { _id, title, username, icon } = network;
+
+  const { setOpen: setCoverOpen, setNetwork: setCoverNetwork } = useCover();
+
+  const doPick = useCallback(() => {
+    if (!isViewOnly) {
+      setCoverNetwork(network);
+      setCoverOpen(true);
+    }
+  }, [network, isViewOnly]);
+
   return (
-    <Wrapper className={className} data-viewonly={isViewOnly} data-focused={isFocused}>
+    <Wrapper className={className} data-viewonly={isViewOnly} data-focused={isFocused} onClick={doPick}>
       <Card>
         {!isViewOnly && (
           <Overlay>
@@ -338,7 +350,7 @@ function Network({ className, _id, isViewOnly, isFocused, title, username, icon 
 
 function NetworkAdd() {
   return (
-    <Link prefetch href={pages.network.create.root}>
+    <Link href={pages.network.create.root}>
       <Wrapper data-style="add">
         <Card>
           <Content>

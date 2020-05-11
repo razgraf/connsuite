@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import { useStore } from "react-redux";
-import { Button } from "../../../components/atoms";
 import { Area } from "../../../components/shared";
 
-function Business() {
-  const store = useStore();
+const Page = styled.div``;
 
+function Business() {
   return (
-    <Area>
-      <p>Business</p>
-    </Area>
+    <Page>
+      <Area>
+        <p>Business</p>
+      </Area>
+    </Page>
   );
 }
 

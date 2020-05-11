@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { useMemo } from "react";
 import { rgba, lighten } from "polished";
 import { colors, gradients } from "../../../themes";
@@ -10,6 +11,8 @@ const types = {
       gradient: "gradient",
     },
     accent: {
+      ...colors,
+      ...gradients,
       white: "white",
       whiteToPrimary: "whiteToPrimary",
       whiteTransparent: "whiteTransparent",
@@ -81,6 +84,7 @@ export const useDesigner = (accent, appearance) => {
         case types.button.accent.grayBlueLight:
           return { ...baseSolid(colors.grayBlueLight, colors.grayBlueDark) };
         default:
+          if (_.has(colors, accent)) return { ...baseSolid(colors[accent], colors.white) };
           break;
       }
     } else if (appearance === types.button.appearance.gradient) {
@@ -88,6 +92,7 @@ export const useDesigner = (accent, appearance) => {
         case types.button.accent.primary:
           return { ...baseSolid(), background: gradients.primary };
         default:
+          if (_.has(gradients, accent)) return { ...baseSolid(), background: gradients[accent] };
           break;
       }
     } else if (types.button.appearance.outline) {
@@ -132,6 +137,7 @@ export const useDesigner = (accent, appearance) => {
           };
 
         default:
+          if (_.has(colors, accent)) return { ...baseOutline(colors[accent], colors[accent]) };
           break;
       }
     }

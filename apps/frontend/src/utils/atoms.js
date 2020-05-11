@@ -41,18 +41,33 @@ export function redirectTo(destination, { res = null } = {}) {
     window.location = destination;
   }
 }
-export function buildHeaders({ store = null } = {}) {
+export function buildHeaders({ auth = null } = {}) {
   const headers = {
     "Content-Type": "application/json",
   };
-  if (_.isNil(store)) return headers;
+  if (_.isNil(auth)) return headers;
 
   try {
-    const state = store.getState();
-    const token = _.get(state, "auth.token.value");
+    const token = _.get(auth, "token.value");
     headers.Authorization = `Bearer ${token || ""}`;
   } catch (e) {
     console.error(e);
   }
   return headers;
+}
+
+export function ellipsis(value, max = null) {
+  try {
+    const material = _.toString(value);
+    if (_.isNil(material) || _.isEmpty(material)) throw new Error("Data Missing");
+
+    if (!_.isNil(max)) {
+      if (material.length <= max) return material;
+      return `${material.slice(0, max - 3)}...`;
+    }
+
+    return material;
+  } catch (e) {
+    return "";
+  }
 }

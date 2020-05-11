@@ -11,14 +11,14 @@ import { redirectTo } from "./atoms";
  *
  */
 
-export async function logout({ store, res = null, local = false } = {}) {
-  if (store) {
+export async function logout({ auth, dispatch, res = null, local = false } = {}) {
+  if (auth) {
     try {
-      if (local) AuthRequest.logout(store);
+      if (local) AuthRequest.logout(auth);
     } catch (e) {
       console.error(e);
     }
-    store.dispatch({ type: PURGE, result: () => null });
+    if (dispatch) dispatch({ type: PURGE, result: () => null });
   }
 
   redirectTo(pages.landing.root, { res });
@@ -31,12 +31,12 @@ export async function logout({ store, res = null, local = false } = {}) {
  *
  */
 
-async function validatePublicOnly({ store, res = null, shallow = true }) {
+async function validatePublicOnly({ auth, res = null, shallow = true }) {
   try {
-    const stored = await AuthRequest.isShallowAuthorized(store);
+    const stored = await AuthRequest.isShallowAuthorized(auth);
     if (shallow && stored) return redirectTo(pages.dashboard.root, { res });
 
-    const payload = await AuthRequest.isAuthorized(store);
+    const payload = await AuthRequest.isAuthorized(auth);
     if (!payload) return false;
 
     const user = payload && _.has(payload, "user") ? payload.user : null;
@@ -49,12 +49,12 @@ async function validatePublicOnly({ store, res = null, shallow = true }) {
   }
 }
 
-async function validatePrivateOnly({ store, res = null, shallow = true }) {
+async function validatePrivateOnly({ auth, dispatch, res = null, shallow = true }) {
   try {
-    const stored = await AuthRequest.isShallowAuthorized(store);
-    if (shallow && !stored) return logout({ store, local: true, res });
+    const stored = await AuthRequest.isShallowAuthorized(auth);
+    if (shallow && !stored) return logout({ auth, dispatch, local: true, res });
 
-    const payload = await AuthRequest.isAuthorized(store);
+    const payload = await AuthRequest.isAuthorized(auth);
     if (!payload) throw new Error("Forbidden");
 
     const user = payload && _.has(payload, "user") ? payload.user : null;
@@ -62,16 +62,16 @@ async function validatePrivateOnly({ store, res = null, shallow = true }) {
 
     return user;
   } catch (e) {
-    return logout({ store, res });
+    return logout({ auth, dispatch, res });
   }
 }
 
-async function validateShared({ store, res = null, shallow = true }) {
+async function validateShared({ auth, shallow = true }) {
   try {
-    const stored = await AuthRequest.isShallowAuthorized(store);
+    const stored = await AuthRequest.isShallowAuthorized(auth);
     if (shallow && stored) return null;
 
-    const payload = await AuthRequest.isAuthorized(store);
+    const payload = await AuthRequest.isAuthorized(auth);
     if (!payload) throw new Error("User not available or authorized");
 
     const user = payload && _.has(payload, "user") ? payload.user : null;
@@ -83,14 +83,26 @@ async function validateShared({ store, res = null, shallow = true }) {
   }
 }
 
-export async function validateAuth({ store, res = null } = {}, visibility = "private", shallow = true) {
+export async function validateAuth({ state, store, dispatch: d, res = null } = {}, visibility = "private", shallow = true) {
+  let auth = null;
+  let dispatch = d;
+  if (!_.isNil(store)) {
+    /** Object is coming from the server (nextjs side) */
+    auth = _.attempt(() => {
+      const s = store.getState();
+      return s.auth;
+    });
+    if (_.isError(auth)) auth = null;
+
+    dispatch = store.dispatch;
+  } else auth = state.auth;
   switch (visibility) {
     case "private":
-      return validatePrivateOnly({ store, res, shallow });
+      return validatePrivateOnly({ auth, dispatch, res, shallow });
     case "public":
-      return validatePublicOnly({ store, res, shallow });
+      return validatePublicOnly({ auth, dispatch, res, shallow });
     case "shared":
     default:
-      return validateShared({ store, res, shallow });
+      return validateShared({ auth, shallow });
   }
 }

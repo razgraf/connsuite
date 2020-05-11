@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
-import { useStore } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { useRegisterReducer, useConnectMachine } from "../../../../../hooks";
 
@@ -91,10 +91,10 @@ const StyledWarning = styled(Warning)`
 `;
 
 function Register({ className }) {
-  const store = useStore();
+  const dispatch = useDispatch();
 
   const reducer = useRegisterReducer();
-  const machine = useConnectMachine(store, "REGISTER");
+  const machine = useConnectMachine(dispatch, "REGISTER");
 
   const isFormValid = useMemo(() => {
     return reducer.helper.isValid(reducer.state);

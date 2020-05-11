@@ -1,4 +1,4 @@
-const media = {
+const medias = {
   small: "640px",
   medium: "960px",
 
@@ -8,4 +8,4 @@ const media = {
   tablet: "600px",
 };
 
-export default media;
+export default medias;

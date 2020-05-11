@@ -62,10 +62,10 @@ async function register(payload) {
  * Check if the user is authorized based on the Bearer Token
  * @throws ...
  */
-async function isAuthorized(store) {
+async function isAuthorized(auth) {
   const response = await fetch(API.authStatus(), {
     method: "GET",
-    headers: buildHeaders({ store }),
+    headers: buildHeaders({ auth }),
     credentials: "omit",
   });
 
@@ -76,10 +76,9 @@ async function isAuthorized(store) {
   }
 }
 
-async function isShallowAuthorized(store) {
+async function isShallowAuthorized(auth) {
   try {
-    const state = store.getState();
-    const token = _.get(state, "auth.token.value");
+    const token = _.get(auth, "token.value");
 
     return !_.isNil(token) && !_.isEmpty(token);
   } catch (e) {
@@ -119,11 +118,11 @@ async function login(payload) {
 /**
  * Disconnect a user
  */
-async function logout(store) {
+async function logout(auth) {
   const endpoint = new URL(API.authLogout());
   await fetch(endpoint, {
     method: "POST",
-    headers: buildHeaders({ store }),
+    headers: buildHeaders({ auth }),
     credentials: "omit",
   });
 }

@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { useStore } from "react-redux";
 import IconAdd from "@material-ui/icons/Add";
 import { components } from "../../../themes";
 import { Button } from "../../../components/atoms";
@@ -8,13 +7,16 @@ import { Area } from "../../../components/shared";
 import { pages, DUMMY } from "../../../constants";
 import Network, { NetworkAdd } from "../../../components/shared/Network";
 import Article, { ArticleAdd } from "../../../components/shared/Article";
+import Cover from "../../../components/shared/Cover";
+
+const Page = styled.div``;
 
 const SectionHeader = styled(components.SectionHeader)``;
 const SectionTitle = styled(components.SectionTitle)``;
 const SectionActions = styled(components.SectionActions)``;
 
 const SectionNetworks = styled(components.Section)`
-  padding: 0 calc(${props => props.theme.sizes.edge} * 1.5);
+  padding: 0 ${props => props.theme.sizes.sectionEdge};
   overflow-x: hidden;
   margin-bottom: ${props => props.theme.sizes.edge};
 `;
@@ -25,12 +27,29 @@ const SectionArticles = styled(components.Section)`
   margin-bottom: ${props => props.theme.sizes.edge};
 `;
 
+const SectionQuick = styled(components.Section)`
+  padding: 0 ${props => props.theme.sizes.sectionEdge};
+  overflow-x: hidden;
+  margin-bottom: calc(${props => props.theme.sizes.edge} * 3);
+`;
+
+const SectionQuickContent = styled.div`
+  display: flex;
+  align-items: center;
+  & > * {
+    margin-right: calc(${props => props.theme.sizes.edge} * 1);
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+`;
+
 const SectionHeaderArticles = styled(SectionHeader)`
   padding-left: calc(${props => props.theme.sizes.edge} * 1.5);
   padding-right: calc(${props => props.theme.sizes.edge} * 1.5);
 `;
 
-const Add = styled.div`
+const ButtonIconWrapper = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -61,63 +80,97 @@ const GridArticles = styled.div`
 `;
 
 function Portfolio() {
-  const store = useStore();
+  const [isCoverVisible, setIsCoverVisible] = useState(true);
 
   return (
-    <Area>
-      <SectionNetworks>
-        <SectionHeader>
-          <SectionTitle>My Networks</SectionTitle>
-          <SectionActions>
+    <Page>
+      <Area>
+        <SectionNetworks>
+          <SectionHeader>
+            <SectionTitle>Networks</SectionTitle>
+            <SectionActions>
+              <Button
+                appearance={t => t.outline}
+                accent={t => t.grayBlueMedium}
+                childrenLeft={
+                  <ButtonIconWrapper>
+                    <IconAdd style={{ fontSize: "11pt" }} />
+                  </ButtonIconWrapper>
+                }
+                isMini
+                title="Create Network"
+                to={pages.network.create.root}
+                type={t => t.router}
+              />
+            </SectionActions>
+          </SectionHeader>
+          <GridNetworks>
+            {DUMMY.NETWORKS.map(network => (
+              <Network key={network._id} {...network} />
+            ))}
+            <NetworkAdd />
+          </GridNetworks>
+        </SectionNetworks>
+        <SectionArticles>
+          <SectionHeaderArticles>
+            <SectionTitle>Articles</SectionTitle>
+            <SectionActions>
+              <Button
+                appearance={t => t.outline}
+                accent={t => t.grayBlueMedium}
+                childrenLeft={
+                  <ButtonIconWrapper>
+                    <IconAdd style={{ fontSize: "11pt" }} />
+                  </ButtonIconWrapper>
+                }
+                isMini
+                title="Create Article"
+                to={pages.article.create.root}
+                type={t => t.router}
+              />
+            </SectionActions>
+          </SectionHeaderArticles>
+          <GridArticles>
+            {DUMMY.ARTICLES.map(article => (
+              <Article key={article._id} {...article} />
+            ))}
+            <ArticleAdd />
+          </GridArticles>
+        </SectionArticles>
+        <SectionQuick>
+          <SectionHeader>
+            <SectionTitle>Quick Actions</SectionTitle>
+          </SectionHeader>
+          <SectionQuickContent>
             <Button
               appearance={t => t.outline}
               accent={t => t.grayBlueMedium}
               childrenLeft={
-                <Add>
+                <ButtonIconWrapper>
                   <IconAdd style={{ fontSize: "11pt" }} />
-                </Add>
+                </ButtonIconWrapper>
               }
-              isMini
               title="Create Network"
               to={pages.network.create.root}
               type={t => t.router}
             />
-          </SectionActions>
-        </SectionHeader>
-        <GridNetworks>
-          {DUMMY.NETWORKS.map(network => (
-            <Network key={network._id} {...network} />
-          ))}
-          <NetworkAdd />
-        </GridNetworks>
-      </SectionNetworks>
-      <SectionArticles>
-        <SectionHeaderArticles>
-          <SectionTitle>My Articles</SectionTitle>
-          <SectionActions>
             <Button
               appearance={t => t.outline}
               accent={t => t.grayBlueMedium}
               childrenLeft={
-                <Add>
+                <ButtonIconWrapper>
                   <IconAdd style={{ fontSize: "11pt" }} />
-                </Add>
+                </ButtonIconWrapper>
               }
-              isMini
               title="Create Article"
               to={pages.article.create.root}
               type={t => t.router}
             />
-          </SectionActions>
-        </SectionHeaderArticles>
-        <GridArticles>
-          {DUMMY.ARTICLES.map(article => (
-            <Article key={article._id} {...article} />
-          ))}
-          <ArticleAdd />
-        </GridArticles>
-      </SectionArticles>
-    </Area>
+          </SectionQuickContent>
+        </SectionQuick>
+      </Area>
+      <Cover isVisible={isCoverVisible} setIsVisible={setIsCoverVisible} />
+    </Page>
   );
 }
 

@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { useStore } from "react-redux";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import IconArrowDown from "@material-ui/icons/KeyboardArrowDownRounded";
@@ -180,12 +180,12 @@ function DropdownItem({ root, title, isActive }) {
 
 function Account() {
   const router = useRouter();
-  const store = useStore();
+  const auth = useSelector(state => state.auth);
 
   const [isDown, setIsDown] = useState(false);
   const [ref] = useOnClickOutside(() => setIsDown(false));
 
-  const name = useMemo(() => parseFullName(store), [store]);
+  const name = useMemo(() => parseFullName(auth), [auth]);
 
   return (
     <Wrapper>

@@ -52,7 +52,7 @@ const Overlay = styled.div`
   cursor: pointer;
   background-color: ${props => rgba(props.theme.colors.white, 0)};
   overflow: hidden;
-  transition: opacity 200ms;
+  transition: background-color 200ms;
 `;
 
 const OverlayHeader = styled.div`
@@ -159,7 +159,7 @@ const OverlayFooterInfoItem = styled.p`
   font-size: 9pt;
   font-weight: 700;
   &[data-purpose="category"] {
-    color: ${props => props.theme.colors.orange};
+    color: ${props => props.theme.colors.secondary};
   }
 `;
 
@@ -194,8 +194,6 @@ const AddTitle = styled.p`
   font-size: 10pt;
   font-weight: 600;
   text-align: center;
-  min-height: 20px;
-  margin-top: 10px;
   color: ${props => props.theme.colors.grayBlueDark};
 `;
 
@@ -206,7 +204,6 @@ const Info = styled.div`
   flex-direction: column;
   width: 100%;
   overflow: hidden;
-  padding-top: calc(${props => props.theme.sizes.networkEdge} * 3 / 4);
   & > * {
     max-width: 160px;
   }
@@ -215,6 +212,10 @@ const Info = styled.div`
 const Wrapper = styled(WrapperPartial)`
   &:hover,
   &:active {
+    ${Overlay} {
+      background-color: ${props => rgba(props.theme.colors.white, 0.2)};
+      transition: background-color 200ms;
+    }
     ${OverlayFooter} {
       transform: translateY(0);
       transition: transform 200ms;
@@ -226,13 +227,23 @@ const Wrapper = styled(WrapperPartial)`
     opacity: 0.6;
     transition: opacity 200ms;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    ${Card} {
+      flex: 1;
+      padding: 20px;
+    }
     ${Content} {
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 60px;
       box-shadow: none;
+      border-radius: 4px;
       border: 1px solid ${props => props.theme.colors.grayBlueNormal};
+    }
+    ${Info} {
+      padding-bottom: calc(${props => props.theme.sizes.networkEdge} * 3 / 4);
     }
     &:hover,
     &:active {
@@ -242,10 +253,10 @@ const Wrapper = styled(WrapperPartial)`
   }
 `;
 
-function Action({ Icon, title, type, url }) {
+function Action({ Icon, callback, title, type, url }) {
   if (type === "button")
     return (
-      <OverlayHeaderAction as="div" title={title}>
+      <OverlayHeaderAction as="div" title={title} onClick={callback}>
         <Icon style={{ fontSize: "13pt" }} />
       </OverlayHeaderAction>
     );
@@ -307,8 +318,8 @@ function Article({ className, _id, image, title, type }) {
                   <OverlayFooterInfoItem data-purpose="category">Categories</OverlayFooterInfoItem>
                 </OverlayFooterInfo>
                 <OverlayFooterButton
-                  appearance={t => t.outline}
-                  accent={t => t.grayBlueMedium}
+                  appearance={t => t.solid}
+                  accent={t => t.secondary}
                   isMini
                   title={type === "external" ? "Visit Article" : "Read Article"}
                   type={t => t.link}
@@ -328,7 +339,7 @@ function Article({ className, _id, image, title, type }) {
 
 function ArticleAdd() {
   return (
-    <Link prefetch href={pages.article.create.root}>
+    <Link href={pages.article.create.root}>
       <Wrapper data-style="add">
         <Card>
           <Content>
@@ -339,7 +350,7 @@ function ArticleAdd() {
           </Content>
         </Card>
         <Info>
-          <AddTitle>Add Article</AddTitle>
+          <AddTitle>Create Article</AddTitle>
         </Info>
       </Wrapper>
     </Link>
@@ -361,11 +372,16 @@ Article.defaultProps = {
 };
 
 Action.propTypes = {
-  Icon: PropTypes.func.isRequired,
+  Icon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  url: PropTypes.string,
+  callback: PropTypes.func,
 };
 
+Action.defaultProps = {
+  url: null,
+  callback: () => {},
+};
 export default Article;
 export { ArticleAdd };
