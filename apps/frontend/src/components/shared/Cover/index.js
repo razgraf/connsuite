@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
@@ -50,7 +50,8 @@ const Slide = styled.div`
   overflow-y: auto;
 
   @media all and (max-width: ${props => props.theme.sizes.canvasMaxWidth}) {
-    display: flex !important;
+    width: 100%;
+    max-width: calc(${props => props.theme.sizes.canvasMaxWidth} * 1 / 2);
   }
 `;
 
