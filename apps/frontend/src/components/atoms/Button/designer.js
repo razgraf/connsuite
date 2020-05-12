@@ -3,16 +3,25 @@ import { useMemo } from "react";
 import { rgba, lighten } from "polished";
 import { colors, gradients } from "../../../themes";
 
+const interpret = source => {
+  const r = {};
+  Object.keys(source).forEach(key => {
+    r[key] = key;
+  });
+  return r;
+};
+
 const types = {
   button: {
     appearance: {
       solid: "solid",
       outline: "outline",
       gradient: "gradient",
+      transparent: "transparent",
     },
     accent: {
-      ...colors,
-      ...gradients,
+      ...interpret(colors),
+      ...interpret(gradients),
       white: "white",
       whiteToPrimary: "whiteToPrimary",
       whiteTransparent: "whiteTransparent",
@@ -83,6 +92,8 @@ export const useDesigner = (accent, appearance) => {
           return { ...baseSolid(colors.grayBlueNormal, colors.grayBlueDark) };
         case types.button.accent.grayBlueLight:
           return { ...baseSolid(colors.grayBlueLight, colors.grayBlueDark) };
+        case types.button.accent.transparentGrayBlueDark:
+          return { ...baseSolid(colors.transparent, colors.grayBlueDark) };
         default:
           if (_.has(colors, accent)) return { ...baseSolid(colors[accent], colors.white) };
           break;
@@ -95,7 +106,7 @@ export const useDesigner = (accent, appearance) => {
           if (_.has(gradients, accent)) return { ...baseSolid(), background: gradients[accent] };
           break;
       }
-    } else if (types.button.appearance.outline) {
+    } else if (appearance === types.button.appearance.outline) {
       switch (accent) {
         case types.button.accent.primary:
           return {
@@ -135,9 +146,15 @@ export const useDesigner = (accent, appearance) => {
             ...baseOutline(colors.grayBlueMedium, colors.grayBlueDark),
             backgroundHover: rgba(colors.grayBlueDark, 0.2),
           };
-
         default:
           if (_.has(colors, accent)) return { ...baseOutline(colors[accent], colors[accent]) };
+          break;
+      }
+    } else if (appearance === types.button.appearance.transparent) {
+      switch (accent) {
+        default:
+          if (_.has(colors, accent))
+            return { ...baseSolid(rgba(colors.dark, 0), colors[accent]), backgroundHover: rgba(colors.dark, 0.05) };
           break;
       }
     }

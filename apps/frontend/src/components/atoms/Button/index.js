@@ -77,6 +77,7 @@ const wrapperCss = css`
 
    switch (design.appearance) {
      case types.button.appearance.outline:
+     case types.button.appearance.transparent:
      case types.button.appearance.solid:
        return css`
          ${color}

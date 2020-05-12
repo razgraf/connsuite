@@ -10,6 +10,7 @@ const colors = {
   grayAccent: "#eeeeee",
   grayClear: "#dddddd",
   grayBlueBlack: "#40474f",
+  grayBlueNight: "#6d8097",
   grayBlueDark: "#8B9AAC",
   grayBlueMedium: "#b3bed5",
   grayBlueNormal: "#d5dbe1",

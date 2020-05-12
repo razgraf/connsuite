@@ -1,12 +1,14 @@
-import React from "react";
+import _ from "lodash";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rgba } from "polished";
 import IconArrow from "@material-ui/icons/KeyboardArrowRight";
 
 import { components } from "../../../../../themes";
-import { Account, Logo } from "../../atoms";
 import { pages, types } from "../../../../../constants";
+import { useHistory } from "../../../../../hooks";
+import { Account, Logo } from "../../atoms";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -68,11 +70,16 @@ const Title = styled.p`
 `;
 
 function NavSecondary({ className, accent, hasAccount, hasParent, title }) {
-  console.log(accent);
+  const { history, pop } = useHistory();
+  const parentRoute = useMemo(() => (hasParent && history.length ? _.get(history[history.length - 1], "route") : pages.dashboard.root), [
+    hasParent,
+    history,
+  ]);
+
   return (
     <Wrapper className={className} data-accent={accent}>
       <Content>
-        <Logo href={pages.dashboard.root} hasParent />
+        <Logo href={parentRoute} hasParent={hasParent} onClick={pop} />
         <Main>
           <IconWrapper>
             <IconArrow style={{ fontSize: "16pt" }} />

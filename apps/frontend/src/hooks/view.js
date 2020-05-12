@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 import { redux } from "../constants";
 
 export function useCover() {
@@ -20,5 +21,19 @@ export function useCover() {
     network: cover.network,
     setOpen,
     setNetwork,
+  };
+}
+
+export function useHistory() {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const history = useSelector(state => state.view.history);
+
+  return {
+    history,
+    push: () => dispatch({ type: redux.HISTORY_PUSH, payload: { route: router.pathname } }),
+    pop: () => dispatch({ type: redux.HISTORY_POP }),
+    clear: () => dispatch({ type: redux.HISTORY_CLEAR }),
   };
 }

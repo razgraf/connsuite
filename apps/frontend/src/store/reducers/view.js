@@ -2,6 +2,26 @@ import { combineReducers } from "redux";
 import { PURGE } from "redux-persist";
 import { redux } from "../../constants";
 
+const initialHistory = [];
+
+const history = (state = initialHistory, { type, payload } = {}) => {
+  switch (type) {
+    case redux.HISTORY_PUSH: {
+      state.push(payload);
+      return state;
+    }
+    case redux.HISTORY_POP: {
+      if (state.length) state.pop();
+      return state;
+    }
+    case redux.HISTORY_CLEAR: {
+      return [];
+    }
+    default:
+      return state;
+  }
+};
+
 const initialCover = {
   cover: {
     isOpen: false,
@@ -36,6 +56,7 @@ const cover = (state = initialCover, { type, payload } = {}) => {
 
 const viewReducer = combineReducers({
   cover,
+  history,
 });
 
 export default viewReducer;

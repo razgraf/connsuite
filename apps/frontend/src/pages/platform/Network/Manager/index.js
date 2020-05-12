@@ -63,7 +63,11 @@ const steps = {
       left: "Cancel",
       leftClick: () => {},
       right: "Next Step",
-      rightClick: () => {},
+      rightClick: () => {
+        console.log("back");
+        Router.back();
+      },
+      isStart: true,
     },
     {
       index: 2,
@@ -82,21 +86,25 @@ const steps = {
       leftClick: () => {},
       right: "Go Live",
       rightClick: () => {},
+      isFinal: true,
     },
   ],
 };
 
+Router.events.on("routeChangeError", (err, url) => console.log(err, url));
+
 function NetworkManager({ query }) {
   const [step, setStep] = useState(1);
+  const type = types.network.manager.create;
 
   return (
     <Page>
-      <StyledNav appearance={types.nav.appearance.secondary} title={pages.network.create.title} source={steps} isGoingBack />
+      <StyledNav appearance={types.nav.appearance.secondary} title={pages.network.create.title} hasParent />
       <Canvas>
         <Card>
-          <Header step={step} />
+          <Header step={step} source={steps[type]} />
           <Main></Main>
-          <Footer step={steps.find(item => item.index === step)[0]} />
+          <Footer step={steps[type].find(item => item.index === step)} />
         </Card>
       </Canvas>
     </Page>

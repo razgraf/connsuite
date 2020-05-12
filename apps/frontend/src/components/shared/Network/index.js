@@ -5,10 +5,10 @@ import styled from "styled-components";
 import Link from "next/link";
 import IconVisit from "@material-ui/icons/InsertLinkRounded";
 import { rgba } from "polished";
-import { pages } from "../../../constants";
+import { pages, redux } from "../../../constants";
 import { ellipsis } from "../../../utils";
 import { Button } from "../../atoms";
-import { useCover } from "../../../hooks";
+import { useCover, useHistory } from "../../../hooks";
 
 const WrapperPartial = styled.div`
   grid-column: span 1;
@@ -295,9 +295,8 @@ const Wrapper = styled(WrapperPartial)`
 `;
 
 function Network({ className, isViewOnly, isFocused, ...network }) {
-  const { _id, title, username, icon } = network;
-
   const { setOpen: setCoverOpen, setNetwork: setCoverNetwork } = useCover();
+  const { _id, title, username, icon } = network;
 
   const doPick = useCallback(() => {
     if (!isViewOnly) {
@@ -349,9 +348,11 @@ function Network({ className, isViewOnly, isFocused, ...network }) {
 }
 
 function NetworkAdd() {
+  const { push } = useHistory();
+
   return (
     <Link href={pages.network.create.root}>
-      <Wrapper data-style="add">
+      <Wrapper data-style="add" onClick={push}>
         <Card>
           <Content>
             <Shape>

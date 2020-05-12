@@ -84,15 +84,15 @@ function Step({ Icon, index, hasDivider, isActive, onClick, title }) {
   );
 }
 
-function Header({ type, step, setStep, source }) {
+function Header({ step, setStep, source }) {
   return (
     <Wrapper>
-      {source[type].map((item, _index) => (
+      {source.map((item, _index) => (
         <Step
           {...item}
           key={item.index}
           isActive={item.index === step}
-          hasDivider={_index + 1 < source[type].length}
+          hasDivider={_index + 1 < source.length}
           onClick={() => setStep(item)}
         />
       ))}
@@ -116,14 +116,12 @@ Step.defaultProps = {
 };
 
 Header.propTypes = {
-  type: PropTypes.oneOf(Object.values(types.network.manager)),
   step: PropTypes.number,
   setStep: PropTypes.func,
-  source: PropTypes.shape({}).isRequired,
+  source: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 Header.defaultProps = {
-  type: types.network.manager.create,
   step: 0,
   setStep: () => {},
 };

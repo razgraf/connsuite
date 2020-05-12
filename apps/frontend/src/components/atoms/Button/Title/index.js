@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const TitleWrapperPartial = styled.div`
   z-index: 2;
