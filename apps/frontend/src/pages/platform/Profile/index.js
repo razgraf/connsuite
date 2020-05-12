@@ -19,7 +19,7 @@ function Profile() {
   const { user } = auth;
   return (
     <Page>
-      <Nav type={types.nav.platform} />
+      <Nav type={types.nav.appearance.platform} />
       <p>Profile</p>
       {user && (
         <>

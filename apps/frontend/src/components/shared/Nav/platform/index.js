@@ -1,9 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rgba } from "polished";
-import AssetLogoCircle from "../../../../assets/logo/logo.png";
 import { components } from "../../../../themes";
-import { Account } from "../atoms";
+import { Account, Logo } from "../atoms";
+import { pages } from "../../../../constants";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -21,23 +22,7 @@ const Content = styled(components.Canvas)`
   justify-content: center;
   height: ${props => props.theme.sizes.navHeight};
   padding: 0 ${props => props.theme.sizes.navHorizontalEdge};
-  max-width: calc(${props => props.theme.sizes.canvasMaxWidth} + 15px);
-`;
-
-const LogoWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: calc(${props => props.theme.sizes.navHeight} - 2 * ${props => props.theme.sizes.navVerticalEdge});
-  width: calc(${props => props.theme.sizes.navHeight} - 2 * ${props => props.theme.sizes.navVerticalEdge});
-  border-radius: 50%;
-  background-image: ${props => props.theme.colors.white};
-  overflow: hidden;
-`;
-
-const Logo = styled.img`
-  object-fit: contain;
-  height: 100%;
+  max-width: calc(${props => props.theme.sizes.canvasMaxWidth});
 `;
 
 const Main = styled.div`
@@ -52,13 +37,11 @@ const AccountWrapper = styled.div`
   justify-content: center;
 `;
 
-function NavPlatform() {
+function NavPlatform({ className }) {
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <Content>
-        <LogoWrapper>
-          <Logo src={AssetLogoCircle} alt="" />
-        </LogoWrapper>
+        <Logo href={pages.dashboard.root} />
         <Main />
         <AccountWrapper>
           <Account />
@@ -67,5 +50,13 @@ function NavPlatform() {
     </Wrapper>
   );
 }
+
+NavPlatform.propTypes = {
+  className: PropTypes.string,
+};
+
+NavPlatform.defaultProps = {
+  className: null,
+};
 
 export default NavPlatform;

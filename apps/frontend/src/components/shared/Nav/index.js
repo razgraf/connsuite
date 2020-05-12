@@ -4,24 +4,30 @@ import { types } from "../../../constants";
 
 import NavPresentation from "./presentation";
 import NavPlatform from "./platform";
-import { NavProfile } from "./special";
+import { NavProfile, NavSecondary } from "./special";
 
 export default function Nav({ appearance, ...otherProps }) {
   switch (appearance) {
-    case types.nav.presentation:
+    case types.nav.appearance.presentation:
       return <NavPresentation {...otherProps} />;
-    case types.nav.profile:
+    case types.nav.appearance.profile:
       return <NavProfile {...otherProps} />;
-    case types.nav.platform:
+    case types.nav.appearance.secondary:
+      return <NavSecondary {...otherProps} />;
+    case types.nav.appearance.platform:
     default:
       return <NavPlatform {...otherProps} />;
   }
 }
 
 Nav.propTypes = {
-  appearance: PropTypes.oneOf(Object.values(types.nav)),
+  accent: PropTypes.oneOf(Object.values(types.nav.accent)),
+  appearance: PropTypes.oneOf(Object.values(types.nav.appearance)),
+  className: PropTypes.string,
 };
 
 Nav.defaultProps = {
-  appearance: types.nav.platform,
+  accent: types.nav.accent.transparent,
+  appearance: types.nav.appearance.platform,
+  className: null,
 };

@@ -4,15 +4,15 @@ const sizes = {
 
   navHeight: "80px",
   navVerticalEdge: "10px",
-  navHorizontalEdge: "15px",
+  navHorizontalEdge: "10px",
   navElevation: "500",
 
   areaElevation: "300",
   areaContentElevation: "100",
 
-  sideBarWidth: "90px",
+  sideBarWidth: "80px",
   sideBarElevation: "200",
-  sideBarHorizontalEdge: "15px",
+  sideBarHorizontalEdge: "10px",
 
   sectionEdge: "22.5px",
 

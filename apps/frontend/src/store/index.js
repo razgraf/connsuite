@@ -34,7 +34,7 @@ export default initial => {
 
   if (isClient) {
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-    store = createStore(persistedReducer, initial, composeEnhancers(applyMiddleware(sagaMiddleware, logger)));
+    store = createStore(persistedReducer, initial, composeEnhancers(applyMiddleware(sagaMiddleware /** logger */)));
     store.__PERSISTOR = persistStore(store);
   } else {
     store = createStore(rootReducer, initial, compose(applyMiddleware(sagaMiddleware)));

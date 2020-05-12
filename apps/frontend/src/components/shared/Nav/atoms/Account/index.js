@@ -12,7 +12,10 @@ import { parseFullName } from "../../../../../utils";
 
 const Wrapper = styled.div`
   position: relative;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: calc(${props => props.theme.sizes.navHeight} - ${props => props.theme.sizes.navVerticalEdge} * 2);
 `;
 
 const Content = styled.div`
@@ -24,19 +27,14 @@ const Content = styled.div`
   height: 100%;
   width: auto;
   min-width: 160px;
-  padding: calc(${props => props.theme.sizes.edge} * 1 / 3);
+  padding: 6px;
   background: #ffffff;
-  border-radius: calc(${props => props.theme.sizes.navHeight} - 2 * ${props => props.theme.sizes.navVerticalEdge});
-  border: 1px solid ${props => props.theme.colors.grayBlueLight};
+  border-radius: 100px;
 `;
 
 const ImageWrapper = styled.div`
-  height: calc(
-    ${props => props.theme.sizes.navHeight} - 2 * ${props => props.theme.sizes.navVerticalEdge} - 1 / 3 * ${props => props.theme.sizes.edge}
-  );
-  width: calc(
-    ${props => props.theme.sizes.navHeight} - 2 * ${props => props.theme.sizes.navVerticalEdge} - 1 / 3 * ${props => props.theme.sizes.edge}
-  );
+  height: calc(${props => props.theme.sizes.navHeight} - 2 * ${props => props.theme.sizes.navVerticalEdge} - 6px * 2);
+  width: calc(${props => props.theme.sizes.navHeight} - 2 * ${props => props.theme.sizes.navVerticalEdge} - 6px * 2);
   border-radius: 50%;
   overflow: hidden;
   border: 1px solid ${props => props.theme.colors.grayLight};
@@ -75,7 +73,7 @@ const Name = styled.p`
   font-family: ${props => props.theme.fonts.primary};
   font-size: 11pt;
   line-height: 1.4;
-  color: ${props => props.theme.colors.dark};
+  color: ${props => props.theme.colors.grayBlueBlack};
   font-weight: 400;
   margin: 0;
 `;
@@ -115,14 +113,14 @@ const ActionDropdown = styled.div`
 
 const Dropdown = styled.div`
   position: absolute;
-  right: 0;
-  top: calc((${props => props.theme.sizes.navHeight} - ${props => props.theme.sizes.navVerticalEdge} * 1));
+  top: calc((${props => props.theme.sizes.navHeight} - ${props => props.theme.sizes.navVerticalEdge} * 1) + 5px);
   z-index: 100;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
+  max-width: 180px;
   background: ${props => props.theme.colors.white};
   border: 1px solid ${props => props.theme.colors.grayBlueLight};
   box-shadow: 0 12px 48px -15px rgba(0, 0, 0, 0.3);

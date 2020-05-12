@@ -61,7 +61,7 @@ const StyledSideBar = styled(SideBar)`
 function Area({ className, children }) {
   return (
     <Wrapper>
-      <Nav type={types.nav.platform} />
+      <Nav type={types.nav.appearance.platform} />
       <Canvas className={className}>
         <StyledSideBar />
         <Content>{children}</Content>

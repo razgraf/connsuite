@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import AssetLogo from "../../../../assets/logo/logo_horiz_white.png";
 import { pages } from "../../../../constants";
@@ -82,9 +83,9 @@ const ActionItem = styled(ActionItemPartial)`
 
 const ActionButton = styled(Button)``;
 
-function NavPresentation() {
+function NavPresentation({ className }) {
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <Content>
         <LogoWrapper>
           <Logo alt="" src={AssetLogo} />
@@ -107,5 +108,13 @@ function NavPresentation() {
     </Wrapper>
   );
 }
+
+NavPresentation.propTypes = {
+  className: PropTypes.string,
+};
+
+NavPresentation.defaultProps = {
+  className: null,
+};
 
 export default NavPresentation;

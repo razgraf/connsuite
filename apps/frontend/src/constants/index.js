@@ -51,11 +51,13 @@ export const pages = {
     root: "/network",
     create: {
       root: "/network",
+      title: "Create a new Network",
     },
     edit: {
       root: "/network/edit",
       route: "/network/edit/:id",
       builder: id => `/network/edit/${id}`,
+      title: "Edit the Network",
     },
   },
   article: {
@@ -63,6 +65,7 @@ export const pages = {
     root: "/article",
     create: {
       root: "/article",
+      title: "Create a new Article",
     },
     view: {
       root: "/article",
@@ -101,9 +104,23 @@ export const sagas = {
 
 export const types = {
   nav: {
-    platform: "platform",
-    presentation: "presentation",
-    profile: "profile",
+    appearance: {
+      platform: "platform",
+      presentation: "presentation",
+      profile: "profile",
+      secondary: "secondary",
+    },
+    accent: {
+      transparent: "transparent",
+      white: "white",
+      dark: "dark",
+    },
+  },
+  network: {
+    manager: {
+      create: "create",
+      edit: "edit",
+    },
   },
 };
 
