@@ -3,15 +3,12 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import IconVisibility from "@material-ui/icons/VisibilityOutlined";
-import { descriptor, Frame, Box } from "../atoms";
-
-const StyledBox = styled(Box)``;
+import { descriptor, Frame } from "../atoms";
 
 const Input = styled.input`
   &:focus {
-    ${StyledBox} {
-      border-color: 1px solid ${props => props.theme.colors.grayBlueDark};
-      transition: border 200ms;
+    & ~ *[data-component="focuser"] {
+      opacity: 1;
     }
   }
 `;

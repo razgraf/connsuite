@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import _ from "lodash";
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
@@ -21,16 +21,9 @@ const Title = styled.p`
   font-size: 14pt;
   font-weight: 400;
   font-family: ${props => props.theme.fonts.primary};
-  color: ${props => props.theme.colors.grayBlueDark};
+  color: ${props => props.theme.colors.grayBlueNight};
   transition: color 150ms;
   margin: 0 0 calc(${props => props.theme.sizes.edge} * 2) 0;
-`;
-
-const Subtitle = styled.p`
-  font-size: 11pt;
-  font-weight: 400;
-  font-family: ${props => props.theme.fonts.primary};
-  color: ${props => props.theme.colors.grayBlueDark};
 `;
 
 const Grid = styled.div`
@@ -41,9 +34,10 @@ const Grid = styled.div`
 `;
 
 const Form = styled.form`
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: calc(${props => props.theme.sizes.edge} * 2);
+  grid-gap: calc(${props => props.theme.sizes.edge} * 1.5);
 `;
 
 const Section = styled(SectionPartial)`
@@ -86,7 +80,7 @@ function Choose({ className, isActive, reducer }) {
         <Title>b. Or create a custom network</Title>
         <Form>
           <InputText
-            help={{ value: "HERE" }} // TODO
+            help={{ value: "Just like 'Facebook' or 'Twitter' you can give a name to your website/new network." }}
             id="createNetworkTitle"
             label="Title"
             onUpdate={e => {
@@ -101,6 +95,40 @@ function Choose({ className, isActive, reducer }) {
             placeholder="MySpace"
             value={reducer.state.title.value}
             warning={reducer.state.title.error}
+          />
+          <InputImage
+            help={{ value: "Provide a logo or an icon to make this stand out." }}
+            id="createNetworkIcon"
+            label="Network Icon"
+            onUpdate={event => {
+              let payload = {
+                name: null,
+                value: null,
+                error: "File not accepted",
+              };
+              try {
+                const files = _.get(event, "target.files");
+                if (!files) throw new Error();
+                const file = _.get(files, [0]);
+                if (!file) throw new Error();
+
+                payload = {
+                  name: file.name,
+                  value: file,
+                  error: null, // TODO gates.interpret(gates.isImageAcceptable, e.target.value),
+                };
+              } catch (e) {
+                console.err(e);
+              }
+              reducer.dispatch({
+                type: reducer.actions.UPDATE_ICON,
+                payload,
+              });
+            }}
+            placeholder="Pick an icon"
+            name={reducer.state.icon.name}
+            value={reducer.state.icon.value}
+            warning={reducer.state.icon.error}
           />
         </Form>
       </Section>

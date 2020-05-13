@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { descriptor, Frame } from "../atoms";
 
-const Input = styled.input`
+const Area = styled.textarea`
+  resize: none;
   &:focus {
     & ~ *[data-component="focuser"] {
       opacity: 1;
@@ -12,10 +13,10 @@ const Input = styled.input`
   }
 `;
 
-function InputText({ className, id, help, label, onUpdate, placeholder, inputRef, value, warning }) {
+function InputArea({ className, id, help, label, onUpdate, placeholder, inputRef, value, warning }) {
   return (
     <Frame className={className} id={id} label={label} warning={warning} help={help}>
-      <Input
+      <Area
         id={id}
         onBlur={onUpdate}
         placeholder={placeholder}
@@ -28,7 +29,7 @@ function InputText({ className, id, help, label, onUpdate, placeholder, inputRef
   );
 }
 
-InputText.propTypes = {
+InputArea.propTypes = {
   className: PropTypes.string,
   id: PropTypes.string.isRequired,
   help: descriptor.Label.propTypes.help,
@@ -40,7 +41,7 @@ InputText.propTypes = {
   warning: PropTypes.string,
 };
 
-InputText.defaultProps = {
+InputArea.defaultProps = {
   className: null,
   inputRef: null,
   label: null,
@@ -50,4 +51,4 @@ InputText.defaultProps = {
   warning: null,
 };
 
-export default InputText;
+export default InputArea;

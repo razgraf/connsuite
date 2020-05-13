@@ -27,7 +27,7 @@ const Page = styled.div`
     z-index: 0;
     content: "";
     width: 100%;
-    height: 211px;
+    height: 214px;
     background: ${props => rgba(props.theme.colors.white, 0.05)};
   }
   & > * {
@@ -80,9 +80,11 @@ const Main = styled.div`
 
 const Playground = styled.div`
   position: relative;
+  z-index: 300;
   flex: 1;
   height: 100%;
   transition: height 0.3s;
+  margin-right: calc(${props => props.theme.sizes.edge} * 6);
 `;
 
 const StepCss = css`
@@ -163,7 +165,7 @@ const stepsFactory = setStep => ({
 });
 
 function NetworkManager({ query }) {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
   const type = types.network.manager.create;
   const network = DUMMY.NETWORKS[0];
   const steps = useMemo(() => stepsFactory(setStep), [setStep]);

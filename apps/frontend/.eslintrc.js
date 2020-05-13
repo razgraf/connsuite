@@ -34,7 +34,7 @@ module.exports = {
     "react/jsx-filename-extension": "off",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-one-expression-per-line": "off",
-    "react/prop-types": ["error", { ignore: ["children", "history", "theme"] }],
+    "react/prop-types": ["error", { ignore: ["children", "history", "theme", "reducer"] }],
     "import/no-dynamic-require": "off",
     "import/prefer-default-export": "off",
     "no-nested-ternary": "off",

@@ -1,59 +1,56 @@
 import _ from "lodash";
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { descriptor, Frame, Box } from "../atoms";
-import { Button } from "@material-ui/core";
-
-const StyledBox = styled(Box)``;
+import { descriptor, Frame } from "../atoms";
+import Button from "../../Button";
 
 const Input = styled.input`
   display: none;
-  &:focus {
-    ${StyledBox} {
-      border-color: 1px solid ${props => props.theme.colors.grayBlueDark};
-      transition: border 200ms;
+`;
+
+const Holder = styled.p`
+  max-width: calc(100% - 80px);
+  ${props => props.theme.extensions.ellipsis};
+  &[data-purpose="holder"]:empty {
+    &:after {
+      content: "${props => props.placeholder}" !important;
     }
   }
 `;
 
-const Holder = styled.p`
-  content: ${props => props.placeholder || ""};
+const Action = styled(Button)`
+  padding: 8px 12px;
+  position: absolute;
+  right: 10px;
 `;
 
 function InputImage({ className, id, help, label, onUpdate, placeholder, inputRef, name, value, warning }) {
+  const ref = useRef();
+  if (_.isNil(inputRef)) inputRef = ref;
+
   return (
     <Frame className={className} id={id} label={label} warning={warning} help={help}>
-      <Holder data-purpose="holder" placeholder={placeholder}>
+      <Holder
+        data-purpose="holder"
+        placeholder={placeholder}
+        onClick={e => {
+          if (inputRef && inputRef.current) inputRef.current.click();
+        }}
+      >
         {name}
       </Holder>
-      <Button
+      <Action
         isMini
         type={t => t.button}
-        accent={t => t.grayBlueNormal}
+        accent={t => t.grayBlueDark}
         appearance={t => t.outline}
         title={_.isNil(name) || _.isEmpty(name) ? "Choose" : "Change"}
-      />
-      <Input
-        id={id}
-        accept="image/*"
-        onChange={event => {
-          try {
-            const files = _.get(event, "target.files");
-            if (!files) throw new Error();
-            const file = _.get(files, [0]);
-            if (!file) throw new Error();
-            onUpdate({ name: file.name, value: file });
-          } catch (e) {
-            console.err(e);
-            onUpdate({ name: null, value: null });
-          }
+        onClick={e => {
+          if (inputRef && inputRef.current) inputRef.current.click();
         }}
-        placeholder={placeholder}
-        ref={inputRef}
-        type="file"
-        autocomplete="on"
       />
+      <Input id={id} accept="image/*" onChange={onUpdate} placeholder={placeholder} ref={inputRef} type="file" autocomplete="on" />
     </Frame>
   );
 }
@@ -67,7 +64,7 @@ InputImage.propTypes = {
   inputRef: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({})]),
   placeholder: PropTypes.string,
   name: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.shape({}),
   warning: PropTypes.string,
 };
 
