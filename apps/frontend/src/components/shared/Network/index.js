@@ -5,10 +5,12 @@ import styled from "styled-components";
 import Link from "next/link";
 import IconVisit from "@material-ui/icons/InsertLinkRounded";
 import { rgba } from "polished";
-import { pages, redux } from "../../../constants";
+import { pages } from "../../../constants";
 import { ellipsis } from "../../../utils";
 import { Button } from "../../atoms";
 import { useCover, useHistory } from "../../../hooks";
+
+import NetworkMini, { NetworkMiniAdd } from "./Mini";
 
 const WrapperPartial = styled.div`
   grid-column: span 1;
@@ -198,7 +200,7 @@ const Title = styled.p`
 
   &:empty {
     border-radius: 4px;
-    background: ${props => props.theme.colors.grayBlueLight};
+    background: ${props => props.theme.colors.grayBlueGhost};
     height: 25px;
     width: 100px;
   }
@@ -213,15 +215,17 @@ const Username = styled.p`
   font-family: ${props => props.theme.fonts.primary};
   color: ${props => props.theme.colors.grayBlueDark};
 
-  &:before {
-    content: "@";
-    margin-right: 2px;
+  &:not(:empty) {
+    &:before {
+      content: "@";
+      margin-right: 2px;
+    }
   }
 
   &:empty {
     border-radius: 4px;
-    background: ${props => props.theme.colors.grayBlueLight};
-    height: 20px;
+    background: ${props => props.theme.colors.grayBlueGhost};
+    height: 16px;
     width: 160px;
   }
 `;
@@ -280,7 +284,7 @@ const Wrapper = styled(WrapperPartial)`
     }
   }
 
-  &[data-style="add"] {
+  &[data-purpose="add"] {
     opacity: 0.6;
     transition: opacity 200ms;
     cursor: pointer;
@@ -358,7 +362,7 @@ function NetworkAdd() {
 
   return (
     <Link href={pages.network.create.root}>
-      <Wrapper data-style="add" onClick={push}>
+      <Wrapper data-purpose="add" onClick={push}>
         <Card>
           <Content>
             <Shape>
@@ -373,10 +377,6 @@ function NetworkAdd() {
       </Wrapper>
     </Link>
   );
-}
-
-function NetworkMini() {
-  return <div>Mini</div>;
 }
 
 Network.propTypes = {
@@ -397,4 +397,4 @@ Network.defaultProps = {
 };
 
 export default Network;
-export { NetworkAdd, NetworkMini };
+export { NetworkAdd, NetworkMini, NetworkMiniAdd };

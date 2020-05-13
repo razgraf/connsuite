@@ -125,6 +125,10 @@ export const types = {
       create: "create",
       edit: "edit",
     },
+    source: {
+      external: "external",
+      internal: "internal",
+    },
   },
 };
 

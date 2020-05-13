@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { rgba } from "polished";
-import Router from "next/router";
 import IconChoose from "@material-ui/icons/ExploreRounded";
 import IconCredentials from "@material-ui/icons/HowToRegRounded";
 import IconLive from "@material-ui/icons/FlashOnRounded";
 import { components } from "../../../../themes";
 import Nav from "../../../../components/shared/Nav";
 import { pages, types, DUMMY } from "../../../../constants";
-
-import { Header, Preview, Footer } from "../../../../components/specific/Network/Manager";
+import { useCreateNetworkReducer } from "../../../../hooks";
+import { Header, Preview, Footer, Steps } from "../../../../components/specific/Network/Manager";
 
 const Page = styled.div`
   position: relative;
@@ -80,24 +79,56 @@ const Main = styled.div`
 `;
 
 const Playground = styled.div`
+  position: relative;
   flex: 1;
   height: 100%;
   transition: height 0.3s;
-  position: relative;
 `;
 
-const steps = {
+const StepCss = css`
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 300ms;
+  pointer-events: none;
+
+  &[data-active="true"] {
+    opacity: 1;
+    transition: opacity 300ms 300ms;
+    pointer-events: all;
+  }
+`;
+
+const Choose = styled(Steps.Choose)`
+  ${StepCss};
+`;
+const Credentials = styled(Steps.Credentials)`
+  ${StepCss};
+`;
+const Live = styled(Steps.Live)`
+  ${StepCss};
+`;
+
+const stepsFactory = setStep => ({
   [types.network.manager.create]: [
     {
       index: 1,
       Icon: IconChoose,
       title: "Choose Network",
       left: "Cancel",
-      leftClick: () => {},
+      leftClick: () => {
+        setStep(3);
+      },
       right: "Next Step",
       rightClick: () => {
-        console.log("back");
-        Router.back();
+        setStep(2);
       },
       isStart: true,
     },
@@ -106,28 +137,38 @@ const steps = {
       Icon: IconCredentials,
       title: "Fill in credentials",
       left: "Cancel",
-      leftClick: () => {},
+      leftClick: () => {
+        setStep(1);
+      },
       right: "Next Step",
-      rightClick: () => {},
+      rightClick: () => {
+        setStep(3);
+      },
     },
     {
       index: 3,
       Icon: IconLive,
       title: "Go Live",
       left: "Cancel",
-      leftClick: () => {},
+      leftClick: () => {
+        setStep(2);
+      },
       right: "Go Live",
-      rightClick: () => {},
+      rightClick: () => {
+        setStep(1);
+      },
       isFinal: true,
     },
   ],
-};
+});
 
 function NetworkManager({ query }) {
   const [step, setStep] = useState(1);
   const type = types.network.manager.create;
-
   const network = DUMMY.NETWORKS[0];
+  const steps = useMemo(() => stepsFactory(setStep), [setStep]);
+
+  const reducer = useCreateNetworkReducer();
 
   return (
     <Page>
@@ -136,7 +177,11 @@ function NetworkManager({ query }) {
         <Card>
           <Header step={step} source={steps[type]} />
           <Main>
-            <Playground> </Playground>
+            <Playground>
+              <Choose isActive={steps[type][0].index === step} reducer={reducer} />
+              <Credentials isActive={steps[type][1].index === step} reducer={reducer} />
+              <Live isActive={steps[type][2].index === step} reducer={reducer} />
+            </Playground>
             <Preview network={network} />
           </Main>
           <Footer step={steps[type].find(item => item.index === step)} />

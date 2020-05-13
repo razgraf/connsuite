@@ -1,16 +1,23 @@
 export const StateInputText = {
   value: "",
-  warning: null,
+  error: null,
 };
 
 export const StateInputPassword = {
   value: "",
-  warning: null,
+  error: null,
+};
+
+export const StateInputImage = {
+  value: null,
+  name: null,
+  error: null,
 };
 
 const state = {
   StateInputText,
   StateInputPassword,
+  StateInputImage,
 };
 
 export default state;

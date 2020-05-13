@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { lighten } from "polished";
 import descriptor from "../descriptor";
 
 const Wrapper = styled.div`
@@ -16,6 +15,7 @@ const Wrapper = styled.div`
   border: 1px solid ${props => props.theme.colors.grayBlueNormal};
   transition: border 250ms;
 
+  p[data-purpose="holder"],
   input,
   textarea {
     font-size: 12pt;
@@ -26,6 +26,22 @@ const Wrapper = styled.div`
     flex: 1;
     background: transparent;
     -webkit-appearance: none;
+  }
+
+  p[data-purpose="holder"] {
+    &:empty {
+      &:after {
+        content: "Search for a file...";
+        font-size: 12pt;
+        color: ${props => props.theme.colors.grayBlueDark};
+        font-weight: 300;
+        outline: none;
+        border: none;
+        flex: 1;
+        background: transparent;
+        -webkit-appearance: none;
+      }
+    }
   }
 
   input::placeholder,

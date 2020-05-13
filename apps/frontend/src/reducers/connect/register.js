@@ -2,11 +2,11 @@ import _ from "lodash";
 import { StateInputText, StateInputPassword } from "../../components/atoms/Input/state";
 
 export const initial = {
-  firstName: { ...StateInputText, value: "Van" },
-  lastName: { ...StateInputText, value: "Software" },
-  username: { ...StateInputText, value: "vansoftware" },
-  email: { ...StateInputText, value: "vansoftwarero@gmail.com" },
-  password: { ...StateInputPassword, value: "Anaaremerede1$" },
+  firstName: { ...StateInputText },
+  lastName: { ...StateInputText },
+  username: { ...StateInputText },
+  email: { ...StateInputText },
+  password: { ...StateInputPassword },
 };
 
 export const actions = {

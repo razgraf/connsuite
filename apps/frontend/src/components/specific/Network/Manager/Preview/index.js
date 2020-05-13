@@ -2,8 +2,7 @@ import _ from "lodash";
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { rgba } from "polished";
-import Network from "../../../../shared/Network";
+import Network, { NetworkMini } from "../../../../shared/Network";
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,7 +11,8 @@ const Wrapper = styled.div`
   width: 350px;
   border: 1px solid ${props => props.theme.colors.grayAccent};
   border-right: none;
-  padding: calc(${props => props.theme.sizes.edge} * 1.5);
+  padding: calc(${props => props.theme.sizes.edge} * 2);
+  padding-top: calc(${props => props.theme.sizes.edge} * 1.5);
   padding-right: 0;
   border-radius: calc(${props => props.theme.sizes.edge} * 2) 0 0 calc(${props => props.theme.sizes.edge} * 2);
 `;
@@ -21,7 +21,7 @@ const HeaderPartial = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  margin-bottom: calc(${props => props.theme.sizes.edge} * 1.5);
+  margin-bottom: calc(${props => props.theme.sizes.edge} * 2);
   padding-bottom: calc(${props => props.theme.sizes.edge} * 1.5);
   border-bottom: 1px solid ${props => props.theme.colors.grayAccent};
 `;
@@ -113,18 +113,11 @@ const ContentSide = styled.div`
   width: 100px;
 `;
 
-const ContentSideNetwork = styled.div`
+const ContentSideNetwork = styled(NetworkMini)`
   position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: 60px;
   width: 60px;
-  padding: 10px;
-  background-color: ${props => props.theme.colors.white};
-  box-shadow: 0 0 5px 1px ${props => rgba(props.theme.colors.dark, 0.05)};
-  border: 1px solid ${props => props.theme.colors.grayLight};
-  border-radius: 4px;
+  padding: 15px;
 
   &:nth-child(1) {
     top: 30px;
@@ -147,12 +140,6 @@ const ContentSideNetwork = styled.div`
   }
 `;
 
-const ContentSideNetworkImage = styled.img`
-  height: 100%;
-  width: 100%;
-  object-fit: contain;
-`;
-
 function Preview({ className, network, isBarActive }) {
   return (
     <Wrapper className={className}>
@@ -171,15 +158,9 @@ function Preview({ className, network, isBarActive }) {
           <ContentMainNetwork {...network} isViewOnly />
         </ContentMain>
         <ContentSide>
-          <ContentSideNetwork>
-            <ContentSideNetworkImage src={_.get(network, "icon.source")} alt="" />
-          </ContentSideNetwork>
-          <ContentSideNetwork>
-            <ContentSideNetworkImage src={_.get(network, "icon.source")} alt="" />
-          </ContentSideNetwork>
-          <ContentSideNetwork>
-            <ContentSideNetworkImage src={_.get(network, "icon.source")} alt="" />
-          </ContentSideNetwork>
+          <ContentSideNetwork network={network} isViewOnly />
+          <ContentSideNetwork network={network} isViewOnly />
+          <ContentSideNetwork network={network} isViewOnly />
         </ContentSide>
       </Content>
     </Wrapper>
