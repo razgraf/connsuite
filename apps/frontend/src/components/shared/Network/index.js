@@ -42,6 +42,8 @@ const ContentHeader = styled.div`
   align-items: center;
   justify-content: flex-end;
   width: 100%;
+  flex-grow: 0;
+  flex-shrink: 0;
   padding: ${props => props.theme.sizes.networkEdge} ${props => props.theme.sizes.networkEdge} 5px 5px;
 `;
 
@@ -53,6 +55,7 @@ const ContentHeaderIndicator = styled.div`
 `;
 
 const ContentMain = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,6 +64,7 @@ const ContentMain = styled.div`
 `;
 
 const ContentImage = styled.img`
+  position: absolute;
   height: 100%;
   width: 100%;
   max-width: ${props => props.theme.sizes.networkIconMaxSize};
@@ -78,6 +82,8 @@ const ContentFooter = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-grow: 0;
+  flex-shrink: 0;
   padding: 5px 0 calc(${props => props.theme.sizes.networkEdge} * 1) 0;
 `;
 
@@ -309,7 +315,7 @@ function Network({ className, isViewOnly, isFocused, ...network }) {
     <Wrapper className={className} data-viewonly={isViewOnly} data-focused={isFocused} onClick={doPick}>
       <Card>
         {!isViewOnly && (
-          <Overlay>
+          <Overlay data-component="overlay">
             <OverlayActions>
               <OverlayActionVisit>
                 <OverlayActionVisitIcon>
@@ -327,14 +333,14 @@ function Network({ className, isViewOnly, isFocused, ...network }) {
             </OverlayActions>
           </Overlay>
         )}
-        <Content>
-          <ContentHeader>
+        <Content data-component="content">
+          <ContentHeader data-component="content-header">
             <ContentHeaderIndicator />
           </ContentHeader>
           <ContentMain>
-            <ContentImage src={_.get(icon, "source")} />
+            <ContentImage src={_.get(icon, "source")} data-component="content-image" />
           </ContentMain>
-          <ContentFooter>
+          <ContentFooter data-component="content-footer">
             <ContentFooterDetails>Get Details</ContentFooterDetails>
           </ContentFooter>
         </Content>

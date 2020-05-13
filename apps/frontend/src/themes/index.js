@@ -7,6 +7,7 @@ import components from "./components";
 import fonts from "./fonts";
 import medias from "./medias";
 import sizes from "./sizes";
+import extensions from "./extensions";
 
 const GlobalStyle = createGlobalStyle`
   *,
@@ -80,6 +81,7 @@ function ThemeProvider({ children }) {
         fonts,
         medias,
         sizes,
+        extensions,
       }}
     >
       {children}
@@ -87,4 +89,4 @@ function ThemeProvider({ children }) {
   );
 }
 
-export { animations, colors, components, fonts, gradients, medias, sizes, GlobalStyle, ThemeProvider };
+export { animations, colors, components, fonts, gradients, medias, sizes, extensions, GlobalStyle, ThemeProvider };

@@ -8,9 +8,9 @@ import IconCredentials from "@material-ui/icons/HowToRegRounded";
 import IconLive from "@material-ui/icons/FlashOnRounded";
 import { components } from "../../../../themes";
 import Nav from "../../../../components/shared/Nav";
-import { pages, types } from "../../../../constants";
+import { pages, types, DUMMY } from "../../../../constants";
 
-import { Header, Footer } from "../../../../components/specific/Network/Manager";
+import { Header, Preview, Footer } from "../../../../components/specific/Network/Manager";
 
 const Page = styled.div`
   position: relative;
@@ -52,7 +52,39 @@ const Card = styled.div`
   margin-bottom: 20px;
 `;
 
-const Main = styled.div``;
+const Main = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+
+  min-height: 440px;
+  width: 100%;
+  padding: calc(${props => props.theme.sizes.edge} * 2.5);
+
+  overflow: hidden;
+
+  &:after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: ${props => props.theme.colors.white};
+    pointer-events: none;
+    display: none;
+  }
+`;
+
+const Playground = styled.div`
+  flex: 1;
+  height: 100%;
+  transition: height 0.3s;
+  position: relative;
+`;
 
 const steps = {
   [types.network.manager.create]: [
@@ -91,11 +123,11 @@ const steps = {
   ],
 };
 
-Router.events.on("routeChangeError", (err, url) => console.log(err, url));
-
 function NetworkManager({ query }) {
   const [step, setStep] = useState(1);
   const type = types.network.manager.create;
+
+  const network = DUMMY.NETWORKS[0];
 
   return (
     <Page>
@@ -103,7 +135,10 @@ function NetworkManager({ query }) {
       <Canvas>
         <Card>
           <Header step={step} source={steps[type]} />
-          <Main></Main>
+          <Main>
+            <Playground> </Playground>
+            <Preview network={network} />
+          </Main>
           <Footer step={steps[type].find(item => item.index === step)} />
         </Card>
       </Canvas>
