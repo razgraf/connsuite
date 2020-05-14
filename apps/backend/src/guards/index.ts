@@ -64,11 +64,11 @@ function isUsernameAcceptable(username: string): boolean {
   return username.length >= MIN_USERNAME_LENGTH && username.length <= MAX_USERNAME_LENGTH;
 }
 
-const gates = {
+const guards = {
   isEmailAcceptable,
   isNameAcceptable,
   isPasswordAcceptable,
   isUsernameAcceptable,
 };
 
-export default gates;
+export default guards;
