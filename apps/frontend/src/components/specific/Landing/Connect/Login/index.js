@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 
 import { useLoginReducer, useConnectMachine } from "../../../../../hooks";
 
-import gates, { policy } from "../../../../../gates";
+import guards, { policy } from "../../../../../guards";
 import { Button, InputText, InputPassword, Warning } from "../../../../atoms";
 import ButtonGoogle from "../../ButtonGoogle";
 
@@ -123,7 +123,7 @@ function Login({ className }) {
               type: reducer.actions.UPDATE_EMAIL,
               payload: {
                 value: e.target.value,
-                error: gates.interpret(gates.isEmailAcceptable, e.target.value),
+                error: guards.interpret(guards.isEmailAcceptable, e.target.value),
               },
             });
           }}
@@ -140,7 +140,7 @@ function Login({ className }) {
               type: reducer.actions.UPDATE_PASSWORD,
               payload: {
                 value: e.target.value,
-                error: gates.interpret(gates.isPasswordAcceptable, e.target.value),
+                error: guards.interpret(guards.isPasswordAcceptable, e.target.value),
               },
             });
           }}

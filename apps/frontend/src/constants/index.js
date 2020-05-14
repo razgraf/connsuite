@@ -139,6 +139,12 @@ export const API = {
   authRegister: () => `${API.root}/auth/classic/register`,
   authLogin: () => `${API.root}/auth/classic/login`,
   authLogout: () => `${API.root}/auth/logout`,
+
+  networkCreate: () => `${API.root}/network`,
+  networkGet: id => `${API.root}/network/${id}`,
+  networkEdit: id => `${API.root}/network/${id}`,
+  networkRemove: id => `${API.root}/network/${id}`,
+  networkList: () => `${API.root}/network`,
 };
 
 export const links = {

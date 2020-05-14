@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { types } from "../../../../../../constants";
-import gates, { policy } from "../../../../../../gates";
+import guards, { policy } from "../../../../../../guards";
 import { InputArea, Emoji } from "../../../../../atoms";
 
 const Wrapper = styled.div``;
@@ -50,8 +50,8 @@ const Grid = styled.form`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-row-gap: calc(${props => props.theme.sizes.edge} * 0.5);
-  grid-column-gap: calc(${props => props.theme.sizes.edge} * 1.5);
+  grid-row-gap: calc(${props => props.theme.sizes.edge} * 1);
+  grid-column-gap: calc(${props => props.theme.sizes.edge} * 1);
 `;
 
 const Field = styled.div`
@@ -143,7 +143,7 @@ function Live({ className, isActive, reducer }) {
                 type: reducer.actions.UPDATE_DESCRIPTION,
                 payload: {
                   value: e.target.value,
-                  error: null, // TODO gates.interpret(gates.isWebsiteAcceptable, e.target.value),
+                  error: null, // TODO guards.interpret(guards.isWebsiteAcceptable, e.target.value),
                 },
               });
             }}

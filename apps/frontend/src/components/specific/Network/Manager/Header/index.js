@@ -6,10 +6,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-
   width: 100%;
-  padding: calc(${props => props.theme.sizes.edge} * 2.5);
-  padding-bottom: 40px;
+  padding: calc(${props => props.theme.sizes.edge} * 2);
   margin-bottom: 0;
   border-bottom: 1px solid ${props => props.theme.colors.grayAccent};
 `;

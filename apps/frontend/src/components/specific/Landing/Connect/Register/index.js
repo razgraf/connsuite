@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 
 import { useRegisterReducer, useConnectMachine } from "../../../../../hooks";
 
-import gates, { policy } from "../../../../../gates";
+import guards, { policy } from "../../../../../guards";
 import { Button, InputText, InputPassword, Warning } from "../../../../atoms";
 import ButtonGoogle from "../../ButtonGoogle";
 
@@ -112,7 +112,7 @@ function Register({ className }) {
               type: reducer.actions.UPDATE_FIRST_NAME,
               payload: {
                 value: e.target.value,
-                error: gates.interpret(gates.isNameAcceptable, e.target.value),
+                error: guards.interpret(guards.isNameAcceptable, e.target.value),
               },
             });
           }}
@@ -129,7 +129,7 @@ function Register({ className }) {
               type: reducer.actions.UPDATE_LAST_NAME,
               payload: {
                 value: e.target.value,
-                error: gates.interpret(gates.isNameAcceptable, e.target.value),
+                error: guards.interpret(guards.isNameAcceptable, e.target.value),
               },
             });
           }}
@@ -146,7 +146,7 @@ function Register({ className }) {
               type: reducer.actions.UPDATE_EMAIL,
               payload: {
                 value: e.target.value,
-                error: gates.interpret(gates.isEmailAcceptable, e.target.value),
+                error: guards.interpret(guards.isEmailAcceptable, e.target.value),
               },
             });
           }}
@@ -163,7 +163,7 @@ function Register({ className }) {
               type: reducer.actions.UPDATE_PASSWORD,
               payload: {
                 value: e.target.value,
-                error: gates.interpret(gates.isPasswordAcceptable, e.target.value),
+                error: guards.interpret(guards.isPasswordAcceptable, e.target.value),
               },
             });
           }}
@@ -181,7 +181,7 @@ function Register({ className }) {
               type: reducer.actions.UPDATE_USERNAME,
               payload: {
                 value: e.target.value,
-                error: gates.interpret(gates.isUsernameAcceptable, e.target.value),
+                error: guards.interpret(guards.isUsernameAcceptable, e.target.value),
               },
             });
           }}

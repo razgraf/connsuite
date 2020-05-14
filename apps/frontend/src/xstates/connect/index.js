@@ -87,7 +87,7 @@ const machine = Machine(
               cond: "isVendorClassic",
               target: states.connect,
             },
-            /** All identifier gates failed */
+            /** All identifier guards failed */
             { ...INVALIDATE },
           ],
         },

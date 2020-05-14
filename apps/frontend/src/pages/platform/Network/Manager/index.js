@@ -37,8 +37,11 @@ const Page = styled.div`
 `;
 const StyledNav = styled(Nav)`
   position: relative;
+  z-index: 200;
 `;
-const Canvas = styled(components.Canvas)``;
+const Canvas = styled(components.Canvas)`
+  z-index: 100;
+`;
 
 const Card = styled.div`
   display: flex;
@@ -58,7 +61,7 @@ const Main = styled.div`
 
   min-height: 440px;
   width: 100%;
-  padding: calc(${props => props.theme.sizes.edge} * 2.5);
+  padding: calc(${props => props.theme.sizes.edge} * 2);
 
   overflow: hidden;
 
@@ -165,7 +168,7 @@ const stepsFactory = setStep => ({
 });
 
 function NetworkManager({ query }) {
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
   const type = types.network.manager.create;
   const network = DUMMY.NETWORKS[0];
   const steps = useMemo(() => stepsFactory(setStep), [setStep]);

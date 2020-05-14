@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { DUMMY, types } from "../../../../../../constants";
 import { NetworkMini } from "../../../../../shared/Network";
-import gates, { policy } from "../../../../../../gates";
+import guards, { policy } from "../../../../../../guards";
 import { InputText, InputImage, Emoji } from "../../../../../atoms";
 
 const Wrapper = styled.div``;
@@ -73,7 +73,7 @@ function Credential({ className, isActive, reducer }) {
                 type: reducer.actions.UPDATE_URL,
                 payload: {
                   value: e.target.value,
-                  error: null, // TODO gates.interpret(gates.isWebsiteAcceptable, e.target.value),
+                  error: null, // TODO guards.interpret(guards.isWebsiteAcceptable, e.target.value),
                 },
               });
             }}
@@ -90,7 +90,7 @@ function Credential({ className, isActive, reducer }) {
                 type: reducer.actions.UPDATE_USERNAME,
                 payload: {
                   value: e.target.value,
-                  error: null, // TODO gates.interpret(gates.isWebsiteAcceptable, e.target.value),
+                  error: null, // TODO guards.interpret(guards.isWebsiteAcceptable, e.target.value),
                 },
               });
             }}
@@ -115,7 +115,7 @@ function Credential({ className, isActive, reducer }) {
                 type: reducer.actions.UPDATE_USERNAME,
                 payload: {
                   value: e.target.value,
-                  error: null, // TODO gates.interpret(gates.isWebsiteAcceptable, e.target.value),
+                  error: null, // TODO guards.interpret(guards.isWebsiteAcceptable, e.target.value),
                 },
               });
             }}

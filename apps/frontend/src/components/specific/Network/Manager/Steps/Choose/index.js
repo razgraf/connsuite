@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { DUMMY } from "../../../../../../constants";
 import { NetworkMini } from "../../../../../shared/Network";
-import gates, { policy } from "../../../../../../gates";
+import guards, { policy } from "../../../../../../guards";
 import { InputText, InputImage } from "../../../../../atoms";
 
 const Wrapper = styled.div``;
@@ -88,7 +88,7 @@ function Choose({ className, isActive, reducer }) {
                 type: reducer.actions.UPDATE_TITLE,
                 payload: {
                   value: e.target.value,
-                  error: null, // TODO gates.interpret(gates.isWebsiteAcceptable, e.target.value),
+                  error: null, // TODO guards.interpret(guards.isWebsiteAcceptable, e.target.value),
                 },
               });
             }}
@@ -115,7 +115,7 @@ function Choose({ className, isActive, reducer }) {
                 payload = {
                   name: file.name,
                   value: file,
-                  error: null, // TODO gates.interpret(gates.isImageAcceptable, e.target.value),
+                  error: null, // TODO guards.interpret(guards.isImageAcceptable, e.target.value),
                 };
               } catch (e) {
                 console.err(e);

@@ -12,8 +12,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: calc(${props => props.theme.sizes.edge} * 2.5);
-  padding-top: 40px;
+  padding: calc(${props => props.theme.sizes.edge} * 2);
   margin-top: 0;
   border-top: 1px solid ${props => props.theme.colors.grayAccent};
 `;
