@@ -56,7 +56,8 @@ const HeaderAction = styled.div`
 const HeaderBar = styled.div`
   position: relative;
   flex: 1;
-  background: ${props => props.theme.colors.grayBlueLight};
+  background-color: ${props => props.theme.colors.grayBlueGhost};
+  border: 1px solid ${props => props.theme.colors.grayBlueLight};
   border-radius: 4px;
   padding: 6px 10px;
   margin-left: 4px;
@@ -142,7 +143,6 @@ const ContentSideNetwork = styled(NetworkMini)`
 `;
 
 function Preview({ className, reducer, step }) {
-  console.log(reducer);
   const network = useMemo(() => {
     if (reducer.state.type.value === types.network.source.internal)
       return {
@@ -154,7 +154,7 @@ function Preview({ className, reducer, step }) {
         },
       };
 
-    return DUMMY.NETWORKS.find(item => item._id === reducer.state.externalId.value) || {};
+    return DUMMY.NETWORKS.find(item => item._id === reducer.state.externalId.value) || {}; // TODO System for external networks
   }, [reducer.state]);
 
   return (
@@ -166,9 +166,7 @@ function Preview({ className, reducer, step }) {
           <HeaderAction />
         </HeaderActions>
         <HeaderBar>
-          <HeaderBarTitle>
-            {`${_.get(reducer.state, "url.value") || "https://preview"}/${_.get(reducer.state, "username.value") || ""}`}
-          </HeaderBarTitle>
+          <HeaderBarTitle>{`${_.get(network, "url") || "https://preview"}/${_.get(network, "username") || ""}`}</HeaderBarTitle>
         </HeaderBar>
       </Header>
       <Content>

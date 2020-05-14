@@ -1,7 +1,6 @@
 import _ from "lodash";
 import { Machine, assign } from "xstate";
 import { NetworkRequest } from "../../requests";
-import { types } from "../../constants";
 import guards from "./guards";
 
 const states = {
@@ -123,18 +122,20 @@ const machine = Machine(
         exit: assign({ error: null }),
       },
       [states.create]: {
-        src: (context, event) => attemptToCreate({ context, event }),
-        onDone: {
-          actions: assign({
-            data: (context, event) => event.data,
-          }),
-          target: states.success,
-        },
-        onError: {
-          actions: assign({
-            error: (context, event) => _.toString(_.get(event, "data.message")),
-          }),
-          target: states.failure,
+        invoke: {
+          src: (context, event) => attemptToCreate({ context, event }),
+          onDone: {
+            actions: assign({
+              data: (context, event) => event.data,
+            }),
+            target: states.success,
+          },
+          onError: {
+            actions: assign({
+              error: (context, event) => _.toString(_.get(event, "data.message")),
+            }),
+            target: states.failure,
+          },
         },
       },
       [states.success]: {

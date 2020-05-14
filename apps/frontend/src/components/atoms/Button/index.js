@@ -6,6 +6,8 @@ import Router from "next/router";
 import Link from "next/link";
 import { darken } from "polished";
 
+import Spinner from "../Spinner";
+
 import Title from "./Title";
 import { types, useDesigner } from "./designer";
 
@@ -129,8 +131,27 @@ const ButtonWrapper = styled.div`
 `;
 
 const LoaderWrapper = styled.div`
-  position: absolute;
-  right: 1rem;
+  position: relative;
+  width: 15px;
+  height: 10px;
+  & > div {
+    position: absolute;
+    position: relative;
+    top: -5px;
+  }
+
+  &:not([data-position="left"]) {
+    order: 1000;
+    & > div {
+      right: -10px;
+    }
+  }
+  &[data-position="left"] {
+    order: -1;
+    & > div {
+      left: -10px;
+    }
+  }
 `;
 
 /**
@@ -184,8 +205,10 @@ function Button({
 
   const renderLoader = useCallback(() => {
     return isLoading ? (
-      <LoaderWrapper {...otherProps} data-component="loader">
-        <p>...</p>
+      <LoaderWrapper {...otherProps} data-component="loader" data-position={isLoading}>
+        <div>
+          <Spinner />
+        </div>
       </LoaderWrapper>
     ) : (
       <></>
@@ -225,6 +248,7 @@ function Button({
       return (
         <LinkWrapper
           data-disabled={isDisabled || isDisabledSoft}
+          data-loading={isLoading}
           className={className}
           shared={sharedProps}
           href={to}
@@ -246,7 +270,13 @@ function Button({
     case types.button.type.router:
       return (
         <Link href={to}>
-          <ButtonWrapper data-disabled={isDisabled || isDisabledSoft} className={className} shared={sharedProps} onClick={onFinalClick}>
+          <ButtonWrapper
+            data-disabled={isDisabled || isDisabledSoft}
+            data-loading={isLoading}
+            className={className}
+            shared={sharedProps}
+            onClick={onFinalClick}
+          >
             {renderBody(ButtonWrapper)}
           </ButtonWrapper>
         </Link>
@@ -254,7 +284,13 @@ function Button({
 
     default:
       return (
-        <ButtonWrapper data-disabled={isDisabled || isDisabledSoft} className={className} shared={sharedProps} onClick={onFinalClick}>
+        <ButtonWrapper
+          data-disabled={isDisabled || isDisabledSoft}
+          data-loading={isLoading}
+          className={className}
+          shared={sharedProps}
+          onClick={onFinalClick}
+        >
           {renderBody(ButtonWrapper)}
         </ButtonWrapper>
       );
@@ -290,7 +326,7 @@ Button.propTypes = {
   isDisabled: PropTypes.bool,
   isDisabledSoft: PropTypes.bool,
   isFullWidth: PropTypes.bool,
-  isLoading: PropTypes.bool,
+  isLoading: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   isMini: PropTypes.bool,
   onClick: PropTypes.func,
   target: PropTypes.string,

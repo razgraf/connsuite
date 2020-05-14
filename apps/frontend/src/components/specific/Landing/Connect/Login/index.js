@@ -105,11 +105,11 @@ function Login({ className }) {
   const dispatch = useDispatch();
 
   const reducer = useLoginReducer();
-  const machine = useConnectMachine(dispatch, "LOGIN");
+  const machine = useConnectMachine({ dispatch, type: "LOGIN" });
 
   const isFormValid = useMemo(() => {
     return reducer.helper.isValid(reducer.state);
-  }, [reducer.state]);
+  }, [reducer]);
 
   return (
     <Wrapper className={className}>

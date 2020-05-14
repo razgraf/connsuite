@@ -14,7 +14,7 @@ function connectActions(dispatch) {
     },
   };
 }
-export function useConnectMachine(dispatch, type = "LOGIN") {
+export function useConnectMachine({ dispatch, type = "LOGIN" } = {}) {
   const piece = useMachine(connectX.machine, { actions: connectActions(dispatch), context: { type } });
   const machine = useMemo(
     () => ({
@@ -28,18 +28,24 @@ export function useConnectMachine(dispatch, type = "LOGIN") {
   return machine;
 }
 
-function networkCreateActions(dispatch) {
+function networkCreateActions({ dispatch, toast, router }) {
   return {
     [networkCreateX.actions.approve]: () => {
-      console.log("Win");
-      // redirectTo(pages.dashboard.root);
+      toast.addToast("Network successfully created!", {
+        appearance: "success",
+        autoDismiss: true,
+        autoDismissTimeout: 3000,
+        onDismiss: () => {
+          router.push(pages.dashboard.root);
+        },
+      });
     },
   };
 }
 
-export function useNetworkCreateMachine(dispatch, type = "CREATE") {
+export function useNetworkCreateMachine({ dispatch, router, toast, type = "CREATE" } = {}) {
   const piece = useMachine(networkCreateX.machine, {
-    actions: networkCreateActions(dispatch),
+    actions: networkCreateActions({ dispatch, toast, router }),
     context: { type },
   });
 

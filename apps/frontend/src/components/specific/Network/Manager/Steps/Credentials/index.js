@@ -1,11 +1,10 @@
 import _ from "lodash";
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { DUMMY, types } from "../../../../../../constants";
-import { NetworkMini } from "../../../../../shared/Network";
+import { types } from "../../../../../../constants";
 import guards, { policy } from "../../../../../../guards";
-import { InputText, InputImage, Emoji } from "../../../../../atoms";
+import { InputText, Emoji } from "../../../../../atoms";
 
 const Wrapper = styled.div``;
 
@@ -56,16 +55,14 @@ const Section = styled(SectionPartial)`
 `;
 
 function Credential({ className, isActive, reducer }) {
-  const type = types.network.source.internal;
-
   return (
     <Wrapper className={className} data-active={isActive}>
-      <Section data-active={type === types.network.source.internal}>
+      <Section data-active={reducer.state.type.value === types.network.source.internal}>
         <Title>Tell us more about this network/website. How can we reach it?</Title>
         <Subtitle>Aside from the url, you can optionally add a custom username. If empty, it will default to your First Name.</Subtitle>
         <Form columns={2}>
           <InputText
-            help={{ value: "We need a link for the website so we know where to send people that click on the card." }}
+            help={{ value: `Where should we send people that click on the network? ${policy.network.url.root}` }}
             id="createNetworkUrl"
             label="Full link/URL"
             onUpdate={e => {
@@ -73,7 +70,7 @@ function Credential({ className, isActive, reducer }) {
                 type: reducer.actions.UPDATE_URL,
                 payload: {
                   value: e.target.value,
-                  error: null, // TODO guards.interpret(guards.isWebsiteAcceptable, e.target.value),
+                  error: guards.interpret(guards.isNetworkUrlAcceptable, e.target.value),
                 },
               });
             }}
@@ -82,7 +79,7 @@ function Credential({ className, isActive, reducer }) {
             warning={reducer.state.url.error}
           />
           <InputText
-            help={{ value: "Add your username here. For consistency, if empty, it will default to your First Name." }} // TODO
+            help={{ value: "Add your username here. For consistency, it will default to your First Name if you leave it empty." }}
             id="createNetworkUsernameInternal"
             label="Username (optional)"
             onUpdate={e => {
@@ -90,7 +87,10 @@ function Credential({ className, isActive, reducer }) {
                 type: reducer.actions.UPDATE_USERNAME,
                 payload: {
                   value: e.target.value,
-                  error: null, // TODO guards.interpret(guards.isWebsiteAcceptable, e.target.value),
+                  error:
+                    !_.isNil(e.target.value) && !_.isEmpty(e.target.value)
+                      ? guards.interpret(guards.isNetworkUsernameAcceptable, e.target.value)
+                      : null,
                 },
               });
             }}
@@ -100,14 +100,16 @@ function Credential({ className, isActive, reducer }) {
           />
         </Form>
       </Section>
-      <Section data-active={type === types.network.source.external}>
+      <Section data-active={reducer.state.type.value === types.network.source.external}>
         <Title>What is your username on Facebook?</Title>
         <Subtitle>
           Remember how every social network had to ask you for a username <Emoji symbol="🤔" />? You&apos;ll need it here.
         </Subtitle>
         <Form>
           <InputText
-            help={{ value: "You know how every social network asks for a username? What would yours be for this new custom network?" }} // TODO
+            help={{
+              value: `You know how every social network asks for a username? What would yours be for this new custom network? ${policy.network.username.root}`,
+            }}
             id="createNetworkUsernameExternal"
             label="Username"
             onUpdate={e => {
@@ -115,7 +117,7 @@ function Credential({ className, isActive, reducer }) {
                 type: reducer.actions.UPDATE_USERNAME,
                 payload: {
                   value: e.target.value,
-                  error: null, // TODO guards.interpret(guards.isWebsiteAcceptable, e.target.value),
+                  error: guards.interpret(guards.isNetworkUsernameAcceptable, e.target.value),
                 },
               });
             }}

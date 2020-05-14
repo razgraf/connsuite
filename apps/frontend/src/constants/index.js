@@ -203,6 +203,7 @@ export const DUMMY = {
       type: "default",
       description: "Hi 👋! You can also find me on Facebook.",
       URL: "https://facebook.com/",
+      url: "https://facebook.com/",
       icon: {
         source: require("../assets/networks/normal/icon_facebook.png"),
       },
@@ -213,6 +214,7 @@ export const DUMMY = {
       title: "Twitter",
       type: "default",
       URL: "https://twitter.com/",
+      url: "https://twitter.com/",
       icon: {
         source: require("../assets/networks/normal/icon_twitter.png"),
       },

@@ -13,8 +13,11 @@ export const MAX_USERNAME_LENGTH = 50;
 export const MIN_NETWORK_TITLE_LENGTH = 1;
 export const MAX_NETWORK_TITLE_LENGTH = 100;
 
-export const MIN_NETWORK_USERNAME_LENGTH = 1;
+export const MIN_NETWORK_USERNAME_LENGTH = 2;
 export const MAX_NETWORK_USERNAME_LENGTH = 50;
+
+export const MIN_NETWORK_DESCRIPTION_LENGTH = 2;
+export const MAX_NETWORK_DESCRIPTION_LENGTH = 500;
 
 export const MAX_NETWORK_ICON_SIZE = 5 * 1024 * 1024;
 export const ALLOWED_NETWORK_ICON_FORMAT = ["jpg", "jpeg", "gif", "png"];
@@ -31,8 +34,8 @@ export const policy = {
     1: `Please use between ${MIN_NAME_LENGTH} and ${MAX_MASSWORD_LENGTH} characters.`,
   },
   username: {
-    root: `Usernames must contain between ${MAX_USERNAME_LENGTH} and ${MAX_USERNAME_LENGTH} characters and must be unique.`,
-    1: `Please use between ${MAX_USERNAME_LENGTH} and ${MAX_USERNAME_LENGTH} characters. Make it unique.`,
+    root: `Usernames must contain between ${MIN_USERNAME_LENGTH} and ${MAX_USERNAME_LENGTH} characters and must be unique.`,
+    1: `Please use between ${MIN_USERNAME_LENGTH} and ${MAX_USERNAME_LENGTH} characters. Make it unique.`,
   },
   email: {
     root: "Emails must have a valid format. You will use it to gain access to your ConnSuite account.",
@@ -53,8 +56,12 @@ export const policy = {
       3: "Please add a file with a valid name.",
     },
     username: {
-      root: `Names must contain between ${MIN_NETWORK_USERNAME_LENGTH} and ${MAX_NETWORK_USERNAME_LENGTH} characters.`,
+      root: `Usernames must contain between ${MIN_NETWORK_USERNAME_LENGTH} and ${MAX_NETWORK_USERNAME_LENGTH} characters.`,
       1: `Please use between ${MIN_NETWORK_USERNAME_LENGTH} and ${MAX_NETWORK_USERNAME_LENGTH} characters.`,
+    },
+    description: {
+      root: `Descriptions can be empty or must contain between ${MIN_NETWORK_DESCRIPTION_LENGTH} and ${MAX_NETWORK_DESCRIPTION_LENGTH} characters.`,
+      1: `Please use between ${MIN_NETWORK_DESCRIPTION_LENGTH} and ${MAX_NETWORK_DESCRIPTION_LENGTH} characters.`,
     },
     externalId: {
       root: "A network must be chosen (or created at step b.) in order to move to the next step.",
@@ -142,8 +149,14 @@ function isNetworkIconAcceptable(value = {}, withPolicy = true) {
 
 function isNetworkUrlAcceptable(value, withPolicy = true) {
   if (_.isNil(value) || _.isEmpty(value) || !_.isString(value)) return withPolicy ? policy.network.url[2] : false;
-  if (!value.startsWith("https://") || !value.startsWith("http://")) return withPolicy ? policy.network.url[1] : false;
-  return validator.isURL(value, { require_protocol: true }) ? true : withPolicy ? policy.network.url[1] : false;
+  if (!(value.startsWith("https://") || value.startsWith("http://"))) return withPolicy ? policy.network.url[1] : false;
+  return validator.isURL(value, { require_protocol: true }) ? true : withPolicy ? policy.network.url[2] : false;
+}
+
+function isNetworkDescriptionsAcceptable(value, withPolicy = true) {
+  const [min, max] = [MIN_NETWORK_DESCRIPTION_LENGTH, MAX_NETWORK_DESCRIPTION_LENGTH];
+  if (_.isNil(value) || _.isEmpty(value) || !_.isString(value)) return withPolicy ? policy.network.description.root : false;
+  return value.length >= min && value.length <= max ? true : withPolicy ? policy.network.description[1] : false;
 }
 
 /**
@@ -172,6 +185,7 @@ const guards = {
   isNetworkExternalIdAcceptable,
   isNetworkUsernameAcceptable,
   isNetworkUrlAcceptable,
+  isNetworkDescriptionsAcceptable,
 };
 
 export default guards;

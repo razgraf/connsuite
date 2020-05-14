@@ -1,8 +1,8 @@
 import _ from "lodash";
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { types } from "../../../../../../constants";
+import { types, DUMMY } from "../../../../../../constants";
 import guards, { policy } from "../../../../../../guards";
 import { InputArea, Emoji } from "../../../../../atoms";
 
@@ -97,11 +97,23 @@ const Section = styled(SectionPartial)`
 `;
 
 function Live({ className, isActive, reducer }) {
-  const type = types.network.source.internal;
+  const network = useMemo(() => {
+    if (reducer.state.type.value === types.network.source.internal)
+      return {
+        url: reducer.state.url.value,
+        title: reducer.state.title.value,
+        username: reducer.state.username.value,
+        icon: {
+          source: reducer.state.icon.preview,
+        },
+      };
+
+    return DUMMY.NETWORKS.find(item => item._id === reducer.state.externalId.value) || {}; // TODO System for external networks
+  }, [reducer.state]);
 
   return (
     <Wrapper className={className} data-active={isActive}>
-      <Section data-active={type === types.network.source.internal}>
+      <Section>
         <Title>
           You are almost there <Emoji symbol="👌" />
         </Title>
@@ -112,17 +124,17 @@ function Live({ className, isActive, reducer }) {
         <Grid>
           <Field>
             <p>
-              Network: <span>Facebook</span>
+              Network: <span>{_.get(network, "title")}</span>
             </p>
           </Field>
           <Field>
             <p>
-              Username: <span>username</span>
+              Username: <span>{_.get(network, "username")}</span>
             </p>
           </Field>
           <Field>
             <p>
-              Link/URL: <span>Dadada</span>
+              Link/URL: <span>{_.get(network, "url")}</span>
             </p>
           </Field>
         </Grid>
@@ -133,8 +145,7 @@ function Live({ className, isActive, reducer }) {
         <Form>
           <InputArea
             help={{
-              value:
-                "This description will be shown when someone is interested in accessing your network. You can use this to separate business from personal accounts.",
+              value: `This description will be shown when someone is interested in accessing your network. You can use this to separate business from personal accounts. ${policy.network.description.root}`,
             }}
             id="createNetworkDescription"
             label="Description (optional)"
@@ -143,7 +154,10 @@ function Live({ className, isActive, reducer }) {
                 type: reducer.actions.UPDATE_DESCRIPTION,
                 payload: {
                   value: e.target.value,
-                  error: null, // TODO guards.interpret(guards.isWebsiteAcceptable, e.target.value),
+                  error:
+                    !_.isNil(e.target.value) && !_.isEmpty(e.target.value)
+                      ? guards.interpret(guards.isNetworkDescriptionsAcceptable, e.target.value)
+                      : null,
                 },
               });
             }}

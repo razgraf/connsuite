@@ -3,9 +3,10 @@ import NextApp from "next/app";
 import { Provider } from "react-redux";
 import { withReduxCookiePersist } from "next-redux-cookie-wrapper";
 import { PersistGate } from "redux-persist/integration/react";
-
+import { ToastProvider } from "react-toast-notifications";
 import { ThemeProvider, GlobalStyle } from "../src/themes";
 import reduxStore from "../src/store";
+import Toast, { ToastContainer } from "../src/components/atoms/Toast";
 
 class App extends NextApp {
   static async getInitialProps({ Component, ctx }) {
@@ -21,7 +22,9 @@ class App extends NextApp {
         <PersistGate persistor={store.__PERSISTOR} loading={null}>
           <ThemeProvider>
             <GlobalStyle />
-            <Component {...pageProps} />
+            <ToastProvider components={{ Toast, ToastContainer }}>
+              <Component {...pageProps} />
+            </ToastProvider>
           </ThemeProvider>
         </PersistGate>
       </Provider>

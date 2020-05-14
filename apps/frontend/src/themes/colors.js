@@ -27,6 +27,7 @@ const colors = {
   pink: "#E100FF",
   red: "#F44336",
   green: "#4CAF50",
+  green2: "#18cc72",
   yellow: "#FFEB3B",
   orange: "#FF9800",
 
@@ -36,6 +37,7 @@ const colors = {
 export const gradients = {
   primary: `linear-gradient(25deg, ${colors.secondary} 30%, ${colors.primary})`,
   gold: `linear-gradient(25deg, ${colors.orange} 30%, ${colors.yellow})`,
+  green: `linear-gradient(25deg, ${colors.green} 30%, ${colors.green2})`,
 };
 
 export default colors;

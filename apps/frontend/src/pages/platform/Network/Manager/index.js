@@ -3,7 +3,9 @@ import React, { useCallback, useMemo, useEffect } from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 import { rgba } from "polished";
+import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
+import { useToasts } from "react-toast-notifications";
 import IconChoose from "@material-ui/icons/ExploreRounded";
 import IconCredentials from "@material-ui/icons/HowToRegRounded";
 import IconLive from "@material-ui/icons/FlashOnRounded";
@@ -20,6 +22,7 @@ const Page = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   background: ${props => props.theme.gradients.primary};
+  opacity: 1;
 
   &:before {
     position: absolute;
@@ -35,6 +38,11 @@ const Page = styled.div`
   & > * {
     position: relative;
     z-index: 20;
+  }
+
+  &[data-leaving="true"] {
+    opacity: 0.75;
+    transition: opacity 1000ms;
   }
 `;
 const StyledNav = styled(Nav)`
@@ -135,14 +143,14 @@ const source = {
     index: 2,
     Icon: IconCredentials,
     title: "Fill in credentials",
-    left: "Cancel",
+    left: "Go Back",
     right: "Next Step",
   },
   3: {
     index: 3,
     Icon: IconLive,
     title: "Go Live",
-    left: "Cancel",
+    left: "Go Back",
     right: "Go Live",
     isFinal: true,
   },
@@ -151,21 +159,23 @@ const source = {
 function NetworkManager({ query }) {
   const type = types.network.manager[_.has(query, "id") ? "edit" : "create"];
   const dispatch = useDispatch();
+  const router = useRouter();
+  const toast = useToasts();
   const reducer = useNetworkCreateReducer();
-  const machine = useNetworkCreateMachine(dispatch, type.toUpperCase());
+  const machine = useNetworkCreateMachine({ dispatch, toast, router, type: type.toUpperCase() });
   const step = useMemo(() => machine.current.context.step, [machine]);
 
+  useEffect(() => console.log(machine.current.value), [machine]);
+
   const onForward = useCallback(() => {
-    console.log("onForward");
     machine.send(machine.events.forward, { payload: reducer.state });
   }, [machine, reducer]);
 
   const onBackward = useCallback(() => {
-    console.log("onBackward");
     machine.send(machine.events.backward);
   }, [machine]);
 
-  const isForwardEnabled = useMemo(() => {
+  const checkForward = useCallback(() => {
     if (step === 1) {
       if (reducer.state.type.value === types.network.source.external) {
         return machine.guards.isExternalChooseAcceptable(machine.context, { payload: reducer.state });
@@ -181,20 +191,20 @@ function NetworkManager({ query }) {
   }, [reducer, step, machine.guards, machine.context]);
 
   return (
-    <Page>
+    <Page data-leaving={machine.current.value === machine.states.success}>
       <StyledNav appearance={types.nav.appearance.secondary} title={pages.network.create.title} hasParent />
       <Canvas>
         <Card>
           <Header step={step} source={source} />
           <Main>
             <Playground>
-              <Choose isActive={step === 1} reducer={reducer} machine={machine} />
-              {/* <Credentials isActive={step === 2} reducer={reducer} machine={machine} />
-              <Live isActive={step === 3} reducer={reducer} machine={machine} /> */}
+              <Choose isActive={step === 1} reducer={reducer} />
+              <Credentials isActive={step === 2} reducer={reducer} />
+              <Live isActive={step === 3} reducer={reducer} />
             </Playground>
             <Preview reducer={reducer} step={step} />
           </Main>
-          <Footer step={source[step]} onForward={onForward} onBackward={onBackward} machine={machine} isForwardEnabled={isForwardEnabled} />
+          <Footer step={source[step]} onForward={onForward} onBackward={onBackward} machine={machine} checkForward={checkForward} />
         </Card>
       </Canvas>
     </Page>

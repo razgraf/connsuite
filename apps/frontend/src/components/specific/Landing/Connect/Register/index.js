@@ -94,11 +94,11 @@ function Register({ className }) {
   const dispatch = useDispatch();
 
   const reducer = useRegisterReducer();
-  const machine = useConnectMachine(dispatch, "REGISTER");
+  const machine = useConnectMachine({ dispatch, type: "REGISTER" });
 
   const isFormValid = useMemo(() => {
     return reducer.helper.isValid(reducer.state);
-  }, [reducer.state]);
+  }, [reducer]);
 
   return (
     <Wrapper className={className}>

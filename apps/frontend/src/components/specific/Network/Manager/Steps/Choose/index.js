@@ -106,7 +106,7 @@ const StyledNetworkMini = styled(NetworkMini)`
   padding: 10px;
 `;
 
-function Choose({ className, isActive, reducer, machine }) {
+function Choose({ className, isActive, reducer }) {
   const onNetworkIconChoose = useCallback(
     file => {
       let payload = {
@@ -196,7 +196,9 @@ function Choose({ className, isActive, reducer, machine }) {
         </Title>
         <Form>
           <InputText
-            help={{ value: "Just like 'Facebook' or 'Twitter' you can give a name to your website/new network." }}
+            help={{
+              value: `Just like 'Facebook' or 'Twitter' you can give a name to your website/new network. ${policy.network.title.root}`,
+            }}
             id="createNetworkTitle"
             label="Title"
             onUpdate={e => {
@@ -213,7 +215,7 @@ function Choose({ className, isActive, reducer, machine }) {
             warning={reducer.state.title.error}
           />
           <InputImage
-            help={{ value: "Provide a logo or an icon to make this stand out." }}
+            help={{ value: `Provide a logo or an icon to make this stand out. ${policy.network.icon.root}` }}
             id="createNetworkIcon"
             label="Network Icon"
             isEventInterpreted
