@@ -1,14 +1,16 @@
-import React, { useState, useMemo } from "react";
+import _ from "lodash";
+import React, { useCallback, useMemo, useEffect } from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 import { rgba } from "polished";
+import { useDispatch } from "react-redux";
 import IconChoose from "@material-ui/icons/ExploreRounded";
 import IconCredentials from "@material-ui/icons/HowToRegRounded";
 import IconLive from "@material-ui/icons/FlashOnRounded";
 import { components } from "../../../../themes";
 import Nav from "../../../../components/shared/Nav";
-import { pages, types, DUMMY } from "../../../../constants";
-import { useCreateNetworkReducer } from "../../../../hooks";
+import { pages, types } from "../../../../constants";
+import { useNetworkCreateReducer, useNetworkCreateMachine } from "../../../../hooks";
 import { Header, Preview, Footer, Steps } from "../../../../components/specific/Network/Manager";
 
 const Page = styled.div`
@@ -121,75 +123,78 @@ const Live = styled(Steps.Live)`
   ${StepCss};
 `;
 
-const stepsFactory = setStep => ({
-  [types.network.manager.create]: [
-    {
-      index: 1,
-      Icon: IconChoose,
-      title: "Choose Network",
-      left: "Cancel",
-      leftClick: () => {
-        setStep(3);
-      },
-      right: "Next Step",
-      rightClick: () => {
-        setStep(2);
-      },
-      isStart: true,
-    },
-    {
-      index: 2,
-      Icon: IconCredentials,
-      title: "Fill in credentials",
-      left: "Cancel",
-      leftClick: () => {
-        setStep(1);
-      },
-      right: "Next Step",
-      rightClick: () => {
-        setStep(3);
-      },
-    },
-    {
-      index: 3,
-      Icon: IconLive,
-      title: "Go Live",
-      left: "Cancel",
-      leftClick: () => {
-        setStep(2);
-      },
-      right: "Go Live",
-      rightClick: () => {
-        setStep(1);
-      },
-      isFinal: true,
-    },
-  ],
-});
+const source = {
+  1: {
+    index: 1,
+    Icon: IconChoose,
+    title: "Choose Network",
+    left: "Cancel",
+    right: "Next Step",
+  },
+  2: {
+    index: 2,
+    Icon: IconCredentials,
+    title: "Fill in credentials",
+    left: "Cancel",
+    right: "Next Step",
+  },
+  3: {
+    index: 3,
+    Icon: IconLive,
+    title: "Go Live",
+    left: "Cancel",
+    right: "Go Live",
+    isFinal: true,
+  },
+};
 
 function NetworkManager({ query }) {
-  const [step, setStep] = useState(1);
-  const type = types.network.manager.create;
-  const network = DUMMY.NETWORKS[0];
-  const steps = useMemo(() => stepsFactory(setStep), [setStep]);
+  const type = types.network.manager[_.has(query, "id") ? "edit" : "create"];
+  const dispatch = useDispatch();
+  const reducer = useNetworkCreateReducer();
+  const machine = useNetworkCreateMachine(dispatch, type.toUpperCase());
+  const step = useMemo(() => machine.current.context.step, [machine]);
 
-  const reducer = useCreateNetworkReducer();
+  const onForward = useCallback(() => {
+    console.log("onForward");
+    machine.send(machine.events.forward, { payload: reducer.state });
+  }, [machine, reducer]);
+
+  const onBackward = useCallback(() => {
+    console.log("onBackward");
+    machine.send(machine.events.backward);
+  }, [machine]);
+
+  const isForwardEnabled = useMemo(() => {
+    if (step === 1) {
+      if (reducer.state.type.value === types.network.source.external) {
+        return machine.guards.isExternalChooseAcceptable(machine.context, { payload: reducer.state });
+      } else return machine.guards.isInternalChooseAcceptable(machine.context, { payload: reducer.state });
+    } else if (step === 2) {
+      if (reducer.state.type.value === types.network.source.external)
+        return machine.guards.isExternalCredentialsAcceptable(machine.context, { payload: reducer.state });
+      else return machine.guards.isInternalCredentialsAcceptable(machine.context, { payload: reducer.state });
+    } else if (step === 3) {
+      return machine.guards.isLiveAcceptable(machine.context, { payload: reducer.state });
+    }
+    return true;
+  }, [reducer, step, machine.guards, machine.context]);
 
   return (
     <Page>
       <StyledNav appearance={types.nav.appearance.secondary} title={pages.network.create.title} hasParent />
       <Canvas>
         <Card>
-          <Header step={step} source={steps[type]} />
+          <Header step={step} source={source} />
           <Main>
             <Playground>
-              <Choose isActive={steps[type][0].index === step} reducer={reducer} />
-              <Credentials isActive={steps[type][1].index === step} reducer={reducer} />
-              <Live isActive={steps[type][2].index === step} reducer={reducer} />
+              <Choose isActive={step === 1} reducer={reducer} machine={machine} />
+              {/* <Credentials isActive={step === 2} reducer={reducer} machine={machine} />
+              <Live isActive={step === 3} reducer={reducer} machine={machine} /> */}
             </Playground>
-            <Preview network={network} />
+            <Preview reducer={reducer} step={step} />
           </Main>
-          <Footer step={steps[type].find(item => item.index === step)} />
+          <Footer step={source[step]} onForward={onForward} onBackward={onBackward} machine={machine} isForwardEnabled={isForwardEnabled} />
         </Card>
       </Canvas>
     </Page>

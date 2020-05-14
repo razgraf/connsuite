@@ -1,11 +1,12 @@
 import _ from "lodash";
-import React, { useState } from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { DUMMY } from "../../../../../../constants";
+import { DUMMY, types } from "../../../../../../constants";
 import { NetworkMini } from "../../../../../shared/Network";
 import guards, { policy } from "../../../../../../guards";
 import { InputText, InputImage } from "../../../../../atoms";
+import { readPreviewFromImage } from "../../../../../../utils";
 
 const Wrapper = styled.div``;
 
@@ -17,13 +18,42 @@ const SectionPartial = styled.div`
   width: 100%;
 `;
 
-const Title = styled.p`
-  font-size: 14pt;
-  font-weight: 400;
-  font-family: ${props => props.theme.fonts.primary};
-  color: ${props => props.theme.colors.grayBlueNight};
-  transition: color 150ms;
+const Title = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   margin: 0 0 calc(${props => props.theme.sizes.edge} * 2) 0;
+  & > p {
+    font-size: 14pt;
+    font-weight: 400;
+    font-family: ${props => props.theme.fonts.primary};
+    color: ${props => props.theme.colors.grayBlueNight};
+    transition: color 150ms;
+    margin: 0;
+  }
+`;
+
+const Label = styled.div`
+  padding: 4px 8px;
+  border-radius: 2px;
+  text-align: center;
+  background-color: ${props => props.theme.colors.grayBlueMedium};
+  transition: background-color 150ms;
+  margin-left: 8px;
+
+  & > span {
+    font-size: 9pt;
+    font-weight: 600;
+    color: ${props => props.theme.colors.white};
+    display: flex;
+    margin: 0;
+    &:first-child {
+      display: none;
+    }
+    &:last-child {
+      color: ${props => props.theme.colors.grayBlueNight};
+    }
+  }
 `;
 
 const Grid = styled.div`
@@ -41,17 +71,31 @@ const Form = styled.form`
 `;
 
 const Section = styled(SectionPartial)`
-  opacity: 0.6;
+  opacity: 0.7;
   transition: opacity 150ms;
   margin-bottom: calc(${props => props.theme.sizes.edge} * 2);
+  border-bottom: 1px solid ${props => props.theme.colors.grayBlueLight};
+  cursor: pointer;
   &:last-of-type {
     margin-bottom: 0;
+    border-bottom: none;
   }
   &[data-active="true"] {
     opacity: 1;
-    ${Title} {
+    cursor: default;
+    ${Title} > p {
       color: ${props => props.theme.colors.secondary};
       transition: color 150ms;
+    }
+    ${Label} {
+      background-color: ${props => props.theme.colors.secondary};
+      transition: background-color 150ms;
+      & > span {
+        display: flex;
+        &:last-child {
+          display: none;
+        }
+      }
     }
   }
 `;
@@ -62,22 +106,94 @@ const StyledNetworkMini = styled(NetworkMini)`
   padding: 10px;
 `;
 
-function Choose({ className, isActive, reducer }) {
-  const [section, setSection] = useState(1);
-  const [selected, setSelected] = useState(null);
+function Choose({ className, isActive, reducer, machine }) {
+  const onNetworkIconChoose = useCallback(
+    file => {
+      let payload = {
+        name: null,
+        value: null,
+        error: "File not accepted",
+      };
+      if (!_.isNil(file)) {
+        payload = {
+          name: file.name,
+          value: file,
+          preview: null,
+          error: guards.interpret(guards.isNetworkIconAcceptable, file),
+        };
+      }
+
+      reducer.dispatch({
+        type: reducer.actions.UPDATE_ICON,
+        payload,
+      });
+
+      readPreviewFromImage(file).then(preview => {
+        if (reducer.state.type.value === types.network.source.internal)
+          reducer.dispatch({
+            type: reducer.actions.UPDATE_ICON_PREVIEW,
+            payload: preview,
+          });
+      });
+    },
+    [reducer],
+  );
+
+  const onNetworkTypeChange = useCallback(
+    type => {
+      if (reducer.state.type.value !== type) {
+        reducer.dispatch({
+          type: reducer.actions.UPDATE_TYPE,
+          payload: { value: type, error: null },
+        });
+      }
+    },
+    [reducer],
+  );
 
   return (
     <Wrapper className={className} data-active={isActive}>
-      <Section data-active={section === 1} onClick={() => setSection(1)}>
-        <Title>a. Choose the network you want to add</Title>
+      <Section
+        data-active={reducer.state.type.value === types.network.source.external}
+        onClick={() => onNetworkTypeChange(types.network.source.external)}
+      >
+        <Title>
+          <p>a. Choose the network you want to add</p>
+          <Label>
+            <span>Active</span>
+            <span>Click to switch</span>
+          </Label>
+        </Title>
         <Grid>
           {DUMMY.NETWORKS.map(item => (
-            <StyledNetworkMini key={item._id} network={item} isFocused={selected === item._id} onClick={() => setSelected(item._id)} />
+            <StyledNetworkMini
+              key={item._id}
+              network={item}
+              isFocused={item._id === reducer.state.externalId.value}
+              onClick={() => {
+                reducer.dispatch({
+                  type: reducer.actions.UPDATE_EXTERNAL_ID,
+                  payload: {
+                    value: item._id,
+                    error: null,
+                  },
+                });
+              }}
+            />
           ))}
         </Grid>
       </Section>
-      <Section data-active={section === 2} onClick={() => setSection(2)}>
-        <Title>b. Or create a custom network</Title>
+      <Section
+        data-active={reducer.state.type.value === types.network.source.internal}
+        onClick={() => onNetworkTypeChange(types.network.source.internal)}
+      >
+        <Title>
+          <p>b. Or create a custom network</p>
+          <Label>
+            <span>Active</span>
+            <span>Click to switch</span>
+          </Label>
+        </Title>
         <Form>
           <InputText
             help={{ value: "Just like 'Facebook' or 'Twitter' you can give a name to your website/new network." }}
@@ -88,43 +204,20 @@ function Choose({ className, isActive, reducer }) {
                 type: reducer.actions.UPDATE_TITLE,
                 payload: {
                   value: e.target.value,
-                  error: null, // TODO guards.interpret(guards.isWebsiteAcceptable, e.target.value),
+                  error: guards.interpret(guards.isNetworkTitleAcceptable, e.target.value),
                 },
               });
             }}
             placeholder="MySpace"
-            value={reducer.state.title.value}
+            value={reducer.state.type.value === types.network.source.internal ? reducer.state.title.value : ""}
             warning={reducer.state.title.error}
           />
           <InputImage
             help={{ value: "Provide a logo or an icon to make this stand out." }}
             id="createNetworkIcon"
             label="Network Icon"
-            onUpdate={event => {
-              let payload = {
-                name: null,
-                value: null,
-                error: "File not accepted",
-              };
-              try {
-                const files = _.get(event, "target.files");
-                if (!files) throw new Error();
-                const file = _.get(files, [0]);
-                if (!file) throw new Error();
-
-                payload = {
-                  name: file.name,
-                  value: file,
-                  error: null, // TODO guards.interpret(guards.isImageAcceptable, e.target.value),
-                };
-              } catch (e) {
-                console.err(e);
-              }
-              reducer.dispatch({
-                type: reducer.actions.UPDATE_ICON,
-                payload,
-              });
-            }}
+            isEventInterpreted
+            onUpdate={onNetworkIconChoose}
             placeholder="Pick an icon"
             name={reducer.state.icon.name}
             value={reducer.state.icon.value}

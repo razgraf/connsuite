@@ -84,12 +84,12 @@ function Step({ Icon, index, hasDivider, isActive, onClick, title }) {
 function Header({ step, setStep, source }) {
   return (
     <Wrapper>
-      {source.map((item, _index) => (
+      {Object.values(source).map((item, _index) => (
         <Step
           {...item}
           key={item.index}
           isActive={item.index === step}
-          hasDivider={_index + 1 < source.length}
+          hasDivider={_index + 1 < Object.values(source).length}
           onClick={() => setStep(item)}
         />
       ))}
@@ -115,7 +115,7 @@ Step.defaultProps = {
 Header.propTypes = {
   step: PropTypes.number,
   setStep: PropTypes.func,
-  source: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  source: PropTypes.shape({}).isRequired,
 };
 
 Header.defaultProps = {

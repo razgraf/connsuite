@@ -1,1 +1,1 @@
-export { default as createNetworkReducer } from "./create";
+export { default as networkCreateReducer } from "./create";

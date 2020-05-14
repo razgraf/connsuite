@@ -71,3 +71,17 @@ export function ellipsis(value, max = null) {
     return "";
   }
 }
+
+export async function readPreviewFromImage(file) {
+  return new Promise((resolve, reject) => {
+    try {
+      const reader = new FileReader();
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } catch (e) {
+      reject();
+    }
+  });
+}

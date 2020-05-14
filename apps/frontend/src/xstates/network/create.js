@@ -2,7 +2,6 @@ import _ from "lodash";
 import { Machine, assign } from "xstate";
 import { NetworkRequest } from "../../requests";
 import { types } from "../../constants";
-
 import guards from "./guards";
 
 const states = {
@@ -17,7 +16,6 @@ const states = {
 
 const events = {
   initialize: "initialize",
-  pickType: "pickType",
   forward: "forward",
   backward: "backward",
   reset: "reset",
@@ -31,13 +29,20 @@ const actions = {
 };
 
 const initialContext = {
+  step: 1,
   data: null,
   error: null,
-  type: types.network.source.external,
 };
 
 async function attemptToCreate({ context }) {
-  return NetworkRequest.create(context);
+  /**
+   * All guards should be passed
+   */
+  console.log("SUCCESS");
+  return {
+    data: "GG",
+  };
+  // return NetworkRequest.create(context);
 }
 
 const RESET = {
@@ -56,7 +61,7 @@ const machine = Machine(
   {
     id: "createNetworkMachine",
     initial: "idle",
-    context: initialContext,
+    context: { ...initialContext, type: "CREATE" },
     states: {
       [states.idle]: {
         on: {
@@ -64,58 +69,58 @@ const machine = Machine(
         },
       },
       [states.choose]: {
+        entry: assign({ step: 1 }),
         on: {
-          [events.pickType]: {
-            actions: assign({
-              type: (__, event) => event.type,
-            }),
-            target: states.choose,
-          },
           [events.forward]: [
             {
-              cond: ["isTypeInternal", "isTitleValid", "isIconValid"],
+              cond: "isInternalChooseAcceptable",
               target: states.credentials,
             },
             {
-              cond: ["isTypeExternal", "isExternalIdValid"],
+              cond: "isExternalChooseAcceptable",
               target: states.credentials,
             },
-            /** All type and content guards failed */
+            /** All network type and content guards failed */
             { ...INVALIDATE },
           ],
         },
+        exit: assign({ error: null }),
       },
       [states.credentials]: {
+        entry: assign({ step: 2 }),
         on: {
           [events.reset]: RESET,
           [events.backward]: states.choose,
           [events.forward]: [
             {
-              cond: ["isTypeInternal", "isUrlValid", "isUsernameAcceptable"],
+              cond: "isInternalCredentialsAcceptable",
               target: states.live,
             },
             {
-              cond: ["isTypeExternal", "isUsernameValid"],
+              cond: "isExternalCredentialsAcceptable",
               target: states.live,
             },
-            /** All type and content guards failed */
+            /** All network type and content guards failed */
             { ...INVALIDATE },
           ],
         },
+        exit: assign({ error: null }),
       },
       [states.live]: {
+        entry: assign({ step: 3, error: null }),
         on: {
           [events.reset]: RESET,
           [events.backward]: states.credentials,
           [events.forward]: [
             {
-              cond: ["isDescriptionAcceptable"],
+              cond: "isLiveAcceptable",
               target: states.create,
             },
             /** All content guards failed */
             { ...INVALIDATE },
           ],
         },
+        exit: assign({ error: null }),
       },
       [states.create]: {
         src: (context, event) => attemptToCreate({ context, event }),
@@ -155,4 +160,5 @@ export default {
   states,
   actions,
   events,
+  guards,
 };

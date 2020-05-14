@@ -26,6 +26,7 @@ export const actions = {
   UPDATE_DESCRIPTION: "UPDATE_DESCRIPTION",
   UPDATE_URL: "UPDATE_URL",
   UPDATE_ICON: "UPDATE_ICON",
+  UPDATE_ICON_PREVIEW: "UPDATE_ICON_PREVIEW",
   UPDATE_EXTERNAL_ID: "UPDATE_EXTERNAL_ID",
 };
 
@@ -35,7 +36,7 @@ export function reducer(state, { type, payload }) {
       return initial;
     case actions.UPDATE_TYPE:
       return {
-        ...state,
+        ...initial,
         type: payload,
       };
     case actions.UPDATE_TITLE:
@@ -58,12 +59,24 @@ export function reducer(state, { type, payload }) {
         ...state,
         icon: payload,
       };
+    case actions.UPDATE_ICON_PREVIEW:
+      return {
+        ...state,
+        icon: { ...state.icon, preview: payload },
+      };
     case actions.UPDATE_URL:
       return {
         ...state,
         url: payload,
       };
     case actions.UPDATE_EXTERNAL_ID:
+      if (payload.extra) {
+        const result = {
+          ...state,
+          externalId: payload,
+        };
+        return result;
+      }
       return {
         ...state,
         externalId: payload,

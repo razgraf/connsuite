@@ -60,6 +60,10 @@ const Icon = styled.img`
   height: 100%;
   width: 100%;
   object-fit: contain;
+  &:not([src]),
+  &[src=""] {
+    visibility: hidden;
+  }
 `;
 
 const Wrapper = styled(WrapperPartial)`

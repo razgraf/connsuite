@@ -223,20 +223,30 @@ function Button({
   switch (type) {
     case types.button.type.link:
       return (
-        <LinkWrapper className={className} shared={sharedProps} href={to} onClick={onFinalClick} rel="noopener noreferrer" target={target}>
+        <LinkWrapper
+          data-disabled={isDisabled || isDisabledSoft}
+          className={className}
+          shared={sharedProps}
+          href={to}
+          onClick={onFinalClick}
+          rel="noopener noreferrer"
+          target={target}
+        >
           {renderBody(LinkWrapper)}
         </LinkWrapper>
       );
     case types.button.type.routerDecorator:
       return (
         <Link href={to}>
-          <div className={className}>{children}</div>
+          <div data-disabled={isDisabled || isDisabledSoft} className={className}>
+            {children}
+          </div>
         </Link>
       );
     case types.button.type.router:
       return (
         <Link href={to}>
-          <ButtonWrapper className={className} shared={sharedProps} onClick={onFinalClick}>
+          <ButtonWrapper data-disabled={isDisabled || isDisabledSoft} className={className} shared={sharedProps} onClick={onFinalClick}>
             {renderBody(ButtonWrapper)}
           </ButtonWrapper>
         </Link>
@@ -244,7 +254,7 @@ function Button({
 
     default:
       return (
-        <ButtonWrapper className={className} shared={sharedProps} onClick={onFinalClick}>
+        <ButtonWrapper data-disabled={isDisabled || isDisabledSoft} className={className} shared={sharedProps} onClick={onFinalClick}>
           {renderBody(ButtonWrapper)}
         </ButtonWrapper>
       );

@@ -1,8 +1,9 @@
 import _ from "lodash";
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Network, { NetworkMini } from "../../../../shared/Network";
+import { types, DUMMY } from "../../../../../constants";
 
 const Wrapper = styled.div`
   display: flex;
@@ -55,7 +56,7 @@ const HeaderAction = styled.div`
 const HeaderBar = styled.div`
   position: relative;
   flex: 1;
-  background: ${props => props.theme.colors.grayBlueGhost};
+  background: ${props => props.theme.colors.grayBlueLight};
   border-radius: 4px;
   padding: 6px 10px;
   margin-left: 4px;
@@ -140,17 +141,34 @@ const ContentSideNetwork = styled(NetworkMini)`
   }
 `;
 
-function Preview({ className, network, isBarActive }) {
+function Preview({ className, reducer, step }) {
+  console.log(reducer);
+  const network = useMemo(() => {
+    if (reducer.state.type.value === types.network.source.internal)
+      return {
+        url: reducer.state.url.value,
+        title: reducer.state.title.value,
+        username: reducer.state.username.value,
+        icon: {
+          source: reducer.state.icon.preview,
+        },
+      };
+
+    return DUMMY.NETWORKS.find(item => item._id === reducer.state.externalId.value) || {};
+  }, [reducer.state]);
+
   return (
     <Wrapper className={className}>
-      <Header data-active={isBarActive}>
+      <Header data-active={step === 2}>
         <HeaderActions>
           <HeaderAction />
           <HeaderAction />
           <HeaderAction />
         </HeaderActions>
         <HeaderBar>
-          <HeaderBarTitle>{`${_.get(network, "URL")}/${_.get(network, "username")}`}</HeaderBarTitle>
+          <HeaderBarTitle>
+            {`${_.get(reducer.state, "url.value") || "https://preview"}/${_.get(reducer.state, "username.value") || ""}`}
+          </HeaderBarTitle>
         </HeaderBar>
       </Header>
       <Content>
@@ -169,13 +187,11 @@ function Preview({ className, network, isBarActive }) {
 
 Preview.propTypes = {
   className: PropTypes.string,
-  network: PropTypes.shape({}).isRequired,
-  isBarActive: PropTypes.bool,
+  step: PropTypes.number.isRequired,
 };
 
 Preview.defaultProps = {
   className: null,
-  isBarActive: false,
 };
 
 export default Preview;

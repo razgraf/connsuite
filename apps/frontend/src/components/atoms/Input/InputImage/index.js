@@ -1,9 +1,10 @@
 import _ from "lodash";
-import React, { useRef } from "react";
+import React, { useRef, useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { descriptor, Frame } from "../atoms";
 import Button from "../../Button";
+import guards from "../../../../guards";
 
 const Input = styled.input`
   display: none;
@@ -25,9 +26,30 @@ const Action = styled(Button)`
   right: 10px;
 `;
 
-function InputImage({ className, id, help, label, onUpdate, placeholder, inputRef, name, value, warning }) {
+function InputImage({ className, id, help, label, onUpdate, placeholder, inputRef, name, value, warning, isEventInterpreted }) {
   const ref = useRef();
   if (_.isNil(inputRef)) inputRef = ref;
+
+  const onChange = useCallback(
+    event => {
+      if (!isEventInterpreted) {
+        onUpdate(event);
+        return;
+      }
+      try {
+        const files = _.get(event, "target.files");
+        if (!files) throw new Error();
+        const file = _.get(files, [0]);
+        if (!file) throw new Error();
+        onUpdate(file);
+        return;
+      } catch (e) {
+        console.error(e);
+        onUpdate(null);
+      }
+    },
+    [onUpdate, isEventInterpreted],
+  );
 
   return (
     <Frame className={className} id={id} label={label} warning={warning} help={help}>
@@ -50,7 +72,7 @@ function InputImage({ className, id, help, label, onUpdate, placeholder, inputRe
           if (inputRef && inputRef.current) inputRef.current.click();
         }}
       />
-      <Input id={id} accept="image/*" onChange={onUpdate} placeholder={placeholder} ref={inputRef} type="file" autocomplete="on" />
+      <Input id={id} accept="image/*" onChange={onChange} placeholder={placeholder} ref={inputRef} type="file" autocomplete="on" />
     </Frame>
   );
 }
@@ -66,6 +88,7 @@ InputImage.propTypes = {
   name: PropTypes.string,
   value: PropTypes.shape({}),
   warning: PropTypes.string,
+  isEventInterpreted: PropTypes.bool,
 };
 
 InputImage.defaultProps = {
@@ -77,6 +100,7 @@ InputImage.defaultProps = {
   name: null,
   value: null,
   warning: null,
+  isEventInterpreted: false,
 };
 
 export default InputImage;

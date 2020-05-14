@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import IconArrowBack from "@material-ui/icons/ArrowBackRounded";
 import IconLive from "@material-ui/icons/FlashOnRounded";
-import { Button } from "../../../../atoms";
+import { Button, Warning } from "../../../../atoms";
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,6 +15,19 @@ const Wrapper = styled.div`
   padding: calc(${props => props.theme.sizes.edge} * 2);
   margin-top: 0;
   border-top: 1px solid ${props => props.theme.colors.grayAccent};
+`;
+
+const StyledButton = styled(Button)`
+  flex-shrink: 0;
+  &[data-disabled="true"] {
+    opacity: 0.6;
+  }
+`;
+
+const StyledWarning = styled(Warning)`
+  & > p {
+    font-size: 11pt;
+  }
 `;
 
 const ButtonIconWrapper = styled.div`
@@ -33,10 +46,10 @@ const ButtonIconWrapper = styled.div`
   }
 `;
 
-function Footer({ className, step }) {
+function Footer({ className, step, onForward, onBackward, machine, isForwardEnabled }) {
   return (
     <Wrapper className={className}>
-      <Button
+      <StyledButton
         title={_.get(step, "left")}
         childrenLeft={
           <ButtonIconWrapper>
@@ -46,11 +59,10 @@ function Footer({ className, step }) {
         type={t => t.button}
         appearance={t => t.transparent}
         accent={t => t.grayBlueNight}
-        onClick={_.get(step, "leftClick")}
-        isDisabled={_.get(step, "leftDisabled")}
+        onClick={onBackward}
       />
-
-      <Button
+      <StyledWarning isCentered value={machine.current.context.error} />
+      <StyledButton
         title={_.get(step, "right")}
         childrenLeft={
           _.get(step, "isFinal") === true && (
@@ -62,8 +74,8 @@ function Footer({ className, step }) {
         type={t => t.button}
         appearance={t => t.solid}
         accent={t => t.secondary}
-        onClick={_.get(step, "rightClick")}
-        isDisabled={_.get(step, "rightDisabled")}
+        onClick={onForward}
+        isDisabled={!isForwardEnabled}
       />
     </Wrapper>
   );
@@ -71,23 +83,21 @@ function Footer({ className, step }) {
 
 Footer.propTypes = {
   className: PropTypes.string,
+  onForward: PropTypes.func,
+  onBackward: PropTypes.func,
   step: PropTypes.shape({
     index: PropTypes.number.isRequired,
     left: PropTypes.string.isRequired,
     right: PropTypes.string.isRequired,
-    leftClick: PropTypes.func.isRequired,
-    rightClick: PropTypes.func.isRequired,
-    leftDisabled: PropTypes.bool,
-    rightDisabled: PropTypes.bool,
-  }),
+  }).isRequired,
+  isForwardEnabled: PropTypes.bool,
 };
 
 Footer.defaultProps = {
   className: null,
-  step: {
-    leftDisabled: false,
-    rightDisabled: false,
-  },
+  onForward: () => {},
+  onBackward: () => {},
+  isForwardEnabled: false,
 };
 
 export default Footer;

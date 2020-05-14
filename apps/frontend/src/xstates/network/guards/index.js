@@ -1,54 +1,79 @@
 import _ from "lodash";
 import { types } from "../../../constants";
+import official from "../../../guards";
 
-function isTitleValid(context, event) {
+/**
+ * ATOMS
+ */
+
+function isTitleAcceptable(__, event) {
+  return official.isNetworkTitleAcceptable(_.get(event, "payload.title.value"), false);
+}
+
+function isIconAcceptable(__, event) {
+  return official.isNetworkIconAcceptable(_.get(event, "payload.icon.value"), false);
+}
+
+function isExternalIdAcceptable(__, event) {
+  return official.isNetworkExternalIdAcceptable(_.get(event, "payload.externalId.value"), false);
+}
+
+function isUrlAcceptable(__, event) {
+  return official.isNetworkUrlAcceptable(_.get(event, "payload.url.value"), false);
+}
+
+function isUsernameAcceptable(__, event) {
+  return official.isNetworkUsernameAcceptable(_.get(event, "payload.username.value"), false);
+}
+
+function isUsernameOptionallyAcceptable(__, event) {
+  if (_.get(event, "payload.username.value") && _.get(event, "payload.username.value").length > 200) return false;
   return true;
 }
 
-function isIconValid(context, event) {
+function isDescriptionOptionallyAcceptable(__, event) {
+  if (_.get(event, "payload.description.value") && _.get(event, "payload.description.value").length > 200) return false;
   return true;
 }
 
-function isExternalIdValid(context, event) {
-  return true;
+function isNetworkTypeInternal(__, event) {
+  return _.get(event, "payload.type.value") === types.network.source.internal;
 }
 
-function isUrlValid(context, event) {
-  return true;
+function isNetworkTypeExternal(__, event) {
+  return _.get(event, "payload.type.value") === types.network.source.external;
 }
 
-function isUsernameValid(context, event) {
-  return true;
+/**
+ * GUARDS
+ */
+
+function isInternalChooseAcceptable(context, event) {
+  return isNetworkTypeInternal(context, event) && isTitleAcceptable(context, event) && isIconAcceptable(context, event);
 }
 
-function isUsernameAcceptable(context, event) {
-  return true;
+function isExternalChooseAcceptable(context, event) {
+  return isNetworkTypeExternal(context, event) && isExternalIdAcceptable(context, event);
 }
 
-function isDescriptionAcceptable(context, event) {
-  return true;
+function isInternalCredentialsAcceptable(context, event) {
+  return isNetworkTypeInternal(context, event) && isUrlAcceptable(context, event) && isUsernameOptionallyAcceptable(context, event);
 }
 
-function isTypeInternal(__, event) {
-  return _.get(event, "type") === types.network.source.internal;
+function isExternalCredentialsAcceptable(context, event) {
+  return isNetworkTypeExternal(context, event) && isUsernameAcceptable(context, event);
 }
 
-function isTypeExternal(__, event) {
-  return _.get(event, "type") === types.network.source.external;
+function isLiveAcceptable(context, event) {
+  return isDescriptionOptionallyAcceptable(context, event);
 }
 
 const guards = {
-  isTypeInternal,
-  isTypeExternal,
-
-  isTitleValid,
-  isIconValid,
-  isExternalIdValid,
-  isUrlValid,
-  isUsernameValid,
-
-  isUsernameAcceptable,
-  isDescriptionAcceptable,
+  isInternalChooseAcceptable,
+  isExternalChooseAcceptable,
+  isInternalCredentialsAcceptable,
+  isExternalCredentialsAcceptable,
+  isLiveAcceptable,
 };
 
 export default guards;

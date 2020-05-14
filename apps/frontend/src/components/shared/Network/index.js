@@ -200,8 +200,8 @@ const Title = styled.p`
 
   &:empty {
     border-radius: 4px;
-    background: ${props => props.theme.colors.grayBlueGhost};
-    height: 25px;
+    background: ${props => props.theme.colors.grayBlueLight};
+    height: 100%;
     width: 100px;
   }
 `;
@@ -224,8 +224,8 @@ const Username = styled.p`
 
   &:empty {
     border-radius: 4px;
-    background: ${props => props.theme.colors.grayBlueGhost};
-    height: 16px;
+    background: ${props => props.theme.colors.grayBlueLight};
+    height: 20px;
     width: 160px;
   }
 `;
@@ -381,7 +381,7 @@ function NetworkAdd() {
 
 Network.propTypes = {
   className: PropTypes.string,
-  _id: PropTypes.string.isRequired,
+  _id: PropTypes.string,
   title: PropTypes.string,
   username: PropTypes.string,
   isViewOnly: PropTypes.bool,
@@ -389,6 +389,7 @@ Network.propTypes = {
 };
 
 Network.defaultProps = {
+  _id: null,
   title: "",
   username: "",
   className: null,

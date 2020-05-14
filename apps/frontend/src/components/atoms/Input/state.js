@@ -11,6 +11,7 @@ export const StateInputPassword = {
 export const StateInputImage = {
   value: null,
   name: null,
+  preview: null,
   error: null,
 };
 

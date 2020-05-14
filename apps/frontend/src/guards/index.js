@@ -60,6 +60,11 @@ export const policy = {
       root: "A network must be chosen (or created at step b.) in order to move to the next step.",
       1: "Please choose a valid network in order to proceed.",
     },
+    url: {
+      root: "Websites and URLs have to contain http:// or https:// and be valid",
+      1: "Please add http:// or https:// before your website or url.",
+      2: "Please add a valid website or url.",
+    },
   },
 };
 
@@ -67,19 +72,20 @@ export const policy = {
  * Auth Guards
  */
 
-function isPasswordAcceptable(password, withPolicy = true) {
-  if (_.isNil(password) || _.isEmpty(password) || !_.isString(password)) return withPolicy ? policy.password[1] : false;
-  if (password.length < MIN_PASSWORD_LENGTH || password.length > MAX_MASSWORD_LENGTH) return withPolicy ? policy.password[1] : false;
+function isPasswordAcceptable(value, withPolicy = true) {
+  const [min, max] = [MIN_PASSWORD_LENGTH, MAX_MASSWORD_LENGTH];
+  if (_.isNil(value) || _.isEmpty(value) || !_.isString(value)) return withPolicy ? policy.password[1] : false;
+  if (value.length < min || value.length > max) return withPolicy ? policy.password[1] : false;
 
   const uppercase = new RegExp("^(?=.*?[A-Z]).{1,}$");
   const lowercase = new RegExp("(?=.*?[a-z]).{1,}$");
   const digit = new RegExp("^(?=.*?[0-9]).{1,}$");
   const special = new RegExp("(?=.*?[#?!@$%^&*-])");
 
-  if (!uppercase.test(password)) return withPolicy ? policy.password[2] : false;
-  if (!lowercase.test(password)) return withPolicy ? policy.password[2] : false;
-  if (!digit.test(password)) return withPolicy ? policy.password[3] : false;
-  if (!special.test(password)) return withPolicy ? policy.password[3] : false;
+  if (!uppercase.test(value)) return withPolicy ? policy.password[2] : false;
+  if (!lowercase.test(value)) return withPolicy ? policy.password[2] : false;
+  if (!digit.test(value)) return withPolicy ? policy.password[3] : false;
+  if (!special.test(value)) return withPolicy ? policy.password[3] : false;
 
   return true;
 }
@@ -90,9 +96,9 @@ function isNameAcceptable(value, withPolicy = true) {
   return value.length >= min && value.length <= max ? true : withPolicy ? policy.name[1] : false;
 }
 
-function isEmailAcceptable(email, withPolicy = true) {
-  if (_.isNil(email) || _.isEmpty(email) || !_.isString(email)) return withPolicy ? policy.email[1] : false;
-  return validator.isEmail(email) ? true : withPolicy ? policy.email[1] : false;
+function isEmailAcceptable(value, withPolicy = true) {
+  if (_.isNil(value) || _.isEmpty(value) || !_.isString(value)) return withPolicy ? policy.email[1] : false;
+  return validator.isEmail(value) ? true : withPolicy ? policy.email[1] : false;
 }
 
 function isUsernameAcceptable(value, withPolicy = true) {
@@ -127,9 +133,17 @@ function isNetworkExternalIdAcceptable(value, withPolicy = true) {
 function isNetworkIconAcceptable(value = {}, withPolicy = true) {
   const name = _.get(value, "name");
   const type = _.attempt(() => value.type.split("/").pop());
+  const size = _.get(value, "size");
   if (_.isNil(name) || _.isEmpty(name) || (!_.isString(name) && !_.isNumber(name))) return withPolicy ? policy.network.icon[3] : false;
   if (_.isError(type) || !ALLOWED_NETWORK_ICON_FORMAT.includes(type)) return withPolicy ? policy.network.icon[1] : false;
+  if (_.isError(size) || size <= 0 || size > MAX_NETWORK_ICON_SIZE) return withPolicy ? policy.network.icon[2] : false;
   return true;
+}
+
+function isNetworkUrlAcceptable(value, withPolicy = true) {
+  if (_.isNil(value) || _.isEmpty(value) || !_.isString(value)) return withPolicy ? policy.network.url[2] : false;
+  if (!value.startsWith("https://") || !value.startsWith("http://")) return withPolicy ? policy.network.url[1] : false;
+  return validator.isURL(value, { require_protocol: true }) ? true : withPolicy ? policy.network.url[1] : false;
 }
 
 /**
@@ -157,6 +171,7 @@ const guards = {
   isNetworkIconAcceptable,
   isNetworkExternalIdAcceptable,
   isNetworkUsernameAcceptable,
+  isNetworkUrlAcceptable,
 };
 
 export default guards;
