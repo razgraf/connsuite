@@ -1,6 +1,5 @@
 import _ from "lodash";
 import { ObjectId } from "mongodb";
-
 import guards, { policy } from "../guards";
 import UsernameRepository from "./username";
 import UserRepository from "./user";
