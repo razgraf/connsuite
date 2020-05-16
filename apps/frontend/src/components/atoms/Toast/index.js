@@ -10,10 +10,6 @@ const BubbleAnimation = keyframes`
         left: 30px;
         transform: scale(0);   
     }
-    30%{
-        left: 30px;
-        transform: scale(0.5);   
-    }
     100%{
         left: -75px;
         transform: scale(1);
@@ -44,8 +40,8 @@ const TopDarkToastWrapper = styled.div`
     animation-name: ${BubbleAnimation};
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
-    animation-timing-function: ease-in;
-    animation-duration: 300ms;
+    animation-timing-function: ease-in-out;
+    animation-duration: 450ms;
   }
 
   p {
