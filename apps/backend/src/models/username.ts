@@ -19,13 +19,15 @@ export class Username {
   readonly updatedAt?: mongoose.Schema.Types.Date | string;
 }
 
-export function toUsernameDTO(username: Username, options: { [key: string]: any } = {}): { [key: string]: any } {
+export function toUsernameDTO(
+  username: Username,
+  options: { [key: string]: any } = { hideUser: false },
+): { [key: string]: any } {
   const result: { [key: string]: any } = {};
   result.isPrimary = username.isPrimary;
   result.value = username.value;
 
   if (!_.get(options, "hideUser")) {
-    result.user = {};
     result.user =
       typeof username.user === "object" && (username.user as User).email !== undefined /** Type Guard */
         ? toUserDTO(username.user as User, { hideUsernames: true })

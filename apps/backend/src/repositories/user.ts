@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import BaseRepository, { BaseOptions } from "./base";
 import UsernameRepository from "./username";
 import { defaults } from "../constants";
-import { Vendor, User, Username, UserModel, Name, Request } from "../models";
+import { Vendor, User, Username, UserModel, Name, Request, Network } from "../models";
 
 export default class UserRepository extends BaseRepository<User> {
   private static instance: UserRepository;
@@ -43,17 +43,11 @@ export default class UserRepository extends BaseRepository<User> {
   }
 
   public async addUsername(userId: string, username: Username): Promise<void> {
-    await UserModel.findByIdAndUpdate(
-      userId,
-      {
-        $push: {
-          usernames: username,
-        },
-      },
-      {
-        upsert: true,
-      },
-    );
+    await UserModel.findByIdAndUpdate(userId, { $push: { usernames: username } }, { upsert: true });
+  }
+
+  public async addNetwork(userId: string, network: Network): Promise<void> {
+    await UserModel.findByIdAndUpdate(userId, { $push: { networks: network } }, { upsert: true });
   }
 
   public async isAlreadyRegistered(payload: { googleId?: string; email?: string }, vendor: Vendor): Promise<boolean> {

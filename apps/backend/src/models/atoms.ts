@@ -20,3 +20,12 @@ export type Token = {
   userId: string;
   safe: string;
 };
+
+export enum NetworkType {
+  External = "external",
+  Internal = "internal",
+}
+
+export enum ImageParent {
+  Network = "network",
+}

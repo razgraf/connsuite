@@ -1,42 +1,17 @@
 import { Request, Response } from "express";
 import BaseController from "./base";
-import { NetworkRepository, UserRepository, UsernameRepository } from "../repositories";
-import { User, Username } from "../models";
+import { NetworkRepository } from "../repositories";
+import { Network } from "../models";
 
 export default class NetworkController extends BaseController {
   public static async get(req: Request, res: Response): Promise<void> {
-    // res.send(`NOT IMPLEMENTED: Network Get: ${req.params.id}`);
     try {
-      const us = (await UserRepository.getInstance().getByEmail("razvan@vansoftware2.ro")) as User;
-      if (!us) {
+      if (false) {
         res.send("No user");
         return;
       }
 
-      const us2 = { _id: us._id } as User;
-
-      const unames = await UsernameRepository.getInstance().listByUser(us2);
-      res.send(JSON.stringify({ unames, us2 }));
-      return;
-
-      const user: User = {
-        name: {
-          first: "Razvan",
-          last: "Apostu",
-        },
-        description: "Boss",
-        email: "razvan@vansoftware.ro",
-      };
-      const u = await UserRepository.getInstance().create(user);
-
-      const username: Username = {
-        value: "razgraf",
-        isPrimary: true,
-        user: u,
-      };
-      const un = await UsernameRepository.getInstance().create(username);
-
-      res.send(JSON.stringify({ user: u, username: un }));
+      res.send(JSON.stringify({ text: "_" }));
     } catch (e) {
       console.error(e);
       res.send("Nope");

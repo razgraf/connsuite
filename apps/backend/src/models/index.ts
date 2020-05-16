@@ -1,6 +1,6 @@
 import * as Request from "./request";
 
-export * from "./atom";
+export * from "./atoms";
 export * from "./network";
 export * from "./user";
 export * from "./username";

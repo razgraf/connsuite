@@ -1,32 +1,95 @@
+import _ from "lodash";
 import mongoose from "mongoose";
-import { prop, getModelForClass } from "@typegoose/typegoose";
-
-export enum NetworkType {
-  Default = "default",
-  Custom = "custom",
-}
+import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
+import { networks } from "../constants";
+import { NetworkType } from "./atoms";
+import { User, toUserDTO } from "./user";
+import { Image, toImageDTO } from "./image";
 
 export class Network {
   readonly _id?: mongoose.Schema.Types.ObjectId | string;
 
-  @prop({ required: true })
-  description!: string;
-
-  // icon: string; //TODO
-  @prop({ required: true, default: 0 })
-  priority?: number;
-  // thumbnail: string; //TODO
-  @prop({ required: true })
-  title!: string;
-
-  @prop({ required: true, enum: NetworkType, default: NetworkType.Default })
+  @prop({ required: true, enum: NetworkType, default: NetworkType.Internal })
   type!: NetworkType;
 
+  @prop({ required: true, default: 0 })
+  priority?: number;
+
   @prop({ required: true })
-  username!: string;
+  title?: string;
+
+  @prop()
+  description?: string;
+
+  @prop()
+  username?: string;
+
+  @prop()
+  url?: string;
+
+  @prop()
+  externalId?: string;
+
+  @prop({ ref: { name: "User" }, required: true })
+  user?: Ref<User>;
+
+  @prop({ ref: { name: "Image" } })
+  icon?: Ref<Image>;
+
+  @prop({ ref: { name: "Image" } })
+  thumbnail?: Ref<Image>;
 
   readonly createdAt?: mongoose.Schema.Types.Date | string;
   readonly updatedAt?: mongoose.Schema.Types.Date | string;
+}
+
+export function interpret(network: Network, result: { [key: string]: any } = {}): void {
+  if (_.isNil(network.externalId) || !_.has(networks, network.externalId)) return;
+
+  const external: Network = networks[network.externalId];
+
+  result.title = external.title;
+  result.icon = external.title;
+  result.thumbnail = external.thumbnail;
+  result.url = external.url;
+}
+
+export function toNetworkDTO(
+  network: Network,
+  options: { [key: string]: any } = { hideImages: false, hideUser: true, interpret: true },
+): { [key: string]: any } {
+  const result: { [key: string]: any } = {};
+
+  result.type = network.type;
+  result.priority = network.priority;
+
+  result.title = network.title;
+  result.description = network.description;
+  result.username = network.username;
+  result.url = network.url;
+
+  if (_.get(options, "interpret") && network.type === NetworkType.External) interpret(network, result);
+
+  if (!_.get(options, "hideId")) result._id = network._id;
+  if (!_.get(options, "hideUser")) {
+    result.user =
+      typeof network.user === "object" && (network.user as User).email !== undefined /** Type Guard */
+        ? toUserDTO(network.user as User, { hideNetworks: true })
+        : { _id: network.user };
+  }
+  if (!_.get(options, "hideImages")) {
+    result.icon =
+      typeof network.icon === "object" && (network.icon as Image).version !== undefined /** Type Guard */
+        ? toImageDTO(network.icon as Image, { hideParent: true })
+        : { _id: network.icon };
+
+    result.thumbnail =
+      typeof network.thumbnail === "object" && (network.thumbnail as Image).version !== undefined /** Type Guard */
+        ? toImageDTO(network.thumbnail as Image, { hideParent: true })
+        : { _id: network.thumbnail };
+  }
+
+  return result;
 }
 
 export const NetworkModel = getModelForClass(Network, { schemaOptions: { timestamps: true } });

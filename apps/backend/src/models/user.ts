@@ -1,10 +1,9 @@
 import _ from "lodash";
 import mongoose from "mongoose";
 import { prop, arrayProp, getModelForClass, Ref } from "@typegoose/typegoose";
-import { Name } from "./atom";
+import { Name } from "./atoms";
 import { Username, toUsernameDTO } from "./username";
-
-/** PRIAMRY CLASS */
+import { Network, toNetworkDTO } from "./network";
 
 export class User {
   readonly _id?: mongoose.Schema.Types.ObjectId | string;
@@ -24,27 +23,20 @@ export class User {
   @prop({ required: true })
   name!: Name;
 
-  @arrayProp({ itemsRef: Username })
+  @arrayProp({ itemsRef: "Username" })
   usernames?: Ref<Username>[];
+
+  @arrayProp({ itemsRef: "Network" })
+  networks?: Ref<Network>[];
 
   readonly createdAt?: mongoose.Schema.Types.Date | string;
   readonly updatedAt?: mongoose.Schema.Types.Date | string;
 }
 
-export class UserDTO {
-  public description?: string;
-  public email?: string;
-  public name?: Name;
-  public usernames?: Username[];
-
-  constructor(user: User) {
-    this.description = user.description;
-    this.email = user.email;
-    this.name = user.name;
-  }
-}
-
-export function toUserDTO(user: User, options: { [key: string]: any } = {}): { [key: string]: any } {
+export function toUserDTO(
+  user: User,
+  options: { [key: string]: any } = { hideId: true, hideUsernames: false, hideNetworks: true },
+): { [key: string]: any } {
   const result: { [key: string]: any } = {};
   result.description = user.description;
   result.email = user.email;
@@ -55,6 +47,15 @@ export function toUserDTO(user: User, options: { [key: string]: any } = {}): { [
     result.usernames = user.usernames?.map(item => {
       return typeof item === "object" && (item as Username).value !== undefined /** Type Guard */
         ? toUsernameDTO(item as Username, { hideUser: true })
+        : { _id: item };
+    });
+  }
+
+  if (!_.get(options, "hideNetworks")) {
+    result.networks = [];
+    result.networks = user.networks?.map(item => {
+      return typeof item === "object" && (item as Network).title !== undefined /** Type Guard */
+        ? toNetworkDTO(item as Network, { hideUser: true })
         : { _id: item };
     });
   }
