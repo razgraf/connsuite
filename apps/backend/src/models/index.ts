@@ -4,5 +4,6 @@ export * from "./atoms";
 export * from "./network";
 export * from "./user";
 export * from "./username";
+export * from "./image";
 export * from "./usersafe";
 export { Request };

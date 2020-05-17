@@ -2,7 +2,7 @@ import _ from "lodash";
 import mongoose from "mongoose";
 import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
 import { networks } from "../constants";
-import { NetworkType } from "./atoms";
+import { NetworkType, NetworkDTOOptions } from "./atoms";
 import { User, toUserDTO } from "./user";
 import { Image, toImageDTO } from "./image";
 
@@ -12,10 +12,13 @@ export class Network {
   @prop({ required: true, enum: NetworkType, default: NetworkType.Internal })
   type!: NetworkType;
 
-  @prop({ required: true, default: 0 })
+  @prop({ ref: { name: "User" }, required: true })
+  user?: Ref<User>;
+
+  @prop({ default: 0 })
   priority?: number;
 
-  @prop({ required: true })
+  @prop()
   title?: string;
 
   @prop()
@@ -30,13 +33,10 @@ export class Network {
   @prop()
   externalId?: string;
 
-  @prop({ ref: { name: "User" }, required: true })
-  user?: Ref<User>;
-
-  @prop({ ref: { name: "Image" } })
+  @prop({ ref: { name: "Image" }, default: null })
   icon?: Ref<Image>;
 
-  @prop({ ref: { name: "Image" } })
+  @prop({ ref: { name: "Image" }, default: null })
   thumbnail?: Ref<Image>;
 
   readonly createdAt?: mongoose.Schema.Types.Date | string;
@@ -56,7 +56,7 @@ export function interpret(network: Network, result: { [key: string]: any } = {})
 
 export function toNetworkDTO(
   network: Network,
-  options: { [key: string]: any } = { hideImages: false, hideUser: true, interpret: true },
+  options: NetworkDTOOptions = { hideImages: false, hideUser: true, interpret: true },
 ): { [key: string]: any } {
   const result: { [key: string]: any } = {};
 

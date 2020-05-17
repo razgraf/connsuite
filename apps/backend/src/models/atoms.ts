@@ -26,6 +26,18 @@ export enum NetworkType {
   Internal = "internal",
 }
 
+export interface NetworkDTOOptions {
+  hideImages?: boolean;
+  hideUser?: boolean;
+  interpret?: boolean;
+  [key: string]: any;
+}
+
 export enum ImageParent {
   Network = "network",
+}
+
+export enum ImagePurpose {
+  Icon = "icon",
+  Thumbnail = "thumbnail",
 }

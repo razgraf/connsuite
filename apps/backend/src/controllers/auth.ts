@@ -49,7 +49,6 @@ export default class AuthController extends ManagerController {
 
   public static async logout(req: Request, res: Response): Promise<void> {
     try {
-      console.log("Logout", res.locals);
       await AuthRepository.getInstance().logout(res.locals);
       res.status(HTTP_CODE.OK);
       res.json({ message: "Disconnected" });

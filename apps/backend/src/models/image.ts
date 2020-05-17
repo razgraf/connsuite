@@ -1,7 +1,7 @@
 import _ from "lodash";
 import mongoose from "mongoose";
 import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
-import { ImageParent } from "./atoms";
+import { ImageParent, ImagePurpose } from "./atoms";
 import { Network, toNetworkDTO } from "./network";
 
 export class Image {
@@ -14,16 +14,10 @@ export class Image {
   version!: number;
 
   @prop()
-  source?: string;
+  type?: string | number;
 
-  @prop()
-  size?: string;
-
-  @prop()
-  type?: string;
-
-  @prop()
-  dimensions?: string;
+  @prop({ enum: ImagePurpose, default: ImagePurpose.Icon })
+  purpose?: ImagePurpose;
 
   /**
    * Possible Parents
@@ -34,6 +28,8 @@ export class Image {
 
   readonly createdAt?: mongoose.Schema.Types.Date | string;
   readonly updatedAt?: mongoose.Schema.Types.Date | string;
+
+  url?: string;
 }
 
 export function toImageDTO(
@@ -45,9 +41,9 @@ export function toImageDTO(
   result.parent = image.parent;
   result.version = image.version;
 
-  result.size = image.size;
+  result.url = image.url;
   result.type = image.type;
-  result.dimensions = image.dimensions;
+  result.purpose = image.purpose;
 
   if (!_.get(options, "hideId")) result._id = image._id;
   if (!_.get(options, "hideParent")) {

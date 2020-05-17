@@ -8,3 +8,11 @@ export class Failed extends BaseError {
     this.code = HTTP_CODE.BAD_REQUEST;
   }
 }
+
+export class NotFound extends BaseError {
+  constructor(message?: string) {
+    super(message);
+    this.name = "NetworkNotFound";
+    this.code = HTTP_CODE.NOT_FOUND;
+  }
+}

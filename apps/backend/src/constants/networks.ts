@@ -1,4 +1,4 @@
-import { tree } from "./atoms";
+import { tree, root } from "./atoms";
 import { NetworkType, ImageParent } from "../models/atoms";
 import { Network } from "../models/network";
 
@@ -6,7 +6,7 @@ const networks: { [key: string]: Network } = [
   ["Behance", "behance", "https://www.behance.net"],
   ["Codementor", "codementor", ""],
   ["Dribbble", "dribbble", ""],
-  ["Facebook", "facebook", ""],
+  ["Facebook", "facebook", "https://www.facebook.com"],
   ["Github", "github", ""],
   ["Gmail", "gmail", ""],
   ["Instagram", "instagram", ""],
@@ -21,12 +21,12 @@ const networks: { [key: string]: Network } = [
     type: NetworkType.External,
     icon: {
       parent: ImageParent.Network,
-      source: `${tree.externalNetwork}/icon/${_id}.png`,
+      source: `${root}/${tree.externalNetwork}/icon/${_id}.png`,
       version: 0,
     },
     thumbnail: {
       parent: ImageParent.Network,
-      source: `${tree.externalNetwork}/thumbnail/${_id}.png`,
+      source: `${root}/${tree.externalNetwork}/thumbnail/${_id}.png`,
       version: 0,
     },
   }))

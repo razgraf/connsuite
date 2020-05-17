@@ -25,6 +25,14 @@ export class InvalidToken extends BaseError {
   }
 }
 
+export class Forbidden extends BaseError {
+  constructor(message?: string) {
+    super(message);
+    this.name = "AuthForbidden";
+    this.code = HTTP_CODE.FORBIDDEN;
+  }
+}
+
 /** Edge case */
 
 export class MissingVendorResponse extends BaseError {

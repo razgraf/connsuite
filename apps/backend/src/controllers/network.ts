@@ -1,30 +1,43 @@
+import _ from "lodash";
+import sharp from "sharp";
 import { Request, Response } from "express";
 import BaseController from "./base";
+import { HTTP_CODE } from "../constants";
 import { NetworkRepository } from "../repositories";
-import { Network } from "../models";
+import { Network, toNetworkDTO } from "../models";
+import { NetworkError, ParamsError } from "../errors";
 
 export default class NetworkController extends BaseController {
   public static async get(req: Request, res: Response): Promise<void> {
     try {
-      if (false) {
-        res.send("No user");
-        return;
-      }
+      if (!_.get(req, "query.id")) throw new ParamsError.Missing("Missing network identifier.");
+      const network: Network | null = await NetworkRepository.getInstance().getById(_.get(req, "query.id"));
+      if (!network) throw new NetworkError.NotFound("The identifier doesn't match any network.");
 
-      res.send(JSON.stringify({ text: "_" }));
+      res.status(HTTP_CODE.OK);
+      res.json({ message: "Found", network: toNetworkDTO(network) });
     } catch (e) {
-      console.error(e);
-      res.send("Nope");
+      res.status(e.code || HTTP_CODE.BAD_REQUEST);
+      res.json({ message: e.message });
     }
   }
 
   public static async create(req: Request, res: Response): Promise<void> {
     try {
-      const { body } = req;
-      const n = await NetworkRepository.getInstance().create({ ...body });
-      res.send(JSON.stringify(n));
+      const { body, file } = req;
+      body.user = res.locals.identity.user;
+      body.icon = file;
+      const holder = (await NetworkRepository.getInstance().create(body)) as Network;
+      const result = (await NetworkRepository.getInstance().getById(holder._id as string, {
+        populate: true,
+      })) as Network;
+
+      res.status(HTTP_CODE.OK);
+      res.json({ message: "Created", network: toNetworkDTO(result) });
     } catch (e) {
-      res.send("Nope");
+      console.error(e);
+      res.status(e.code || HTTP_CODE.BAD_REQUEST);
+      res.json({ message: e.message });
     }
   }
 

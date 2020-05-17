@@ -8,3 +8,16 @@ export const defaults = {
   username: "rockstar",
   description: "ConnSuite Rockstar",
 };
+
+export const sizes = {
+  network: {
+    icon: {
+      WIDTH: 1000,
+      HEIGHT: 1000,
+    },
+    thumbnail: {
+      WIDTH: 400,
+      HEIGHT: 400,
+    },
+  },
+};
