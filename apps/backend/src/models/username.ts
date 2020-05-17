@@ -28,10 +28,11 @@ export function toUsernameDTO(
   result.value = username.value;
 
   if (!_.get(options, "hideUser")) {
-    result.user =
-      typeof username.user === "object" && (username.user as User).email !== undefined /** Type Guard */
-        ? toUserDTO(username.user as User, { hideUsernames: true })
-        : { _id: username.user };
+    if (!_.isNil(username.user))
+      result.user =
+        typeof username.user === "object" && (username.user as User).email !== undefined /** Type Guard */
+          ? toUserDTO(username.user as User, { hideUsernames: true })
+          : { _id: username.user };
   }
 
   return result;

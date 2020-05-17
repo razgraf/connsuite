@@ -68,25 +68,29 @@ export function toNetworkDTO(
   result.username = network.username;
   result.url = network.url;
 
+  console.log("net:", network);
+
   if (_.get(options, "interpret") && network.type === NetworkType.External) interpret(network, result);
 
   if (!_.get(options, "hideId")) result._id = network._id;
-  if (!_.get(options, "hideUser")) {
+  if (!_.get(options, "hideUser") && !_.isNil(network.user)) {
     result.user =
       typeof network.user === "object" && (network.user as User).email !== undefined /** Type Guard */
         ? toUserDTO(network.user as User, { hideNetworks: true })
         : { _id: network.user };
   }
   if (!_.get(options, "hideImages")) {
-    result.icon =
-      typeof network.icon === "object" && (network.icon as Image).version !== undefined /** Type Guard */
-        ? toImageDTO(network.icon as Image, { hideParent: true })
-        : { _id: network.icon };
+    if (!_.isNil(network.icon))
+      result.icon =
+        typeof network.icon === "object" && (network.icon as Image).version !== undefined /** Type Guard */
+          ? toImageDTO(network.icon as Image, { hideParent: true })
+          : { _id: network.icon };
 
-    result.thumbnail =
-      typeof network.thumbnail === "object" && (network.thumbnail as Image).version !== undefined /** Type Guard */
-        ? toImageDTO(network.thumbnail as Image, { hideParent: true })
-        : { _id: network.thumbnail };
+    if (!_.isNil(network.thumbnail))
+      result.thumbnail =
+        typeof network.thumbnail === "object" && (network.thumbnail as Image).version !== undefined /** Type Guard */
+          ? toImageDTO(network.thumbnail as Image, { hideParent: true })
+          : { _id: network.thumbnail };
   }
 
   return result;

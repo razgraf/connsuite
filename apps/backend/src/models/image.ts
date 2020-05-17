@@ -49,10 +49,11 @@ export function toImageDTO(
   if (!_.get(options, "hideParent")) {
     switch (result.parent) {
       case ImageParent.Network:
-        result.user =
-          typeof image.network === "object" && (image.network as Network).title !== undefined /** Type Guard */
-            ? toNetworkDTO(image.network as Network, { hideImages: true })
-            : { _id: image.network };
+        if (!_.isNil(image.network))
+          result.user =
+            typeof image.network === "object" && (image.network as Network).title !== undefined /** Type Guard */
+              ? toNetworkDTO(image.network as Network, { hideImages: true })
+              : { _id: image.network };
         break;
       default:
         break;

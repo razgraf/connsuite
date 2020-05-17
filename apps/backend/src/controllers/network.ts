@@ -10,8 +10,9 @@ import { NetworkError, ParamsError } from "../errors";
 export default class NetworkController extends BaseController {
   public static async get(req: Request, res: Response): Promise<void> {
     try {
-      if (!_.get(req, "query.id")) throw new ParamsError.Missing("Missing network identifier.");
-      const network: Network | null = await NetworkRepository.getInstance().getById(_.get(req, "query.id"));
+      const id = _.get(req, "params.id");
+      if (!id) throw new ParamsError.Missing("Missing network identifier.");
+      const network: Network | null = await NetworkRepository.getInstance().getById(id, { populate: true });
       if (!network) throw new NetworkError.NotFound("The identifier doesn't match any network.");
 
       res.status(HTTP_CODE.OK);

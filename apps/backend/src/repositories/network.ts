@@ -16,7 +16,10 @@ export default class NetworkRepository extends BaseRepository<Network> {
   }
 
   public async getById(id: string, options?: BaseOptions): Promise<Network | null> {
-    if (options && options.populate) return NetworkModel.findOne({ _id: id }).populate("icon").populate("thumbnail");
+    if (options && options.populate)
+      return NetworkModel.findOne({ _id: id })
+        .populate({ path: "icon", model: "Image" })
+        .populate({ path: "thumbnail", model: "Image" });
     return NetworkModel.findById(id);
   }
 
@@ -86,20 +89,11 @@ export default class NetworkRepository extends BaseRepository<Network> {
      * Create the network object and gain access to the _id
      */
 
-    console.log("_createInternal", specimen);
-
     const network: Network = await NetworkModel.create(specimen);
-
-    console.log("_createInternal", network);
 
     if (!network) throw new NetworkError.Failed("Network couldn't be created.");
     await this._bind(network);
-
-    /**
-     * Create the network icons (Async)
-     */
-
-    this._generateImages(payload.icon, network);
+    await this._generateImages(payload.icon, network);
 
     return network;
   }
@@ -134,7 +128,7 @@ export default class NetworkRepository extends BaseRepository<Network> {
       type: source.mimetype as string,
     };
 
-    ImageRepository.getInstance().save(source, specimen);
-    ImageRepository.getInstance().save(source, { ...specimen, purpose: ImagePurpose.Thumbnail });
+    await ImageRepository.getInstance().save(source, specimen);
+    await ImageRepository.getInstance().save(source, { ...specimen, purpose: ImagePurpose.Thumbnail });
   }
 }

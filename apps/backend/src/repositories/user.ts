@@ -13,7 +13,8 @@ export default class UserRepository extends BaseRepository<User> {
   }
 
   public async getById(id: string, options?: BaseOptions): Promise<User | null> {
-    if (options && options.populate) return UserModel.findOne({ _id: id }).populate("usernames");
+    if (options && options.populate)
+      return UserModel.findOne({ _id: id }).populate({ path: "usernames", model: "Username" });
     return UserModel.findOne({ _id: id });
   }
 
@@ -33,12 +34,14 @@ export default class UserRepository extends BaseRepository<User> {
   /** ************* **/
 
   public async getByEmail(email: string, options?: BaseOptions): Promise<User | null> {
-    if (options && options.populate) return UserModel.findOne({ email }).populate("usernames");
+    if (options && options.populate)
+      return UserModel.findOne({ email }).populate({ path: "usernames", model: "Username" });
     return await UserModel.findOne({ email });
   }
 
   public async getByGoogleId(googleId: string, options?: BaseOptions): Promise<User | null> {
-    if (options && options.populate) return UserModel.findOne({ googleId }).populate("usernames");
+    if (options && options.populate)
+      return UserModel.findOne({ googleId }).populate({ path: "usernames", model: "Username" });
     return await UserModel.findOne({ googleId });
   }
 

@@ -42,25 +42,25 @@ export default class ImageRepository extends BaseRepository<Image> {
 
     if (icon.parent === ImageParent.Network) {
       if (icon.purpose === ImagePurpose.Icon) {
-        this._bind(icon);
+        await this._bind(icon);
 
         sharp(source.buffer)
           .resize(sizes.network.icon.HEIGHT, sizes.network.icon.WIDTH, {
             fit: sharp.fit.inside,
             withoutEnlargement: true,
           })
-          .toFile(`${tree.internalNetwork}/${icon.network}-${icon.version}.${type}`);
+          .toFile(`${tree.internalNetwork}/${icon.network}-${icon.purpose}-${icon.version}.${type}`);
 
         return icon;
       } else if (image.purpose === ImagePurpose.Thumbnail) {
-        this._bind(icon);
+        await this._bind(icon);
 
         sharp(source.buffer)
           .resize(sizes.network.thumbnail.HEIGHT, sizes.network.thumbnail.WIDTH, {
             fit: sharp.fit.inside,
             withoutEnlargement: true,
           })
-          .toFile(`${tree.internalNetwork}/${icon.network}-${icon.version}.${type}`);
+          .toFile(`${tree.internalNetwork}/${icon.network}-${icon.purpose}-${icon.version}.${type}`);
 
         return icon;
       }
@@ -73,7 +73,7 @@ export default class ImageRepository extends BaseRepository<Image> {
   private async _bind(image: Image): Promise<void> {
     await NetworkRepository.getInstance().update(
       String(image.network),
-      image.type === ImagePurpose.Thumbnail
+      image.purpose === ImagePurpose.Thumbnail
         ? ({
             thumbnail: image,
           } as Network)
