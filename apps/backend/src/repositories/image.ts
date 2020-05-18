@@ -6,6 +6,7 @@ import { sizes } from "../constants";
 import { ImageError } from "../errors";
 import { Image, ImageModel, ImageParent, ImagePurpose, Network } from "../models";
 import { tree } from "../constants/atoms";
+import { Mongoose, Schema } from "mongoose";
 
 export default class ImageRepository extends BaseRepository<Image> {
   private static instance: ImageRepository;

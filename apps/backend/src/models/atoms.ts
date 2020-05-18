@@ -27,8 +27,8 @@ export enum NetworkType {
 }
 
 export interface NetworkDTOOptions {
-  hideImages?: boolean;
-  hideUser?: boolean;
+  images?: boolean;
+  user?: boolean;
   interpret?: boolean;
   [key: string]: any;
 }
@@ -40,4 +40,20 @@ export enum ImageParent {
 export enum ImagePurpose {
   Icon = "icon",
   Thumbnail = "thumbnail",
+}
+
+export interface ImageDTOOptions {
+  parent?: boolean;
+  [key: string]: any;
+}
+
+export interface UserDTOOptions {
+  usernames?: boolean;
+  networks?: boolean;
+  [key: string]: any;
+}
+
+export interface UsernameDTOOptions {
+  user?: boolean;
+  [key: string]: any;
 }

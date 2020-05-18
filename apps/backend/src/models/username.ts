@@ -1,7 +1,8 @@
 import _ from "lodash";
 import mongoose from "mongoose";
-import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
+import { prop, getModelForClass, Ref, isDocument } from "@typegoose/typegoose";
 import { User, toUserDTO } from "./user";
+import { UsernameDTOOptions } from "./atoms";
 
 export class Username {
   readonly _id?: mongoose.Schema.Types.ObjectId | string;
@@ -21,19 +22,16 @@ export class Username {
 
 export function toUsernameDTO(
   username: Username,
-  options: { [key: string]: any } = { hideUser: false },
+  options: UsernameDTOOptions = { user: false },
 ): { [key: string]: any } {
   const result: { [key: string]: any } = {};
+
+  result._id = username._id;
   result.isPrimary = username.isPrimary;
   result.value = username.value;
 
-  if (!_.get(options, "hideUser")) {
-    if (!_.isNil(username.user))
-      result.user =
-        typeof username.user === "object" && (username.user as User).email !== undefined /** Type Guard */
-          ? toUserDTO(username.user as User, { hideUsernames: true })
-          : { _id: username.user };
-  }
+  if (_.get(options, "user") === true && _.isNil(username.user) && isDocument(username.user))
+    result.user = toUserDTO(username.user);
 
   return result;
 }

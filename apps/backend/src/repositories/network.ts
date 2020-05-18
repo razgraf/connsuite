@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { ObjectId } from "mongodb";
 import BaseRepository, { BaseOptions } from "./base";
 import UserRepository from "./user";
 import ImageRepository from "./image";
@@ -29,43 +28,16 @@ export default class NetworkRepository extends BaseRepository<Network> {
     if (!_.get(payload, "type")) throw new ParamsError.Missing("Missing Type");
 
     if (payload.type === NetworkType.Internal) {
-      if (!_.get(payload, "title")) throw new ParamsError.Missing("Missing Type");
-      if (!_.get(payload, "icon")) throw new ParamsError.Missing("Missing icon or wrong icon size & type.");
-
-      if (!guards.isNetworkTitleAcceptable(payload.title)) throw new ParamsError.Invalid(policy.network.title.root);
-
-      const iconGuard = guards.isNetworkIconAcceptable(_.get(payload, "icon"), true, { vendor: "multer" });
-      if (iconGuard !== true) throw new ParamsError.Invalid(iconGuard as string);
-
-      if (_.get(payload, "username")) {
-        const usernameGuard = guards.isNetworkUsernameAcceptable(payload.username || "", true);
-        if (usernameGuard !== true) throw new ParamsError.Invalid(usernameGuard as string);
-      }
-      if (_.get(payload, "description")) {
-        const descriptionGuard = guards.isNetworkDescriptionsAcceptable(payload.description || "", true);
-        if (descriptionGuard !== true) throw new ParamsError.Invalid(descriptionGuard as string);
-      }
-
+      await this._createInternalGuards(payload);
       return this._createInternal(payload);
     } else if (payload.type === NetworkType.External) {
-      if (!_.get(payload, "externalId")) throw new ParamsError.Missing("Missing External Network");
-      if (!_.get(payload, "username")) throw new ParamsError.Missing("Missing Username");
-
-      const externalIdGuard = guards.isNetworkExternalIdAcceptable(payload.externalId, true);
-      if (externalIdGuard !== true) throw new ParamsError.Invalid(externalIdGuard as string);
-
-      if (!guards.isNetworkUsernameAcceptable(payload.username))
-        throw new ParamsError.Invalid(policy.network.username.root);
-
-      if (_.get(payload, "description"))
-        if (!guards.isNetworkDescriptionsAcceptable(payload.description || ""))
-          throw new ParamsError.Invalid(policy.network.description.root);
-
+      await this._createExternalGuards(payload);
       return this._createExternal(payload);
     }
 
     throw new ParamsError.Invalid("Network type not supported.");
   }
+
   public async update(id: string, payload: Network): Promise<Network | null> {
     return NetworkModel.findByIdAndUpdate(id, payload, { new: true });
   }
@@ -130,5 +102,46 @@ export default class NetworkRepository extends BaseRepository<Network> {
 
     await ImageRepository.getInstance().save(source, specimen);
     await ImageRepository.getInstance().save(source, { ...specimen, purpose: ImagePurpose.Thumbnail });
+  }
+
+  /**
+   *
+   * ----
+   *
+   *
+   */
+
+  private async _createInternalGuards(payload: Request.NetworkCreateInternal): Promise<void> {
+    if (!_.get(payload, "title")) throw new ParamsError.Missing("Missing Type");
+    if (!_.get(payload, "icon")) throw new ParamsError.Missing("Missing icon or wrong icon size & type.");
+
+    if (!guards.isNetworkTitleAcceptable(payload.title)) throw new ParamsError.Invalid(policy.network.title.root);
+
+    const iconGuard = guards.isNetworkIconAcceptable(_.get(payload, "icon"), true, { vendor: "multer" });
+    if (iconGuard !== true) throw new ParamsError.Invalid(iconGuard as string);
+
+    if (_.get(payload, "username")) {
+      const usernameGuard = guards.isNetworkUsernameAcceptable(payload.username || "", true);
+      if (usernameGuard !== true) throw new ParamsError.Invalid(usernameGuard as string);
+    }
+    if (_.get(payload, "description")) {
+      const descriptionGuard = guards.isNetworkDescriptionsAcceptable(payload.description || "", true);
+      if (descriptionGuard !== true) throw new ParamsError.Invalid(descriptionGuard as string);
+    }
+  }
+
+  private async _createExternalGuards(payload: Request.NetworkCreateExternal): Promise<void> {
+    if (!_.get(payload, "externalId")) throw new ParamsError.Missing("Missing External Network");
+    if (!_.get(payload, "username")) throw new ParamsError.Missing("Missing Username");
+
+    const externalIdGuard = guards.isNetworkExternalIdAcceptable(payload.externalId, true);
+    if (externalIdGuard !== true) throw new ParamsError.Invalid(externalIdGuard as string);
+
+    if (!guards.isNetworkUsernameAcceptable(payload.username))
+      throw new ParamsError.Invalid(policy.network.username.root);
+
+    if (_.get(payload, "description"))
+      if (!guards.isNetworkDescriptionsAcceptable(payload.description || ""))
+        throw new ParamsError.Invalid(policy.network.description.root);
   }
 }

@@ -28,7 +28,7 @@ export default class NetworkController extends BaseController {
       const { body, file } = req;
       body.user = res.locals.identity.user;
       body.icon = file;
-      const holder = (await NetworkRepository.getInstance().create(body)) as Network;
+      const holder: Network = await NetworkRepository.getInstance().create(body);
       const result = (await NetworkRepository.getInstance().getById(holder._id as string, {
         populate: true,
       })) as Network;

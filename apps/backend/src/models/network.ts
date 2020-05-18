@@ -1,6 +1,6 @@
 import _ from "lodash";
 import mongoose from "mongoose";
-import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
+import { prop, getModelForClass, Ref, isDocument } from "@typegoose/typegoose";
 import { networks } from "../constants";
 import { NetworkType, NetworkDTOOptions } from "./atoms";
 import { User, toUserDTO } from "./user";
@@ -56,10 +56,11 @@ export function interpret(network: Network, result: { [key: string]: any } = {})
 
 export function toNetworkDTO(
   network: Network,
-  options: NetworkDTOOptions = { hideImages: false, hideUser: true, interpret: true },
+  options: NetworkDTOOptions = { images: true, user: true, interpret: true },
 ): { [key: string]: any } {
   const result: { [key: string]: any } = {};
 
+  result._id = network._id;
   result.type = network.type;
   result.priority = network.priority;
 
@@ -68,29 +69,15 @@ export function toNetworkDTO(
   result.username = network.username;
   result.url = network.url;
 
-  console.log("net:", network);
+  if (_.get(options, "interpret") === true && network.type === NetworkType.External) interpret(network, result);
 
-  if (_.get(options, "interpret") && network.type === NetworkType.External) interpret(network, result);
-
-  if (!_.get(options, "hideId")) result._id = network._id;
-  if (!_.get(options, "hideUser") && !_.isNil(network.user)) {
-    result.user =
-      typeof network.user === "object" && (network.user as User).email !== undefined /** Type Guard */
-        ? toUserDTO(network.user as User, { hideNetworks: true })
-        : { _id: network.user };
+  if (_.get(options, "user") === true && !_.isNil(network.user) && isDocument(network.user)) {
+    result.user = toUserDTO(network.user);
   }
-  if (!_.get(options, "hideImages")) {
-    if (!_.isNil(network.icon))
-      result.icon =
-        typeof network.icon === "object" && (network.icon as Image).version !== undefined /** Type Guard */
-          ? toImageDTO(network.icon as Image, { hideParent: true })
-          : { _id: network.icon };
+  if (_.get(options, "images") === true) {
+    if (!_.isNil(network.icon) && isDocument(network.icon)) result.icon = toImageDTO(network.icon);
 
-    if (!_.isNil(network.thumbnail))
-      result.thumbnail =
-        typeof network.thumbnail === "object" && (network.thumbnail as Image).version !== undefined /** Type Guard */
-          ? toImageDTO(network.thumbnail as Image, { hideParent: true })
-          : { _id: network.thumbnail };
+    if (!_.isNil(network.thumbnail) && isDocument(network.thumbnail)) result.icon = toImageDTO(network.thumbnail);
   }
 
   return result;

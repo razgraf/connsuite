@@ -14,7 +14,7 @@ export default class AuthController extends ManagerController {
       body.agent = getUserAgent(req);
       const { user, token } = await AuthRepository.getInstance().google(body);
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Authenthicated and Authorized", user: toUserDTO(user), token });
+      res.json({ message: "Authenthicated and Authorized", user: toUserDTO(user, { usernames: true }), token });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });
@@ -27,7 +27,7 @@ export default class AuthController extends ManagerController {
       body.agent = getUserAgent(req);
       const { user, token } = await AuthRepository.getInstance().login(body);
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Authenthicated and Authorized", user: toUserDTO(user), token });
+      res.json({ message: "Authenthicated and Authorized", user: toUserDTO(user, { usernames: true }), token });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });
@@ -40,7 +40,11 @@ export default class AuthController extends ManagerController {
       body.agent = getUserAgent(req);
       const { user, token } = await AuthRepository.getInstance().register(body);
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Created, Authenthicated and Authorized", user: toUserDTO(user), token });
+      res.json({
+        message: "Created, Authenthicated and Authorized",
+        user: toUserDTO(user, { usernames: true }),
+        token,
+      });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });
@@ -63,7 +67,7 @@ export default class AuthController extends ManagerController {
       if (!user) throw new AuthError.UserNotFound("Final error when searching for user.");
 
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Validated", user: toUserDTO(user) });
+      res.json({ message: "Validated", user: toUserDTO(user, { usernames: true }) });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });
