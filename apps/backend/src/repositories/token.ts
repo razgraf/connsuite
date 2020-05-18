@@ -50,6 +50,14 @@ export default class TokenRepository extends ManagerRepository {
     return null;
   }
 
+  /**
+   *
+   *
+   * Specific Private - Utility Methods
+   *
+   *
+   */
+
   private async _encryptToken(userId: string, safe: string): Promise<string> {
     if (_.isNil(process.env.CONN_BACK_JWT_SECRET) || _.isNil(process.env.CONN_BACK_ENCRYPTION_SECRET))
       throw new AuthError.InvalidToken();

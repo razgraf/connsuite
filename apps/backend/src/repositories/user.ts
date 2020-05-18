@@ -1,5 +1,6 @@
 import _ from "lodash";
 import bcrypt from "bcrypt";
+import { ObjectId } from "mongodb";
 import BaseRepository, { BaseOptions } from "./base";
 import UsernameRepository from "./username";
 import { defaults } from "../constants";
@@ -31,7 +32,13 @@ export default class UserRepository extends BaseRepository<User> {
     return (await UserModel.find(filters)) || [];
   }
 
-  /** ************* **/
+  /**
+   *
+   *
+   * Specific Public Methods
+   *
+   *
+   */
 
   public async getByEmail(email: string, options?: BaseOptions): Promise<User | null> {
     if (options && options.populate)
@@ -51,6 +58,10 @@ export default class UserRepository extends BaseRepository<User> {
 
   public async addNetwork(userId: string, network: Network): Promise<void> {
     await UserModel.findByIdAndUpdate(userId, { $push: { networks: network } }, { upsert: true });
+  }
+
+  public async removeNetwork(userId: string, networkId: string): Promise<void> {
+    await UserModel.findByIdAndUpdate(userId, { $pull: { networks: new ObjectId(networkId) } });
   }
 
   public async isAlreadyRegistered(payload: { googleId?: string; email?: string }, vendor: Vendor): Promise<boolean> {
@@ -139,7 +150,13 @@ export default class UserRepository extends BaseRepository<User> {
     return user;
   }
 
-  /********/
+  /**
+   *
+   *
+   * Specific Private - Utility Methods
+   *
+   *
+   */
 
   private _hashPassword(clear: string): string {
     return bcrypt.hashSync(clear, 10);

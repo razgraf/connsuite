@@ -1,12 +1,12 @@
 import _ from "lodash";
 import sharp from "sharp";
+import fs from "fs";
 import BaseRepository from "./base";
 import NetworkRepository from "./network";
 import { sizes } from "../constants";
 import { ImageError } from "../errors";
 import { Image, ImageModel, ImageParent, ImagePurpose, Network } from "../models";
 import { tree } from "../constants/atoms";
-import { Mongoose, Schema } from "mongoose";
 
 export default class ImageRepository extends BaseRepository<Image> {
   private static instance: ImageRepository;
@@ -34,7 +34,13 @@ export default class ImageRepository extends BaseRepository<Image> {
     return (await ImageModel.find(filters)) || [];
   }
 
-  /* ***** */
+  /**
+   *
+   *
+   * Specific Public Methods
+   *
+   *
+   */
 
   public async save(source: Express.Multer.File, image: Image): Promise<Image | null> {
     const type = _.attempt(() => _.toString(_.get(image || {}, "type") || "").split("/")[1]);
@@ -50,7 +56,7 @@ export default class ImageRepository extends BaseRepository<Image> {
             fit: sharp.fit.inside,
             withoutEnlargement: true,
           })
-          .toFile(`${tree.internalNetwork}/${icon.network}-${icon.purpose}-${icon.version}.${type}`);
+          .toFile(`${tree.internalNetwork}/${icon._id}.${type}`);
 
         return icon;
       } else if (image.purpose === ImagePurpose.Thumbnail) {
@@ -61,7 +67,7 @@ export default class ImageRepository extends BaseRepository<Image> {
             fit: sharp.fit.inside,
             withoutEnlargement: true,
           })
-          .toFile(`${tree.internalNetwork}/${icon.network}-${icon.purpose}-${icon.version}.${type}`);
+          .toFile(`${tree.internalNetwork}/${icon._id}.${type}`);
 
         return icon;
       }
@@ -69,18 +75,43 @@ export default class ImageRepository extends BaseRepository<Image> {
     return null;
   }
 
-  /* ***** */
+  public async unlink(image: Image): Promise<void> {
+    if (!_.isNil(image._id) && !_.isNil(image.type)) {
+      const id = _.get(image, "_id");
+      const type = _.attempt(() => _.toString(_.get(image || {}, "type") || "").split("/")[1]);
+      if (!type) {
+        console.error("File type not found");
+        return;
+      }
+      const path = `/../../${tree.internalNetwork}/${id}.${type}`;
+      fs.exists(__dirname + path, exists => {
+        if (exists)
+          fs.unlink(__dirname + path, error => {
+            if (error) console.error(error);
+          });
+        else console.error("File not found");
+      });
+    }
+  }
+
+  /**
+   *
+   *
+   * Specific Private - Utility Methods
+   *
+   *
+   */
 
   private async _bind(image: Image): Promise<void> {
-    await NetworkRepository.getInstance().update(
+    await NetworkRepository.getInstance().bindImage(
       String(image.network),
       image.purpose === ImagePurpose.Thumbnail
-        ? ({
+        ? {
             thumbnail: image,
-          } as Network)
-        : ({
+          }
+        : {
             icon: image,
-          } as Network),
+          },
     );
   }
 }

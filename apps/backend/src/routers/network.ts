@@ -11,7 +11,11 @@ NetworkRouter.post(
   [AuthMiddleware.bearer, UploadMiddleware.upload.single("icon")],
   NetworkController.create,
 );
-NetworkRouter.patch(routes.network.update, AuthMiddleware.bearer, NetworkController.update);
+NetworkRouter.patch(
+  routes.network.update,
+  [AuthMiddleware.bearer, UploadMiddleware.upload.single("icon")],
+  NetworkController.update,
+);
 NetworkRouter.delete(routes.network.remove, AuthMiddleware.bearer, NetworkController.remove);
 NetworkRouter.get(routes.network.list, NetworkController.list);
 

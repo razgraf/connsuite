@@ -41,7 +41,10 @@ export function toUserDTO(
   result._id = user._id;
   result.description = user.description;
   result.email = user.email;
-  result.name = user.name;
+  result.name = {
+    first: _.get(user, "name.first"),
+    last: _.get(user, "name.last"),
+  };
 
   if (_.get(options, "usernames") === true && !_.isNil(user.usernames) && isDocumentArray(user.usernames)) {
     result.usernames = user.usernames?.map(item => toUsernameDTO(item));

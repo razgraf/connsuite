@@ -49,7 +49,7 @@ export function interpret(network: Network, result: { [key: string]: any } = {})
   const external: Network = networks[network.externalId];
 
   result.title = external.title;
-  result.icon = external.title;
+  result.icon = external.icon;
   result.thumbnail = external.thumbnail;
   result.url = external.url;
 }
@@ -76,8 +76,7 @@ export function toNetworkDTO(
   }
   if (_.get(options, "images") === true) {
     if (!_.isNil(network.icon) && isDocument(network.icon)) result.icon = toImageDTO(network.icon);
-
-    if (!_.isNil(network.thumbnail) && isDocument(network.thumbnail)) result.icon = toImageDTO(network.thumbnail);
+    if (!_.isNil(network.thumbnail) && isDocument(network.thumbnail)) result.thumbnail = toImageDTO(network.thumbnail);
   }
 
   return result;

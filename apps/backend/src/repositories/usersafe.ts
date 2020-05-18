@@ -41,7 +41,13 @@ export default class UsersafeRepository extends BaseRepository<Usersafe> {
     return UsersafeModel.find(filters) || [];
   }
 
-  /** ************* **/
+  /**
+   *
+   *
+   * Specific Public Methods
+   *
+   *
+   */
 
   public async getByUserAndSafe(usersafe: Usersafe): Promise<Usersafe | null> {
     return UsersafeModel.findOne({ user: usersafe.user, safe: usersafe.safe });

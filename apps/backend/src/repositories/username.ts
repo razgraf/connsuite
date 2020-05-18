@@ -34,7 +34,13 @@ export default class UsernameRepository extends BaseRepository<Username> {
     return (await UsernameModel.find(filters)) || [];
   }
 
-  /** ************* **/
+  /**
+   *
+   *
+   * Specific Public Methods
+   *
+   *
+   */
 
   public async getByValue(value: string): Promise<Username | null> {
     return UsernameModel.findOne({ value });
@@ -54,7 +60,13 @@ export default class UsernameRepository extends BaseRepository<Username> {
     return username && username.length > 0 ? username : null;
   }
 
-  /** ************* **/
+  /**
+   *
+   *
+   * Specific Private - Utility Methods
+   *
+   *
+   */
 
   private async _create(payload: Username, options = { alter: true as boolean }): Promise<Username> {
     const { value } = payload;
