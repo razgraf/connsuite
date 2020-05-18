@@ -40,11 +40,10 @@ export default class NetworkRepository extends BaseRepository<Network> {
     if (_.isNil(payload) || !_.get(payload, "user"))
       throw new AuthError.Forbidden("Missing user configuration (server side).");
 
-    if (!_.get(payload, "type")) throw new ParamsError.Missing("Missing Type");
-
     const holder: Network | null = await this.getByFilters({ _id: id, user: payload.user }, { populate: true });
     if (!holder) throw new Error("Unknown network");
 
+    payload.type = holder.type;
     if (payload.type === NetworkType.Internal) {
       await this._internalGuards(payload, "update");
       return this._updateInternal(holder, payload);
@@ -189,7 +188,7 @@ export default class NetworkRepository extends BaseRepository<Network> {
 
   private async _updateExternal(holder: Network, payload: Request.NetworkCreateExternal): Promise<Network | null> {
     const network = await NetworkModel.findByIdAndUpdate(holder._id, {
-      username: payload.title,
+      username: payload.username,
       description: payload.description,
     });
 
@@ -241,14 +240,14 @@ export default class NetworkRepository extends BaseRepository<Network> {
   }
 
   private async _internalGuards(payload: Request.NetworkCreateInternal, type = "create"): Promise<void> {
-    if (!_.get(payload, "title")) throw new ParamsError.Missing("Missing Type");
-    if (!guards.isNetworkTitleAcceptable(payload.title)) throw new ParamsError.Invalid(policy.network.title.root);
-
     if (type === "create" || (type === "update" && !_.isNil(payload.icon))) {
       if (!_.get(payload, "icon")) throw new ParamsError.Missing("Missing icon or wrong icon size & type.");
       const iconGuard = guards.isNetworkIconAcceptable(_.get(payload, "icon"), true, { vendor: "multer" });
       if (iconGuard !== true) throw new ParamsError.Invalid(iconGuard as string);
     }
+
+    if (!_.get(payload, "title")) throw new ParamsError.Missing("Missing Type");
+    if (!guards.isNetworkTitleAcceptable(payload.title)) throw new ParamsError.Invalid(policy.network.title.root);
 
     if (_.get(payload, "username")) {
       const usernameGuard = guards.isNetworkUsernameAcceptable(payload.username || "", true);
@@ -263,12 +262,11 @@ export default class NetworkRepository extends BaseRepository<Network> {
   private async _externalGuards(payload: Request.NetworkCreateExternal, type = "create"): Promise<void> {
     if (type === "create") {
       if (!_.get(payload, "externalId")) throw new ParamsError.Missing("Missing External Network");
+      const externalIdGuard = guards.isNetworkExternalIdAcceptable(payload.externalId, true);
+      if (externalIdGuard !== true) throw new ParamsError.Invalid(externalIdGuard as string);
     }
 
     if (!_.get(payload, "username")) throw new ParamsError.Missing("Missing Username");
-
-    const externalIdGuard = guards.isNetworkExternalIdAcceptable(payload.externalId, true);
-    if (externalIdGuard !== true) throw new ParamsError.Invalid(externalIdGuard as string);
 
     if (!guards.isNetworkUsernameAcceptable(payload.username))
       throw new ParamsError.Invalid(policy.network.username.root);

@@ -27,13 +27,10 @@ export default class NetworkController extends BaseController {
       const { body, file } = req;
       body.user = res.locals.identity.user;
       body.icon = file;
-      const holder: Network = await NetworkRepository.getInstance().create(body);
-      const result = (await NetworkRepository.getInstance().getById(holder._id as string, {
-        populate: true,
-      })) as Network;
+      const holder = ((await NetworkRepository.getInstance().create(body)) as Network) || {};
 
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Created", network: toNetworkDTO(result) });
+      res.json({ message: "Created", _id: holder._id });
     } catch (e) {
       console.error(e);
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
@@ -49,10 +46,11 @@ export default class NetworkController extends BaseController {
       const { body, file } = req;
       body.user = res.locals.identity.user;
       body.icon = file;
-      const result: Network = (await NetworkRepository.getInstance().update(networkId, body)) as Network;
+
+      const holder = ((await NetworkRepository.getInstance().update(networkId, body)) as Network) || {};
 
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Updated", network: toNetworkDTO(result) });
+      res.json({ message: "Updated", _id: holder._id });
     } catch (e) {
       console.error(e);
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
