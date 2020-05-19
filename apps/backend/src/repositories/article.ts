@@ -1,8 +1,10 @@
 import _ from "lodash";
 import { ObjectId } from "mongodb";
+import { isDocument } from "@typegoose/typegoose";
 import BaseRepository, { BaseOptions } from "./base";
 import SkillRepository from "./skill";
 import ImageRepository from "./image";
+import UserRepository from "./user";
 import guards from "../guards";
 import { ParamsError, ArticleError } from "../errors";
 import { Skill, Request, Article, ArticleModel, ArticleType, ImageParent, ImagePurpose, Image } from "../models";
@@ -36,8 +38,15 @@ export default class ArticleRepository extends BaseRepository<Article> {
   public async update(id: string, payload: any): Promise<Article | null> {
     return ArticleModel.findByIdAndUpdate(id, payload, { new: true });
   }
+
+  /**
+   *
+   * @param {string} id - the id of the soon to be removed article
+   * Use this iteration of remove() only by admin demand. For user demands, use @method removeFromUser() as it checks for ownership
+   */
+
   public async remove(id: string): Promise<void> {
-    await ArticleModel.findOneAndRemove({ _id: id, isDefault: false });
+    await ArticleModel.findByIdAndRemove(id);
   }
   public async list(filters: { [key: string]: unknown }, options?: BaseOptions): Promise<Article[]> {
     if (options && options.populate) return ArticleModel.find(filters).populate(this._populateByOptions(options)) || [];
@@ -52,8 +61,29 @@ export default class ArticleRepository extends BaseRepository<Article> {
    *
    */
 
+  public async removeFromUser(articleId: string, userId: string): Promise<void> {
+    try {
+      const article: Article | null = await this.getByFilters({ _id: articleId, user: userId }, { populate: true });
+      if (!article) throw new Error("Unknown article");
+
+      this._removeImages(article);
+      this._removeUserBond(articleId, userId);
+      this._removeSkills(articleId);
+      await this.remove(articleId);
+    } catch (error) {
+      console.error(error);
+      throw new ArticleError.NotFound(
+        "Couldn't find network to remove or access is forbidden for this user-network pair.",
+      );
+    }
+  }
+
   public async getByFilters(filters: { [key: string]: unknown }, options?: BaseOptions): Promise<Article | null> {
     return ArticleModel.findOne(filters);
+  }
+
+  public async bindImage(articleId: string, payload: { cover: Image } | { thumbnail: Image }): Promise<void> {
+    await ArticleModel.findByIdAndUpdate(articleId, payload);
   }
 
   public async addSkill(articleId: string, skill: Skill): Promise<void> {
@@ -64,10 +94,6 @@ export default class ArticleRepository extends BaseRepository<Article> {
     await ArticleModel.findByIdAndUpdate(articleId, { $pull: { skills: new ObjectId(skillId) } });
   }
 
-  public async bindImage(articleId: string, payload: { cover: Image } | { thumbnail: Image }): Promise<void> {
-    await ArticleModel.findByIdAndUpdate(articleId, payload);
-  }
-
   /**
    *
    *
@@ -75,6 +101,14 @@ export default class ArticleRepository extends BaseRepository<Article> {
    *
    *
    */
+
+  private async _bind(articleId: string, userId: string): Promise<void> {
+    await UserRepository.getInstance().addArticle(articleId, userId);
+  }
+
+  private async _removeUserBond(articleId: string, userId: string): Promise<void> {
+    await UserRepository.getInstance().removeArticle(articleId, userId);
+  }
 
   private _populateByOptions(options?: BaseOptions): { path: string; model: string }[] {
     const population: { path: string; model: string }[] = [];
@@ -128,6 +162,38 @@ export default class ArticleRepository extends BaseRepository<Article> {
     });
   }
 
+  private _generateSummary(content: string): string {
+    if (content) return "ConnSuite Article - X";
+    return "ConnSuite Article - O"; // TODO
+  }
+
+  private async _removeImages(article: Article): Promise<void> {
+    try {
+      if (article.type === ArticleType.Internal) {
+        if (!_.isNil(article.cover) && isDocument(article.cover)) {
+          await ImageRepository.getInstance().remove(article.cover._id);
+          ImageRepository.getInstance().unlink(article.cover);
+        }
+
+        if (!_.isNil(article.thumbnail) && isDocument(article.thumbnail)) {
+          await ImageRepository.getInstance().remove(article.thumbnail._id);
+          ImageRepository.getInstance().unlink(article.thumbnail);
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   *
+   * @param {Article} article
+   * Remove any custom skills that were created for this article
+   */
+  private async _removeSkills(articleId: string): Promise<void> {
+    await SkillRepository.getInstance().removeAllWithArticle(articleId);
+  }
+
   /**
    *
    *
@@ -137,13 +203,31 @@ export default class ArticleRepository extends BaseRepository<Article> {
    */
 
   private async _createInternal(payload: Request.ArticleCreateInternal): Promise<Article> {
-    console.log("_internal", payload, ArticleType.Internal);
-    return {} as Article;
+    const specimen: Article = {
+      type: ArticleType.Internal,
+      title: payload.title,
+      user: new ObjectId(payload.userId),
+      content: payload.content,
+      summary: this._generateSummary(payload.content),
+      skills: [],
+    };
+
+    const article: Article = await ArticleModel.create(specimen);
+    if (!article) throw new ArticleError.Failed("Article couldn't be created.");
+
+    article.userId = String(article.user);
+
+    this._bind(String(article._id), article.userId);
+
+    await this._generateImages(payload.cover, article);
+    await this._bindSkills(payload.skills, article);
+
+    return article;
   }
 
   private async _createExternal(payload: Request.ArticleCreateExternal): Promise<Article> {
     const specimen: Article = {
-      type: payload.type,
+      type: ArticleType.External,
       title: payload.title,
       url: payload.url,
       user: new ObjectId(payload.userId),
@@ -154,6 +238,8 @@ export default class ArticleRepository extends BaseRepository<Article> {
     if (!article) throw new ArticleError.Failed("Article couldn't be created.");
 
     article.userId = String(article.user);
+
+    this._bind(String(article._id), article.userId);
 
     await this._generateImages(payload.cover, article);
     await this._bindSkills(payload.skills, article);
@@ -177,7 +263,7 @@ export default class ArticleRepository extends BaseRepository<Article> {
     if (skillsGuard !== true) throw new ParamsError.Invalid(skillsGuard as string);
 
     if (!_.get(payload, "content")) throw new ParamsError.Missing("Missing Content");
-    const contentGuard = guards.isArticleContentAcceptable(payload.content, true);
+    const contentGuard = guards.isArticleContentAcceptable(payload.content, true, true);
     if (contentGuard !== true) throw new ParamsError.Invalid(contentGuard as string);
   }
 

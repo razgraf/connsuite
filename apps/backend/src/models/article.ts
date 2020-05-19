@@ -27,6 +27,12 @@ export class Article {
   @prop()
   url?: string;
 
+  @prop()
+  content?: string;
+
+  @prop()
+  summary?: string;
+
   @arrayProp({ itemsRef: "Skill" })
   skills?: Ref<Skill>[];
 
@@ -38,7 +44,7 @@ export class Article {
 
 export function toArticleDTO(
   article: Article,
-  options: ArticleDTOOptions = { skills: true, images: true, user: true },
+  options: ArticleDTOOptions = { skills: true, images: true, user: true, content: false },
 ): { [key: string]: any } {
   const result: { [key: string]: any } = {};
 
@@ -47,9 +53,13 @@ export function toArticleDTO(
   result.title = article.title;
   result.url = article.url;
 
+  if (result.type === ArticleType.Internal) {
+    result.summary = article.summary;
+    if (_.get(options, "content") === true && !_.isNil(article.content)) result.content = article.content;
+  }
+
   if (_.get(options, "images") === true) {
     if (!_.isNil(article.cover) && isDocument(article.cover)) result.cover = toImageDTO(article.cover);
-
     if (!_.isNil(article.thumbnail) && isDocument(article.thumbnail)) result.thumbnail = toImageDTO(article.thumbnail);
   }
 

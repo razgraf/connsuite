@@ -4,7 +4,7 @@ import { ObjectId } from "mongodb";
 import BaseRepository, { BaseOptions } from "./base";
 import UsernameRepository from "./username";
 import { defaults } from "../constants";
-import { Vendor, User, Username, UserModel, Name, Request, Network } from "../models";
+import { Vendor, User, Username, UserModel, Name, Request, Network, Article } from "../models";
 
 export default class UserRepository extends BaseRepository<User> {
   private static instance: UserRepository;
@@ -56,12 +56,20 @@ export default class UserRepository extends BaseRepository<User> {
     await UserModel.findByIdAndUpdate(userId, { $push: { usernames: username } }, { upsert: true });
   }
 
-  public async addNetwork(userId: string, network: Network): Promise<void> {
-    await UserModel.findByIdAndUpdate(userId, { $push: { networks: network } }, { upsert: true });
+  public async addNetwork(networkId: string, userId: string): Promise<void> {
+    await UserModel.findByIdAndUpdate(userId, { $push: { networks: new ObjectId(networkId) } }, { upsert: true });
   }
 
-  public async removeNetwork(userId: string, networkId: string): Promise<void> {
+  public async removeNetwork(networkId: string, userId: string): Promise<void> {
     await UserModel.findByIdAndUpdate(userId, { $pull: { networks: new ObjectId(networkId) } });
+  }
+
+  public async addArticle(articleId: string, userId: string): Promise<void> {
+    await UserModel.findByIdAndUpdate(userId, { $push: { articles: new ObjectId(articleId) } }, { upsert: true });
+  }
+
+  public async removeArticle(articleId: string, userId: string): Promise<void> {
+    await UserModel.findByIdAndUpdate(userId, { $pull: { articles: new ObjectId(articleId) } });
   }
 
   public async isAlreadyRegistered(payload: { googleId?: string; email?: string }, vendor: Vendor): Promise<boolean> {

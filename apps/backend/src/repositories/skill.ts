@@ -61,7 +61,7 @@ export default class SkillRepository extends BaseRepository<Skill> {
   }
 
   public async removeAllWithArticle(articleId: string): Promise<void> {
-    await SkillModel.deleteMany({ article: new ObjectId(articleId) });
+    await SkillModel.deleteMany({ article: new ObjectId(articleId), isDefault: false });
   }
 
   public async removeSafelyFromArticle(skillId: string, articleId: string, userId: string): Promise<void> {

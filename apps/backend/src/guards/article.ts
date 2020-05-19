@@ -27,6 +27,10 @@ export const policy = {
     1: `You can have at most ${limits.MAX_ARTICLE_SKILLS_COUNT} skills per article.`,
     2: `Custom skills should have between ${limits.MIN_ARTICLE_SKILLS_TITLE_LENGTH} and ${limits.MAX_ARTICLE_SKILLS_TITLE_LENGTH} characters`,
   },
+  content: {
+    root: "You must use valid content for your articles",
+    1: `You should have at least one section in your article.`,
+  },
 };
 
 function isArticleTitleAcceptable(value: string, withPolicy = WITH_POLICY): string | boolean {
@@ -73,7 +77,12 @@ function isArticleUrlAcceptable(value: string, withPolicy = WITH_POLICY): string
   return validator.isURL(value, { require_protocol: true }) ? true : withPolicy ? policy.url[2] : false;
 }
 
-function isArticleContentAcceptable(value: string, withPolicy = WITH_POLICY): string | boolean {
+function isArticleContentAcceptable(value: string, withPolicy = WITH_POLICY, isStringified = false): string | boolean {
+  const sections = isStringified && !_.isNil(value) ? _.attempt(() => JSON.parse(value as string)) : value;
+
+  if (_.isNil(sections) || !_.isArray(sections) || sections.length < limits.MIN_ARTICLE_SECTION_COUNT)
+    return withPolicy ? policy.content[1] : false;
+
   return true;
 }
 

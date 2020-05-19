@@ -2,8 +2,9 @@ import _ from "lodash";
 import mongoose from "mongoose";
 import { prop, arrayProp, getModelForClass, Ref, isDocumentArray } from "@typegoose/typegoose";
 import { Name, UserDTOOptions } from "./atoms";
-import { Username, toUsernameDTO } from "./username";
+import { Article, toArticleDTO } from "./article";
 import { Network, toNetworkDTO } from "./network";
+import { Username, toUsernameDTO } from "./username";
 
 export class User {
   readonly _id?: mongoose.Schema.Types.ObjectId | string;
@@ -29,13 +30,16 @@ export class User {
   @arrayProp({ itemsRef: "Network" })
   networks?: Ref<Network>[];
 
+  @arrayProp({ itemsRef: "Articles" })
+  articles?: Ref<Article>[];
+
   readonly createdAt?: mongoose.Schema.Types.Date | string;
   readonly updatedAt?: mongoose.Schema.Types.Date | string;
 }
 
 export function toUserDTO(
   user: User,
-  options: UserDTOOptions = { usernames: false, networks: false },
+  options: UserDTOOptions = { usernames: false, networks: false, articles: false },
 ): { [key: string]: any } {
   const result: { [key: string]: any } = {};
   result._id = user._id;
@@ -52,6 +56,10 @@ export function toUserDTO(
 
   if (_.get(options, "networks") === true && !_.isNil(user.networks) && isDocumentArray(user.networks)) {
     result.networks = user.networks?.map(item => toNetworkDTO(item));
+  }
+
+  if (_.get(options, "articles") === true && !_.isNil(user.articles) && isDocumentArray(user.articles)) {
+    result.articles = user.articles?.map(articles => toArticleDTO(articles));
   }
 
   return result;

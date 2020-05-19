@@ -64,7 +64,7 @@ export default class NetworkController extends BaseController {
       const userId = res.locals.identity.user;
       if (!networkId) throw new ParamsError.Missing("Missing network identifier.");
 
-      await NetworkRepository.getInstance().removeFromUser({ networkId, userId });
+      await NetworkRepository.getInstance().removeFromUser(networkId, userId);
 
       res.status(HTTP_CODE.OK);
       res.json({ message: "Removed" });

@@ -62,15 +62,14 @@ export default class ArticleController extends BaseController {
 
   public static async remove(req: Request, res: Response): Promise<void> {
     try {
-      throw new Error("Not implemented");
-      // const networkId = _.get(req, "params.id");
-      // const userId = res.locals.identity.user;
-      // if (!networkId) throw new ParamsError.Missing("Missing network identifier.");
+      const articleId = _.get(req, "params.id");
+      const userId = res.locals.identity.user;
+      if (!articleId) throw new ParamsError.Missing("Missing article identifier.");
 
-      // await NetworkRepository.getInstance().removeFromUser({ networkId, userId });
+      await ArticleRepository.getInstance().removeFromUser(articleId, userId);
 
-      // res.status(HTTP_CODE.OK);
-      // res.json({ message: "Removed" });
+      res.status(HTTP_CODE.OK);
+      res.json({ message: "Removed" });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });

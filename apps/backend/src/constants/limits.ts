@@ -27,6 +27,8 @@ export const MAX_ARTICLE_SKILLS_TITLE_LENGTH = 20;
 
 export const MAX_ARTICLE_SKILLS_COUNT = 30;
 
+export const MIN_ARTICLE_SECTION_COUNT = 1;
+
 export const MAX_ARTICLE_COVER_SIZE = 12 * 1024 * 1024;
 export const ALLOWED_ARTICLE_COVER_FORMAT = ["jpeg", "png"];
 

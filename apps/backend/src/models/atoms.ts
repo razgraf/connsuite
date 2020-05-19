@@ -50,6 +50,7 @@ export interface ImageDTOOptions {
 export interface UserDTOOptions {
   usernames?: boolean;
   networks?: boolean;
+  articles?: boolean;
 }
 
 export interface UsernameDTOOptions {
@@ -62,8 +63,9 @@ export interface SkillDTOOptions {
 }
 
 export interface ArticleDTOOptions {
-  skills?: boolean;
+  content?: boolean;
   images?: boolean;
+  skills?: boolean;
   user?: boolean;
 }
 

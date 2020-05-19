@@ -16,15 +16,10 @@ export default class NetworkRepository extends BaseRepository<Network> {
 
   public async getById(id: string, options?: BaseOptions): Promise<Network | null> {
     if (options && options.populate)
-      return (
-        NetworkModel.findOne({ _id: id })
-          // .populate({ path: "icon", model: "Image" })
-          // .populate({ path: "thumbnail", model: "Image" });
-          .populate([
-            { path: "icon", model: "Image" },
-            { path: "thumbnail", model: "Image" },
-          ])
-      );
+      return NetworkModel.findOne({ _id: id }).populate([
+        { path: "icon", model: "Image" },
+        { path: "thumbnail", model: "Image" },
+      ]);
     return NetworkModel.findById(id);
   }
 
@@ -64,7 +59,7 @@ export default class NetworkRepository extends BaseRepository<Network> {
   /**
    *
    * @param {string} id - the id of the soon to be removed network
-   * Use this iteration of remove() only by admin demand. For user demands, use removeFromUser() as it checks for ownership
+   * Use this iteration of remove() only by admin demand. For user demands, use @method removeFromUser() as it checks for ownership
    */
 
   public async remove(id: string): Promise<void> {
@@ -96,17 +91,14 @@ export default class NetworkRepository extends BaseRepository<Network> {
     return NetworkModel.findOne(filters);
   }
 
-  public async removeFromUser(payload: { networkId: string; userId: string }): Promise<void> {
+  public async removeFromUser(networkId: string, userId: string): Promise<void> {
     try {
-      const network: Network | null = await this.getByFilters(
-        { _id: payload.networkId, user: payload.userId },
-        { populate: true },
-      );
+      const network: Network | null = await this.getByFilters({ _id: networkId, user: userId }, { populate: true });
       if (!network) throw new Error("Unknown network");
 
       this._removeImages(network);
       this._removeUserBond(network);
-      await this.remove(payload.networkId);
+      await this.remove(networkId);
     } catch (error) {
       console.error(error);
       throw new NetworkError.NotFound(
@@ -128,7 +120,13 @@ export default class NetworkRepository extends BaseRepository<Network> {
    */
 
   private async _bind(network: Network): Promise<void> {
-    await UserRepository.getInstance().addNetwork(String(network.user), network);
+    await UserRepository.getInstance().addNetwork(String(network._id), String(network.user));
+  }
+
+  private async _removeUserBond(network: Network): Promise<void> {
+    if (!_.isNil(network.user)) {
+      UserRepository.getInstance().removeNetwork(String(network._id), String(network.user));
+    }
   }
 
   private async _generateImages(source: Express.Multer.File, network: Network): Promise<void> {
@@ -160,12 +158,6 @@ export default class NetworkRepository extends BaseRepository<Network> {
       }
     } catch (e) {
       console.error(e);
-    }
-  }
-
-  private async _removeUserBond(network: Network): Promise<void> {
-    if (!_.isNil(network.user)) {
-      UserRepository.getInstance().removeNetwork(String(network.user), String(network._id));
     }
   }
 
