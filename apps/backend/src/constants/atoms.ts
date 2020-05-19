@@ -11,8 +11,13 @@ export const tree = {
   internalNetwork: "data/content/network",
 };
 
+export const configs = {
+  WITH_POLICY: false,
+};
+
 export default {
   host,
   root,
   tree,
+  configs,
 };

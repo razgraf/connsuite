@@ -27,7 +27,7 @@ app.use(routes.network.root, NetworkRouter);
 app.use(routes.auth.root, AuthRouter);
 
 app.get("/", (req: express.Request, res: express.Response) => {
-  res.send("Hello");
+  res.send("Hi.");
 });
 
 app.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`));

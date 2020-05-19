@@ -65,11 +65,11 @@ export default class AuthRepository extends ManagerRepository {
     if (!_.get(body, "password")) throw new ParamsError.Missing("Missing Password.");
     if (!_.get(body, "username")) throw new ParamsError.Missing("Missing Username.");
 
-    if (!guards.isNameAcceptable(body.firstName)) throw new ParamsError.Invalid(policy.name.root);
-    if (!guards.isNameAcceptable(body.lastName)) throw new ParamsError.Invalid(policy.name.root);
-    if (!guards.isUsernameAcceptable(body.username)) throw new ParamsError.Invalid(policy.username.root);
-    if (!guards.isEmailAcceptable(body.email)) throw new ParamsError.Invalid(policy.email.root);
-    if (!guards.isPasswordAcceptable(body.password)) throw new ParamsError.Invalid(policy.password.root);
+    if (!guards.isNameAcceptable(body.firstName)) throw new ParamsError.Invalid(policy.user.name.root);
+    if (!guards.isNameAcceptable(body.lastName)) throw new ParamsError.Invalid(policy.user.name.root);
+    if (!guards.isUsernameAcceptable(body.username)) throw new ParamsError.Invalid(policy.user.username.root);
+    if (!guards.isEmailAcceptable(body.email)) throw new ParamsError.Invalid(policy.user.email.root);
+    if (!guards.isPasswordAcceptable(body.password)) throw new ParamsError.Invalid(policy.user.password.root);
 
     const isAlreadyRegistered: boolean = await UserRepository.getInstance().isAlreadyRegistered(body, Vendor.CLASSIC);
     if (isAlreadyRegistered) throw new ParamsError.Conflict(`The email ${body.email} is already linked to an account`);
@@ -95,8 +95,8 @@ export default class AuthRepository extends ManagerRepository {
     if (!_.get(body, "email")) throw new ParamsError.Missing("Missing Email.");
     if (!_.get(body, "password")) throw new ParamsError.Missing("Missing Password.");
 
-    if (!guards.isEmailAcceptable(body.email)) throw new ParamsError.Invalid(policy.email.root);
-    if (!guards.isPasswordAcceptable(body.password)) throw new ParamsError.Invalid(policy.password.root);
+    if (!guards.isEmailAcceptable(body.email)) throw new ParamsError.Invalid(policy.user.email.root);
+    if (!guards.isPasswordAcceptable(body.password)) throw new ParamsError.Invalid(policy.user.password.root);
 
     const user: User = (await UserRepository.getInstance().getByEmail(body.email, { populate: true })) as User;
 

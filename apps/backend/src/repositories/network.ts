@@ -16,9 +16,15 @@ export default class NetworkRepository extends BaseRepository<Network> {
 
   public async getById(id: string, options?: BaseOptions): Promise<Network | null> {
     if (options && options.populate)
-      return NetworkModel.findOne({ _id: id })
-        .populate({ path: "icon", model: "Image" })
-        .populate({ path: "thumbnail", model: "Image" });
+      return (
+        NetworkModel.findOne({ _id: id })
+          // .populate({ path: "icon", model: "Image" })
+          // .populate({ path: "thumbnail", model: "Image" });
+          .populate([
+            { path: "icon", model: "Image" },
+            { path: "thumbnail", model: "Image" },
+          ])
+      );
     return NetworkModel.findById(id);
   }
 
@@ -246,8 +252,13 @@ export default class NetworkRepository extends BaseRepository<Network> {
       if (iconGuard !== true) throw new ParamsError.Invalid(iconGuard as string);
     }
 
-    if (!_.get(payload, "title")) throw new ParamsError.Missing("Missing Type");
-    if (!guards.isNetworkTitleAcceptable(payload.title)) throw new ParamsError.Invalid(policy.network.title.root);
+    if (!_.get(payload, "title")) throw new ParamsError.Missing("Missing Title");
+    const titleGuard = guards.isNetworkTitleAcceptable(payload.title, true);
+    if (titleGuard !== true) throw new ParamsError.Invalid(titleGuard as string);
+
+    if (!_.get(payload, "url")) throw new ParamsError.Missing("Missing Url");
+    const urlGuard = guards.isNetworkUrlAcceptable(payload.url, true);
+    if (urlGuard !== true) throw new ParamsError.Invalid(urlGuard as string);
 
     if (_.get(payload, "username")) {
       const usernameGuard = guards.isNetworkUsernameAcceptable(payload.username || "", true);
@@ -267,12 +278,12 @@ export default class NetworkRepository extends BaseRepository<Network> {
     }
 
     if (!_.get(payload, "username")) throw new ParamsError.Missing("Missing Username");
+    const usernameGuard = guards.isNetworkUrlAcceptable(payload.username, true);
+    if (usernameGuard !== true) throw new ParamsError.Invalid(usernameGuard as string);
 
-    if (!guards.isNetworkUsernameAcceptable(payload.username))
-      throw new ParamsError.Invalid(policy.network.username.root);
-
-    if (_.get(payload, "description"))
-      if (!guards.isNetworkDescriptionsAcceptable(payload.description || ""))
-        throw new ParamsError.Invalid(policy.network.description.root);
+    if (_.get(payload, "description")) {
+      const descriptionGuard = guards.isNetworkDescriptionsAcceptable(payload.description || "", true);
+      if (descriptionGuard !== true) throw new ParamsError.Invalid(descriptionGuard as string);
+    }
   }
 }

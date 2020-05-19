@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import BaseController from "./base";
 import { HTTP_CODE } from "../constants";
 import { NetworkRepository } from "../repositories";
-import { Network, toNetworkDTO } from "../models";
+import { Network, toNetworkDTO, Skill, SkillModel } from "../models";
 import { NetworkError, ParamsError } from "../errors";
 
 export default class NetworkController extends BaseController {
@@ -87,6 +87,24 @@ export default class NetworkController extends BaseController {
 
       res.status(HTTP_CODE.OK);
       res.json({ message: "Found", networks: networks.map(network => toNetworkDTO(network)) });
+    } catch (e) {
+      res.status(e.code || HTTP_CODE.BAD_REQUEST);
+      res.json({ message: e.message });
+    }
+  }
+
+  public static async admin(req: Request, res: Response): Promise<void> {
+    try {
+      const seedSkills: () => void = () => {
+        const skills: string[] = ["React", "Node", "Next.js", "Php", "MongoDb", "MySQL", "Javascript", "React Native"];
+
+        skills.forEach(title => SkillModel.create({ title, isDefault: true }));
+      };
+
+      // seedSkills();
+
+      res.status(HTTP_CODE.OK);
+      res.json({ message: "Doing admin stuff" });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });

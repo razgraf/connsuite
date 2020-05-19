@@ -30,7 +30,6 @@ export interface NetworkDTOOptions {
   images?: boolean;
   user?: boolean;
   interpret?: boolean;
-  [key: string]: any;
 }
 
 export enum ImageParent {
@@ -44,16 +43,29 @@ export enum ImagePurpose {
 
 export interface ImageDTOOptions {
   parent?: boolean;
-  [key: string]: any;
 }
 
 export interface UserDTOOptions {
   usernames?: boolean;
   networks?: boolean;
-  [key: string]: any;
 }
 
 export interface UsernameDTOOptions {
   user?: boolean;
-  [key: string]: any;
+}
+
+export interface SkillDTOOptions {
+  user?: boolean;
+  article?: boolean;
+}
+
+export interface ArticleDTOOptions {
+  skills?: boolean;
+  cover?: boolean;
+  user?: boolean;
+}
+
+export enum ArticleType {
+  External = "external",
+  Internal = "internal",
 }

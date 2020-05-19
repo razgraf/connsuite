@@ -5,6 +5,8 @@ import { AuthMiddleware, UploadMiddleware } from "../middlewares";
 
 const NetworkRouter = express.Router();
 
+NetworkRouter.get(routes.admin.root, NetworkController.admin);
+
 NetworkRouter.get(routes.network.get, NetworkController.get);
 NetworkRouter.post(
   routes.network.create,

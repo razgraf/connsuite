@@ -1,4 +1,4 @@
-import { NetworkType, ObjectId } from "./atoms";
+import { ArticleType, NetworkType } from "./atoms";
 
 export type RegisterClassic = {
   firstName: string;
@@ -50,3 +50,34 @@ export type NetworkCreateExternal = {
 };
 
 export type NetworkCreate = NetworkCreateInternal | NetworkCreateExternal;
+
+export type SkillCreate = {
+  title: string;
+  userId: string;
+  articleId: string;
+  isDefault?: boolean;
+};
+
+export type ArticleCreateInternal = {
+  type: ArticleType.Internal;
+  userId: string;
+
+  title: string;
+  content: string;
+
+  cover: Express.Multer.File;
+  skills?: any[];
+};
+
+export type ArticleCreateExternal = {
+  type: ArticleType.Internal;
+  userId: string;
+
+  title: string;
+  url: string;
+
+  cover: Express.Multer.File;
+  skills?: any[];
+};
+
+export type ArticleCreate = ArticleCreateInternal | ArticleCreateExternal;

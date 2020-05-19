@@ -1,5 +1,12 @@
 export type BaseOptions = {
   populate?: boolean;
+  admin?: boolean;
+
+  hideUser?: boolean;
+  hideImages?: boolean;
+  hideSkills?: boolean;
+  hideArticle?: boolean;
+
   [key: string]: boolean | undefined;
 };
 

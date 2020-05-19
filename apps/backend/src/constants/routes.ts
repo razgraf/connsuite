@@ -1,4 +1,20 @@
 export default {
+  admin: {
+    root: "/admin", //TODO REMOVE THIS IN PRODUCTION
+  },
+  article: {
+    root: "/articles",
+    /** CRUD **/
+
+    get: "/:id",
+    create: "/",
+    update: "/:id",
+    remove: "/:id",
+
+    /** CRUD BATCH */
+
+    list: "/",
+  },
   network: {
     root: "/networks",
 
