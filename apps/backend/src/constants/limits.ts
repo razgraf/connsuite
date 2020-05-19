@@ -19,7 +19,7 @@ export const MAX_NETWORK_DESCRIPTION_LENGTH = 500;
 export const MAX_NETWORK_ICON_SIZE = 5 * 1024 * 1024;
 export const ALLOWED_NETWORK_ICON_FORMAT = ["jpg", "jpeg", "gif", "png"];
 
-export const MIN_ARTICLE_TITLE_LENGTH = 1;
+export const MIN_ARTICLE_TITLE_LENGTH = 5;
 export const MAX_ARTICLE_TITLE_LENGTH = 144;
 
 export const MIN_ARTICLE_SKILLS_TITLE_LENGTH = 1;

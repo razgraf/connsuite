@@ -7,7 +7,7 @@ export const policy = {
   root: "Network must be valid",
   title: {
     root: `Titles must contain between ${limits.MIN_NETWORK_TITLE_LENGTH} and ${limits.MAX_NETWORK_TITLE_LENGTH} characters.`,
-    1: `Please use between ${limits.MIN_NETWORK_TITLE_LENGTH} and ${limits.MAX_NETWORK_TITLE_LENGTH} characters.`,
+    1: `Please use between ${limits.MIN_NETWORK_TITLE_LENGTH} and ${limits.MAX_NETWORK_TITLE_LENGTH} characters for the title.`,
   },
   icon: {
     root: `Icons must be images (${limits.ALLOWED_NETWORK_ICON_FORMAT.join(", ")}) and must have a maximum size of ${

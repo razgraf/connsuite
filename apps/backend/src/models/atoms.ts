@@ -34,9 +34,11 @@ export interface NetworkDTOOptions {
 
 export enum ImageParent {
   Network = "network",
+  Article = "article",
 }
 
 export enum ImagePurpose {
+  Cover = "cover",
   Icon = "icon",
   Thumbnail = "thumbnail",
 }
@@ -61,7 +63,7 @@ export interface SkillDTOOptions {
 
 export interface ArticleDTOOptions {
   skills?: boolean;
-  cover?: boolean;
+  images?: boolean;
   user?: boolean;
 }
 

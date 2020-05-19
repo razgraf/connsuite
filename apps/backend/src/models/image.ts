@@ -2,6 +2,7 @@ import _ from "lodash";
 import mongoose from "mongoose";
 import { prop, getModelForClass, Ref, isDocument } from "@typegoose/typegoose";
 import { ImageParent, ImagePurpose, ImageDTOOptions } from "./atoms";
+import { Article, toArticleDTO } from "./article";
 import { Network, toNetworkDTO } from "./network";
 
 export class Image {
@@ -23,8 +24,11 @@ export class Image {
    * Possible Parents
    */
 
-  @prop({ ref: { name: "Network" }, required: true })
+  @prop({ ref: { name: "Network" }, default: null })
   network?: Ref<Network>;
+
+  @prop({ ref: { name: "Article" }, default: null })
+  article?: Ref<Article>;
 
   readonly createdAt?: mongoose.Schema.Types.Date | string;
   readonly updatedAt?: mongoose.Schema.Types.Date | string;
@@ -45,6 +49,9 @@ export function toImageDTO(image: Image, options: ImageDTOOptions = { parent: fa
 
   if (_.get(options, "parent") === true) {
     switch (result.parent) {
+      case ImageParent.Article:
+        if (!_.isNil(image.article) && isDocument(image.article)) result.article = toArticleDTO(image.article);
+        break;
       case ImageParent.Network:
         if (!_.isNil(image.network) && isDocument(image.network)) result.network = toNetworkDTO(image.network);
         break;

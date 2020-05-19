@@ -2,10 +2,12 @@ import _ from "lodash";
 import sharp from "sharp";
 import fs from "fs";
 import BaseRepository from "./base";
+import ArticleRepository from "./article";
 import NetworkRepository from "./network";
+
 import { sizes } from "../constants";
 import { ImageError } from "../errors";
-import { Image, ImageModel, ImageParent, ImagePurpose, Network } from "../models";
+import { Image, ImageModel, ImageParent, ImagePurpose } from "../models";
 import { tree } from "../constants/atoms";
 
 export default class ImageRepository extends BaseRepository<Image> {
@@ -45,31 +47,55 @@ export default class ImageRepository extends BaseRepository<Image> {
   public async save(source: Express.Multer.File, image: Image): Promise<Image | null> {
     const type = _.attempt(() => _.toString(_.get(image || {}, "type") || "").split("/")[1]);
     if (!type) throw new ImageError.MimeType("Could not identify type at save.");
-    const icon: Image = await this.create(image);
+    const file: Image = await this.create(image);
 
-    if (icon.parent === ImageParent.Network) {
-      if (icon.purpose === ImagePurpose.Icon) {
-        await this._bind(icon);
+    if (file.parent === ImageParent.Network) {
+      if (file.purpose === ImagePurpose.Icon) {
+        await this._bind(file);
 
         sharp(source.buffer)
-          .resize(sizes.network.icon.HEIGHT, sizes.network.icon.WIDTH, {
+          .resize(sizes.network.icon.WIDTH, sizes.network.icon.HEIGHT, {
             fit: sharp.fit.inside,
             withoutEnlargement: true,
           })
-          .toFile(`${tree.internalNetwork}/${icon._id}.${type}`);
+          .toFile(`${tree.internalNetwork}/${file._id}.${type}`);
 
-        return icon;
+        return file;
       } else if (image.purpose === ImagePurpose.Thumbnail) {
-        await this._bind(icon);
+        await this._bind(file);
 
         sharp(source.buffer)
-          .resize(sizes.network.thumbnail.HEIGHT, sizes.network.thumbnail.WIDTH, {
+          .resize(sizes.network.thumbnail.WIDTH, sizes.network.thumbnail.HEIGHT, {
             fit: sharp.fit.inside,
             withoutEnlargement: true,
           })
-          .toFile(`${tree.internalNetwork}/${icon._id}.${type}`);
+          .toFile(`${tree.internalNetwork}/${file._id}.${type}`);
 
-        return icon;
+        return file;
+      }
+    } else if (file.parent === ImageParent.Article) {
+      if (file.purpose === ImagePurpose.Cover) {
+        await this._bind(file);
+
+        sharp(source.buffer)
+          .resize(sizes.article.cover.WIDTH, sizes.article.cover.HEIGHT, {
+            fit: sharp.fit.inside,
+            withoutEnlargement: true,
+          })
+          .toFile(`${tree.article}/${file._id}.${type}`);
+
+        return file;
+      } else if (image.purpose === ImagePurpose.Thumbnail) {
+        await this._bind(file);
+
+        sharp(source.buffer)
+          .resize(sizes.article.thumbnail.WIDTH, sizes.article.thumbnail.HEIGHT, {
+            fit: sharp.fit.inside,
+            withoutEnlargement: true,
+          })
+          .toFile(`${tree.article}/${file._id}.${type}`);
+
+        return file;
       }
     }
     return null;
@@ -83,7 +109,12 @@ export default class ImageRepository extends BaseRepository<Image> {
         console.error("File type not found");
         return;
       }
-      const path = `/../../${tree.internalNetwork}/${id}.${type}`;
+
+      let path = "";
+
+      if (image.parent === ImageParent.Network) path = `/../../${tree.internalNetwork}/${id}.${type}`;
+      if (image.parent === ImageParent.Network) path = `/../../${tree.article}/${id}.${type}`;
+
       fs.exists(__dirname + path, exists => {
         if (exists)
           fs.unlink(__dirname + path, error => {
@@ -103,15 +134,28 @@ export default class ImageRepository extends BaseRepository<Image> {
    */
 
   private async _bind(image: Image): Promise<void> {
-    await NetworkRepository.getInstance().bindImage(
-      String(image.network),
-      image.purpose === ImagePurpose.Thumbnail
-        ? {
-            thumbnail: image,
-          }
-        : {
-            icon: image,
-          },
-    );
+    if (image.parent === ImageParent.Network) {
+      await NetworkRepository.getInstance().bindImage(
+        String(image.network),
+        image.purpose === ImagePurpose.Thumbnail
+          ? {
+              thumbnail: image,
+            }
+          : {
+              icon: image,
+            },
+      );
+    } else if (image.parent === ImageParent.Article) {
+      await ArticleRepository.getInstance().bindImage(
+        String(image.article),
+        image.purpose === ImagePurpose.Thumbnail
+          ? {
+              thumbnail: image,
+            }
+          : {
+              cover: image,
+            },
+      );
+    }
   }
 }

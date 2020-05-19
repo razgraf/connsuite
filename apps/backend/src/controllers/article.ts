@@ -84,12 +84,12 @@ export default class ArticleController extends BaseController {
 
       const articles: Article[] = await ArticleRepository.getInstance().list(
         { user: _.get(body, "userId") },
-        { populate: true },
+        { populate: true, hideUser: true },
       );
       if (_.isNil(articles)) throw new ArticleError.NotFound("Issue when searching networks for this individual.");
 
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Found", networks: articles.map(article => toArticleDTO(article)) });
+      res.json({ message: "Found", articles: articles.map(article => toArticleDTO(article)) });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });

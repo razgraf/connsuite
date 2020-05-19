@@ -6,8 +6,8 @@ export const host: { [key: string]: string } = {
 
 export const root = host[process.env.NODE_ENV || "development"];
 export const tree = {
+  article: "data/content/article",
   externalNetwork: "data/static/network",
-  internalArticle: "data/content/article",
   internalNetwork: "data/content/network",
 };
 

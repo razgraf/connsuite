@@ -21,4 +21,14 @@ export const sizes = {
       HEIGHT: 400,
     },
   },
+  article: {
+    cover: {
+      WIDTH: 1400,
+      HEIGHT: 700,
+    },
+    thumbnail: {
+      WIDTH: 900,
+      HEIGHT: 450,
+    },
+  },
 };

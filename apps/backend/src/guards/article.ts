@@ -7,7 +7,7 @@ export const policy = {
   root: "Articles must be valid",
   title: {
     root: `Titles must contain between ${limits.MIN_ARTICLE_TITLE_LENGTH} and ${limits.MAX_ARTICLE_TITLE_LENGTH} characters.`,
-    1: `Please use between ${limits.MIN_ARTICLE_TITLE_LENGTH} and ${limits.MAX_ARTICLE_TITLE_LENGTH} characters.`,
+    1: `Please use between ${limits.MIN_ARTICLE_TITLE_LENGTH} and ${limits.MAX_ARTICLE_TITLE_LENGTH} characters for the title.`,
   },
   cover: {
     root: `Covers must be images (${limits.ALLOWED_ARTICLE_COVER_FORMAT.join(", ")}) and must have a maximum size of ${
@@ -77,19 +77,27 @@ function isArticleContentAcceptable(value: string, withPolicy = WITH_POLICY): st
   return true;
 }
 
-function isArticleSkillListAcceptable(list: any[] | undefined, withPolicy = WITH_POLICY): string | boolean {
+function isArticleSkillListAcceptable(
+  value: any[] | string | undefined,
+  withPolicy = WITH_POLICY,
+  isStringified = false,
+): string | boolean {
+  const list = isStringified && !_.isNil(value) ? _.attempt(() => JSON.parse(value as string)) : value;
+
   if (_.isNil(list) || !_.isArray(list)) return withPolicy ? policy.skills.root : false;
   if (list.length > limits.MAX_ARTICLE_SKILLS_COUNT) return withPolicy ? policy.skills[1] : false;
 
   const [min, max] = [limits.MIN_ARTICLE_SKILLS_TITLE_LENGTH, limits.MAX_ARTICLE_SKILLS_TITLE_LENGTH];
 
-  list.forEach(skill => {
-    if (!_.get(skill, "_id") && !_.get(skill, "title")) return withPolicy ? policy.skills[2] : false;
-    else if (!_.get(skill, "_id") && _.get(skill, "title")) {
+  for (let i = 0; i < list.length; i += 1) {
+    const skill = list[i];
+    if (!_.has(skill, "_id") && !_.has(skill, "title")) return withPolicy ? policy.skills[2] : false;
+    if (_.has(skill, "_id") && !_.get(skill, "_id")) return withPolicy ? policy.skills[2] : false;
+    if (_.has(skill, "title")) {
       const length = _.toString(_.get(skill, "title")).length;
-      if (length < min || length > max) return withPolicy ? policy.title[1] : false;
+      if (length < min || length > max) return withPolicy ? policy.skills[2] : false;
     }
-  });
+  }
 
   return true;
 }

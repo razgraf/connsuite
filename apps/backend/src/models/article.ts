@@ -21,6 +21,9 @@ export class Article {
   @prop({ ref: { name: "Image" }, default: null })
   cover?: Ref<Image>;
 
+  @prop({ ref: { name: "Image" }, default: null })
+  thumbnail?: Ref<Image>;
+
   @prop()
   url?: string;
 
@@ -29,11 +32,13 @@ export class Article {
 
   readonly createdAt?: mongoose.Schema.Types.Date | string;
   readonly updatedAt?: mongoose.Schema.Types.Date | string;
+
+  userId?: string;
 }
 
 export function toArticleDTO(
   article: Article,
-  options: ArticleDTOOptions = { skills: false, cover: false, user: false },
+  options: ArticleDTOOptions = { skills: true, images: true, user: true },
 ): { [key: string]: any } {
   const result: { [key: string]: any } = {};
 
@@ -42,8 +47,11 @@ export function toArticleDTO(
   result.title = article.title;
   result.url = article.url;
 
-  if (_.get(options, "cover") === true && !_.isNil(article.cover) && isDocument(article.cover))
-    result.cover = toImageDTO(article.cover);
+  if (_.get(options, "images") === true) {
+    if (!_.isNil(article.cover) && isDocument(article.cover)) result.cover = toImageDTO(article.cover);
+
+    if (!_.isNil(article.thumbnail) && isDocument(article.thumbnail)) result.thumbnail = toImageDTO(article.thumbnail);
+  }
 
   if (_.get(options, "user") === true && !_.isNil(article.user) && isDocument(article.user))
     result.user = toUserDTO(article.user);

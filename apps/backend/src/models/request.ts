@@ -66,7 +66,7 @@ export type ArticleCreateInternal = {
   content: string;
 
   cover: Express.Multer.File;
-  skills?: any[];
+  skills: string /** Stringified JSON of skills from FormData */;
 };
 
 export type ArticleCreateExternal = {
@@ -77,7 +77,12 @@ export type ArticleCreateExternal = {
   url: string;
 
   cover: Express.Multer.File;
-  skills?: any[];
+  skills: string /** Stringified JSON of skills from FormData */;
 };
 
 export type ArticleCreate = ArticleCreateInternal | ArticleCreateExternal;
+
+export type SkillTransfer = {
+  _id?: string;
+  title?: string;
+};

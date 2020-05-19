@@ -2,7 +2,7 @@ require("dotenv").config();
 import cors from "cors";
 import express, { Request, Response, NextFunction } from "express";
 
-import { AuthRouter, NetworkRouter } from "./routers";
+import { ArticleRouter, AuthRouter, NetworkRouter } from "./routers";
 import { routes } from "./constants";
 import { mongo } from "./vendors";
 
@@ -23,8 +23,9 @@ app.use((error: SyntaxError, req: Request, res: Response, next: NextFunction) =>
   next();
 });
 
-app.use(routes.network.root, NetworkRouter);
+app.use(routes.article.root, ArticleRouter);
 app.use(routes.auth.root, AuthRouter);
+app.use(routes.network.root, NetworkRouter);
 
 app.get("/", (req: express.Request, res: express.Response) => {
   res.send("Hi.");

@@ -2,9 +2,8 @@ import _ from "lodash";
 import { ObjectId } from "mongodb";
 import BaseRepository, { BaseOptions } from "./base";
 import ArticleRepository from "./article";
-import UserRepository from "./user";
 import { ParamsError, SkillError } from "../errors";
-import { Skill, SkillModel, Request, Article } from "../models";
+import { Skill, SkillModel, Request } from "../models";
 
 export default class SkillRepository extends BaseRepository<Skill> {
   private static instance: SkillRepository;
@@ -61,7 +60,11 @@ export default class SkillRepository extends BaseRepository<Skill> {
     await SkillModel.findOneAndUpdate({ _id: skillId, _user: userId }, payload);
   }
 
-  public async removeFromArticle(skillId: string, articleId: string, userId: string): Promise<void> {
+  public async removeAllWithArticle(articleId: string): Promise<void> {
+    await SkillModel.deleteMany({ article: new ObjectId(articleId) });
+  }
+
+  public async removeSafelyFromArticle(skillId: string, articleId: string, userId: string): Promise<void> {
     try {
       const skill = (await this.getByFilters({ _id: skillId, user: userId, article: articleId })) as Skill;
 
@@ -77,7 +80,7 @@ export default class SkillRepository extends BaseRepository<Skill> {
     }
   }
 
-  public async getByFilters(filters: { [key: string]: unknown }, options?: BaseOptions): Promise<Skill | null> {
+  public async getByFilters(filters: { [key: string]: unknown }): Promise<Skill | null> {
     return SkillModel.findOne(filters);
   }
 
