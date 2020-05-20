@@ -62,9 +62,15 @@ export interface SkillDTOOptions {
   article?: boolean;
 }
 
+export interface CategoryDTOOptions {
+  user?: boolean;
+  article?: boolean;
+}
+
 export interface ArticleDTOOptions {
   content?: boolean;
   images?: boolean;
+  categories?: boolean;
   skills?: boolean;
   user?: boolean;
 }

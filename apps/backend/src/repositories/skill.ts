@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { ObjectId } from "mongodb";
-import BaseRepository, { BaseOptions } from "./base";
+import BaseRepository from "./base";
 import ArticleRepository from "./article";
 import { ParamsError, SkillError } from "../errors";
 import { Skill, SkillModel, Request } from "../models";
@@ -17,6 +17,7 @@ export default class SkillRepository extends BaseRepository<Skill> {
   }
 
   public async create(payload: Request.SkillCreate, options = { admin: false }): Promise<Skill> {
+    console.log(payload);
     if (_.isNil(payload)) throw new ParamsError.Missing("No payload provided.");
     if (!_.get(payload, "userId")) throw new ParamsError.Missing("No creator provided. Missing user id.");
     if (!_.get(payload, "articleId")) throw new ParamsError.Missing("No purpose provided. Missing article id.");
@@ -98,6 +99,6 @@ export default class SkillRepository extends BaseRepository<Skill> {
     }
   }
   private async _bindToArticle(skill: Skill): Promise<void> {
-    await ArticleRepository.getInstance().addSkill(String(skill.article), skill); // TODO
+    await ArticleRepository.getInstance().addSkill(String(skill.article), String(skill._id)); // TODO
   }
 }

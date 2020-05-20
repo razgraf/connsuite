@@ -19,7 +19,7 @@ export class User {
   password?: string;
 
   @prop()
-  googleId?: string | number;
+  googleId?: string;
 
   @prop({ required: true })
   name!: Name;

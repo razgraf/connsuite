@@ -85,3 +85,12 @@ export async function readPreviewFromImage(file) {
     }
   });
 }
+
+export function blur() {
+  try {
+    const list = document.getElementsByTagName("input");
+    Array.prototype.forEach.call(list, item => item.blur());
+  } catch (e) {
+    console.error(e);
+  }
+}

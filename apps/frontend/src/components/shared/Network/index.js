@@ -67,8 +67,8 @@ const ContentMain = styled.div`
 
 const ContentImage = styled.img`
   position: absolute;
-  height: 100%;
-  width: 100%;
+  height: 90%;
+  width: 90%;
   max-width: ${props => props.theme.sizes.networkIconMaxSize};
   max-height: ${props => props.theme.sizes.networkIconMaxSize};
   object-fit: contain;

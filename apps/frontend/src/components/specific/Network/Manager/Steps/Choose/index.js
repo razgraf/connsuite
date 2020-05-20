@@ -2,9 +2,9 @@ import _ from "lodash";
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import guards, { policy } from "@connsuite/guards";
 import { DUMMY, types } from "../../../../../../constants";
 import { NetworkMini } from "../../../../../shared/Network";
-import guards, { policy } from "../../../../../../guards";
 import { InputText, InputImage } from "../../../../../atoms";
 import { readPreviewFromImage } from "../../../../../../utils";
 
@@ -121,19 +121,25 @@ function Choose({ className, isActive, reducer }) {
           preview: null,
           error: guards.interpret(guards.isNetworkIconAcceptable, file),
         };
+
+        if (payload.error === null)
+          readPreviewFromImage(file).then(preview => {
+            if (reducer.state.type.value === types.network.source.internal)
+              reducer.dispatch({
+                type: reducer.actions.UPDATE_ICON_PREVIEW,
+                payload: preview,
+              });
+          });
+        else
+          reducer.dispatch({
+            type: reducer.actions.UPDATE_ICON_PREVIEW,
+            payload: null,
+          });
       }
 
       reducer.dispatch({
         type: reducer.actions.UPDATE_ICON,
         payload,
-      });
-
-      readPreviewFromImage(file).then(preview => {
-        if (reducer.state.type.value === types.network.source.internal)
-          reducer.dispatch({
-            type: reducer.actions.UPDATE_ICON_PREVIEW,
-            payload: preview,
-          });
       });
     },
     [reducer],

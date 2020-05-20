@@ -15,7 +15,7 @@ export class Image {
   version!: number;
 
   @prop()
-  type?: string | number;
+  type?: string;
 
   @prop({ enum: ImagePurpose, default: ImagePurpose.Icon })
   purpose?: ImagePurpose;

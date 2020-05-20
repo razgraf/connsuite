@@ -1,5 +1,6 @@
 export { default as ArticleRepository } from "./article";
 export { default as AuthRepository } from "./auth";
+export { default as CategoryRepository } from "./category";
 export { default as ImageRepository } from "./image";
 export { default as NetworkRepository } from "./network";
 export { default as SkillRepository } from "./skill";

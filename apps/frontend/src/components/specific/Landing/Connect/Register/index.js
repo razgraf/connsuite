@@ -3,11 +3,10 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
+import guards, { policy } from "@connsuite/guards";
 import { useDispatch } from "react-redux";
-
+import { blur } from "../../../../../utils";
 import { useRegisterReducer, useConnectMachine } from "../../../../../hooks";
-
-import guards, { policy } from "../../../../../guards";
 import { Button, InputText, InputPassword, Warning } from "../../../../atoms";
 import ButtonGoogle from "../../ButtonGoogle";
 
@@ -104,7 +103,7 @@ function Register({ className }) {
     <Wrapper className={className}>
       <Fields>
         <InputText
-          help={{ value: policy.name.root }}
+          help={{ value: policy.user.name.root }}
           id="registerFirstName"
           label="First Name"
           onUpdate={e => {
@@ -121,7 +120,7 @@ function Register({ className }) {
           warning={reducer.state.firstName.error}
         />
         <InputText
-          help={{ value: policy.name.root }}
+          help={{ value: policy.user.name.root }}
           id="registerLastName"
           label="Last Name"
           onUpdate={e => {
@@ -138,7 +137,7 @@ function Register({ className }) {
           warning={reducer.state.lastName.error}
         />
         <InputText
-          help={{ value: policy.email.root }}
+          help={{ value: policy.user.email.root }}
           id="registerEmail"
           label="Email"
           onUpdate={e => {
@@ -155,7 +154,7 @@ function Register({ className }) {
           warning={reducer.state.email.error}
         />
         <InputPassword
-          help={{ value: policy.password.root }}
+          help={{ value: policy.user.password.root }}
           id="registerPassword"
           label="Password"
           onUpdate={e => {
@@ -173,7 +172,7 @@ function Register({ className }) {
         />
 
         <InputText
-          help={{ value: policy.username.root }}
+          help={{ value: policy.user.username.root }}
           id="registerUsername"
           label="Username"
           onUpdate={e => {
@@ -191,7 +190,7 @@ function Register({ className }) {
         />
         <StyledWarning isCentered value={_.toString(machine.current.context.error)} />
       </Fields>
-      <Actions>
+      <Actions onMouseEnter={blur}>
         <Button
           type={t => t.button}
           title="Register a new Profile"

@@ -1,4 +1,5 @@
 import _ from "lodash";
+import * as limits from "./atoms/limits";
 import articleGuards, { policy as articlePolicy } from "./article";
 import networkGuards, { policy as networkPolicy } from "./network";
 import userGuards, { policy as userPolicy } from "./user";
@@ -16,7 +17,7 @@ function interpret(gate: Function, value: any): any {
   return result === true ? null : result;
 }
 
-export const policy = {
+const policy = {
   article: articlePolicy,
   user: userPolicy,
   network: networkPolicy,
@@ -30,3 +31,4 @@ const guards = {
 };
 
 export default guards;
+export { limits, policy };

@@ -1,0 +1,23 @@
+{
+  "name": "@connsuite/guards",
+  "version": "1.0.0",
+  "description": "ConnSuite Guards",
+  "author": "Razvan Gabriel Apostu",
+  "license": "ISC",
+  "main": "./dist",
+  "typings": "./dist/index.d.ts",
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "validator": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.152",
+    "@types/validator": "^13.0.0",
+    "shx": "^0.3.2"
+  },
+  "scripts": {
+    "clean": "shx rm -rf ./dist",
+    "build": "yarn clean && tsc -d ",
+    "build:watch": "tsc --watch"
+  }
+}

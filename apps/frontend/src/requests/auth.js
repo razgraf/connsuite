@@ -63,6 +63,8 @@ async function register(payload) {
  * @throws ...
  */
 async function isAuthorized(auth) {
+  if (_.isNil(auth) || !_.get(auth, "token.value")) return false;
+
   const response = await fetch(API.authStatus(), {
     method: "GET",
     headers: buildHeaders({ auth }),

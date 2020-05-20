@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { descriptor, Frame } from "../atoms";
 import Button from "../../Button";
-import guards from "../../../../guards";
 
 const Input = styled.input`
   display: none;
@@ -18,6 +17,9 @@ const Holder = styled.p`
       content: "${props => props.placeholder}" !important;
     }
   }
+  &[data-purpose="holder"][data-warning="true"]{
+    color: ${props => props.theme.colors.red};
+  }
 `;
 
 const Action = styled(Button)`
@@ -26,7 +28,7 @@ const Action = styled(Button)`
   right: 10px;
 `;
 
-function InputImage({ className, id, help, label, onUpdate, placeholder, inputRef, name, value, warning, isEventInterpreted }) {
+function InputImage({ className, id, help, label, onUpdate, placeholder, inputRef, name, warning, isEventInterpreted }) {
   const ref = useRef();
   if (_.isNil(inputRef)) inputRef = ref;
 
@@ -51,12 +53,15 @@ function InputImage({ className, id, help, label, onUpdate, placeholder, inputRe
     [onUpdate, isEventInterpreted],
   );
 
+  console.log("W", warning);
+
   return (
     <Frame className={className} id={id} label={label} warning={warning} help={help}>
       <Holder
         data-purpose="holder"
+        data-warning={!_.isNil(warning)}
         placeholder={placeholder}
-        onClick={e => {
+        onClick={() => {
           if (inputRef && inputRef.current) inputRef.current.click();
         }}
       >
@@ -68,7 +73,7 @@ function InputImage({ className, id, help, label, onUpdate, placeholder, inputRe
         accent={t => t.grayBlueDark}
         appearance={t => t.outline}
         title={_.isNil(name) || _.isEmpty(name) ? "Choose" : "Change"}
-        onClick={e => {
+        onClick={() => {
           if (inputRef && inputRef.current) inputRef.current.click();
         }}
       />
@@ -86,7 +91,6 @@ InputImage.propTypes = {
   inputRef: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({})]),
   placeholder: PropTypes.string,
   name: PropTypes.string,
-  value: PropTypes.shape({}),
   warning: PropTypes.string,
   isEventInterpreted: PropTypes.bool,
 };
@@ -98,7 +102,6 @@ InputImage.defaultProps = {
   help: null,
   placeholder: null,
   name: null,
-  value: null,
   warning: null,
   isEventInterpreted: false,
 };

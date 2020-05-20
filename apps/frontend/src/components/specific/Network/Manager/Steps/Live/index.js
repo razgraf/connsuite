@@ -2,8 +2,8 @@ import _ from "lodash";
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import guards, { policy } from "@connsuite/guards";
 import { types, DUMMY } from "../../../../../../constants";
-import guards, { policy } from "../../../../../../guards";
 import { InputArea, Emoji } from "../../../../../atoms";
 
 const Wrapper = styled.div``;

@@ -5,6 +5,7 @@ import { User, toUserDTO } from "./user";
 import { Skill, toSkillDTO } from "./skill";
 import { ArticleType, ArticleDTOOptions } from "./atoms";
 import { Image, toImageDTO } from "./image";
+import { Category, toCategoryDTO } from "./category";
 
 export class Article {
   readonly _id?: mongoose.Schema.Types.ObjectId | string;
@@ -36,6 +37,9 @@ export class Article {
   @arrayProp({ itemsRef: "Skill" })
   skills?: Ref<Skill>[];
 
+  @arrayProp({ itemsRef: "Category" })
+  categories?: Ref<Category>[];
+
   readonly createdAt?: mongoose.Schema.Types.Date | string;
   readonly updatedAt?: mongoose.Schema.Types.Date | string;
 
@@ -44,7 +48,7 @@ export class Article {
 
 export function toArticleDTO(
   article: Article,
-  options: ArticleDTOOptions = { skills: true, images: true, user: true, content: false },
+  options: ArticleDTOOptions = { categories: true, skills: true, images: true, user: true, content: false },
 ): { [key: string]: any } {
   const result: { [key: string]: any } = {};
 
@@ -68,6 +72,9 @@ export function toArticleDTO(
 
   if (_.get(options, "skills") === true && !_.isNil(article.skills) && isDocumentArray(article.skills))
     result.skills = article.skills?.map(item => toSkillDTO(item));
+
+  if (_.get(options, "categories") === true && !_.isNil(article.categories) && isDocumentArray(article.categories))
+    result.categories = article.categories?.map(item => toCategoryDTO(item));
 
   return result;
 }

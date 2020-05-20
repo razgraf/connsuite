@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import BaseController from "./base";
 import { HTTP_CODE } from "../constants";
 import { NetworkRepository } from "../repositories";
-import { Network, toNetworkDTO, Skill, SkillModel } from "../models";
+import { Network, toNetworkDTO } from "../models";
 import { NetworkError, ParamsError } from "../errors";
 
 export default class NetworkController extends BaseController {
@@ -95,11 +95,11 @@ export default class NetworkController extends BaseController {
 
   public static async admin(req: Request, res: Response): Promise<void> {
     try {
-      const seedSkills: () => void = () => {
-        const skills: string[] = ["React", "Node", "Next.js", "Php", "MongoDb", "MySQL", "Javascript", "React Native"];
+      // const seedSkills: () => void = () => {
+      //   const skills: string[] = ["React", "Node", "Next.js", "Php", "MongoDb", "MySQL", "Javascript", "React Native"];
 
-        skills.forEach(title => SkillModel.create({ title, isDefault: true }));
-      };
+      //   skills.forEach(title => SkillModel.create({ title, isDefault: true }));
+      // };
 
       // seedSkills();
 

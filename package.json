@@ -1,0 +1,31 @@
+{
+  "name": "@connsuite/alpha",
+  "version": "1.0.0",
+  "description": "Your online business card (Alpha)",
+  "author": "Razvan Gabriel Apostu",
+  "license": "ISC",
+  "homepage": "https://github.com/razgraf/connsuite#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/razgraf/connsuite.git"
+  },
+  "devDependencies": {
+    "wsrun": "^5.2.0"
+  },
+  "scripts": {
+    "front": "yarn workspace @connsuite/frontend dev",
+    "front:start": "yarn workspace @connsuite/frontend start",
+    "front:build": "yarn workspace @connsuite/frontend build",
+    "back": "yarn workspace @connsuite/backend dev",
+    "back:start": "yarn workspace @connsuite/backend start",
+    "back:build": "yarn workspace @connsuite/backend build",
+    "pack": "wsrun -p @connsuite/guards -c build:watch"
+  },
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ]
+  }
+}

@@ -93,6 +93,6 @@ export default class UsernameRepository extends BaseRepository<Username> {
   }
 
   private async _bind(username: Username): Promise<void> {
-    await UserRepository.getInstance().addUsername(String(username.user), username);
+    await UserRepository.getInstance().addUsername(String(username.user), String(username._id));
   }
 }

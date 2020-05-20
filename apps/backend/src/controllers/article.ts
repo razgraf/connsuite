@@ -31,7 +31,7 @@ export default class ArticleController extends BaseController {
       const holder = ((await ArticleRepository.getInstance().create(body)) as Article) || {};
 
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Created", _id: holder._id, article: toArticleDTO(holder) });
+      res.json({ message: "Created", _id: holder._id });
     } catch (e) {
       console.error(e);
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
@@ -41,18 +41,17 @@ export default class ArticleController extends BaseController {
 
   public static async update(req: Request, res: Response): Promise<void> {
     try {
-      throw new Error("Not implemented");
-      // const networkId = _.get(req, "params.id");
-      // if (!networkId) throw new ParamsError.Missing("Missing network identifier.");
+      const articleId = _.get(req, "params.id");
+      if (!articleId) throw new ParamsError.Missing("Missing article identifier.");
 
-      // const { body, file } = req;
-      // body.user = res.locals.identity.user;
-      // body.icon = file;
+      const { body, file } = req;
+      body.userId = res.locals.identity.user;
+      body.cover = file;
 
-      // const holder = ((await NetworkRepository.getInstance().update(networkId, body)) as Network) || {};
+      const holder = ((await ArticleRepository.getInstance().update(articleId, body)) as Article) || {};
 
-      // res.status(HTTP_CODE.OK);
-      // res.json({ message: "Updated", _id: holder._id });
+      res.status(HTTP_CODE.OK);
+      res.json({ message: "Updated", _id: holder._id });
     } catch (e) {
       console.error(e);
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
@@ -85,7 +84,7 @@ export default class ArticleController extends BaseController {
         { user: _.get(body, "userId") },
         { populate: true, hideUser: true },
       );
-      if (_.isNil(articles)) throw new ArticleError.NotFound("Issue when searching networks for this individual.");
+      if (_.isNil(articles)) throw new ArticleError.NotFound("Issue when searching articles for this individual.");
 
       res.status(HTTP_CODE.OK);
       res.json({ message: "Found", articles: articles.map(article => toArticleDTO(article)) });

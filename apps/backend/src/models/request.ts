@@ -58,6 +58,13 @@ export type SkillCreate = {
   isDefault?: boolean;
 };
 
+export type CategoryCreate = {
+  title: string;
+  userId: string;
+  articleId: string;
+  isDefault?: boolean;
+};
+
 export type ArticleCreateInternal = {
   type: ArticleType.Internal;
   userId: string;
@@ -67,10 +74,11 @@ export type ArticleCreateInternal = {
 
   cover: Express.Multer.File;
   skills: string /** Stringified JSON of skills from FormData */;
+  categories: string /** Stringified JSON of categories from FormData */;
 };
 
 export type ArticleCreateExternal = {
-  type: ArticleType.Internal;
+  type: ArticleType.External;
   userId: string;
 
   title: string;
@@ -78,11 +86,17 @@ export type ArticleCreateExternal = {
 
   cover: Express.Multer.File;
   skills: string /** Stringified JSON of skills from FormData */;
+  categories: string /** Stringified JSON of categories from FormData */;
 };
 
 export type ArticleCreate = ArticleCreateInternal | ArticleCreateExternal;
 
 export type SkillTransfer = {
+  _id?: string;
+  title?: string;
+};
+
+export type CategoryTransfer = {
   _id?: string;
   title?: string;
 };

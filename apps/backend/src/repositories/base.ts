@@ -6,6 +6,7 @@ export type BaseOptions = {
   hideImages?: boolean;
   hideSkills?: boolean;
   hideArticle?: boolean;
+  hideCategories?: boolean;
 
   [key: string]: boolean | undefined;
 };

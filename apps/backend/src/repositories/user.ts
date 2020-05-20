@@ -52,8 +52,8 @@ export default class UserRepository extends BaseRepository<User> {
     return await UserModel.findOne({ googleId });
   }
 
-  public async addUsername(userId: string, username: Username): Promise<void> {
-    await UserModel.findByIdAndUpdate(userId, { $push: { usernames: username } }, { upsert: true });
+  public async addUsername(userId: string, usernameId: string): Promise<void> {
+    await UserModel.findByIdAndUpdate(userId, { $push: { usernames: new ObjectId(usernameId) } }, { upsert: true });
   }
 
   public async addNetwork(networkId: string, userId: string): Promise<void> {

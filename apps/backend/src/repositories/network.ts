@@ -1,9 +1,10 @@
 import _ from "lodash";
+import guards from "@connsuite/guards";
 import { isDocument } from "@typegoose/typegoose";
 import BaseRepository, { BaseOptions } from "./base";
 import UserRepository from "./user";
 import ImageRepository from "./image";
-import guards, { policy } from "../guards";
+import { networks } from "../constants";
 import { Network, NetworkModel, NetworkType, Request, Image, ImageParent, ImagePurpose } from "../models";
 import { ParamsError, NetworkError, AuthError } from "../errors";
 
@@ -16,10 +17,7 @@ export default class NetworkRepository extends BaseRepository<Network> {
 
   public async getById(id: string, options?: BaseOptions): Promise<Network | null> {
     if (options && options.populate)
-      return NetworkModel.findOne({ _id: id }).populate([
-        { path: "icon", model: "Image" },
-        { path: "thumbnail", model: "Image" },
-      ]);
+      return NetworkModel.findOne({ _id: id }).populate(this._populateByOptions(options));
     return NetworkModel.findById(id);
   }
 
@@ -42,7 +40,7 @@ export default class NetworkRepository extends BaseRepository<Network> {
       throw new AuthError.Forbidden("Missing user configuration (server side).");
 
     const holder: Network | null = await this.getByFilters({ _id: id, user: payload.user }, { populate: true });
-    if (!holder) throw new Error("Unknown network");
+    if (!holder) throw new NetworkError.NotFound("Unknown network or access not granted.");
 
     payload.type = holder.type;
     if (payload.type === NetworkType.Internal) {
@@ -67,10 +65,7 @@ export default class NetworkRepository extends BaseRepository<Network> {
   }
 
   public async list(filters: { [key: string]: unknown }, options?: BaseOptions): Promise<Network[]> {
-    if (options && options.populate)
-      return NetworkModel.find(filters)
-        .populate({ path: "icon", model: "Image" })
-        .populate({ path: "thumbnail", model: "Image" });
+    if (options && options.populate) return NetworkModel.find(filters).populate(this._populateByOptions(options));
 
     return NetworkModel.find(filters) || [];
   }
@@ -159,6 +154,13 @@ export default class NetworkRepository extends BaseRepository<Network> {
     } catch (e) {
       console.error(e);
     }
+  }
+
+  private _populateByOptions(options?: BaseOptions): { path: string; model: string }[] {
+    const population: { path: string; model: string }[] = [];
+    if (_.isNil(options) || !_.get(options, "populate")) return population;
+    if (!options.hideImages) population.push({ path: "cover", model: "Image" }, { path: "thumbnail", model: "Image" });
+    return population;
   }
 
   /**
@@ -265,7 +267,7 @@ export default class NetworkRepository extends BaseRepository<Network> {
   private async _externalGuards(payload: Request.NetworkCreateExternal, type = "create"): Promise<void> {
     if (type === "create") {
       if (!_.get(payload, "externalId")) throw new ParamsError.Missing("Missing External Network");
-      const externalIdGuard = guards.isNetworkExternalIdAcceptable(payload.externalId, true);
+      const externalIdGuard = guards.isNetworkExternalIdAcceptable(payload.externalId, true, networks);
       if (externalIdGuard !== true) throw new ParamsError.Invalid(externalIdGuard as string);
     }
 

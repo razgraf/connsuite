@@ -33,15 +33,8 @@ const initialContext = {
   error: null,
 };
 
-async function attemptToCreate({ context }) {
-  /**
-   * All guards should be passed
-   */
-  console.log("SUCCESS");
-  return {
-    data: "GG",
-  };
-  // return NetworkRequest.create(context);
+async function attemptToCreate({ context, event }) {
+  return NetworkRequest.create(event.payload);
 }
 
 const RESET = {

@@ -1,6 +1,7 @@
 export * from "./atom";
 export * as ArticleError from "./article";
 export * as AuthError from "./auth";
+export * as CategoryError from "./category";
 export * as ImageError from "./image";
 export * as NetworkError from "./network";
 export * as ParamsError from "./params";

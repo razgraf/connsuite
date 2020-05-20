@@ -1,6 +1,6 @@
 import _ from "lodash";
+import official from "@connsuite/guards";
 import { types } from "../../../constants";
-import official from "../../../guards";
 
 /**
  * ATOMS
