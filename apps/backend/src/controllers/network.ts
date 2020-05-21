@@ -2,9 +2,10 @@ import _ from "lodash";
 import { Request, Response } from "express";
 import BaseController from "./base";
 import { HTTP_CODE } from "../constants";
-import { NetworkRepository } from "../repositories";
+import { NetworkRepository, UserRepository } from "../repositories";
 import { Network, toNetworkDTO } from "../models";
-import { NetworkError, ParamsError } from "../errors";
+import { AuthError, NetworkError, ParamsError } from "../errors";
+import { ObjectId } from "mongodb";
 
 export default class NetworkController extends BaseController {
   public static async get(req: Request, res: Response): Promise<void> {
@@ -74,14 +75,22 @@ export default class NetworkController extends BaseController {
     }
   }
 
+  /** Any user can list another user's networks */
   public static async list(req: Request, res: Response): Promise<void> {
     try {
-      const { body } = req;
-      if (!_.get(body, "userId")) throw new ParamsError.Missing("Missing user identifier.");
+      const { query } = req;
+      console.log(query);
+      if (_.isNil(query)) throw new ParamsError.Missing("Insuficient listing payload.");
+      const userId = await UserRepository.getInstance().interpretIdentificatorToId(query);
+      if (_.isNil(userId)) throw new AuthError.UserNotFound("Missing user based on given auth details.");
 
       const networks: Network[] = await NetworkRepository.getInstance().list(
-        { user: _.get(body, "userId") },
-        { populate: true },
+        { user: new ObjectId(userId) },
+        {
+          populate: true,
+          limit: _.get(query, "limit") as string,
+          offset: _.get(query, "offset") as string,
+        },
       );
       if (_.isNil(networks)) throw new NetworkError.NotFound("Issue when searching networks for this individual.");
 

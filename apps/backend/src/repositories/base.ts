@@ -2,13 +2,17 @@ export type BaseOptions = {
   populate?: boolean;
   admin?: boolean;
 
+  limit?: number | string;
+  offset?: number | string;
+
   hideUser?: boolean;
   hideImages?: boolean;
   hideSkills?: boolean;
   hideArticle?: boolean;
   hideCategories?: boolean;
+  hideUsernames?: boolean;
 
-  [key: string]: boolean | undefined;
+  [key: string]: boolean | number | string | undefined;
 };
 
 abstract class BaseRepository<T> {

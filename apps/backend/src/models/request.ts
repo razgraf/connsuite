@@ -100,3 +100,9 @@ export type CategoryTransfer = {
   _id?: string;
   title?: string;
 };
+
+export type UserIdentificator = {
+  _id?: string;
+  username?: string;
+  email?: string;
+};

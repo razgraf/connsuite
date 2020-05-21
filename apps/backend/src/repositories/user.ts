@@ -5,6 +5,7 @@ import BaseRepository, { BaseOptions } from "./base";
 import UsernameRepository from "./username";
 import { defaults } from "../constants";
 import { Vendor, User, Username, UserModel, Name, Request, Network, Article } from "../models";
+import { isValidObjectId } from "mongoose";
 
 export default class UserRepository extends BaseRepository<User> {
   private static instance: UserRepository;
@@ -14,8 +15,7 @@ export default class UserRepository extends BaseRepository<User> {
   }
 
   public async getById(id: string, options?: BaseOptions): Promise<User | null> {
-    if (options && options.populate)
-      return UserModel.findOne({ _id: id }).populate({ path: "usernames", model: "Username" });
+    if (options && options.populate) return UserModel.findOne({ _id: id }).populate(this._populateByOptions(options));
     return UserModel.findOne({ _id: id });
   }
 
@@ -41,15 +41,45 @@ export default class UserRepository extends BaseRepository<User> {
    */
 
   public async getByEmail(email: string, options?: BaseOptions): Promise<User | null> {
-    if (options && options.populate)
-      return UserModel.findOne({ email }).populate({ path: "usernames", model: "Username" });
+    if (options && options.populate) return UserModel.findOne({ email }).populate(this._populateByOptions(options));
     return await UserModel.findOne({ email });
   }
 
   public async getByGoogleId(googleId: string, options?: BaseOptions): Promise<User | null> {
-    if (options && options.populate)
-      return UserModel.findOne({ googleId }).populate({ path: "usernames", model: "Username" });
+    if (options && options.populate) return UserModel.findOne({ googleId }).populate(this._populateByOptions(options));
     return await UserModel.findOne({ googleId });
+  }
+
+  public async getByUsername(username: string, options?: BaseOptions): Promise<User | null> {
+    const found = (await UsernameRepository.getInstance().getByValue(username)) as Username;
+    if (!found || !found.user) return null;
+    if (options && options.populate) return UserModel.findById(found.user).populate(this._populateByOptions(options));
+    return await UserModel.findById(found.user);
+  }
+
+  public async getIdByUsername(username: string): Promise<string | null> {
+    const found = (await UsernameRepository.getInstance().getByValue(username)) as Username;
+    return !found || !found.user ? null : String(found.user);
+  }
+
+  public async interpretIdentificatorToId(payload: Request.UserIdentificator): Promise<string | null> {
+    if (_.isNil(payload)) return null;
+
+    if (!_.isNil(payload._id) && isValidObjectId(payload._id)) return payload._id;
+
+    if (!_.isNil(payload.username)) {
+      const id = await this.getIdByUsername(payload.username || "");
+      if (!id) return null;
+      return String(id);
+    }
+
+    if (!_.isNil(payload.email)) {
+      const user = (await this.getByEmail(payload.email || "")) as User;
+      if (!user || _.isNil(user._id)) return null;
+      return String(user._id);
+    }
+
+    return null;
   }
 
   public async addUsername(userId: string, usernameId: string): Promise<void> {
@@ -165,6 +195,13 @@ export default class UserRepository extends BaseRepository<User> {
    *
    *
    */
+
+  private _populateByOptions(options?: BaseOptions): { path: string; model: string }[] {
+    const population: { path: string; model: string }[] = [];
+    if (_.isNil(options) || !_.get(options, "populate")) return population;
+    if (!options.hideUsernames) population.push({ path: "usernames", model: "Username" });
+    return population;
+  }
 
   private _hashPassword(clear: string): string {
     return bcrypt.hashSync(clear, 10);

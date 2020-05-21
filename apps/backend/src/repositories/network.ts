@@ -65,9 +65,12 @@ export default class NetworkRepository extends BaseRepository<Network> {
   }
 
   public async list(filters: { [key: string]: unknown }, options?: BaseOptions): Promise<Network[]> {
-    if (options && options.populate) return NetworkModel.find(filters).populate(this._populateByOptions(options));
-
-    return NetworkModel.find(filters) || [];
+    console.log(filters, this._formatByOptions(options));
+    if (!_.isNil(options))
+      return NetworkModel.find(filters, null, this._formatByOptions(options)).populate(
+        this._populateByOptions(options),
+      );
+    return NetworkModel.find(filters, null, this._formatByOptions(options)) || [];
   }
 
   /**
@@ -161,6 +164,22 @@ export default class NetworkRepository extends BaseRepository<Network> {
     if (_.isNil(options) || !_.get(options, "populate")) return population;
     if (!options.hideImages) population.push({ path: "cover", model: "Image" }, { path: "thumbnail", model: "Image" });
     return population;
+  }
+
+  private _formatByOptions(options?: BaseOptions): { sort: object; limit?: number; offset?: number } {
+    const format: { sort: object; limit?: number; offset?: number } = { sort: { priority: -1 } };
+    if (_.isNil(options)) return format;
+    if (!_.isNil(options.limit)) {
+      const limit = _.attempt(() => _.toNumber(options.limit));
+      if (!_.isError(limit)) format.limit = limit;
+    }
+
+    if (!_.isNil(options.offset)) {
+      const offset = _.attempt(() => _.toNumber(options.offset));
+      if (!_.isError(offset)) format.offset = offset;
+    }
+
+    return format;
   }
 
   /**
