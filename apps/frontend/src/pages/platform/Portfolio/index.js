@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import IconAdd from "@material-ui/icons/Add";
+import { useSelector, useDispatch } from "react-redux";
 import { components } from "../../../themes";
-import { Button } from "../../../components/atoms";
+import { Button, Spinner } from "../../../components/atoms";
 import { Area } from "../../../components/shared";
-import { pages, DUMMY } from "../../../constants";
+import { sagas, pages, DUMMY } from "../../../constants";
 import Network, { NetworkAdd } from "../../../components/shared/Network";
 import Article, { ArticleAdd } from "../../../components/shared/Article";
 import Cover from "../../../components/shared/Cover";
@@ -81,13 +82,21 @@ const GridArticles = styled.div`
 
 function Portfolio() {
   const [isCoverVisible, setIsCoverVisible] = useState(true);
+  const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: sagas.NETWORKS_LIST, payload: { auth, user: { _id: "5eb17173301573f88847f144" } } });
+  }, [auth, dispatch]);
 
   return (
     <Page>
       <Area>
         <SectionNetworks>
           <SectionHeader>
-            <SectionTitle>Networks</SectionTitle>
+            <SectionTitle>
+              <p>Networks</p>
+              <Spinner color={c => c.secondary} />
+            </SectionTitle>
             <SectionActions>
               <Button
                 appearance={t => t.outline}
@@ -113,7 +122,9 @@ function Portfolio() {
         </SectionNetworks>
         <SectionArticles>
           <SectionHeaderArticles>
-            <SectionTitle>Articles</SectionTitle>
+            <SectionTitle>
+              <p>Articles</p>
+            </SectionTitle>
             <SectionActions>
               <Button
                 appearance={t => t.outline}

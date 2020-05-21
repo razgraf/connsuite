@@ -111,7 +111,7 @@ const Card = styled.div`
   align-items: center;
   width: 100%;
   height: 200px;
-  border-radius: calc(${props => props.theme.sizes.edge} * 1.5);
+  border-radius: calc(${props => props.theme.sizes.edge} * 1);
   background: ${props => props.theme.colors.white};
   box-shadow: 0 12px 30px -15px r ${props => rgba(props.theme.colors.dark, 0.3)};
 `;
@@ -196,9 +196,15 @@ const CardRightAction = styled.div`
   background: ${props => props.theme.colors.white};
   border-radius: 50%;
   border: 1px solid ${props => props.theme.colors.grayLight};
-  box-shadow: 0 3px 15px -2px ${props => rgba(props.theme.colors.dark, 0.1)};
-  transition: box-shadow 0.2s;
+  box-shadow: 0 3px 5px -2px ${props => rgba(props.theme.colors.dark, 0.08)};
+  transition: box-shadow 200ms;
   cursor: pointer;
+
+  &:hover,
+  &:active {
+    box-shadow: 0 5px 15px -5px ${props => rgba(props.theme.colors.dark, 0.15)};
+    transition: box-shadow 200ms;
+  }
 
   &:last-child {
     margin: 0;

@@ -22,7 +22,7 @@ export default initial => {
   const persistedReducer = persistReducer(
     {
       key: "root",
-      version: 0,
+      version: 1,
       storage: new CookieStorage(Cookies),
       stateReconciler: autoMergeLevel2,
       migrate: createMigrate(migrations, { debug: true }),
@@ -34,7 +34,7 @@ export default initial => {
 
   if (isClient) {
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-    store = createStore(persistedReducer, initial, composeEnhancers(applyMiddleware(sagaMiddleware /** logger */)));
+    store = createStore(persistedReducer, initial, composeEnhancers(applyMiddleware(sagaMiddleware, logger)));
     store.__PERSISTOR = persistStore(store);
   } else {
     store = createStore(rootReducer, initial, compose(applyMiddleware(sagaMiddleware)));

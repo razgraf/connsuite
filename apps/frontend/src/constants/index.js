@@ -85,25 +85,38 @@ export const subpages = {};
 export const vendors = {};
 
 export const redux = {
-  SET: "SET",
-  CHECK: "CHECK",
+  SET: "store_SET",
+  CHECK: "store_CHECK",
 
-  AUTH_USER_SET: "AUTH_USER_SET",
-  AUTH_TOKEN_SET: "AUTH_TOKEN_SET",
+  AUTH_USER_SET: "store_AUTH_USER_SET",
+  AUTH_TOKEN_SET: "store_AUTH_TOKEN_SET",
 
-  COVER_OPEN: "COVER_OPEN",
-  COVER_CLOSE: "COVER_CLOSE",
-  COVER_TOGGLE: "COVER_TOGGLE",
-  COVER_NETWORK_CLEAR: "COVER_NETWORK_CLEAR",
-  COVER_NETWORK_SET: "COVER_NETWORK_SET",
+  COVER_OPEN: "store_COVER_OPEN",
+  COVER_CLOSE: "store_COVER_CLOSE",
+  COVER_TOGGLE: "store_COVER_TOGGLE",
+  COVER_NETWORK_CLEAR: "store_COVER_NETWORK_CLEAR",
+  COVER_NETWORK_SET: "store_COVER_NETWORK_SET",
 
-  HISTORY_PUSH: "HISTORY_PUSH",
-  HISTORY_POP: "HISTORY_POP",
-  HISTORY_CLEAR: "HISTORY_CLEAR",
+  HISTORY_PUSH: "store_HISTORY_PUSH",
+  HISTORY_POP: "store_HISTORY_POP",
+  HISTORY_CLEAR: "store_HISTORY_CLEAR",
+
+  NETWORKS_SET: "store_NETWORKS_SET",
+  NETWORKS_SET_IS_LOADING: "store_NETWORKS_SET_IS_LOADING",
+  NETWORKS_SET_LIST: "store_NETWORKS_SET_LIST",
+  NETWORKS_CLEAR_LIST: "store_NETWORKS_CLEAR_LIST",
+  NETWORKS_PUSH_LIST: "store_NETWORKS_PUSH_LIST",
+
+  ARTICLES_SET: "store_ARTICLES_SET",
+  ARTICLES_SET_IS_LOADING: "store_ARTICLES_SET_IS_LOADING",
+  ARTICLES_SET_LIST: "store_ARTICLES_SET_LIST",
+  ARTICLES_CLEAR_LIST: "store_ARTICLES_CLEAR_LIST",
+  ARTICLES_PUSH_LIST: "store_ARTICLES_PUSH_LIST",
 };
 
 export const sagas = {
-  TEST: "TEST",
+  NETWORKS_LIST: "saga_NETWORKS_LIST",
+  ARTICLES_LIST: "saga_ARTICLES_LIST",
 };
 
 export const types = {
@@ -140,11 +153,17 @@ export const API = {
   authLogin: () => `${API.root}/auth/classic/login`,
   authLogout: () => `${API.root}/auth/logout`,
 
-  networkCreate: () => `${API.root}/network`,
-  networkGet: id => `${API.root}/network/${id}`,
-  networkEdit: id => `${API.root}/network/${id}`,
-  networkRemove: id => `${API.root}/network/${id}`,
-  networkList: () => `${API.root}/network`,
+  networkCreate: () => `${API.root}/networks`,
+  networkGet: id => `${API.root}/networks/${id}`,
+  networkEdit: id => `${API.root}/networks/${id}`,
+  networkRemove: id => `${API.root}/networks/${id}`,
+  networkList: () => `${API.root}/networks`,
+
+  articleCreate: () => `${API.root}/articles`,
+  articleGet: id => `${API.root}/articles/${id}`,
+  articleEdit: id => `${API.root}/articles/${id}`,
+  articleRemove: id => `${API.root}/articles/${id}`,
+  articleList: () => `${API.root}/articles`,
 };
 
 export const links = {

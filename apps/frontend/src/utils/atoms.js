@@ -41,9 +41,9 @@ export function redirectTo(destination, { res = null } = {}) {
     window.location = destination;
   }
 }
-export function buildHeaders({ auth = null } = {}) {
+export function buildHeaders({ auth = null, encoding = null } = {}) {
   const headers = {
-    "Content-Type": "application/json",
+    "Content-Type": _.isNil(encoding) ? "application/json" : encoding,
   };
   if (_.isNil(auth)) return headers;
 

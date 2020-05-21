@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { PURGE } from "redux-persist";
+import AuthRequest from "../requests/auth";
 import { pages } from "../constants";
-import { AuthRequest } from "../requests";
 import { redirectTo } from "./atoms";
 
 /**

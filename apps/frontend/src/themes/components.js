@@ -89,14 +89,18 @@ const SectionHeader = styled.div`
   padding: calc(${props => props.theme.sizes.edge} * 2) 0;
 `;
 
-const SectionTitle = styled.p`
-  margin: 0;
+const SectionTitle = styled.div`
+  display: flex;
+  align-items: center;
   flex: 1;
-  text-align: left;
-  color: ${props => props.theme.colors.secondary};
-  font-family: ${props => props.theme.fonts.primary};
-  font-size: 13pt;
-  font-weight: 400;
+  & > p {
+    margin: 0 calc(${props => props.theme.sizes.edge} * 2 / 3) 0 0;
+    text-align: left;
+    color: ${props => props.theme.colors.secondary};
+    font-family: ${props => props.theme.fonts.primary};
+    font-size: 13pt;
+    font-weight: 400;
+  }
 `;
 
 const SectionActions = styled.div`

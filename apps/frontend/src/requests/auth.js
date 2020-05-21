@@ -1,7 +1,7 @@
 import _ from "lodash";
 import fetch from "cross-fetch";
 import { API, status } from "../constants";
-import { buildHeaders } from "../utils";
+import { buildHeaders } from "../utils/atoms";
 
 /**
  * Create a new user with the Google System
@@ -129,7 +129,7 @@ async function logout(auth) {
   });
 }
 
-const AuthRequest = {
+export default {
   isAuthorized,
   isShallowAuthorized,
 
@@ -138,5 +138,3 @@ const AuthRequest = {
   register,
   logout,
 };
-
-export default AuthRequest;
