@@ -43,15 +43,17 @@ export class Network {
   readonly updatedAt?: mongoose.Schema.Types.Date | string;
 }
 
-export function interpret(network: Network, result: { [key: string]: any } = {}): void {
-  if (_.isNil(network.externalId) || !_.has(networks, network.externalId)) return;
+function interpret(network: Network, result: { [key: string]: any } = {}): void {
+  if (network.type === NetworkType.External) {
+    if (_.isNil(network.externalId) || !_.has(networks, network.externalId)) return;
 
-  const external: Network = networks[network.externalId];
+    const external: Network = networks[network.externalId];
 
-  result.title = external.title;
-  result.icon = external.icon;
-  result.thumbnail = external.thumbnail;
-  result.url = external.url;
+    result.title = external.title;
+    result.icon = external.icon;
+    result.thumbnail = external.thumbnail;
+    result.url = external.url;
+  }
 }
 
 export function toNetworkDTO(
@@ -69,7 +71,7 @@ export function toNetworkDTO(
   result.username = network.username;
   result.url = network.url;
 
-  if (_.get(options, "interpret") === true && network.type === NetworkType.External) interpret(network, result);
+  if (_.get(options, "interpret") === true) interpret(network, result);
 
   if (_.get(options, "user") === true && !_.isNil(network.user) && isDocument(network.user)) {
     result.user = toUserDTO(network.user);

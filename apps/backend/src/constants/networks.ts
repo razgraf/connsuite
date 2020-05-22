@@ -21,12 +21,12 @@ const networks: { [key: string]: Network } = [
     type: NetworkType.External,
     icon: {
       parent: ImageParent.Network,
-      source: `${root}/${tree.externalNetwork}/icon/${_id}.png`,
+      url: `${root}/${tree.externalNetwork}/icon/${_id}.png`,
       version: 0,
     },
     thumbnail: {
       parent: ImageParent.Network,
-      source: `${root}/${tree.externalNetwork}/thumbnail/${_id}.png`,
+      url: `${root}/${tree.externalNetwork}/thumbnail/${_id}.png`,
       version: 0,
     },
   }))

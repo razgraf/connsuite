@@ -45,6 +45,7 @@ export enum ImagePurpose {
 
 export interface ImageDTOOptions {
   parent?: boolean;
+  interpret?: boolean;
 }
 
 export interface UserDTOOptions {

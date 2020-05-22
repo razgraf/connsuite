@@ -162,7 +162,7 @@ export default class NetworkRepository extends BaseRepository<Network> {
   private _populateByOptions(options?: BaseOptions): { path: string; model: string }[] {
     const population: { path: string; model: string }[] = [];
     if (_.isNil(options) || !_.get(options, "populate")) return population;
-    if (!options.hideImages) population.push({ path: "cover", model: "Image" }, { path: "thumbnail", model: "Image" });
+    if (!options.hideImages) population.push({ path: "icon", model: "Image" }, { path: "thumbnail", model: "Image" });
     return population;
   }
 

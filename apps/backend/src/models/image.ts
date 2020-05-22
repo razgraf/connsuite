@@ -1,6 +1,7 @@
 import _ from "lodash";
 import mongoose from "mongoose";
 import { prop, getModelForClass, Ref, isDocument } from "@typegoose/typegoose";
+import { atoms } from "../constants";
 import { ImageParent, ImagePurpose, ImageDTOOptions } from "./atoms";
 import { Article, toArticleDTO } from "./article";
 import { Network, toNetworkDTO } from "./network";
@@ -36,16 +37,32 @@ export class Image {
   url?: string;
 }
 
-export function toImageDTO(image: Image, options: ImageDTOOptions = { parent: false }): { [key: string]: any } {
+function interpret(image: Image, result: { [key: string]: any } = {}): void {
+  if (image.parent === ImageParent.Network) {
+    const type = _.attempt(() => _.toString(_.get(image || {}, "type") || "").split("/")[1]);
+    if (_.isNil(image._id) || _.isError(type) || _.isNil(type)) return;
+    result.url = `${atoms.root}/${atoms.tree.externalNetwork}/icon/${image._id}.${type}`;
+  } else if (image.parent === ImageParent.Article) {
+    const type = _.attempt(() => _.toString(_.get(image || {}, "type") || "").split("/")[1]);
+    if (_.isNil(image._id) || _.isError(type) || _.isNil(type)) return;
+    result.url = `${atoms.root}/${atoms.tree.article}/icon/${image._id}.${type}`;
+  }
+}
+
+export function toImageDTO(
+  image: Image,
+  options: ImageDTOOptions = { parent: false, interpret: true },
+): { [key: string]: any } {
   const result: { [key: string]: any } = {};
 
-  result._id = image._id;
-  result.parent = image.parent;
-  result.version = image.version;
+  // result._id = image._id;
+  // result.purpose = image.purpose;
+  // result.version = image.version;
 
-  result.url = image.url;
   result.type = image.type;
-  result.purpose = image.purpose;
+  result.parent = image.parent;
+
+  if (_.get(options, "interpret") === true) interpret(image, result);
 
   if (_.get(options, "parent") === true) {
     switch (result.parent) {
