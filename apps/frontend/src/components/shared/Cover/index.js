@@ -1,6 +1,5 @@
 import _ from "lodash";
 import React from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
 import IconArrow from "@material-ui/icons/ArrowForwardRounded";
@@ -11,7 +10,7 @@ import { rgba } from "polished";
 
 import Backdrop from "../Backdrop";
 import { pages } from "../../../constants";
-import { useCover } from "../../../hooks";
+import { useCover, useHistory } from "../../../hooks";
 
 const WrapperPartial = styled.div`
   position: fixed;
@@ -121,14 +120,14 @@ const CardLeft = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
-  padding: 0 calc(${props => props.theme.sizes.edge} * 2);
+  padding: 0 calc(${props => props.theme.sizes.edge} * 2.5);
 `;
 
 const CardLeftImage = styled.img`
   width: 100%;
   height: 100%;
-  max-width: 110px;
-  max-height: 110px;
+  max-width: 100px;
+  max-height: 100px;
   object-fit: contain;
   user-select: none;
   opacity: 1;
@@ -145,8 +144,12 @@ const CardMain = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  height: 100%;
+  height: auto;
   flex: 1;
+  border-left: 1px solid ${props => props.theme.colors.grayBlueLight};
+  padding-top: ${props => props.theme.sizes.edge};
+  padding-bottom: ${props => props.theme.sizes.edge};
+  padding-left: calc(${props => props.theme.sizes.edge} * 2);
 `;
 
 const CardMainTitle = styled.p`
@@ -185,7 +188,7 @@ const CardRight = styled.div`
   padding: 0 calc(${props => props.theme.sizes.edge} * 2);
 `;
 
-const CardRightAction = styled.div`
+const CardRightAction = styled.a`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -197,13 +200,25 @@ const CardRightAction = styled.div`
   border-radius: 50%;
   border: 1px solid ${props => props.theme.colors.grayLight};
   box-shadow: 0 3px 5px -2px ${props => rgba(props.theme.colors.dark, 0.08)};
-  transition: box-shadow 200ms;
   cursor: pointer;
+  transition: background 100ms, border 100ms;
 
   &:hover,
   &:active {
-    box-shadow: 0 5px 15px -5px ${props => rgba(props.theme.colors.dark, 0.15)};
-    transition: box-shadow 200ms;
+    background: ${props => props.theme.colors.secondary};
+    border: 1px solid ${props => props.theme.colors.secondary};
+    transition: background 100ms, border 100ms;
+    & > * {
+      color: ${props => props.theme.colors.white};
+    }
+
+    &[data-purpose="statistics"] {
+      background: ${props => props.theme.colors.orange};
+      border: 1px solid ${props => props.theme.colors.orange};
+      & > * {
+        color: ${props => props.theme.colors.white};
+      }
+    }
   }
 
   &:last-child {
@@ -285,6 +300,7 @@ const Wrapper = styled(WrapperPartial)`
 
 function Cover() {
   const { isOpen, network, setOpen } = useCover();
+  const { push } = useHistory();
 
   return (
     <Wrapper data-visible={isOpen}>
@@ -303,19 +319,17 @@ function Cover() {
                 </CardLeft>
                 <CardMain>
                   <CardMainTitle>{_.get(network, "title")}</CardMainTitle>
-                  <CardMainUsername>{_.get(network, "username")}</CardMainUsername>
+                  {_.get(network, "username") && <CardMainUsername>{_.get(network, "username")}</CardMainUsername>}
                 </CardMain>
                 <CardRight>
                   <Link href={pages.statistics.root}>
-                    <CardRightAction data-purpose="statistics" title={pages.statistics.title}>
+                    <CardRightAction data-purpose="statistics" title={pages.statistics.title} onClick={push}>
                       <pages.statistics.Icon style={{ fontSize: "16pt" }} />
                     </CardRightAction>
                   </Link>
-                  <Link href={_.get(network, "url") || "#"}>
-                    <CardRightAction title="Visit Network">
-                      <IconArrow style={{ fontSize: "16pt" }} />
-                    </CardRightAction>
-                  </Link>
+                  <CardRightAction title="Visit Network" href={_.get(network, "url") || "#"} target="_blank" rel="noopener noreferrer">
+                    <IconArrow style={{ fontSize: "16pt" }} />
+                  </CardRightAction>
                 </CardRight>
               </Card>
             </Section>
@@ -338,7 +352,7 @@ function Cover() {
                 </ActionTitle>
               </Action>
               <Link href={pages.network.edit.builder(_.get(network, "_id"))}>
-                <Action as="div">
+                <Action onClick={push}>
                   <ActionIcon>
                     <IconEdit style={{ fontSize: "12pt" }} />
                   </ActionIcon>

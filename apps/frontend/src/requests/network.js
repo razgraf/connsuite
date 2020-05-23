@@ -17,7 +17,6 @@ import { buildHeaders } from "../utils/atoms";
  * @param {boolean} [handle] - Handle response inside (OK vs Not OK)
  */
 async function create({ auth, network }, handle = true) {
-  console.log(auth, network);
   const body = new FormData();
   Object.keys(network).forEach(key => body.append(key, network[key]));
 
@@ -111,10 +110,14 @@ async function remove({ auth, networkId }, handle = true) {
  */
 async function get({ auth, networkId }, handle = true) {
   const endpoint = new URL(API.networkGet(networkId));
+  const params = {
+    authorize: true,
+  };
+
+  Object.keys(params).forEach(key => (!_.isNil(params[key]) ? endpoint.searchParams.append(key, params[key]) : null));
   const response = await fetch(endpoint, {
     method: "GET",
     headers: buildHeaders({ auth }),
-    body: {},
     credentials: "omit",
   });
 

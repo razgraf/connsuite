@@ -4,13 +4,12 @@ import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 import { rgba } from "polished";
 import { useSelector } from "react-redux";
-import IconChoose from "@material-ui/icons/ExploreRounded";
-import IconCredentials from "@material-ui/icons/HowToRegRounded";
 import IconLive from "@material-ui/icons/FlashOnRounded";
 import { components } from "../../../../themes";
 import Nav from "../../../../components/shared/Nav";
+import { Warning, Spinner } from "../../../../components/atoms";
 import { pages, types } from "../../../../constants";
-import { useNetworkCreateReducer, useNetworkCreateMachine } from "../../../../hooks";
+import { useNetworkReducer, useNetworkEditMachine, useHistory } from "../../../../hooks";
 import { Header, Preview, Footer, Steps } from "../../../../components/specific/Network/Manager";
 
 const Page = styled.div`
@@ -137,95 +136,103 @@ const StepCss = css`
   }
 `;
 
-const Choose = styled(Steps.Choose)`
-  ${StepCss};
+const StyledWarning = styled(Warning)`
+  & > p {
+    font-size: 11pt;
+  }
 `;
-const Credentials = styled(Steps.Credentials)`
+
+const Loader = styled.div`
   ${StepCss};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
-const Live = styled(Steps.Live)`
+
+const Explainer = styled.div`
+  ${StepCss};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Modify = styled(Steps.Modify)`
   ${StepCss};
 `;
 
 const source = {
   1: {
     index: 1,
-    Icon: IconChoose,
-    title: "Choose Network",
-    left: "Cancel",
-    right: "Next Step",
-  },
-  2: {
-    index: 2,
-    Icon: IconCredentials,
-    title: "Fill in credentials",
-    left: "Go Back",
-    right: "Next Step",
-  },
-  3: {
-    index: 3,
     Icon: IconLive,
-    title: "Go Live",
-    left: "Go Back",
-    right: "Go Live",
+    title: "Edit Attributes and Go Live",
+    left: "Cancel changes",
+    right: "Edit and Go Live",
     isFinal: true,
   },
 };
 
 function NetworkManager({ query }) {
-  const type = types.network.manager[_.has(query, "id") ? "edit" : "create"];
+  const networkId = _.get(query, "id");
   const auth = useSelector(state => state.auth);
-  const reducer = useNetworkCreateReducer();
-  const machine = useNetworkCreateMachine({ type: type.toUpperCase() });
-  const step = useMemo(() => machine.current.context.step, [machine]);
+  const reducer = useNetworkReducer();
+  const machine = useNetworkEditMachine({ networkId, reducer });
+  const history = useHistory();
 
-  useEffect(() => console.log(machine.current.value), [machine]);
-
-  const onForward = useCallback(() => {
-    if (step === 3) {
-      const network = {};
-      console.log(reducer.state);
-      Object.keys(reducer.state).forEach(key => {
-        network[key] = reducer.state[key].value;
-      });
-      machine.send(machine.events.forward, { payload: { auth, network } });
-    } else machine.send(machine.events.forward, { payload: reducer.state });
-  }, [auth, machine, reducer, step]);
-
-  const onBackward = useCallback(() => {
-    machine.send(machine.events.backward);
+  useEffect(() => {
+    console.log(machine.current.value);
   }, [machine]);
 
+  const onForward = useCallback(() => {
+    const network = {};
+    Object.keys(reducer.state).forEach(key => {
+      network[key] = reducer.state[key].value;
+    });
+    machine.send(machine.events.forward, { payload: { auth, network, networkId } });
+  }, [auth, machine, reducer, networkId]);
+
+  const onBackward = useCallback(() => {
+    history.back(pages.portfolio.root);
+  }, [history]);
+
   const checkForward = useCallback(() => {
-    if (step === 1) {
-      if (reducer.state.type.value === types.network.type.external) {
-        return machine.guards.isExternalChooseAcceptable(machine.context, { payload: reducer.state });
-      } else return machine.guards.isInternalChooseAcceptable(machine.context, { payload: reducer.state });
-    } else if (step === 2) {
-      if (reducer.state.type.value === types.network.type.external)
-        return machine.guards.isExternalCredentialsAcceptable(machine.context, { payload: reducer.state });
-      else return machine.guards.isInternalCredentialsAcceptable(machine.context, { payload: reducer.state });
-    } else if (step === 3) {
-      return machine.guards.isLiveAcceptable(machine.context, { payload: reducer.state });
-    }
-    return true;
-  }, [reducer, step, machine.guards, machine.context]);
+    if (reducer.state.type.value === types.network.type.external)
+      return machine.guards.isExternalModifyAcceptable(machine.current.context, { payload: { ...reducer.state, networkId } });
+    else return machine.guards.isInternalModifyAcceptable(machine.current.context, { payload: { ...reducer.state, networkId } });
+  }, [reducer, machine, networkId]);
+
+  const interpreted = useMemo(() => {
+    return {
+      url: reducer.state.url.value,
+      title: reducer.state.title.value,
+      username: reducer.state.username.value,
+      icon: {
+        url: reducer.state.icon.preview,
+      },
+    };
+  }, [reducer.state]);
 
   return (
     <Page data-leaving={machine.current.value === machine.states.success}>
-      <StyledNav appearance={types.nav.appearance.secondary} title={pages.network.create.title} hasParent />
+      <StyledNav appearance={types.nav.appearance.secondary} title={pages.network.edit.title} hasParent />
       <Canvas>
         <Card>
-          <Header step={step} source={source} />
+          <Header step={1} source={source} />
           <Main>
             <Playground>
-              <Choose isActive={step === 1} reducer={reducer} />
-              <Credentials isActive={step === 2} reducer={reducer} />
-              <Live isActive={step === 3} reducer={reducer} />
+              <Loader data-active={machine.current.value === machine.states.retrieve}>
+                <Spinner color={c => c.secondary} size={50} thickness={2} />
+              </Loader>
+              <Explainer data-active={machine.current.value === machine.states.forbidden}>
+                <StyledWarning isCentered value={machine.current.context.error} />
+              </Explainer>
+              <Modify
+                isActive={![machine.states.idle, machine.states.retrieve, machine.states.forbidden].includes(machine.current.value)}
+                reducer={reducer}
+              />
             </Playground>
-            <Preview reducer={reducer} step={step} />
+            <Preview reducer={reducer} isBarActive network={interpreted} />
           </Main>
-          <Footer step={source[step]} onForward={onForward} onBackward={onBackward} machine={machine} checkForward={checkForward} />
+          <Footer step={source[1]} onForward={onForward} onBackward={onBackward} machine={machine} checkForward={checkForward} />
         </Card>
       </Canvas>
     </Page>

@@ -1,10 +1,14 @@
 import _ from "lodash";
-import official from "@connsuite/guards";
+import official, { limits } from "@connsuite/guards";
 import { types } from "../../../constants";
 
 /**
  * ATOMS
  */
+
+function isModifyAcceptable(__, event) {
+  return !_.isNil(_.get(event, "payload.networkId"));
+}
 
 function isTitleAcceptable(__, event) {
   return official.isNetworkTitleAcceptable(_.get(event, "payload.title.value"), false);
@@ -27,12 +31,18 @@ function isUsernameAcceptable(__, event) {
 }
 
 function isUsernameOptionallyAcceptable(__, event) {
-  if (_.get(event, "payload.username.value") && _.get(event, "payload.username.value").length > 200) return false;
+  if (_.get(event, "payload.username.value")) return official.isNetworkUsernameAcceptable(_.get(event, "payload.username.value"), false);
   return true;
 }
 
 function isDescriptionOptionallyAcceptable(__, event) {
-  if (_.get(event, "payload.description.value") && _.get(event, "payload.description.value").length > 200) return false;
+  if (_.get(event, "payload.description.value"))
+    return official.isNetworkDescriptionsAcceptable(_.get(event, "payload.description.value"), false);
+  return true;
+}
+
+function isIconOptionallyAcceptable(__, event) {
+  if (_.get(event, "payload.icon.value")) return official.isNetworkIconAcceptable(_.get(event, "payload.icon.value"), false);
   return true;
 }
 
@@ -68,12 +78,36 @@ function isLiveAcceptable(context, event) {
   return isDescriptionOptionallyAcceptable(context, event);
 }
 
+function isInternalModifyAcceptable(context, event) {
+  return (
+    isNetworkTypeInternal(context, event) &&
+    isModifyAcceptable(context, event) &&
+    isTitleAcceptable(context, event) &&
+    isUrlAcceptable(context, event) &&
+    isIconOptionallyAcceptable(context, event) &&
+    isUsernameOptionallyAcceptable(context, event) &&
+    isDescriptionOptionallyAcceptable(context, event)
+  );
+}
+
+function isExternalModifyAcceptable(context, event) {
+  return (
+    isNetworkTypeExternal(context, event) &&
+    isModifyAcceptable(context, event) &&
+    isUsernameAcceptable(context, event) &&
+    isDescriptionOptionallyAcceptable(context, event)
+  );
+}
+
 const guards = {
   isInternalChooseAcceptable,
   isExternalChooseAcceptable,
   isInternalCredentialsAcceptable,
   isExternalCredentialsAcceptable,
   isLiveAcceptable,
+
+  isInternalModifyAcceptable,
+  isExternalModifyAcceptable,
 };
 
 export default guards;

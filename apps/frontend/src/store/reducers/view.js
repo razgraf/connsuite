@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { combineReducers } from "redux";
 import { PURGE, REHYDRATE } from "redux-persist";
 import { redux } from "../../constants";
@@ -59,9 +60,56 @@ const cover = (state = initialCover, { type, payload } = {}) => {
   }
 };
 
+const initialModal = {
+  list: [],
+};
+
+const modal = (state = initialModal, { type, payload } = {}) => {
+  switch (type) {
+    case redux.MODAL_RESET: {
+      return initialModal;
+    }
+    case redux.MODAL_ADD: {
+      const { list } = state;
+      if (!_.isNil(payload.id) && !list.find(item => item.id === _.get(payload, "id"))) list.push(payload);
+      return {
+        ...state,
+        list,
+      };
+    }
+    case redux.MODAL_OPEN: {
+      return {
+        ...state,
+        list: state.list.map(item => (item.id === _.get(payload, "id") ? { ...item, isOpen: true } : item)),
+      };
+    }
+    case redux.MODAL_CLOSE: {
+      return {
+        ...state,
+        list: state.list.map(item => (item.id === _.get(payload, "id") ? { ...item, isOpen: false } : item)),
+      };
+    }
+    case redux.MODAL_REMOVE: {
+      const { list } = state;
+      if (!_.isNil(payload.id)) _.remove(list, item => item.id === payload.id);
+      return {
+        ...state,
+        list,
+      };
+    }
+    case REHYDRATE:
+      return initialModal;
+    case PURGE:
+      return initialModal;
+    default:
+      return state;
+  }
+};
+
 const viewReducer = combineReducers({
   cover,
   history,
+  modal,
 });
 
 export default viewReducer;

@@ -120,7 +120,6 @@ const OverlayActions = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
-
   width: 100%;
   height: 100%;
   padding: calc(${props => props.theme.sizes.networkEdge} * 3 / 4);
@@ -132,35 +131,35 @@ const OverlayActionVisit = styled.div`
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  margin-bottom: calc(${props => props.theme.sizes.networkEdge} * 3 / 4);
+  margin-bottom: auto;
+  /* margin-bottom: calc(${props => props.theme.sizes.networkEdge} * 3 / 4); */
 `;
 
-const OverlayActionVisitIcon = styled.div`
+const OverlayActionVisitIcon = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  height: 40px;
-  width: 40px;
-  border-radius: 20px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
   background-color: ${props => props.theme.colors.white};
-  margin-right: 10px;
-  transition: background-color 200ms;
+  /* margin-right: 10px; */
+  transition: background-color 100ms;
 
   & > * {
     color: ${props => props.theme.colors.secondary};
     line-height: 0 !important;
     transform: rotate(-15deg);
-    transition: color 200ms;
+    transition: color 100ms;
   }
 
   &:hover,
   &:active {
-    background-color: ${props => props.theme.colors.secondary};
-    transition: background-color 200ms;
+    background-color: ${props => props.theme.colors.dark};
+    transition: background-color 100ms;
     & > * {
-      color: ${props => props.theme.colors.white};
-      transition: color 200ms;
+      color: ${props => props.theme.colors.secondary};
+      transition: color 100ms;
     }
   }
 `;
@@ -170,6 +169,7 @@ const OverlayActionVisitTitle = styled.p`
   color: ${props => props.theme.colors.white};
   margin: 0;
   font-weight: 600;
+  display: none;
 `;
 
 const OverlayActionDetails = styled(Button)``;
@@ -313,7 +313,7 @@ const Wrapper = styled(WrapperPartial)`
 
 function Network({ className, isViewOnly, isFocused, isInEditMode, ...network }) {
   const { setOpen: setCoverOpen, setNetwork: setCoverNetwork } = useCover();
-  const { title, username, icon } = network;
+  const { title, username, icon, thumbnail, url } = network;
 
   const doPick = useCallback(() => {
     if (!isViewOnly) {
@@ -329,7 +329,7 @@ function Network({ className, isViewOnly, isFocused, isInEditMode, ...network })
           <Overlay data-component="overlay">
             <OverlayActions>
               <OverlayActionVisit>
-                <OverlayActionVisitIcon>
+                <OverlayActionVisitIcon href={url} target="_blank" rel="noopener noreferrer">
                   <IconVisit style={{ fontSize: "14pt" }} />
                 </OverlayActionVisitIcon>
                 <OverlayActionVisitTitle>Visit network</OverlayActionVisitTitle>
@@ -349,7 +349,7 @@ function Network({ className, isViewOnly, isFocused, isInEditMode, ...network })
             <ContentHeaderIndicator />
           </ContentHeader>
           <ContentMain>
-            <ContentImage src={_.get(icon, "url")} data-component="content-image" />
+            <ContentImage src={_.get(thumbnail, "url")} data-component="content-image" />
           </ContentMain>
           <ContentFooter data-component="content-footer">
             <ContentFooterDetails>Get Details</ContentFooterDetails>

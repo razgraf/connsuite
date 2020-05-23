@@ -3,14 +3,13 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled, { keyframes } from "styled-components";
 import Network, { NetworkMini } from "../../../../shared/Network";
-import { types } from "../../../../../constants";
-import { useExternalNetworks } from "../../../../../hooks";
+import { ellipsis } from "../../../../../utils";
 
 const IndicatorBlink = keyframes`
   0%{
     opacity: 0;
   }
-  50%{
+  20%{
     opacity: 1;
   }
   100%{
@@ -176,32 +175,19 @@ const ContentSideNetwork = styled(NetworkMini)`
   }
 `;
 
-function Preview({ className, reducer, step }) {
-  const external = useExternalNetworks();
-
-  const network = useMemo(() => {
-    if (reducer.state.type.value === types.network.type.internal)
-      return {
-        url: reducer.state.url.value,
-        title: reducer.state.title.value,
-        username: reducer.state.username.value,
-        icon: {
-          url: reducer.state.icon.preview,
-        },
-      };
-    else if (reducer.state.type.value === types.network.type.external)
-      return external ? _.get(external, "list").find(item => item._id === reducer.state.externalId.value) : {};
-    return {};
-  }, [reducer.state, external]);
-
+function Preview({ className, reducer, network, isBarActive }) {
   const bar = useMemo(
-    () => `${_.toString(_.get(network, "url")) || "https://www.network.com"}/${_.toString(_.get(reducer.state.username, "value"))}`,
+    () =>
+      ellipsis(
+        `${_.toString(_.get(network, "url")) || "https://www.network.com"}/${_.toString(_.get(reducer.state.username, "value"))}`,
+        40,
+      ),
     [network, reducer.state.username],
   );
 
   return (
     <Wrapper className={className}>
-      <Header data-active={step === 2}>
+      <Header data-active={isBarActive}>
         <HeaderActions>
           <HeaderAction />
           <HeaderAction />
@@ -228,11 +214,14 @@ function Preview({ className, reducer, step }) {
 
 Preview.propTypes = {
   className: PropTypes.string,
-  step: PropTypes.number.isRequired,
+  isBarActive: PropTypes.bool,
+  network: PropTypes.shape({}),
 };
 
 Preview.defaultProps = {
   className: null,
+  isBarActive: false,
+  network: {},
 };
 
 export default Preview;

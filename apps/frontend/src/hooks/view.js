@@ -1,7 +1,8 @@
+import _ from "lodash";
 import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import { redux } from "../constants";
+import { redux, pages } from "../constants";
 
 export function useCover() {
   const dispatch = useDispatch();
@@ -38,6 +39,10 @@ export function useHistory() {
 
   return {
     history,
+    back: (fallback = null) => {
+      const route = history.length > 0 ? _.get(history, `[${history.length - 1}]route`) : fallback;
+      router.push(route || pages.dashboard.root).then(() => dispatch({ type: redux.HISTORY_POP }));
+    },
     push: () => dispatch({ type: redux.HISTORY_PUSH, payload: { route: router.pathname } }),
     pop: () => dispatch({ type: redux.HISTORY_POP }),
     clear: () => dispatch({ type: redux.HISTORY_CLEAR }),

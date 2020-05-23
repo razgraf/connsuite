@@ -28,6 +28,8 @@ const actions = {
 };
 
 const initialContext = {
+  auth: null,
+  networkId: null,
   step: 1,
   data: null,
   error: null,
@@ -53,7 +55,7 @@ const machine = Machine(
   {
     id: "createNetworkMachine",
     initial: "idle",
-    context: { ...initialContext, type: "CREATE" },
+    context: { ...initialContext },
     states: {
       [states.idle]: {
         on: {
