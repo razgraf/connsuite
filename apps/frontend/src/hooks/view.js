@@ -7,14 +7,20 @@ export function useCover() {
   const dispatch = useDispatch();
   const cover = useSelector(state => state.view.cover);
 
-  const setOpen = useCallback((isOpen = true) => {
-    if (isOpen) dispatch({ type: redux.COVER_OPEN });
-    else dispatch({ type: redux.COVER_CLOSE });
-  }, []);
+  const setOpen = useCallback(
+    (isOpen = true) => {
+      if (isOpen) dispatch({ type: redux.COVER_OPEN });
+      else dispatch({ type: redux.COVER_CLOSE });
+    },
+    [dispatch],
+  );
 
-  const setNetwork = useCallback(network => {
-    dispatch({ type: redux.COVER_NETWORK_SET, payload: { network } });
-  }, []);
+  const setNetwork = useCallback(
+    network => {
+      dispatch({ type: redux.COVER_NETWORK_SET, payload: { network } });
+    },
+    [dispatch],
+  );
 
   return {
     isOpen: cover.isOpen,

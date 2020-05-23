@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import IconAdd from "@material-ui/icons/Add";
-import { useSelector, useDispatch } from "react-redux";
 import { components } from "../../../themes";
 import { Button, Spinner } from "../../../components/atoms";
 import { Area } from "../../../components/shared";
-import { sagas, pages, DUMMY } from "../../../constants";
+import { pages } from "../../../constants";
+import { useNetworks, useArticles } from "../../../hooks";
 import Network, { NetworkAdd } from "../../../components/shared/Network";
 import Article, { ArticleAdd } from "../../../components/shared/Article";
 import Cover from "../../../components/shared/Cover";
@@ -25,7 +25,7 @@ const SectionNetworks = styled(components.Section)`
 const SectionArticles = styled(components.Section)`
   padding: 0;
   overflow-x: hidden;
-  margin-bottom: ${props => props.theme.sizes.edge};
+  margin-bottom: 0;
 `;
 
 const SectionQuick = styled(components.Section)`
@@ -75,6 +75,7 @@ const GridArticles = styled.div`
   grid-template-rows: repeat(auto-fill, 310px);
   grid-gap: 0;
   overflow: hidden;
+  padding-bottom: ${props => props.theme.sizes.edge};
   & > * {
     grid-column: span 1;
   }
@@ -82,11 +83,9 @@ const GridArticles = styled.div`
 
 function Portfolio() {
   const [isCoverVisible, setIsCoverVisible] = useState(true);
-  const auth = useSelector(state => state.auth);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch({ type: sagas.NETWORKS_LIST, payload: { auth, user: { _id: "5eb17173301573f88847f144" } } });
-  }, [auth, dispatch]);
+
+  const networks = useNetworks();
+  const articles = useArticles();
 
   return (
     <Page>
@@ -95,7 +94,7 @@ function Portfolio() {
           <SectionHeader>
             <SectionTitle>
               <p>Networks</p>
-              <Spinner color={c => c.secondary} />
+              <Spinner color={c => c.secondary} isVisible={networks.isLoading} />
             </SectionTitle>
             <SectionActions>
               <Button
@@ -114,7 +113,7 @@ function Portfolio() {
             </SectionActions>
           </SectionHeader>
           <GridNetworks>
-            {DUMMY.NETWORKS.map(network => (
+            {networks.list.map(network => (
               <Network key={network._id} {...network} />
             ))}
             <NetworkAdd />
@@ -124,6 +123,7 @@ function Portfolio() {
           <SectionHeaderArticles>
             <SectionTitle>
               <p>Articles</p>
+              <Spinner color={c => c.secondary} isVisible={articles.isLoading} />
             </SectionTitle>
             <SectionActions>
               <Button
@@ -142,7 +142,7 @@ function Portfolio() {
             </SectionActions>
           </SectionHeaderArticles>
           <GridArticles>
-            {DUMMY.ARTICLES.map(article => (
+            {articles.list.map(article => (
               <Article key={article._id} {...article} />
             ))}
             <ArticleAdd />

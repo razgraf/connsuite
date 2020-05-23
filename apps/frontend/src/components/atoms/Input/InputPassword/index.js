@@ -53,6 +53,7 @@ function InputPassword({ className, id, help, label, onUpdate, placeholder, inpu
         ref={inputRef}
         type={isVisible ? "text" : "password"}
         defaultValue={_.isNil(value) ? "" : value}
+        autocomplete="off"
       />
       <VisibleIcon
         data-visible={isVisible}

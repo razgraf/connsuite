@@ -37,11 +37,11 @@ function isDescriptionOptionallyAcceptable(__, event) {
 }
 
 function isNetworkTypeInternal(__, event) {
-  return _.get(event, "payload.type.value") === types.network.source.internal;
+  return _.get(event, "payload.type.value") === types.network.type.internal;
 }
 
 function isNetworkTypeExternal(__, event) {
-  return _.get(event, "payload.type.value") === types.network.source.external;
+  return _.get(event, "payload.type.value") === types.network.type.external;
 }
 
 /**

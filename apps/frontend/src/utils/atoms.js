@@ -1,7 +1,7 @@
 import _ from "lodash";
 import Router from "next/router";
 
-export function getAsset({ type, source }) {
+export function _getAsset({ type, source }) {
   let asset = null;
   try {
     switch (type) {
@@ -36,15 +36,20 @@ export function redirectTo(destination, { res = null } = {}) {
   }
 
   if (destination[0] === "/" && destination[1] !== "/") {
-    Router.push(destination);
+    Router.push(destination).then(() => {
+      try {
+        window.scrollTo(0, 0);
+      } catch (e) {
+        console.error(e);
+      }
+    });
   } else {
     window.location = destination;
   }
 }
 export function buildHeaders({ auth = null, encoding = null } = {}) {
-  const headers = {
-    "Content-Type": _.isNil(encoding) ? "application/json" : encoding,
-  };
+  const headers = {};
+  if (encoding !== "auto") headers["Content-Type"] = _.isNil(encoding) ? "application/json" : encoding;
   if (_.isNil(auth)) return headers;
 
   try {

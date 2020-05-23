@@ -50,7 +50,7 @@ const Overlay = styled.div`
   width: 100%;
   height: 100%;
   cursor: pointer;
-  background-color: ${props => rgba(props.theme.colors.white, 0)};
+  background-color: ${props => rgba(props.theme.colors.black, 0)};
   overflow: hidden;
   transition: background-color 200ms;
 `;
@@ -123,10 +123,9 @@ const OverlayFooter = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
   width: 101%;
   padding: ${props => props.theme.sizes.edge};
-  background: ${props => rgba(props.theme.colors.white, 0.97)};
+  background: ${props => props.theme.colors.white};
   transform: translateY(100%);
   transition: transform 200ms;
   will-change: transform;
@@ -213,7 +212,7 @@ const Wrapper = styled(WrapperPartial)`
   &:hover,
   &:active {
     ${Overlay} {
-      background-color: ${props => rgba(props.theme.colors.white, 0.2)};
+      background-color: ${props => rgba(props.theme.colors.black, 0.15)};
       transition: background-color 200ms;
     }
     ${OverlayFooter} {
@@ -222,7 +221,11 @@ const Wrapper = styled(WrapperPartial)`
       will-change: transform;
     }
   }
-
+  &:not([data-style="add"]) {
+    ${Card} {
+      box-shadow: 0 0 15px 0 ${props => rgba(props.theme.colors.dark, 0.1)};
+    }
+  }
   &[data-style="add"] {
     opacity: 0.6;
     transition: opacity 200ms;
@@ -290,7 +293,7 @@ const actionFactory = _id => [
   },
 ];
 
-function Article({ className, _id, image, title, type }) {
+function Article({ className, _id, thumbnail, title, type }) {
   const actions = useMemo(() => actionFactory(_id), [_id]);
 
   return (
@@ -329,7 +332,7 @@ function Article({ className, _id, image, title, type }) {
             </OverlayFooter>
           </Overlay>
           <Content>
-            <ContentImage src={_.get(image, "source")} />
+            <ContentImage src={_.get(thumbnail, "url")} />
           </Content>
         </Card>
       </Wrapper>
@@ -360,7 +363,9 @@ function ArticleAdd() {
 Article.propTypes = {
   className: PropTypes.string,
   _id: PropTypes.string.isRequired,
-  image: PropTypes.shape({}).isRequired,
+  thumbnail: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+  }).isRequired,
   title: PropTypes.string,
   type: PropTypes.oneOf(["internal", "external"]),
 };

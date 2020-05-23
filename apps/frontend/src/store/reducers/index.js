@@ -1,12 +1,14 @@
 import { combineReducers } from "redux";
 
 import authReducer from "./auth";
-import dataReducer from "./data";
+import portfolioReducer from "./portfolio";
+import resourceReducer from "./resource";
 import viewReducer from "./view";
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  data: dataReducer,
+  portfolio: portfolioReducer,
+  resource: resourceReducer,
   view: viewReducer,
 });
 

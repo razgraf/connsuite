@@ -10,7 +10,7 @@ import IconDelete from "@material-ui/icons/RemoveCircleOutlineRounded";
 import { rgba } from "polished";
 
 import Backdrop from "../Backdrop";
-import { pages, DUMMY } from "../../../constants";
+import { pages } from "../../../constants";
 import { useCover } from "../../../hooks";
 
 const WrapperPartial = styled.div`
@@ -299,7 +299,7 @@ function Cover() {
               </SectionHeader>
               <Card>
                 <CardLeft>
-                  <CardLeftImage src={_.get(network, "icon.source")} alt="" />
+                  <CardLeftImage src={_.get(network, "icon.url")} alt="" />
                 </CardLeft>
                 <CardMain>
                   <CardMainTitle>{_.get(network, "title")}</CardMainTitle>
@@ -358,17 +358,5 @@ function Cover() {
     </Wrapper>
   );
 }
-
-Cover.propTypes = {
-  network: PropTypes.shape({}),
-  isVisible: PropTypes.bool,
-  setIsVisible: PropTypes.func,
-};
-
-Cover.defaultProps = {
-  network: DUMMY.NETWORKS[0],
-  isVisible: false,
-  setIsVisible: () => {},
-};
 
 export default Cover;

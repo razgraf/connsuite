@@ -106,7 +106,7 @@ const Wrapper = styled(WrapperPartial)`
 function NetworkMini({ className, network, isViewOnly, isFocused, onClick }) {
   return (
     <Wrapper className={className} data-focused={isFocused} data-viewonly={isViewOnly} onClick={isViewOnly ? null : onClick}>
-      <Icon src={_.get(network, "icon.source")} alt="" />
+      <Icon src={_.get(network, "thumbnail.url")} alt="" />
       <Overlay />
     </Wrapper>
   );

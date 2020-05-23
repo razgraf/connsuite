@@ -3,7 +3,8 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import guards, { policy } from "@connsuite/guards";
-import { types, DUMMY } from "../../../../../../constants";
+import { useExternalNetworks } from "../../../../../../hooks";
+import { types } from "../../../../../../constants";
 import { InputArea, Emoji } from "../../../../../atoms";
 
 const Wrapper = styled.div``;
@@ -97,19 +98,24 @@ const Section = styled(SectionPartial)`
 `;
 
 function Live({ className, isActive, reducer }) {
+  const external = useExternalNetworks() || { list: [] };
   const network = useMemo(() => {
-    if (reducer.state.type.value === types.network.source.internal)
+    if (reducer.state.type.value === types.network.type.internal)
       return {
         url: reducer.state.url.value,
         title: reducer.state.title.value,
         username: reducer.state.username.value,
         icon: {
-          source: reducer.state.icon.preview,
+          url: reducer.state.icon.preview,
         },
       };
 
-    return DUMMY.NETWORKS.find(item => item._id === reducer.state.externalId.value) || {}; // TODO System for external networks
-  }, [reducer.state]);
+    const supported = external.list.find(item => item._id === reducer.state.externalId.value) || {};
+    return {
+      ...supported,
+      username: reducer.state.username.value,
+    };
+  }, [reducer.state, external]);
 
   return (
     <Wrapper className={className} data-active={isActive}>
@@ -129,7 +135,7 @@ function Live({ className, isActive, reducer }) {
           </Field>
           <Field>
             <p>
-              Username: <span>{_.get(network, "username")}</span>
+              Username: <span>{_.get(network, "username") || "-"}</span>
             </p>
           </Field>
           <Field>

@@ -22,7 +22,7 @@ function InputText({ className, id, help, label, onUpdate, placeholder, inputRef
         ref={inputRef}
         type="text"
         defaultValue={_.isNil(value) ? "" : value}
-        autocomplete="on"
+        autocomplete="off"
       />
     </Frame>
   );

@@ -6,22 +6,21 @@ import { buildHeaders } from "../utils/atoms";
 /**
  * @param {object} p0
  * @param {object} p0.auth - Authorization (persisted)
- * @param {object} p0.network
- * @param {string} p0.network.type
- * @param {string} [p0.network.title]
- * @param {string} [p0.network.username]
- * @param {string} [p0.network.description]
- * @param {File} [p0.network.icon]
- * @param {string} [p0.network.url]
- * @param {object} [p0.network.externalId]
+ * @param {object} p0.article
+ * @param {string} p0.article.type
+ * @param {string} p0.article.title
+ * @param {string} [p0.article.skills] - 🚨 PREPROCESS:: Has to be a stringified JSON
+ * @param {string} [p0.article.categories] - 🚨 PREPROCESS:: Has to be a stringified JSON
+ * @param {string} [p0.article.content]
+ * @param {string} [p0.article.url]
+ * @param {File} [p0.article.cover]
  * @param {boolean} [handle] - Handle response inside (OK vs Not OK)
  */
-async function create({ auth, network }, handle = true) {
-  console.log(auth, network);
+async function create({ auth, article }, handle = true) {
   const body = new FormData();
-  Object.keys(network).forEach(key => body.append(key, network[key]));
+  Object.keys(article).forEach(key => body.append(key, article[key]));
 
-  const endpoint = new URL(API.networkCreate());
+  const endpoint = new URL(API.articleCreate());
   const response = await fetch(endpoint, {
     method: "POST",
     headers: buildHeaders({ auth, encoding: "auto" }),
@@ -43,22 +42,22 @@ async function create({ auth, network }, handle = true) {
 /**
  * @param {object} p0
  * @param {object} p0.auth - Authorization (persisted)
- * @param {object} p0.networkId - Item identification
- * @param {string} p0.network
- * @param {string} p0.network.type
- * @param {string} [p0.network.title]
- * @param {string} [p0.network.username]
- * @param {string} [p0.network.description]
- * @param {File} [p0.network.icon]
- * @param {string} [p0.network.url]
- * @param {object} [p0.network.externalId]
+ * @param {string} p0.articleId - Item identification
+ * @param {object} p0.article
+ * @param {string} p0.article.type
+ * @param {string} p0.article.title
+ * @param {string} [p0.article.skills] - 🚨 PREPROCESS:: Has to be a stringified JSON
+ * @param {string} [p0.article.categories] - 🚨 PREPROCESS:: Has to be a stringified JSON
+ * @param {string} [p0.article.content]
+ * @param {string} [p0.article.url]
+ * @param {File} [p0.article.cover]
  * @param {boolean} [handle] - Handle response inside (OK vs Not OK)
  */
-async function edit({ auth, network, networkId }, handle = true) {
+async function edit({ auth, article, articleId }, handle = true) {
   const body = new FormData();
-  Object.keys(network).forEach(key => body.append(key, network[key]));
+  Object.keys(article).forEach(key => body.append(key, article[key]));
 
-  const endpoint = new URL(API.networkEdit(networkId));
+  const endpoint = new URL(API.articleEdit(articleId));
   const response = await fetch(endpoint, {
     method: "PATCH",
     headers: buildHeaders({ auth, encoding: "auto" }),
@@ -80,11 +79,11 @@ async function edit({ auth, network, networkId }, handle = true) {
 /**
  * @param {object} p0
  * @param {object} p0.auth - Authorization (persisted)
- * @param {object} p0.networkId - Item identification
+ * @param {object} p0.articleId - Item identification
  * @param {boolean} [handle] - Handle response inside (OK vs Not OK)
  */
-async function remove({ auth, networkId }, handle = true) {
-  const endpoint = new URL(API.networkRemove(networkId));
+async function remove({ auth, articleId }, handle = true) {
+  const endpoint = new URL(API.articleRemove(articleId));
   const response = await fetch(endpoint, {
     method: "DELETE",
     headers: buildHeaders({ auth }),
@@ -106,11 +105,11 @@ async function remove({ auth, networkId }, handle = true) {
 /**
  * @param {object} p0
  * @param {object} p0.auth - Authorization (persisted)
- * @param {object} p0.networkId - Item identification
+ * @param {object} p0.articleId - Item identification
  * @param {boolean} [handle] - Handle response inside (OK vs Not OK)
  */
-async function get({ auth, networkId }, handle = true) {
-  const endpoint = new URL(API.networkGet(networkId));
+async function get({ auth, articleId }, handle = true) {
+  const endpoint = new URL(API.articleGet(articleId));
   const response = await fetch(endpoint, {
     method: "GET",
     headers: buildHeaders({ auth }),
@@ -141,7 +140,7 @@ async function get({ auth, networkId }, handle = true) {
  * @param {boolean} [handle] - Handle response inside (OK vs Not OK)
  */
 async function list({ auth, user = { _id: null, username: null }, filters = { limit: null, offset: null } }, handle = true) {
-  const endpoint = new URL(API.networkList());
+  const endpoint = new URL(API.articleList());
   const params = {
     ...user,
     ...filters,
@@ -165,33 +164,10 @@ async function list({ auth, user = { _id: null, username: null }, filters = { li
   } else return response;
 }
 
-/**
- * @param {object} p0
- * @param {boolean} [handle] - Handle response inside (OK vs Not OK)
- */
-async function listExternal(handle = true) {
-  const endpoint = new URL(API.networkListExternal());
-  const response = await fetch(endpoint, {
-    method: "GET",
-    headers: buildHeaders(),
-    credentials: "omit",
-  });
-  if (handle) {
-    if (response.status === status.OK) {
-      return response.json();
-    } else {
-      const error = await _.attempt(async () => response.json());
-      if (!_.isError(error) && _.has(error, "message")) throw new Error(error.message);
-      throw new Error("Connection error.");
-    }
-  } else return response;
-}
-
 export default {
   create,
   edit,
   remove,
   get,
   list,
-  listExternal,
 };

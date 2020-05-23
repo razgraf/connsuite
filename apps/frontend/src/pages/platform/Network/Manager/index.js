@@ -3,9 +3,7 @@ import React, { useCallback, useMemo, useEffect } from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 import { rgba } from "polished";
-import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { useToasts } from "react-toast-notifications";
+import { useSelector } from "react-redux";
 import IconChoose from "@material-ui/icons/ExploreRounded";
 import IconCredentials from "@material-ui/icons/HowToRegRounded";
 import IconLive from "@material-ui/icons/FlashOnRounded";
@@ -35,14 +33,32 @@ const Page = styled.div`
     height: 214px;
     background: ${props => rgba(props.theme.colors.white, 0.05)};
   }
+
+  &:after {
+    position: absolute;
+    z-index: ${props => props.theme.sizes.toastContainerElevation};
+    left: 0;
+    top: 0;
+    content: "";
+    width: 100vw;
+    height: 100vh;
+    background: ${props => rgba(props.theme.colors.dark, 0.25)};
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1500ms;
+  }
+
   & > * {
     position: relative;
     z-index: 20;
   }
 
   &[data-leaving="true"] {
-    opacity: 0.75;
-    transition: opacity 1000ms;
+    &:after {
+      opacity: 1;
+      pointer-events: all;
+      transition: opacity 1500ms;
+    }
   }
 `;
 const StyledNav = styled(Nav)`
@@ -158,18 +174,23 @@ const source = {
 
 function NetworkManager({ query }) {
   const type = types.network.manager[_.has(query, "id") ? "edit" : "create"];
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const toast = useToasts();
+  const auth = useSelector(state => state.auth);
   const reducer = useNetworkCreateReducer();
-  const machine = useNetworkCreateMachine({ dispatch, toast, router, type: type.toUpperCase() });
+  const machine = useNetworkCreateMachine({ type: type.toUpperCase() });
   const step = useMemo(() => machine.current.context.step, [machine]);
 
   useEffect(() => console.log(machine.current.value), [machine]);
 
   const onForward = useCallback(() => {
-    machine.send(machine.events.forward, { payload: reducer.state });
-  }, [machine, reducer]);
+    if (step === 3) {
+      const network = {};
+      console.log(reducer.state);
+      Object.keys(reducer.state).forEach(key => {
+        network[key] = reducer.state[key].value;
+      });
+      machine.send(machine.events.forward, { payload: { auth, network } });
+    } else machine.send(machine.events.forward, { payload: reducer.state });
+  }, [auth, machine, reducer, step]);
 
   const onBackward = useCallback(() => {
     machine.send(machine.events.backward);
@@ -177,11 +198,11 @@ function NetworkManager({ query }) {
 
   const checkForward = useCallback(() => {
     if (step === 1) {
-      if (reducer.state.type.value === types.network.source.external) {
+      if (reducer.state.type.value === types.network.type.external) {
         return machine.guards.isExternalChooseAcceptable(machine.context, { payload: reducer.state });
       } else return machine.guards.isInternalChooseAcceptable(machine.context, { payload: reducer.state });
     } else if (step === 2) {
-      if (reducer.state.type.value === types.network.source.external)
+      if (reducer.state.type.value === types.network.type.external)
         return machine.guards.isExternalCredentialsAcceptable(machine.context, { payload: reducer.state });
       else return machine.guards.isInternalCredentialsAcceptable(machine.context, { payload: reducer.state });
     } else if (step === 3) {

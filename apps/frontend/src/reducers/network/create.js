@@ -4,7 +4,7 @@ import { types } from "../../constants";
 
 export const initial = {
   type: {
-    value: types.network.source.external,
+    value: types.network.type.external,
     error: null,
   },
   title: { ...StateInputText },
@@ -89,7 +89,7 @@ export function reducer(state, { type, payload }) {
 export const helper = {
   isValid: state => {
     try {
-      if (state.type.value === types.network.source.external) {
+      if (state.type.value === types.network.type.external) {
         return [state.externalId, state.username].every(item => {
           const value = _.get(item, "value");
           const error = _.get(item, "error");

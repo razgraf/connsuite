@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { PURGE } from "redux-persist";
+import { PURGE, REHYDRATE } from "redux-persist";
 import { redux } from "../../constants";
 
 const initialHistory = [];
@@ -17,6 +17,10 @@ const history = (state = initialHistory, { type, payload } = {}) => {
     case redux.HISTORY_CLEAR: {
       return [];
     }
+    case REHYDRATE:
+      return initialHistory;
+    case PURGE:
+      return initialHistory;
     default:
       return state;
   }
@@ -46,9 +50,10 @@ const cover = (state = initialCover, { type, payload } = {}) => {
     case redux.COVER_NETWORK_CLEAR: {
       return { ...state, network: payload.network };
     }
+    case REHYDRATE:
+      return initialCover;
     case PURGE:
       return initialCover;
-
     default:
       return state;
   }

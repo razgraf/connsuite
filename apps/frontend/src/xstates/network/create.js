@@ -33,7 +33,7 @@ const initialContext = {
   error: null,
 };
 
-async function attemptToCreate({ context, event }) {
+async function attemptToCreate({ event }) {
   return NetworkRequest.create(event.payload);
 }
 
@@ -99,7 +99,7 @@ const machine = Machine(
         exit: assign({ error: null }),
       },
       [states.live]: {
-        entry: assign({ step: 3, error: null }),
+        entry: assign({ step: 3 }),
         on: {
           [events.reset]: RESET,
           [events.backward]: states.credentials,
@@ -127,7 +127,7 @@ const machine = Machine(
             actions: assign({
               error: (context, event) => _.toString(_.get(event, "data.message")),
             }),
-            target: states.failure,
+            target: states.live,
           },
         },
       },

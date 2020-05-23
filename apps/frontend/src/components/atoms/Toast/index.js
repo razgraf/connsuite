@@ -4,6 +4,7 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { rgba } from "polished";
 import { DefaultToast, DefaultToastContainer } from "react-toast-notifications";
+import { sizes } from "../../../themes";
 
 const BubbleAnimation = keyframes`
     0%{ 
@@ -96,7 +97,7 @@ export function ToastContainer(props) {
     <DefaultToastContainer
       {...props}
       style={{
-        zIndex: 9999,
+        zIndex: sizes.toastContainerElevation,
         top: "auto",
         bottom: 0,
         display: "flex",

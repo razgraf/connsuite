@@ -53,7 +53,7 @@ const ContentHeaderIndicator = styled.div`
   height: 8px;
   width: 8px;
   border-radius: 4px;
-  background: ${props => props.theme.colors.primary};
+  background: ${props => props.theme.colors.secondary};
 `;
 
 const ContentMain = styled.div`
@@ -183,7 +183,7 @@ const Info = styled.div`
   overflow: hidden;
   padding-top: calc(${props => props.theme.sizes.networkEdge} * 3 / 4);
   & > * {
-    max-width: 160px;
+    max-width: 170px;
   }
 `;
 
@@ -302,21 +302,28 @@ const Wrapper = styled(WrapperPartial)`
       transition: opacity 200ms;
     }
   }
+  &[data-editmode="false"] {
+    ${Title}, ${Username} {
+      &:empty {
+        visibility: hidden !important;
+      }
+    }
+  }
 `;
 
-function Network({ className, isViewOnly, isFocused, ...network }) {
+function Network({ className, isViewOnly, isFocused, isInEditMode, ...network }) {
   const { setOpen: setCoverOpen, setNetwork: setCoverNetwork } = useCover();
-  const { _id, title, username, icon } = network;
+  const { title, username, icon } = network;
 
   const doPick = useCallback(() => {
     if (!isViewOnly) {
       setCoverNetwork(network);
       setCoverOpen(true);
     }
-  }, [network, isViewOnly]);
+  }, [setCoverNetwork, setCoverOpen, network, isViewOnly]);
 
   return (
-    <Wrapper className={className} data-viewonly={isViewOnly} data-focused={isFocused} onClick={doPick}>
+    <Wrapper className={className} data-viewonly={isViewOnly} data-focused={isFocused} data-editmode={isInEditMode} onClick={doPick}>
       <Card>
         {!isViewOnly && (
           <Overlay data-component="overlay">
@@ -342,7 +349,7 @@ function Network({ className, isViewOnly, isFocused, ...network }) {
             <ContentHeaderIndicator />
           </ContentHeader>
           <ContentMain>
-            <ContentImage src={_.get(icon, "source")} data-component="content-image" />
+            <ContentImage src={_.get(icon, "url")} data-component="content-image" />
           </ContentMain>
           <ContentFooter data-component="content-footer">
             <ContentFooterDetails>Get Details</ContentFooterDetails>
@@ -350,7 +357,7 @@ function Network({ className, isViewOnly, isFocused, ...network }) {
         </Content>
       </Card>
       <Info>
-        <Title>{ellipsis(title, 19)}</Title>
+        <Title>{ellipsis(title, 18)}</Title>
         <Username>{ellipsis(username, 30)}</Username>
       </Info>
     </Wrapper>
@@ -386,6 +393,7 @@ Network.propTypes = {
   username: PropTypes.string,
   isViewOnly: PropTypes.bool,
   isFocused: PropTypes.bool,
+  isInEditMode: PropTypes.bool,
 };
 
 Network.defaultProps = {
@@ -395,6 +403,7 @@ Network.defaultProps = {
   className: null,
   isViewOnly: false,
   isFocused: false,
+  isInEditMode: false,
 };
 
 export default Network;

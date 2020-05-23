@@ -3,8 +3,9 @@ import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import guards, { policy } from "@connsuite/guards";
-import { DUMMY, types } from "../../../../../../constants";
+import { types } from "../../../../../../constants";
 import { NetworkMini } from "../../../../../shared/Network";
+import { useExternalNetworks } from "../../../../../../hooks";
 import { InputText, InputImage } from "../../../../../atoms";
 import { readPreviewFromImage } from "../../../../../../utils";
 
@@ -107,6 +108,8 @@ const StyledNetworkMini = styled(NetworkMini)`
 `;
 
 function Choose({ className, isActive, reducer }) {
+  const external = useExternalNetworks() || { list: [] };
+
   const onNetworkIconChoose = useCallback(
     file => {
       let payload = {
@@ -124,7 +127,7 @@ function Choose({ className, isActive, reducer }) {
 
         if (payload.error === null)
           readPreviewFromImage(file).then(preview => {
-            if (reducer.state.type.value === types.network.source.internal)
+            if (reducer.state.type.value === types.network.type.internal)
               reducer.dispatch({
                 type: reducer.actions.UPDATE_ICON_PREVIEW,
                 payload: preview,
@@ -160,8 +163,8 @@ function Choose({ className, isActive, reducer }) {
   return (
     <Wrapper className={className} data-active={isActive}>
       <Section
-        data-active={reducer.state.type.value === types.network.source.external}
-        onClick={() => onNetworkTypeChange(types.network.source.external)}
+        data-active={reducer.state.type.value === types.network.type.external}
+        onClick={() => onNetworkTypeChange(types.network.type.external)}
       >
         <Title>
           <p>a. Choose the network you want to add</p>
@@ -171,7 +174,7 @@ function Choose({ className, isActive, reducer }) {
           </Label>
         </Title>
         <Grid>
-          {DUMMY.NETWORKS.map(item => (
+          {external.list.map(item => (
             <StyledNetworkMini
               key={item._id}
               network={item}
@@ -190,8 +193,8 @@ function Choose({ className, isActive, reducer }) {
         </Grid>
       </Section>
       <Section
-        data-active={reducer.state.type.value === types.network.source.internal}
-        onClick={() => onNetworkTypeChange(types.network.source.internal)}
+        data-active={reducer.state.type.value === types.network.type.internal}
+        onClick={() => onNetworkTypeChange(types.network.type.internal)}
       >
         <Title>
           <p>b. Or create a custom network</p>
@@ -217,7 +220,7 @@ function Choose({ className, isActive, reducer }) {
               });
             }}
             placeholder="MySpace"
-            value={reducer.state.type.value === types.network.source.internal ? reducer.state.title.value : ""}
+            value={reducer.state.type.value === types.network.type.internal ? reducer.state.title.value : ""}
             warning={reducer.state.title.error}
           />
           <InputImage

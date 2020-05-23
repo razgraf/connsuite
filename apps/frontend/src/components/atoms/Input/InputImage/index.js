@@ -53,8 +53,6 @@ function InputImage({ className, id, help, label, onUpdate, placeholder, inputRe
     [onUpdate, isEventInterpreted],
   );
 
-  console.log("W", warning);
-
   return (
     <Frame className={className} id={id} label={label} warning={warning} help={help}>
       <Holder

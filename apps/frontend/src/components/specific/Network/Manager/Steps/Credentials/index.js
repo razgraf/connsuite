@@ -57,7 +57,7 @@ const Section = styled(SectionPartial)`
 function Credential({ className, isActive, reducer }) {
   return (
     <Wrapper className={className} data-active={isActive}>
-      <Section data-active={reducer.state.type.value === types.network.source.internal}>
+      <Section data-active={reducer.state.type.value === types.network.type.internal}>
         <Title>Tell us more about this network/website. How can we reach it?</Title>
         <Subtitle>Aside from the url, you can optionally add a custom username. If empty, it will default to your First Name.</Subtitle>
         <Form columns={2}>
@@ -79,7 +79,7 @@ function Credential({ className, isActive, reducer }) {
             warning={reducer.state.url.error}
           />
           <InputText
-            help={{ value: "Add your username here. For consistency, it will default to your First Name if you leave it empty." }}
+            help={{ value: "Add your username here. You can leave this empty if the network is a personal website or similar." }}
             id="createNetworkUsernameInternal"
             label="Username (optional)"
             onUpdate={e => {
@@ -100,7 +100,7 @@ function Credential({ className, isActive, reducer }) {
           />
         </Form>
       </Section>
-      <Section data-active={reducer.state.type.value === types.network.source.external}>
+      <Section data-active={reducer.state.type.value === types.network.type.external}>
         <Title>What is your username on Facebook?</Title>
         <Subtitle>
           Remember how every social network had to ask you for a username <Emoji symbol="🤔" />? You&apos;ll need it here.

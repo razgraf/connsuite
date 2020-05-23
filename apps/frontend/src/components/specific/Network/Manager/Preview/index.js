@@ -1,9 +1,22 @@
 import _ from "lodash";
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import Network, { NetworkMini } from "../../../../shared/Network";
-import { types, DUMMY } from "../../../../../constants";
+import { types } from "../../../../../constants";
+import { useExternalNetworks } from "../../../../../hooks";
+
+const IndicatorBlink = keyframes`
+  0%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 1;
+  }
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -55,6 +68,8 @@ const HeaderAction = styled.div`
 
 const HeaderBar = styled.div`
   position: relative;
+  display: flex;
+  align-items: center;
   flex: 1;
   background-color: ${props => props.theme.colors.grayBlueGhost};
   border: 1px solid ${props => props.theme.colors.grayBlueLight};
@@ -63,9 +78,25 @@ const HeaderBar = styled.div`
   margin-left: 4px;
 `;
 
+const HeaderBarIndicator = styled.div`
+  height: 6px;
+  width: 6px;
+  border-radius: 3px;
+  background: ${props => props.theme.colors.secondary};
+  position: absolute;
+  right: 6px;
+  animation-name: ${IndicatorBlink};
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-fill-mode: forwards;
+  animation-duration: 1200ms;
+  animation-timing-function: ease-in;
+  visibility: hidden;
+`;
+
 const HeaderBarTitle = styled.p`
   width: 100%;
-  max-width: 100%;
+  max-width: calc(100% - 20px);
   margin: 0;
   font-style: italic;
   font-size: 9pt;
@@ -79,6 +110,9 @@ const Header = styled(HeaderPartial)`
   &[data-active="true"] {
     ${HeaderBarTitle} {
       color: ${props => props.theme.colors.secondary};
+    }
+    ${HeaderBarIndicator} {
+      visibility: visible;
     }
   }
 `;
@@ -143,19 +177,27 @@ const ContentSideNetwork = styled(NetworkMini)`
 `;
 
 function Preview({ className, reducer, step }) {
+  const external = useExternalNetworks();
+
   const network = useMemo(() => {
-    if (reducer.state.type.value === types.network.source.internal)
+    if (reducer.state.type.value === types.network.type.internal)
       return {
         url: reducer.state.url.value,
         title: reducer.state.title.value,
         username: reducer.state.username.value,
         icon: {
-          source: reducer.state.icon.preview,
+          url: reducer.state.icon.preview,
         },
       };
+    else if (reducer.state.type.value === types.network.type.external)
+      return external ? _.get(external, "list").find(item => item._id === reducer.state.externalId.value) : {};
+    return {};
+  }, [reducer.state, external]);
 
-    return DUMMY.NETWORKS.find(item => item._id === reducer.state.externalId.value) || {}; // TODO System for external networks
-  }, [reducer.state]);
+  const bar = useMemo(
+    () => `${_.toString(_.get(network, "url")) || "https://www.network.com"}/${_.toString(_.get(reducer.state.username, "value"))}`,
+    [network, reducer.state.username],
+  );
 
   return (
     <Wrapper className={className}>
@@ -166,12 +208,13 @@ function Preview({ className, reducer, step }) {
           <HeaderAction />
         </HeaderActions>
         <HeaderBar>
-          <HeaderBarTitle>{`${_.get(network, "url") || "https://preview"}/${_.get(network, "username") || ""}`}</HeaderBarTitle>
+          <HeaderBarTitle>{bar}</HeaderBarTitle>
+          <HeaderBarIndicator />
         </HeaderBar>
       </Header>
       <Content>
         <ContentMain>
-          <ContentMainNetwork {...network} isViewOnly />
+          <ContentMainNetwork {...network} isViewOnly isInEditMode />
         </ContentMain>
         <ContentSide>
           <ContentSideNetwork network={network} isViewOnly />

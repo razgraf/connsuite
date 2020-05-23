@@ -25,6 +25,7 @@ const sizes = {
   sectionTitle: "18pt",
 
   coverElevation: "400",
+  toastContainerElevation: "9999",
 };
 
 export default sizes;
