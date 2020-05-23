@@ -65,7 +65,6 @@ export default class NetworkRepository extends BaseRepository<Network> {
   }
 
   public async list(filters: { [key: string]: unknown }, options?: BaseOptions): Promise<Network[]> {
-    console.log(filters, this._formatByOptions(options));
     if (!_.isNil(options))
       return NetworkModel.find(filters, null, this._formatByOptions(options)).populate(
         this._populateByOptions(options),
@@ -129,7 +128,6 @@ export default class NetworkRepository extends BaseRepository<Network> {
 
   private async _generateImages(source: Express.Multer.File, network: Network): Promise<void> {
     const specimen: Image = {
-      version: 0,
       parent: ImageParent.Network,
       purpose: ImagePurpose.Icon,
 

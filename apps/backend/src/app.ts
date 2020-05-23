@@ -1,4 +1,5 @@
 require("dotenv").config();
+import path from "path";
 import cors from "cors";
 import express, { Request, Response, NextFunction } from "express";
 
@@ -12,6 +13,7 @@ const app: express.Application = express();
 
 app.use(cors());
 app.use(express.json());
+app.use("/public", express.static(path.join(__dirname, "../public")));
 
 app.use((error: SyntaxError, req: Request, res: Response, next: NextFunction) => {
   if (error instanceof SyntaxError && "body" in error) {

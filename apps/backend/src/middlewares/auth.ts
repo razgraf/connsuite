@@ -23,6 +23,21 @@ class AuthMiddleware {
       return;
     }
   }
+  public static async bearerFriendly(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const header = _.get(req, "headers.authorization");
+      if (!header) throw new AuthError.InvalidToken("Bearer Missing");
+      const token = header?.split(" ")[1] || "";
+      if (!token) throw new AuthError.InvalidToken("Bearer Malformed");
+      const usersafe: Usersafe = await AuthRepository.getInstance().validate(token);
+      if (!res.locals) res.locals = {};
+      res.locals.identity = usersafe;
+      next();
+    } catch (e) {
+      res.locals.identity = null;
+      return;
+    }
+  }
 }
 
 export default AuthMiddleware;

@@ -7,7 +7,10 @@ const NetworkRouter = express.Router();
 
 NetworkRouter.get(routes.admin.root, NetworkController.admin);
 
+NetworkRouter.get(routes.network.listExternal, NetworkController.listExternal);
 NetworkRouter.get(routes.network.get, NetworkController.get);
+NetworkRouter.get(routes.network.list, NetworkController.list);
+
 NetworkRouter.post(
   routes.network.create,
   [AuthMiddleware.bearer, UploadMiddleware.upload.single("icon")],
@@ -19,6 +22,5 @@ NetworkRouter.patch(
   NetworkController.update,
 );
 NetworkRouter.delete(routes.network.remove, AuthMiddleware.bearer, NetworkController.remove);
-NetworkRouter.get(routes.network.list, NetworkController.list);
 
 export default NetworkRouter;

@@ -28,6 +28,7 @@ export default {
     /** CRUD BATCH */
 
     list: "/",
+    listExternal: "/external/",
   },
   auth: {
     root: "/auth",

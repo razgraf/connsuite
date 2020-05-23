@@ -1,5 +1,5 @@
 import { tree, root } from "./atoms";
-import { NetworkType, ImageParent } from "../models/atoms";
+import { NetworkType, ImageParent, ImagePurpose } from "../models/atoms";
 import { Network } from "../models/network";
 
 const networks: { [key: string]: Network } = [
@@ -20,14 +20,16 @@ const networks: { [key: string]: Network } = [
     url,
     type: NetworkType.External,
     icon: {
+      _id,
+      type: "image/png",
+      purpose: ImagePurpose.Icon,
       parent: ImageParent.Network,
-      url: `${root}/${tree.externalNetwork}/icon/${_id}.png`,
-      version: 0,
     },
     thumbnail: {
+      _id,
+      type: "image/png",
+      purpose: ImagePurpose.Thumbnail,
       parent: ImageParent.Network,
-      url: `${root}/${tree.externalNetwork}/thumbnail/${_id}.png`,
-      version: 0,
     },
   }))
   .reduce((accumulator, current) => ({ ...accumulator, [current._id]: current }), {});

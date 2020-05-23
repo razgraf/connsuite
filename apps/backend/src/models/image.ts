@@ -2,6 +2,7 @@ import _ from "lodash";
 import mongoose from "mongoose";
 import { prop, getModelForClass, Ref, isDocument } from "@typegoose/typegoose";
 import { atoms } from "../constants";
+import { networks as external } from "../constants";
 import { ImageParent, ImagePurpose, ImageDTOOptions } from "./atoms";
 import { Article, toArticleDTO } from "./article";
 import { Network, toNetworkDTO } from "./network";
@@ -11,9 +12,6 @@ export class Image {
 
   @prop({ required: true, enum: ImageParent, default: ImageParent.Network })
   parent!: ImageParent;
-
-  @prop({ required: true, default: 0 })
-  version!: number;
 
   @prop()
   type?: string;
@@ -41,7 +39,9 @@ function interpret(image: Image, result: { [key: string]: any } = {}): void {
   if (image.parent === ImageParent.Network) {
     const type = _.attempt(() => _.toString(_.get(image || {}, "type") || "").split("/")[1]);
     if (_.isNil(image._id) || _.isError(type) || _.isNil(type)) return;
-    result.url = `${atoms.root}/${atoms.tree.externalNetwork}/icon/${image._id}.${type}`;
+    if (Object.keys(external).includes(String(image._id)))
+      result.url = `${atoms.root}/${atoms.tree.externalNetwork}/${image.purpose}/${image._id}.${type}`;
+    else result.url = `${atoms.root}/${atoms.tree.internalNetwork}/${image._id}.${type}`;
   } else if (image.parent === ImageParent.Article) {
     const type = _.attempt(() => _.toString(_.get(image || {}, "type") || "").split("/")[1]);
     if (_.isNil(image._id) || _.isError(type) || _.isNil(type)) return;
@@ -57,12 +57,9 @@ export function toImageDTO(
 
   // result._id = image._id;
   // result.purpose = image.purpose;
-  // result.version = image.version;
 
   result.type = image.type;
   result.parent = image.parent;
-
-  if (_.get(options, "interpret") === true) interpret(image, result);
 
   if (_.get(options, "parent") === true) {
     switch (result.parent) {
@@ -76,6 +73,8 @@ export function toImageDTO(
         break;
     }
   }
+
+  if (_.get(options, "interpret") === true) interpret(image, result);
 
   return result;
 }

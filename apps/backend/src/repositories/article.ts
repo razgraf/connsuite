@@ -28,8 +28,11 @@ export default class ArticleRepository extends BaseRepository<Article> {
   }
 
   public async getById(id: string, options?: BaseOptions): Promise<Article | null> {
-    if (options && options.populate) return ArticleModel.findById(id).populate(this._populateByOptions(options)) || [];
-    return ArticleModel.findById(id);
+    if (options && options.populate)
+      return (
+        ArticleModel.findById(id, this._projectByOptions(options)).populate(this._populateByOptions(options)) || []
+      );
+    return ArticleModel.findById(id, this._projectByOptions(options));
   }
 
   public async create(payload: Request.ArticleCreate): Promise<Article> {
@@ -78,8 +81,11 @@ export default class ArticleRepository extends BaseRepository<Article> {
     await ArticleModel.findByIdAndRemove(id);
   }
   public async list(filters: { [key: string]: unknown }, options?: BaseOptions): Promise<Article[]> {
-    if (options && options.populate) return ArticleModel.find(filters).populate(this._populateByOptions(options)) || [];
-    return ArticleModel.find(filters) || [];
+    if (options && options.populate)
+      return (
+        ArticleModel.find(filters, this._projectByOptions(options)).populate(this._populateByOptions(options)) || []
+      );
+    return ArticleModel.find(filters, this._projectByOptions(options)) || [];
   }
 
   /**
@@ -110,8 +116,10 @@ export default class ArticleRepository extends BaseRepository<Article> {
 
   public async getByFilters(filters: { [key: string]: unknown }, options?: BaseOptions): Promise<Article | null> {
     if (options && options.populate)
-      return ArticleModel.findOne(filters).populate(this._populateByOptions(options)) || [];
-    return ArticleModel.findOne(filters);
+      return (
+        ArticleModel.findOne(filters, this._projectByOptions(options)).populate(this._populateByOptions(options)) || []
+      );
+    return ArticleModel.findOne(filters, this._projectByOptions(options));
   }
 
   public async bindImage(articleId: string, payload: { cover: Image } | { thumbnail: Image }): Promise<void> {
@@ -166,9 +174,17 @@ export default class ArticleRepository extends BaseRepository<Article> {
     return population;
   }
 
+  private _projectByOptions(options?: BaseOptions): { [key: string]: boolean } {
+    const projection: { [key: string]: boolean } = {};
+    if (_.isNil(options)) return projection;
+
+    if (!options.hideContent) projection.content = false;
+
+    return projection;
+  }
+
   private async _generateImages(source: Express.Multer.File, article: Article): Promise<void> {
     const specimen: Image = {
-      version: 0,
       parent: ImageParent.Article,
       purpose: ImagePurpose.Cover,
 

@@ -1,7 +1,7 @@
 import _ from "lodash";
 import mongoose from "mongoose";
 import { prop, getModelForClass, Ref, isDocument } from "@typegoose/typegoose";
-import { networks } from "../constants";
+import { networks as external } from "../constants";
 import { NetworkType, NetworkDTOOptions } from "./atoms";
 import { User, toUserDTO } from "./user";
 import { Image, toImageDTO } from "./image";
@@ -45,14 +45,15 @@ export class Network {
 
 function interpret(network: Network, result: { [key: string]: any } = {}): void {
   if (network.type === NetworkType.External) {
-    if (_.isNil(network.externalId) || !_.has(networks, network.externalId)) return;
+    if (_.isNil(network.externalId) || !_.has(external, network.externalId)) return;
 
-    const external: Network = networks[network.externalId];
+    const supported: Network = external[network.externalId];
 
-    result.title = external.title;
-    result.icon = external.icon;
-    result.thumbnail = external.thumbnail;
-    result.url = external.url;
+    result.title = supported.title;
+    result.url = supported.url;
+
+    result.icon = toImageDTO(supported.icon as Image);
+    result.thumbnail = toImageDTO(supported.thumbnail as Image);
   }
 }
 
@@ -71,15 +72,16 @@ export function toNetworkDTO(
   result.username = network.username;
   result.url = network.url;
 
-  if (_.get(options, "interpret") === true) interpret(network, result);
-
   if (_.get(options, "user") === true && !_.isNil(network.user) && isDocument(network.user)) {
     result.user = toUserDTO(network.user);
   }
+
   if (_.get(options, "images") === true) {
     if (!_.isNil(network.icon) && isDocument(network.icon)) result.icon = toImageDTO(network.icon);
     if (!_.isNil(network.thumbnail) && isDocument(network.thumbnail)) result.thumbnail = toImageDTO(network.thumbnail);
   }
+
+  if (_.get(options, "interpret") === true) interpret(network, result);
 
   return result;
 }

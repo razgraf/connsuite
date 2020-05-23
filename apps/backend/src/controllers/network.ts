@@ -1,11 +1,11 @@
 import _ from "lodash";
 import { Request, Response } from "express";
+import { ObjectId } from "mongodb";
 import BaseController from "./base";
-import { HTTP_CODE } from "../constants";
+import { HTTP_CODE, networks as external } from "../constants";
 import { NetworkRepository, UserRepository } from "../repositories";
 import { Network, toNetworkDTO } from "../models";
 import { AuthError, NetworkError, ParamsError } from "../errors";
-import { ObjectId } from "mongodb";
 
 export default class NetworkController extends BaseController {
   public static async get(req: Request, res: Response): Promise<void> {
@@ -79,7 +79,6 @@ export default class NetworkController extends BaseController {
   public static async list(req: Request, res: Response): Promise<void> {
     try {
       const { query } = req;
-      console.log(query);
       if (_.isNil(query)) throw new ParamsError.Missing("Insuficient listing payload.");
       const userId = await UserRepository.getInstance().interpretIdentificatorToId(query);
       if (_.isNil(userId)) throw new AuthError.UserNotFound("Missing user based on given auth details.");
@@ -96,6 +95,16 @@ export default class NetworkController extends BaseController {
 
       res.status(HTTP_CODE.OK);
       res.json({ message: "Found", networks: networks.map(network => toNetworkDTO(network)) });
+    } catch (e) {
+      res.status(e.code || HTTP_CODE.BAD_REQUEST);
+      res.json({ message: e.message });
+    }
+  }
+
+  public static async listExternal(req: Request, res: Response): Promise<void> {
+    try {
+      res.status(HTTP_CODE.OK);
+      res.json({ message: "Supported external networks.", networks: Object.values(external) });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });

@@ -1,10 +1,11 @@
 import _ from "lodash";
 import { Request, Response } from "express";
+import { ObjectId } from "mongodb";
 import BaseController from "./base";
 import { HTTP_CODE } from "../constants";
-import { ArticleRepository } from "../repositories";
+import { ArticleRepository, UserRepository } from "../repositories";
 import { Article, toArticleDTO } from "../models";
-import { ArticleError, ParamsError } from "../errors";
+import { ArticleError, AuthError, ParamsError } from "../errors";
 
 export default class ArticleController extends BaseController {
   public static async get(req: Request, res: Response): Promise<void> {
@@ -75,19 +76,28 @@ export default class ArticleController extends BaseController {
     }
   }
 
+  /** Any user can list another user's networks */
   public static async list(req: Request, res: Response): Promise<void> {
     try {
-      const { body } = req;
-      if (!_.get(body, "userId")) throw new ParamsError.Missing("Missing user identifier.");
+      const { query } = req;
+      if (_.isNil(query)) throw new ParamsError.Missing("Insuficient listing payload.");
+      const userId = await UserRepository.getInstance().interpretIdentificatorToId(query);
+      if (_.isNil(userId)) throw new AuthError.UserNotFound("Missing user based on given auth details.");
 
       const articles: Article[] = await ArticleRepository.getInstance().list(
-        { user: _.get(body, "userId") },
-        { populate: true, hideUser: true },
+        { user: new ObjectId(userId) },
+        {
+          populate: true,
+          hideUser: true,
+          hideContent: true,
+          limit: _.get(query, "limit") as string,
+          offset: _.get(query, "offset") as string,
+        },
       );
       if (_.isNil(articles)) throw new ArticleError.NotFound("Issue when searching articles for this individual.");
 
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Found", articles: articles.map(article => toArticleDTO(article)) });
+      res.json({ message: "Found", articles: articles.map(network => toArticleDTO(network)) });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });

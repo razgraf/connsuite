@@ -9,6 +9,7 @@ export type BaseOptions = {
   hideImages?: boolean;
   hideSkills?: boolean;
   hideArticle?: boolean;
+  hideContent?: boolean;
   hideCategories?: boolean;
   hideUsernames?: boolean;
 
