@@ -26,6 +26,8 @@ const sizes = {
 
   coverElevation: "400",
   toastContainerElevation: "9999",
+
+  modalElevation: "600",
 };
 
 export default sizes;

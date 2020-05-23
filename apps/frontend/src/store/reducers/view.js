@@ -69,9 +69,18 @@ const modal = (state = initialModal, { type, payload } = {}) => {
     case redux.MODAL_RESET: {
       return initialModal;
     }
-    case redux.MODAL_ADD: {
+    case redux.MODAL_REGISTER: {
       const { list } = state;
+      console.log(payload.id);
       if (!_.isNil(payload.id) && !list.find(item => item.id === _.get(payload, "id"))) list.push(payload);
+      return {
+        ...state,
+        list,
+      };
+    }
+    case redux.MODAL_UNREGISTER: {
+      const { list } = state;
+      if (!_.isNil(payload.id)) _.remove(list, item => item.id === payload.id);
       return {
         ...state,
         list,
@@ -89,14 +98,7 @@ const modal = (state = initialModal, { type, payload } = {}) => {
         list: state.list.map(item => (item.id === _.get(payload, "id") ? { ...item, isOpen: false } : item)),
       };
     }
-    case redux.MODAL_REMOVE: {
-      const { list } = state;
-      if (!_.isNil(payload.id)) _.remove(list, item => item.id === payload.id);
-      return {
-        ...state,
-        list,
-      };
-    }
+
     case REHYDRATE:
       return initialModal;
     case PURGE:

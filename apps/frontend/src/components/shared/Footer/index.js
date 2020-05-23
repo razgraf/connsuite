@@ -13,6 +13,8 @@ import { Button } from "../../atoms";
 const Wrapper = styled.div`
   width: 100%;
   background: ${props => props.theme.colors.grayBlueBlack};
+  position: relative;
+  z-index: calc(${props => props.theme.sizes.areaElevation} + 10);
 `;
 const Canvas = styled(components.Canvas)`
   display: flex;

@@ -123,8 +123,8 @@ export const redux = {
   MODAL_RESET: "store_MODAL_RESET",
   MODAL_OPEN: "store_MODAL_OPEN",
   MODAL_CLOSE: "store_MODAL_CLOSE",
-  MODAL_ADD: "store_MODAL_ADD",
-  MODAL_REMOVE: "store_MODAL_REMOVE",
+  MODAL_REGISTER: "store_MODAL_REGISTER",
+  MODAL_UNREGISTER: "store_MODAL_UNREGISTER",
 };
 
 export const sagas = {

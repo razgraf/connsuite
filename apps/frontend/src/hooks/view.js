@@ -31,6 +31,34 @@ export function useCover() {
   };
 }
 
+export function useModal(id) {
+  const dispatch = useDispatch();
+  const list = useSelector(state => state.view.modal.list);
+  let modal = list.find(item => item.id === id);
+
+  if (_.isNil(modal)) {
+    modal = { id, isOpen: false };
+    dispatch({
+      type: redux.MODAL_REGISTER,
+      payload: modal,
+    });
+  }
+
+  const { isOpen } = modal;
+  const setOpen = useCallback(
+    (state = true) => {
+      if (state) dispatch({ type: redux.MODAL_OPEN, payload: { id } });
+      else dispatch({ type: redux.MODAL_CLOSE, payload: { id } });
+    },
+    [dispatch, id],
+  );
+
+  return {
+    isOpen,
+    setOpen,
+  };
+}
+
 export function useHistory() {
   const router = useRouter();
   const dispatch = useDispatch();
