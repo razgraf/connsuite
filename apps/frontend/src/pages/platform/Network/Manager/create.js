@@ -224,7 +224,9 @@ function NetworkManager() {
         },
       };
     else if (reducer.state.type.value === types.network.type.external)
-      return external ? _.get(external, "list").find(item => item._id === reducer.state.externalId.value) : {};
+      return external
+        ? { ..._.get(external, "list").find(item => item._id === reducer.state.externalId.value), username: reducer.state.username.value }
+        : {};
     return {};
   }, [reducer.state, external]);
 

@@ -5,24 +5,20 @@ import guards from "./guards";
 
 const states = {
   idle: "idle",
-  retrieve: "retrieve",
-  modify: "modify",
+  decide: "decide",
   apply: "apply",
   success: "success",
   failure: "failure",
 };
 
 const events = {
-  initialize: "initialize",
   forward: "forward",
   reset: "reset",
-  forbidden: "forbidden",
 };
 
 /** Only the named actions coming from the prop chain */
 const actions = {
   approve: "approve",
-  bind: "bind",
 };
 
 const initialContext = {
@@ -31,62 +27,41 @@ const initialContext = {
 };
 
 /** {auth, networkId} =  event.payload */
-async function attemptToRetrieve({ context }) {
-  console.log("attemptToRetrieve", context);
-  return NetworkRequest.get(context);
-}
-
-/** {auth, networkId, network} =  event.payload */
-async function attemptToEdit({ event }) {
-  console.log("attemptToEdit", event);
-  return NetworkRequest.edit(event.payload);
+async function attemptToRemove({ event }) {
+  return NetworkRequest.remove(event.payload);
 }
 
 const RESET = {
-  target: states.modify,
+  target: states.decide,
   actions: assign(() => initialContext),
 };
 
 const machine = Machine(
   {
-    id: "editNetworkMachine",
+    id: "removeNetworkMachine",
     initial: "idle",
     context: { ...initialContext },
     states: {
       [states.idle]: {
         on: {
-          "": states.retrieve,
+          "": states.decide,
         },
       },
-      [states.retrieve]: {
-        invoke: {
-          src: (context, event) => attemptToRetrieve({ context, event }),
-          onDone: {
-            actions: assign({
-              data: (context, event) => event.data,
-              isAuthorized: true,
-            }),
-            target: states.modify,
-          },
-          onError: {
-            actions: assign({
-              error: (context, event) => _.toString(_.get(event, "data.message")),
-            }),
-            target: states.forbidden,
-          },
-        },
-      },
-      [states.modify]: {
-        entry: [actions.bind],
+      [states.decide]: {
         on: {
           [events.reset]: RESET,
-          [events.forward]: states.apply,
+          [events.forward]: [
+            {
+              cond: "isNetworkIdProvided",
+              target: states.apply,
+            },
+          ],
         },
         exit: assign({ error: null }),
       },
       [states.apply]: {
         invoke: {
-          src: (context, event) => attemptToEdit({ context, event }),
+          src: (context, event) => attemptToRemove({ context, event }),
           onDone: {
             actions: assign({
               data: (context, event) => event.data,
@@ -103,16 +78,8 @@ const machine = Machine(
       },
       [states.success]: {
         entry: [actions.approve],
-        on: {
-          [events.reset]: RESET,
-        },
       },
-      [states.failure]: {
-        on: {
-          "": states.modify,
-        },
-      },
-      [states.forbidden]: {},
+      [states.failure]: {},
     },
   },
   {

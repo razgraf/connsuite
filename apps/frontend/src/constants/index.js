@@ -17,7 +17,7 @@ export const pages = {
   profile: {
     Icon: IconProfile,
     root: "/",
-    route: "/:id",
+    route: "/[id]",
     builder: id => `/${id}`,
     title: "Profile",
   },
@@ -55,13 +55,12 @@ export const pages = {
     },
     edit: {
       root: "/network/edit",
-      route: "/network/edit/:id",
+      route: "/network/edit/[id]",
       builder: id => `/network/edit/${id}`,
       title: "Edit the Network",
     },
   },
   article: {
-    route: "/:id",
     root: "/article",
     create: {
       root: "/article",
@@ -69,12 +68,12 @@ export const pages = {
     },
     view: {
       root: "/article",
-      route: "/article/:id",
+      route: "/article/[id]",
       builder: id => `/article/${id}`,
     },
     edit: {
       root: "/article/edit",
-      route: "/article/edit/:id",
+      route: "/article/edit/[id]",
       builder: id => `/article/edit/${id}`,
     },
   },
@@ -228,8 +227,15 @@ export const footer = [
   ],
 ];
 
+export const MODAL_PORTAL = "van-modal__container";
+
+export const modals = {
+  networkRemove: "modalNetworkRemove",
+};
+
 const constants = {
   API,
+  modals,
   redux,
   pages,
   subpages,

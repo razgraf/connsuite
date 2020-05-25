@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { useMemo } from "react";
-import { rgba, lighten } from "polished";
+import { rgba, lighten, darken } from "polished";
 import { colors, gradients } from "../../../themes";
 
 const interpret = source => {
@@ -32,14 +32,15 @@ const types = {
       grayBlueNormal: "grayBlueNormal",
       grayBlueLight: "grayBlueLight",
       red: "red",
+      remove: "remove",
       google: "google",
+      cancel: "cancel",
     },
     type: {
       button: "button",
       link: "link",
       router: "router",
       routerDecorator: "router-decorator",
-      hashRouter: "hash-router",
     },
   },
 };
@@ -78,8 +79,9 @@ export const useDesigner = (accent, appearance) => {
           return { ...baseSolid(colors.dark) };
         case types.button.accent.white:
           return { ...baseSolid(colors.white, colors.dark) };
+        case types.button.accent.remove:
         case types.button.accent.red:
-          return { ...baseSolid(colors.red, colors.white) };
+          return { ...baseSolid(colors.red, colors.white), backgroundHover: darken(0.1, colors.red) };
         case types.button.accent.google:
           return { ...baseSolid(colors.google, colors.white) };
         case types.button.accent.whiteTransparent:
@@ -144,6 +146,20 @@ export const useDesigner = (accent, appearance) => {
         case types.button.accent.grayBlueMedium:
           return {
             ...baseOutline(colors.grayBlueMedium, colors.grayBlueDark),
+            backgroundHover: rgba(colors.grayBlueDark, 0.2),
+          };
+
+        case types.button.accent.remove:
+          return {
+            ...baseOutline(),
+            border: colors.red,
+            color: colors.red,
+            backgroundHover: colors.red,
+            colorHover: colors.white,
+          };
+        case types.button.accent.cancel:
+          return {
+            ...baseOutline(colors.grayBlueLight, colors.dark),
             backgroundHover: rgba(colors.grayBlueDark, 0.2),
           };
         default:

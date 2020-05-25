@@ -9,8 +9,9 @@ import IconDelete from "@material-ui/icons/RemoveCircleOutlineRounded";
 import { rgba } from "polished";
 
 import Backdrop from "../Backdrop";
-import { pages } from "../../../constants";
-import { useCover, useHistory } from "../../../hooks";
+import { pages, modals } from "../../../constants";
+import { useCover, useHistory, useModal } from "../../../hooks";
+import { ModalNetworkRemove } from "../../specific/Modals";
 
 const WrapperPartial = styled.div`
   position: fixed;
@@ -300,6 +301,7 @@ const Wrapper = styled(WrapperPartial)`
 
 function Cover() {
   const { isOpen, network, setOpen } = useCover();
+  const { setOpen: setModalRemoveOpen } = useModal(modals.networkRemove);
   const { push } = useHistory();
 
   return (
@@ -351,7 +353,7 @@ function Cover() {
                   Share: <span>connsuite.com/razgraf/facebook</span>
                 </ActionTitle>
               </Action>
-              <Link href={pages.network.edit.builder(_.get(network, "_id"))}>
+              <Link href={pages.network.edit.route} as={pages.network.edit.builder(_.get(network, "_id"))}>
                 <Action onClick={push}>
                   <ActionIcon>
                     <IconEdit style={{ fontSize: "12pt" }} />
@@ -359,7 +361,7 @@ function Cover() {
                   <ActionTitle>Edit Network</ActionTitle>
                 </Action>
               </Link>
-              <Action as="div" data-purpose="delete">
+              <Action as="div" data-purpose="delete" onClick={() => setModalRemoveOpen(true)}>
                 <ActionIcon>
                   <IconDelete style={{ fontSize: "12pt" }} />
                 </ActionIcon>
@@ -369,6 +371,7 @@ function Cover() {
           </Content>
         </Slide>
       </Container>
+      <ModalNetworkRemove network={network} onSuccess={() => setOpen(false)} />
     </Wrapper>
   );
 }

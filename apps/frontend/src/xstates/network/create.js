@@ -18,8 +18,6 @@ const events = {
   forward: "forward",
   backward: "backward",
   reset: "reset",
-  success: "success",
-  failure: "failure",
 };
 
 /** Only the named actions coming from the prop chain */

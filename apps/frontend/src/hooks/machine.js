@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { useMachine } from "@xstate/react";
 import { useToasts } from "react-toast-notifications";
-import { connectX, networkCreateX, networkEditX } from "../xstates";
+import { connectX, networkCreateX, networkEditX, networkRemoveX } from "../xstates";
 import { redirectTo } from "../utils";
 import { redux, pages, sagas } from "../constants";
 
@@ -83,7 +83,7 @@ function networkEditActions({ auth, dispatch, toast, router, reducer }) {
         },
       });
     },
-    [networkEditX.actions.bind]: (context, event) => {
+    [networkEditX.actions.bind]: context => {
       const network = _.get(context, "data.network");
       const binder = {
         type: _.get(network, "type"),
@@ -117,6 +117,43 @@ export function useNetworkEditMachine({ networkId, reducer }) {
   const machine = useMemo(
     () => ({
       ...networkEditX,
+      current: piece[0],
+      send: piece[1],
+    }),
+    [piece],
+  );
+
+  return machine;
+}
+
+function networkRemoveActions({ auth, dispatch, toast, onSuccess }) {
+  return {
+    [networkEditX.actions.approve]: () => {
+      const username = _.attempt(() => auth.user.usernames.find(item => item.isPrimary === true).value);
+      dispatch({ type: sagas.NETWORKS_LIST, payload: { auth, user: { username: !_.isError(username) ? username : null } } });
+      toast.addToast("Network removed.", {
+        appearance: "success",
+        autoDismiss: true,
+        autoDismissTimeout: 2000,
+        onDismiss: () => {
+          onSuccess();
+        },
+      });
+    },
+  };
+}
+
+export function useNetworkRemoveMachine({ onSuccess = () => {} }) {
+  const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+  const toast = useToasts();
+  const piece = useMachine(networkRemoveX.machine, {
+    actions: networkRemoveActions({ auth, dispatch, toast, onSuccess }),
+  });
+
+  const machine = useMemo(
+    () => ({
+      ...networkRemoveX,
       current: piece[0],
       send: piece[1],
     }),

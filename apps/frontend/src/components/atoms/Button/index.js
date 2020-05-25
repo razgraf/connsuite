@@ -161,6 +161,7 @@ const LoaderWrapper = styled.div`
 function Button({
   accent: rawAccent,
   appearance: rawAppearance,
+  cast,
   className,
   children,
   childrenLeft,
@@ -262,15 +263,16 @@ function Button({
     case types.button.type.routerDecorator:
       return (
         <Link href={to}>
-          <div data-disabled={isDisabled || isDisabledSoft} className={className}>
+          <a href={to} data-disabled={isDisabled || isDisabledSoft} className={className}>
             {children}
-          </div>
+          </a>
         </Link>
       );
     case types.button.type.router:
       return (
         <Link href={to}>
           <ButtonWrapper
+            as={cast}
             data-disabled={isDisabled || isDisabledSoft}
             data-loading={isLoading}
             className={className}
@@ -285,6 +287,7 @@ function Button({
     default:
       return (
         <ButtonWrapper
+          as={cast}
           data-disabled={isDisabled || isDisabledSoft}
           data-loading={isLoading}
           className={className}
@@ -317,6 +320,8 @@ Button.propTypes = {
    * Either a string or a function that will receive the possible types as an argument and return the chosen value.
    */
   appearance: PropTypes.oneOfType([PropTypes.func, PropTypes.oneOf(Object.keys(types.button.appearance))]),
+  /* In cases where the button has a decorator (e.g. Link) we might want to cast the container obhect to *as* */
+  cast: PropTypes.string,
   childrenLeft: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   /**
    * @param {object} className Additional classNames for out-of-scope styling
@@ -353,6 +358,7 @@ Button.propTypes = {
 Button.defaultProps = {
   accent: types.button.accent.primary,
   appearance: types.button.appearance.outline,
+  cast: null,
   childrenLeft: null,
   childrenRight: null,
   className: null,

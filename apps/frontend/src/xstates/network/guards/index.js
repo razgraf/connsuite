@@ -1,12 +1,12 @@
 import _ from "lodash";
-import official, { limits } from "@connsuite/guards";
+import official from "@connsuite/guards";
 import { types } from "../../../constants";
 
 /**
  * ATOMS
  */
 
-function isModifyAcceptable(__, event) {
+function isNetworkIdProvided(__, event) {
   return !_.isNil(_.get(event, "payload.networkId"));
 }
 
@@ -81,7 +81,7 @@ function isLiveAcceptable(context, event) {
 function isInternalModifyAcceptable(context, event) {
   return (
     isNetworkTypeInternal(context, event) &&
-    isModifyAcceptable(context, event) &&
+    isNetworkIdProvided(context, event) &&
     isTitleAcceptable(context, event) &&
     isUrlAcceptable(context, event) &&
     isIconOptionallyAcceptable(context, event) &&
@@ -93,7 +93,7 @@ function isInternalModifyAcceptable(context, event) {
 function isExternalModifyAcceptable(context, event) {
   return (
     isNetworkTypeExternal(context, event) &&
-    isModifyAcceptable(context, event) &&
+    isNetworkIdProvided(context, event) &&
     isUsernameAcceptable(context, event) &&
     isDescriptionOptionallyAcceptable(context, event)
   );
@@ -108,6 +108,8 @@ const guards = {
 
   isInternalModifyAcceptable,
   isExternalModifyAcceptable,
+
+  isNetworkIdProvided,
 };
 
 export default guards;

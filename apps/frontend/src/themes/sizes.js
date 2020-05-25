@@ -28,6 +28,8 @@ const sizes = {
   toastContainerElevation: "9999",
 
   modalElevation: "600",
+
+  text: "11pt",
 };
 
 export default sizes;

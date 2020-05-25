@@ -9,6 +9,7 @@ import IconDelete from "@material-ui/icons/DeleteOutline";
 import IconVisit from "@material-ui/icons/InsertLinkRounded";
 import { rgba } from "polished";
 import { pages } from "../../../constants";
+import { useHistory } from "../../../hooks";
 import { ellipsis } from "../../../utils";
 import { Button } from "../../atoms";
 
@@ -49,7 +50,6 @@ const Overlay = styled.div`
 
   width: 100%;
   height: 100%;
-  cursor: pointer;
   background-color: ${props => rgba(props.theme.colors.black, 0)};
   overflow: hidden;
   transition: background-color 200ms;
@@ -256,28 +256,13 @@ const Wrapper = styled(WrapperPartial)`
   }
 `;
 
-function Action({ Icon, callback, title, type, url }) {
-  if (type === "button")
-    return (
-      <OverlayHeaderAction as="div" title={title} onClick={callback}>
-        <Icon style={{ fontSize: "13pt" }} />
-      </OverlayHeaderAction>
-    );
-  return (
-    <Link href={url}>
-      <OverlayHeaderAction title={title}>
-        <Icon style={{ fontSize: "13pt" }} />
-      </OverlayHeaderAction>
-    </Link>
-  );
-}
-
 const actionFactory = _id => [
   {
     Icon: IconEdit,
     title: "Edit",
     type: "link",
     url: pages.article.edit.builder(_id),
+    route: pages.article.edit.route,
   },
   {
     Icon: IconShare,
@@ -293,50 +278,78 @@ const actionFactory = _id => [
   },
 ];
 
+function Action({ Icon, callback, title, type, url, route }) {
+  if (type === "button")
+    return (
+      <OverlayHeaderAction as="div" title={title} onClick={callback}>
+        <Icon style={{ fontSize: "13pt" }} />
+      </OverlayHeaderAction>
+    );
+  return (
+    <Link href={route} as={url}>
+      <OverlayHeaderAction title={title}>
+        <Icon style={{ fontSize: "13pt" }} />
+      </OverlayHeaderAction>
+    </Link>
+  );
+}
+
 function Article({ className, _id, thumbnail, title, type }) {
   const actions = useMemo(() => actionFactory(_id), [_id]);
+  const history = useHistory();
 
   return (
-    <Link href={pages.article.view.builder(_id)}>
-      <Wrapper className={className}>
-        <Card>
-          <Overlay>
-            <OverlayHeader>
-              {type === "external" && (
-                <OverlayHeaderLocation title="External">
-                  {" "}
-                  <IconVisit style={{ fontSize: "13pt" }} />
-                </OverlayHeaderLocation>
-              )}
-              <OverlayHeaderActions>
-                {actions.map(action => (
-                  <Action {...action} key={action.title} />
-                ))}
-              </OverlayHeaderActions>
-            </OverlayHeader>
-            <OverlayFooter>
-              <OverlayFooterTitle>{ellipsis(title, 80)}</OverlayFooterTitle>
-              <OverlayFooterBottom>
-                <OverlayFooterInfo>
-                  <OverlayFooterInfoItem data-purpose="category">Categories</OverlayFooterInfoItem>
-                </OverlayFooterInfo>
+    <Wrapper className={className}>
+      <Card>
+        <Overlay>
+          <OverlayHeader>
+            {type === "external" && (
+              <OverlayHeaderLocation title="External">
+                <IconVisit style={{ fontSize: "13pt" }} />
+              </OverlayHeaderLocation>
+            )}
+            <OverlayHeaderActions>
+              {actions.map(action => (
+                <Action {...action} key={action.title} />
+              ))}
+            </OverlayHeaderActions>
+          </OverlayHeader>
+          <OverlayFooter>
+            <OverlayFooterTitle>{ellipsis(title, 80)}</OverlayFooterTitle>
+            <OverlayFooterBottom>
+              <OverlayFooterInfo>
+                <OverlayFooterInfoItem data-purpose="category">Categories</OverlayFooterInfoItem>
+              </OverlayFooterInfo>
+              {type === "external" ? (
                 <OverlayFooterButton
+                  type={t => t.link}
                   appearance={t => t.solid}
                   accent={t => t.secondary}
                   isMini
-                  title={type === "external" ? "Visit Article" : "Read Article"}
-                  type={t => t.link}
-                  to={pages.article.view.builder(_id)}
+                  title="Visit Article"
+                  to={pages.article.edit.builder(_id)}
                 />
-              </OverlayFooterBottom>
-            </OverlayFooter>
-          </Overlay>
-          <Content>
-            <ContentImage src={_.get(thumbnail, "url")} />
-          </Content>
-        </Card>
-      </Wrapper>
-    </Link>
+              ) : (
+                <Link href={pages.article.edit.route} as={pages.article.edit.builder(_id)}>
+                  <a href="#" onClick={history.push}>
+                    <OverlayFooterButton
+                      type={t => t.button}
+                      appearance={t => t.solid}
+                      accent={t => t.secondary}
+                      isMini
+                      title="Read Article"
+                    />
+                  </a>
+                </Link>
+              )}
+            </OverlayFooterBottom>
+          </OverlayFooter>
+        </Overlay>
+        <Content>
+          <ContentImage src={_.get(thumbnail, "url")} />
+        </Content>
+      </Card>
+    </Wrapper>
   );
 }
 
@@ -381,11 +394,13 @@ Action.propTypes = {
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   url: PropTypes.string,
+  route: PropTypes.string,
   callback: PropTypes.func,
 };
 
 Action.defaultProps = {
   url: null,
+  route: null,
   callback: () => {},
 };
 export default Article;

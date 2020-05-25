@@ -42,6 +42,7 @@ export default class Document extends NextDocument {
         <body>
           <Main />
           <NextScript />
+          <div id="van-modal__container" />
         </body>
       </Html>
     );
