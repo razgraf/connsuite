@@ -16,6 +16,7 @@ const Wrapper = styled.div`
   position: relative;
   width: 100%;
   padding: calc(${props => props.theme.sizes.edge} * 2);
+  background: ${props => props.theme.colors.white};
 `;
 
 const CoverWrapper = styled.div`
@@ -65,6 +66,8 @@ const CoverButton = styled.div`
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   transition: box-shadow 200ms;
   & > * {
+    margin-top: -1px;
+    margin-right: -2px;
     color: ${props => props.theme.colors.grayBlueDark};
   }
   &:hover,
@@ -152,7 +155,7 @@ function Header({ className, reducer }) {
       <CoverWrapper>
         <Cover />
         <CoverButton>
-          <IconPhotoAdd style={{ fontSize: "14pt" }} />
+          <IconPhotoAdd style={{ fontSize: "15pt" }} />
         </CoverButton>
         <CoverPill>
           <Helper

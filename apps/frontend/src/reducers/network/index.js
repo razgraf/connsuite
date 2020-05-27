@@ -117,31 +117,8 @@ export function reducer(state, { type, payload }) {
   }
 }
 
-export const helper = {
-  isValid: state => {
-    try {
-      if (state.type.value === types.network.type.external) {
-        return [state.externalId, state.username].every(item => {
-          const value = _.get(item, "value");
-          const error = _.get(item, "error");
-          return !_.isNil(value) && !_.isEmpty(value) && _.isNil(error);
-        });
-      } else {
-        return [state.title, state.icon, state.username, state.url].every(item => {
-          const value = _.get(item, "value");
-          const error = _.get(item, "error");
-          return !_.isNil(value) && !_.isEmpty(value) && _.isNil(error);
-        });
-      }
-    } catch (e) {
-      return false;
-    }
-  },
-};
-
 export default {
   actions,
-  helper,
   initial,
   reducer,
 };

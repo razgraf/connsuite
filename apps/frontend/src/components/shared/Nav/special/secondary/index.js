@@ -73,7 +73,7 @@ const Wrapper = styled(WrapperPartial)`
 
   &[data-accent="${types.nav.accent.white}"]{
     box-shadow: none;
-    background: transparent;
+    background: ${props => props.theme.colors.white};;
     border-bottom: 1px solid ${props => props.theme.colors.grayLight};
     ${Title}, ${IconWrapper} > *{
       color: ${props => props.theme.colors.dark};

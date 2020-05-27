@@ -27,6 +27,7 @@ const Wrapper = styled.div`
   &[data-active="false"] {
     opacity: 0;
     pointer-events: none;
+    overflow: hidden;
     transition: opacity 200ms;
   }
 `;

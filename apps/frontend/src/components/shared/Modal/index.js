@@ -142,7 +142,7 @@ function Modal({ className, id, title, children, actions, elevation }) {
       <Card>
         <Header>
           <Title>{_.isString(title) ? <p>{title}</p> : title}</Title>
-          <Close oonClick={() => setOpen(false)}>
+          <Close onClick={() => setOpen(false)}>
             <IconClose style={{ fontSize: "14pt" }} />
           </Close>
         </Header>

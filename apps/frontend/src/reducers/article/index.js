@@ -7,7 +7,7 @@ export const initial = {
     value: types.network.type.external,
     error: null,
   },
-  icon: { ...StateInputImage },
+  cover: { ...StateInputImage },
   title: { ...StateInputText },
   skills: { ...StateInputTags },
   cateogries: { ...StateInputTags },
@@ -19,8 +19,8 @@ export const actions = {
   BIND: "BIND",
   RESET: "RESET",
   UPDATE_TYPE: "UPDATE_TYPE",
-  UPDATE_ICON: "UPDATE_ICON",
-  UPDATE_ICON_PREVIEW: "UPDATE_ICON_PREVIEW",
+  UPDATE_COVER: "UPDATE_COVER",
+  UPDATE_COVER_PREVIEW: "UPDATE_COVER_PREVIEW",
   UPDATE_TITLE: "UPDATE_TITLE",
   UPDATE_SKILLS: "UPDATE_SKILLS",
   UPDATE_CATEGORIES: "UPDATE_CATEGORIES",
@@ -42,15 +42,15 @@ export function reducer(state, { type, payload }) {
         ...initial,
         type: payload,
       };
-    case actions.UPDATE_ICON:
+    case actions.UPDATE_COVER:
       return {
         ...state,
-        icon: payload,
+        cover: payload,
       };
-    case actions.UPDATE_ICON_PREVIEW:
+    case actions.UPDATE_COVER_PREVIEW:
       return {
         ...state,
-        icon: { ...state.icon, preview: payload },
+        cover: { ...state.cover, preview: payload },
       };
     case actions.UPDATE_TITLE:
       return {
@@ -76,38 +76,15 @@ export function reducer(state, { type, payload }) {
     case actions.UPDATE_CATEGORIES:
       return {
         ...state,
-        skills: payload,
+        categories: payload,
       };
     default:
       throw new Error("Unknown Action");
   }
 }
 
-export const helper = {
-  isValid: state => {
-    try {
-      if (state.type.value === types.network.type.external) {
-        return [state.externalId, state.username].every(item => {
-          const value = _.get(item, "value");
-          const error = _.get(item, "error");
-          return !_.isNil(value) && !_.isEmpty(value) && _.isNil(error);
-        });
-      } else {
-        return [state.title, state.icon, state.username, state.url].every(item => {
-          const value = _.get(item, "value");
-          const error = _.get(item, "error");
-          return !_.isNil(value) && !_.isEmpty(value) && _.isNil(error);
-        });
-      }
-    } catch (e) {
-      return false;
-    }
-  },
-};
-
 export default {
   actions,
-  helper,
   initial,
   reducer,
 };

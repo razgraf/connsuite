@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 import { rgba } from "polished";
 import { useSelector } from "react-redux";
+import IconArticlePublish from "@material-ui/icons/PublicRounded";
+import { Button } from "../../../../components/atoms";
 import { components } from "../../../../themes";
 import Nav from "../../../../components/shared/Nav";
 import { pages, types } from "../../../../constants";
@@ -14,7 +16,7 @@ const Page = styled.div`
   position: relative;
   width: 100vw;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   background: ${props => props.theme.colors.white};
   opacity: 1;
 
@@ -56,12 +58,78 @@ const StyledNav = styled(Nav)`
   order: 0 !important;
 `;
 const Canvas = styled(components.Canvas)`
+  position: relative;
   z-index: 100;
   min-height: calc(100vh - ${props => props.theme.sizes.navHeight});
-  border-left: 1px solid ${props => props.theme.colors.grayLight};
-  border-right: 1px solid ${props => props.theme.colors.grayLight};
-  box-shadow: 0 100px 15px 0 ${props => rgba(props.theme.colors.dark, 0.05)};
+  background: ${props => props.theme.colors.white};
+  border: 1px solid ${props => props.theme.colors.grayLight};
+  border-top: none;
   padding: 0;
+  margin-bottom: calc(${props => props.theme.sizes.edge});
+
+  &:before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    top: 10%;
+    left: 0;
+    width: 10%;
+    height: 80%;
+    box-shadow: 0 0 50px ${props => rgba(props.theme.colors.grayBlueDark, 0.2)};
+  }
+  &:after {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    top: 10%;
+    right: 0;
+    width: 10%;
+    height: 80%;
+    box-shadow: 0 0 50px ${props => rgba(props.theme.colors.grayBlueDark, 0.2)};
+  }
+`;
+
+const Actions = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: calc(${props => props.theme.sizes.edge} * 3) 0 150px;
+  & > * {
+    margin-right: ${props => props.theme.sizes.edge};
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+`;
+
+const StyledButton = styled(Button)`
+  flex-shrink: 0;
+  &[data-loading="true"] {
+    background: ${props => props.theme.gradients.gold};
+  }
+`;
+
+const ButtonBox = styled.div`
+  flex-shrink: 0;
+  &[data-success="true"] {
+    & > ${StyledButton} {
+      background: ${props => props.theme.gradients.green};
+    }
+  }
+`;
+
+const ButtonIconWrapper = styled.div`
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  & > * {
+    left: -10px;
+    position: absolute;
+    color: ${props => props.theme.colors.white};
+  }
 `;
 
 function ArticleManager() {
@@ -73,6 +141,13 @@ function ArticleManager() {
   //   useEffect(() => console.log(machine.current.value), [machine]);
 
   const [type, setType] = useState("external");
+
+  const onCancel = useCallback(() => {
+    // check reducer
+    // confirm modal
+  }, []);
+
+  const onPublish = useCallback(() => {}, []);
 
   return (
     <Page data-leaving={false}>
@@ -91,6 +166,43 @@ function ArticleManager() {
           <Specific reducer={reducer} />
         </Canvas>
       </Playground>
+      <Actions>
+        <ButtonBox
+          // data-success={machine.current.value === machine.states.success}
+          onMouseEnter={() => {
+            try {
+              const list = document.getElementsByTagName("input");
+              Array.prototype.forEach.call(list, item => item.blur());
+            } catch (e) {
+              console.error(e);
+            }
+          }}
+        >
+          <StyledButton
+            title="Publish Article"
+            childrenLeft={
+              <ButtonIconWrapper>
+                <IconArticlePublish style={{ fontSize: "14pt" }} />
+              </ButtonIconWrapper>
+            }
+            onClick={onPublish}
+            // isLoading={machine.current.value === machine.states.create}
+            type={t => t.button}
+            appearance={t => t.solid}
+            accent={t => t.secondary}
+            // isDisabledSoft={!isForwardEnabled}
+          />
+        </ButtonBox>
+
+        <Button
+          isDisabled={false} // machine.current.value === machine.states.apply
+          type={t => t.button}
+          appearance={t => t.outline}
+          accent={t => t.cancel}
+          title="Cancel"
+          onClick={onCancel}
+        />
+      </Actions>
     </Page>
   );
 }
