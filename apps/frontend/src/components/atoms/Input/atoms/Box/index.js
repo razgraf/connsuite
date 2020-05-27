@@ -74,7 +74,7 @@ const Focuser = styled.div`
 
 function Box({ children, className }) {
   return (
-    <Wrapper className={className}>
+    <Wrapper className={className} data-component="box">
       {children}
       <Focuser data-component="focuser" />
     </Wrapper>

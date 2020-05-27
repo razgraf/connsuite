@@ -194,7 +194,7 @@ function NetworkManager() {
   }, [auth, machine, reducer, step]);
 
   const onBackward = useCallback(() => {
-    if (step === 1) history.back(pages.portfolio.root);
+    if (step === 1) history.back({ fallback: pages.portfolio.root });
     machine.send(machine.events.backward);
   }, [machine, step, history]);
 

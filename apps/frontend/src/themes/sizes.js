@@ -30,6 +30,8 @@ const sizes = {
   modalElevation: "600",
 
   text: "11pt",
+
+  articlePickerElevation: "600",
 };
 
 export default sizes;

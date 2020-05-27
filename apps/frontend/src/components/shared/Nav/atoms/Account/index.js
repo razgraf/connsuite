@@ -96,7 +96,7 @@ const ActionDropdown = styled.div`
 
   &:hover,
   &:active {
-    background: ${props => props.theme.colors.grayBlueNormal};
+    background: ${props => props.theme.colors.grayBlueLight};
     transition: background 200ms, transform 200ms;
   }
 
@@ -176,7 +176,7 @@ function DropdownItem({ root, title, isActive }) {
   );
 }
 
-function Account() {
+function Account({ className }) {
   const router = useRouter();
   const auth = useSelector(state => state.auth);
 
@@ -186,8 +186,8 @@ function Account() {
   const name = useMemo(() => parseFullName(auth), [auth]);
 
   return (
-    <Wrapper>
-      <Content>
+    <Wrapper className={className}>
+      <Content data-component="pill">
         <ImageWrapper>
           <Image src={AssetLogoCircle} alt="" />
         </ImageWrapper>
@@ -211,6 +211,13 @@ function Account() {
 }
 
 export default Account;
+
+Account.propTypes = {
+  className: PropTypes.string,
+};
+Account.defaultProps = {
+  className: null,
+};
 
 DropdownItem.propTypes = {
   title: PropTypes.string.isRequired,

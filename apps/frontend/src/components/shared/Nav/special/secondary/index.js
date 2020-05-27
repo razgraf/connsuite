@@ -10,22 +10,14 @@ import { pages, types } from "../../../../../constants";
 import { useHistory } from "../../../../../hooks";
 import { Account, Logo } from "../../atoms";
 
-const Wrapper = styled.div`
+const WrapperPartial = styled.div`
   position: fixed;
   top: 0;
   z-index: ${props => props.theme.sizes.navElevation};
   order: 1;
-
   width: 100%;
   background: ${props => props.theme.gradients.primary};
   box-shadow: 0 -10px 30px 12px ${props => rgba(props.theme.colors.secondary, 0.3)};
-
-
-  &[data-accent="${types.nav.accent.transparent}"]{
-    box-shadow: none;
-    background: transparent;
-  }
-
 `;
 const Content = styled(components.Canvas)`
   display: flex;
@@ -35,6 +27,8 @@ const Content = styled(components.Canvas)`
   padding: 0 ${props => props.theme.sizes.navHorizontalEdge};
   max-width: calc(${props => props.theme.sizes.canvasMaxWidth});
 `;
+
+const NavLogo = styled(Logo)``;
 
 const Main = styled.div`
   display: flex;
@@ -49,6 +43,8 @@ const AccountWrapper = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+const NavAccount = styled(Account)``;
 
 const IconWrapper = styled.div`
   margin-right: calc(${props => props.theme.sizes.edge} * 1);
@@ -69,6 +65,30 @@ const Title = styled.p`
   font-weight: 400;
 `;
 
+const Wrapper = styled(WrapperPartial)`
+   &[data-accent="${types.nav.accent.transparent}"]{
+    box-shadow: none;
+    background: transparent;
+  }
+
+  &[data-accent="${types.nav.accent.white}"]{
+    box-shadow: none;
+    background: transparent;
+    border-bottom: 1px solid ${props => props.theme.colors.grayLight};
+    ${Title}, ${IconWrapper} > *{
+      color: ${props => props.theme.colors.dark};
+    }
+    ${NavLogo}{
+      border: 1px solid ${props => props.theme.colors.grayLight};
+    }
+    ${NavAccount}{
+      & > div[data-component="pill"]{
+        border: 1px solid ${props => props.theme.colors.grayLight};
+      }
+    }
+  }
+`;
+
 function NavSecondary({ className, accent, hasAccount, hasParent, title }) {
   const { history, pop } = useHistory();
   const parentRoute = useMemo(() => (hasParent && history.length ? _.get(history[history.length - 1], "route") : pages.dashboard.root), [
@@ -79,7 +99,7 @@ function NavSecondary({ className, accent, hasAccount, hasParent, title }) {
   return (
     <Wrapper className={className} data-accent={accent}>
       <Content>
-        <Logo href={parentRoute} hasParent={hasParent} onClick={pop} />
+        <NavLogo href={parentRoute} hasParent={hasParent} onClick={pop} />
         <Main>
           <IconWrapper>
             <IconArrow style={{ fontSize: "16pt" }} />
@@ -88,7 +108,7 @@ function NavSecondary({ className, accent, hasAccount, hasParent, title }) {
         </Main>
         {hasAccount && (
           <AccountWrapper>
-            <Account />
+            <NavAccount />
           </AccountWrapper>
         )}
       </Content>

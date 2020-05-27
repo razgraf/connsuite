@@ -15,10 +15,16 @@ export const StateInputImage = {
   error: null,
 };
 
+export const StateInputTags = {
+  value: [],
+  error: null,
+};
+
 const state = {
   StateInputText,
   StateInputPassword,
   StateInputImage,
+  StateInputTags,
 };
 
 export default state;

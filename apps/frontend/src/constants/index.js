@@ -155,6 +155,12 @@ export const types = {
       internal: "internal",
     },
   },
+  article: {
+    type: {
+      external: "external",
+      internal: "internal",
+    },
+  },
 };
 
 export const API = {

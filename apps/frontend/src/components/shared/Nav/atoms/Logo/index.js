@@ -11,6 +11,7 @@ const WrapperPartial = styled.a`
   width: calc(${props => props.theme.sizes.navHeight} - 2 * ${props => props.theme.sizes.navVerticalEdge});
   border-radius: 50%;
   background-color: ${props => props.theme.colors.white};
+  border: 1px solid transparent;
   cursor: pointer;
 `;
 
@@ -41,6 +42,8 @@ const Back = styled.div`
   justify-content: center;
   height: 100%;
   width: 100%;
+  background-color: ${props => props.theme.colors.grayBlueGhost};
+  border-radius: 50%;
   transform: translateX(100%);
   transition: transform 200ms;
   & > * {
@@ -64,9 +67,9 @@ const Wrapper = styled(WrapperPartial)`
   }
 `;
 
-function Logo({ href, onClick, hasParent }) {
+function Logo({ className, href, onClick, hasParent }) {
   const component = (
-    <Wrapper as={_.isNil(href) ? "div" : "a"} onClick={onClick} data-goingback={hasParent}>
+    <Wrapper className={className} as={_.isNil(href) ? "div" : "a"} onClick={onClick} data-goingback={hasParent}>
       <Container>
         <Image src={AssetLogoCircle} alt="" />
         {hasParent && (
@@ -81,12 +84,14 @@ function Logo({ href, onClick, hasParent }) {
 }
 
 Logo.propTypes = {
+  className: PropTypes.string,
   href: PropTypes.string,
   onClick: PropTypes.func,
   hasParent: PropTypes.bool,
 };
 
 Logo.defaultProps = {
+  className: null,
   href: null,
   onClick: () => {},
   hasParent: false,

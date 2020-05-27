@@ -8,7 +8,7 @@ import IconShare from "@material-ui/icons/ShareRounded";
 import IconDelete from "@material-ui/icons/DeleteOutline";
 import IconVisit from "@material-ui/icons/InsertLinkRounded";
 import { rgba } from "polished";
-import { pages } from "../../../constants";
+import { pages, types } from "../../../constants";
 import { useHistory } from "../../../hooks";
 import { ellipsis } from "../../../utils";
 import { Button } from "../../atoms";
@@ -303,7 +303,7 @@ function Article({ className, _id, thumbnail, title, type }) {
       <Card>
         <Overlay>
           <OverlayHeader>
-            {type === "external" && (
+            {type === types.article.type.external && (
               <OverlayHeaderLocation title="External">
                 <IconVisit style={{ fontSize: "13pt" }} />
               </OverlayHeaderLocation>
@@ -320,7 +320,7 @@ function Article({ className, _id, thumbnail, title, type }) {
               <OverlayFooterInfo>
                 <OverlayFooterInfoItem data-purpose="category">Categories</OverlayFooterInfoItem>
               </OverlayFooterInfo>
-              {type === "external" ? (
+              {type === types.article.type.external ? (
                 <OverlayFooterButton
                   type={t => t.link}
                   appearance={t => t.solid}
@@ -354,9 +354,11 @@ function Article({ className, _id, thumbnail, title, type }) {
 }
 
 function ArticleAdd() {
+  const history = useHistory();
+
   return (
     <Link href={pages.article.create.root}>
-      <Wrapper data-style="add">
+      <Wrapper data-style="add" as="a" onClick={() => history.push()}>
         <Card>
           <Content>
             <Shape>
@@ -380,13 +382,13 @@ Article.propTypes = {
     url: PropTypes.string.isRequired,
   }).isRequired,
   title: PropTypes.string,
-  type: PropTypes.oneOf(["internal", "external"]),
+  type: PropTypes.oneOf(Object.values(types.article.type)),
 };
 
 Article.defaultProps = {
   className: "",
   title: "",
-  type: "internal",
+  type: types.article.type.internal,
 };
 
 Action.propTypes = {

@@ -191,7 +191,7 @@ function NetworkManager({ query }) {
   }, [auth, machine, reducer, networkId]);
 
   const onBackward = useCallback(() => {
-    history.back(pages.portfolio.root);
+    history.back({ fallback: pages.portfolio.root });
   }, [history]);
 
   const checkForward = useCallback(() => {

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
-export function useOnClickOutside(handler) {
-  const ref = useRef();
+export function useOnClickOutside(handler, reference = null) {
+  const temp = useRef();
+  const ref = reference || temp;
 
   useEffect(() => {
     const listener = event => {
@@ -15,6 +16,25 @@ export function useOnClickOutside(handler) {
     return () => {
       document.removeEventListener("mousedown", listener);
       document.removeEventListener("touchstart", listener);
+    };
+  }, [ref, handler]);
+
+  return [ref];
+}
+
+export function useOnKeyDown(handler, reference = null) {
+  const temp = useRef();
+  const ref = reference || temp;
+
+  useEffect(() => {
+    const listener = event => {
+      if (ref && ref.current && ref.current.contains(event.target)) handler(event);
+    };
+
+    document.addEventListener("keydown", listener);
+
+    return () => {
+      document.removeEventListener("keydown", listener);
     };
   }, [ref, handler]);
 

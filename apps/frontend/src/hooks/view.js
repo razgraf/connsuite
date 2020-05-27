@@ -67,7 +67,7 @@ export function useHistory() {
 
   return {
     history,
-    back: (fallback = null) => {
+    back: ({ fallback = null }) => {
       const route = history.length > 0 ? _.get(history, `[${history.length - 1}]route`) : fallback;
       router.push(route || pages.dashboard.root).then(() => dispatch({ type: redux.HISTORY_POP }));
     },
