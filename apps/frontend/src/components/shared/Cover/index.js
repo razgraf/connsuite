@@ -11,7 +11,6 @@ import { rgba } from "polished";
 import Backdrop from "../Backdrop";
 import { pages, modals } from "../../../constants";
 import { useCover, useHistory, useModal } from "../../../hooks";
-import { ModalNetworkRemove } from "../../specific/Modals";
 
 const WrapperPartial = styled.div`
   position: fixed;
@@ -371,7 +370,6 @@ function Cover() {
           </Content>
         </Slide>
       </Container>
-      <ModalNetworkRemove network={network} onSuccess={() => setOpen(false)} />
     </Wrapper>
   );
 }

@@ -256,28 +256,6 @@ const Wrapper = styled(WrapperPartial)`
   }
 `;
 
-const actionFactory = _id => [
-  {
-    Icon: IconEdit,
-    title: "Edit",
-    type: "link",
-    url: pages.article.edit.builder(_id),
-    route: pages.article.edit.route,
-  },
-  {
-    Icon: IconShare,
-    title: "Share",
-    type: "button",
-    callback: () => console.log(`Share ${_id}`),
-  },
-  {
-    Icon: IconDelete,
-    title: "Delete",
-    type: "button",
-    callback: () => console.log(`Delete ${_id}`),
-  },
-];
-
 function Action({ Icon, callback, title, type, url, route }) {
   if (type === "button")
     return (
@@ -294,8 +272,7 @@ function Action({ Icon, callback, title, type, url, route }) {
   );
 }
 
-function Article({ className, _id, thumbnail, categories, title, type }) {
-  const actions = useMemo(() => actionFactory(_id), [_id]);
+function Article({ className, _id, thumbnail, categories, title, type, onRemoveClick }) {
   const history = useHistory();
 
   const categoryField = useMemo(() => {
@@ -320,9 +297,9 @@ function Article({ className, _id, thumbnail, categories, title, type }) {
               </OverlayHeaderLocation>
             )}
             <OverlayHeaderActions>
-              {actions.map(action => (
-                <Action {...action} key={action.title} />
-              ))}
+              <Action Icon={IconEdit} title="Edit" type="link" url={pages.article.edit.builder(_id)} route={pages.article.edit.route} />
+              <Action Icon={IconShare} title="Share" type="button" callback={() => console.log(`Share ${_id}`)} />
+              <Action Icon={IconDelete} title="Delete" type="button" callback={() => onRemoveClick({ _id, title })} />
             </OverlayHeaderActions>
           </OverlayHeader>
           <OverlayFooter>
@@ -399,6 +376,7 @@ Article.propTypes = {
       title: PropTypes.string.isRequired,
     }),
   ),
+  onRemoveClick: PropTypes.func,
 };
 
 Article.defaultProps = {
@@ -406,6 +384,7 @@ Article.defaultProps = {
   title: "",
   type: types.article.type.internal,
   categories: [],
+  onRemoveClick: () => {},
 };
 
 Action.propTypes = {

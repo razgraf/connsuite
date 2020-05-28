@@ -78,6 +78,11 @@ const ContentImage = styled.img`
   &[src=""] {
     visibility: hidden;
   }
+
+  @media all and (max-width: ${props => props.theme.medias.medium}) {
+    height: 80%;
+    width: 80%;
+  }
 `;
 
 const ContentFooter = styled.div`
@@ -95,6 +100,9 @@ const ContentFooterDetails = styled.p`
   font-size: 10pt;
   font-weight: 600;
   margin: 0;
+  @media all and (max-width: ${props => props.theme.medias.medium}) {
+    font-size: 9pt;
+  }
 `;
 
 const Overlay = styled.div`

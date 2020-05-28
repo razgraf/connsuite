@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import IconAdd from "@material-ui/icons/Add";
 import { components } from "../../../themes";
 import { Button, Spinner } from "../../../components/atoms";
 import { Area } from "../../../components/shared";
-import { pages } from "../../../constants";
-import { useNetworks, useArticles } from "../../../hooks";
+import { pages, modals } from "../../../constants";
+import { useNetworks, useArticles, useCover, useModal } from "../../../hooks";
 import Network, { NetworkAdd } from "../../../components/shared/Network";
 import Article, { ArticleAdd } from "../../../components/shared/Article";
 import Cover from "../../../components/shared/Cover";
+import { ModalNetworkRemove, ModalArticleRemove } from "../../../components/specific/Modals";
 
 const Page = styled.div``;
 
@@ -60,12 +61,19 @@ const ButtonIconWrapper = styled.div`
 const GridNetworks = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   grid-column-gap: ${props => props.theme.sizes.edge};
   grid-row-gap: calc(${props => props.theme.sizes.edge} * 1.5);
   grid-auto-rows: 1fr;
   & > * {
     grid-column: span 1;
+    flex-grow: 0;
+  }
+  @media all and (max-width: ${props => props.theme.medias.medium}) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @media all and (max-width: ${props => props.theme.medias.small}) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 `;
 
@@ -73,7 +81,7 @@ const GridArticles = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 1fr;
+  grid-auto-rows: minmax(300px, 1fr);
   grid-gap: 0;
   overflow: hidden;
   padding-bottom: ${props => props.theme.sizes.edge};
@@ -83,10 +91,19 @@ const GridArticles = styled.div`
 `;
 
 function Portfolio() {
-  const [isCoverVisible, setIsCoverVisible] = useState(true);
-
   const networks = useNetworks();
   const articles = useArticles();
+  const [articleRemove, setArticleRemove] = useState(null);
+  const { setOpen: setArticleRemoveModalOpen } = useModal(modals.articleRemove);
+  const { network: networkCover, setOpen: setOpenCover } = useCover();
+
+  const onArticleRemoveClick = useCallback(
+    article => {
+      setArticleRemove(article);
+      setArticleRemoveModalOpen(true);
+    },
+    [setArticleRemove, setArticleRemoveModalOpen],
+  );
 
   return (
     <Page>
@@ -144,7 +161,7 @@ function Portfolio() {
           </SectionHeaderArticles>
           <GridArticles>
             {articles.list.map(article => (
-              <Article key={article._id} {...article} />
+              <Article key={article._id} {...article} onRemoveClick={onArticleRemoveClick} />
             ))}
             <ArticleAdd />
           </GridArticles>
@@ -181,7 +198,9 @@ function Portfolio() {
           </SectionQuickContent>
         </SectionQuick>
       </Area>
-      <Cover isVisible={isCoverVisible} setIsVisible={setIsCoverVisible} />
+      <Cover />
+      <ModalNetworkRemove network={networkCover} onSuccess={() => setOpenCover(false)} />
+      <ModalArticleRemove article={articleRemove} onSuccess={() => setArticleRemove(null)} />
     </Page>
   );
 }
