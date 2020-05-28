@@ -87,7 +87,6 @@ async function remove({ auth, articleId }, handle = true) {
   const response = await fetch(endpoint, {
     method: "DELETE",
     headers: buildHeaders({ auth }),
-    body: {},
     credentials: "omit",
   });
 

@@ -1,16 +1,14 @@
-import _ from "lodash";
 import { StateInputText, StateInputImage, StateInputTags } from "../../components/atoms/Input/state";
-import { types } from "../../constants";
 
 export const initial = {
   type: {
-    value: types.network.type.external,
+    value: null,
     error: null,
   },
   cover: { ...StateInputImage },
   title: { ...StateInputText },
   skills: { ...StateInputTags },
-  cateogries: { ...StateInputTags },
+  categories: { ...StateInputTags },
   content: { ...StateInputText }, // TODO EditorJs (?)
   url: { ...StateInputText },
 };

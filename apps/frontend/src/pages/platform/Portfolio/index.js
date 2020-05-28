@@ -63,6 +63,7 @@ const GridNetworks = styled.div`
   grid-template-columns: repeat(5, 1fr);
   grid-column-gap: ${props => props.theme.sizes.edge};
   grid-row-gap: calc(${props => props.theme.sizes.edge} * 1.5);
+  grid-auto-rows: 1fr;
   & > * {
     grid-column: span 1;
   }
@@ -72,7 +73,7 @@ const GridArticles = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(auto-fill, 310px);
+  grid-auto-rows: 1fr;
   grid-gap: 0;
   overflow: hidden;
   padding-bottom: ${props => props.theme.sizes.edge};

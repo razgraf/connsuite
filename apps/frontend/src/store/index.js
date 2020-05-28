@@ -19,7 +19,7 @@ export default initial => {
   const persistedReducer = persistReducer(
     {
       key: "root",
-      version: -1,
+      version: 1,
       storage,
       stateReconciler: autoMergeLevel2,
       migrate: createMigrate(migrations, { debug: true }),

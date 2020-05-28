@@ -6,7 +6,7 @@ import { types } from "../../../constants";
  * ATOMS
  */
 
-function isNetworkIdProvided(__, event) {
+function isIdProvided(__, event) {
   return !_.isNil(_.get(event, "payload.networkId"));
 }
 
@@ -81,7 +81,7 @@ function isLiveAcceptable(context, event) {
 function isInternalModifyAcceptable(context, event) {
   return (
     isNetworkTypeInternal(context, event) &&
-    isNetworkIdProvided(context, event) &&
+    isIdProvided(context, event) &&
     isTitleAcceptable(context, event) &&
     isUrlAcceptable(context, event) &&
     isIconOptionallyAcceptable(context, event) &&
@@ -93,13 +93,13 @@ function isInternalModifyAcceptable(context, event) {
 function isExternalModifyAcceptable(context, event) {
   return (
     isNetworkTypeExternal(context, event) &&
-    isNetworkIdProvided(context, event) &&
+    isIdProvided(context, event) &&
     isUsernameAcceptable(context, event) &&
     isDescriptionOptionallyAcceptable(context, event)
   );
 }
 
-const guards = {
+export default {
   isInternalChooseAcceptable,
   isExternalChooseAcceptable,
   isInternalCredentialsAcceptable,
@@ -109,7 +109,5 @@ const guards = {
   isInternalModifyAcceptable,
   isExternalModifyAcceptable,
 
-  isNetworkIdProvided,
+  isIdProvided,
 };
-
-export default guards;

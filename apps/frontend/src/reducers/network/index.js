@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { StateInputText, StateInputImage } from "../../components/atoms/Input/state";
 import { types } from "../../constants";
 

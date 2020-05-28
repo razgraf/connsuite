@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { useMachine } from "@xstate/react";
 import { useToasts } from "react-toast-notifications";
-import { connectX, networkCreateX, networkEditX, networkRemoveX } from "../xstates";
+import { connectX, networkCreateX, networkEditX, networkRemoveX, articleCreateX, articleRemoveX } from "../xstates";
 import { redirectTo } from "../utils";
 import { redux, pages, sagas } from "../constants";
 
@@ -128,7 +128,7 @@ export function useNetworkEditMachine({ networkId, reducer }) {
 
 function networkRemoveActions({ auth, dispatch, toast, onSuccess }) {
   return {
-    [networkEditX.actions.approve]: () => {
+    [networkRemoveX.actions.approve]: () => {
       const username = _.attempt(() => auth.user.usernames.find(item => item.isPrimary === true).value);
       dispatch({ type: sagas.NETWORKS_LIST, payload: { auth, user: { username: !_.isError(username) ? username : null } } });
       toast.addToast("Network removed.", {
@@ -154,6 +154,81 @@ export function useNetworkRemoveMachine({ onSuccess = () => {} }) {
   const machine = useMemo(
     () => ({
       ...networkRemoveX,
+      current: piece[0],
+      send: piece[1],
+    }),
+    [piece],
+  );
+
+  return machine;
+}
+
+function articleCreateActions({ auth, dispatch, toast, router }) {
+  return {
+    [articleCreateX.actions.approve]: () => {
+      toast.addToast("Article successfully created!", {
+        appearance: "success",
+        autoDismiss: true,
+        autoDismissTimeout: 2500,
+        onDismiss: () => {
+          const username = _.attempt(() => auth.user.usernames.find(item => item.isPrimary === true).value);
+          dispatch({ type: sagas.ARTICLES_LIST, payload: { auth, user: { username: !_.isError(username) ? username : null } } });
+          router.push(pages.portfolio.root);
+        },
+      });
+    },
+  };
+}
+
+export function useArticleCreateMachine() {
+  const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const toast = useToasts();
+  const piece = useMachine(articleCreateX.machine, {
+    actions: articleCreateActions({ auth, dispatch, toast, router }),
+  });
+
+  const machine = useMemo(
+    () => ({
+      ...articleCreateX,
+      current: piece[0],
+      send: piece[1],
+    }),
+    [piece],
+  );
+
+  return machine;
+}
+
+function articleRemoveActions({ auth, dispatch, toast, onSuccess }) {
+  return {
+    [articleRemoveX.actions.approve]: () => {
+      const username = _.attempt(() => auth.user.usernames.find(item => item.isPrimary === true).value);
+      dispatch({ type: sagas.ARTICLES_LIST, payload: { auth, user: { username: !_.isError(username) ? username : null } } });
+      toast.addToast("Article removed.", {
+        appearance: "success",
+        autoDismiss: true,
+        autoDismissTimeout: 2000,
+        onDismiss: () => {
+          onSuccess();
+        },
+      });
+    },
+  };
+}
+
+export function useArticleRemoveMachine({ onSuccess = () => {} }) {
+  const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+  const toast = useToasts();
+  const piece = useMachine(articleRemoveX.machine, {
+    actions: articleRemoveActions({ auth, dispatch, toast, onSuccess }),
+  });
+
+  const machine = useMemo(
+    () => ({
+      ...articleRemoveX,
       current: piece[0],
       send: piece[1],
     }),

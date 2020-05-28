@@ -156,7 +156,7 @@ InputTags.propTypes = {
       }),
     ]),
   ),
-  accent: PropTypes.oneOf(Object.values(colors)),
+  accent: PropTypes.oneOfType([PropTypes.func, PropTypes.oneOf(Object.values(colors))]),
 };
 
 InputTags.defaultProps = {

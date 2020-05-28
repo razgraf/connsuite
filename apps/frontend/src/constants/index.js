@@ -119,6 +119,16 @@ export const redux = {
   RESOURCE_EXTERNAL_NETWORKS_SET_IS_FETCHED: "store_RESOURCE_EXTERNAL_NETWORKS_SET_IS_FETCHED",
   RESOURCE_EXTERNAL_NETWORKS_SET_LIST: "store_RESOURCE_EXTERNAL_NETWORKS_SET_LIST",
 
+  RESOURCE_DEFAULT_SKILLS_SET: "store_RESOURCE_DEFAULT_SKILLS_SET",
+  RESOURCE_DEFAULT_SKILLS_SET_IS_LOADING: "store_RESOURCE_DEFAULT_SKILLS_SET_IS_LOADING",
+  RESOURCE_DEFAULT_SKILLS_SET_IS_FETCHED: "store_RESOURCE_DEFAULT_SKILLS_SET_IS_FETCHED",
+  RESOURCE_DEFAULT_SKILLS_SET_LIST: "store_RESOURCE_DEFAULT_SKILLS_SET_LIST",
+
+  RESOURCE_DEFAULT_CATEGORIES_SET: "store_RESOURCE_DEFAULT_CATEGORIES_SET",
+  RESOURCE_DEFAULT_CATEGORIES_SET_IS_LOADING: "store_RESOURCE_DEFAULT_CATEGORIES_SET_IS_LOADING",
+  RESOURCE_DEFAULT_CATEGORIES_SET_IS_FETCHED: "store_RESOURCE_DEFAULT_CATEGORIES_SET_IS_FETCHED",
+  RESOURCE_DEFAULT_CATEGORIES_SET_LIST: "store_RESOURCE_DEFAULT_CATEGORIES_SET_LIST",
+
   MODAL_RESET: "store_MODAL_RESET",
   MODAL_OPEN: "store_MODAL_OPEN",
   MODAL_CLOSE: "store_MODAL_CLOSE",
@@ -183,6 +193,9 @@ export const API = {
   articleEdit: id => `${API.root}/articles/${id}`,
   articleRemove: id => `${API.root}/articles/${id}`,
   articleList: () => `${API.root}/articles`,
+
+  skillListDefault: () => `${API.root}/skills/default`,
+  categoryListDefault: () => `${API.root}/categories/default`,
 };
 
 export const links = {
@@ -237,6 +250,7 @@ export const MODAL_PORTAL = "van-modal__container";
 
 export const modals = {
   networkRemove: "modalNetworkRemove",
+  articleRemove: "modalArticleRemove",
 };
 
 const constants = {

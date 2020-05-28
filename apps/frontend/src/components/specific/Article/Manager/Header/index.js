@@ -1,12 +1,15 @@
-import React from "react";
+import _ from "lodash";
+import React, { useCallback, useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rgba } from "polished";
+import guards from "@connsuite/guards";
 import IconPhotoAdd from "@material-ui/icons/AddPhotoAlternateRounded";
 import IconPhoto from "@material-ui/icons/InsertPhotoRounded";
 import IconHelp from "@material-ui/icons/HelpRounded";
 import IconDelete from "@material-ui/icons/DeleteOutlineRounded";
-import { Helper } from "../../../../atoms";
+import { Helper, InputImage, Warning } from "../../../../atoms";
+import { readPreviewFromImage } from "../../../../../utils";
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,9 +20,10 @@ const Wrapper = styled.div`
   width: 100%;
   padding: calc(${props => props.theme.sizes.edge} * 2);
   background: ${props => props.theme.colors.white};
+  transition: border 200ms;
 `;
 
-const CoverWrapper = styled.div`
+const CoverWrapperPartial = styled.div`
   z-index: 100;
   position: relative;
   display: flex;
@@ -32,21 +36,23 @@ const CoverWrapper = styled.div`
   background-color: ${props => props.theme.colors.grayBlueGhost};
 `;
 
-const Cover = styled.img`
+const CoverContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
   z-index: 100;
+  pointer-events: none;
+`;
+const Cover = styled.img`
+  width: 100%;
+  height: 100%;
   transform: scale(1.1);
-  filter: blur(3px);
-  transition: filter 2000ms;
+  object-fit: cover;
 
   &:not([src]),
   &[src=""] {
     visibility: hidden;
     visibility: hidden;
-    filter: blur(0);
-    transition: filter 2000ms;
   }
 `;
 
@@ -55,7 +61,7 @@ const CoverButton = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  z-index: 200;
+  z-index: 50;
   position: absolute;
   height: 60px;
   width: 60px;
@@ -124,6 +130,21 @@ const CoverPillAction = styled.div`
   }
 `;
 
+const CoverWarning = styled(Warning)`
+  position: absolute;
+  z-index: 500;
+  right: calc(${props => props.theme.sizes.edge} * 0.5);
+  top: calc(${props => props.theme.sizes.edge} * 0.5);
+  margin: 0;
+  border-radius: 2px;
+  padding: ${props => props.theme.sizes.edge};
+  & > p {
+    padding: 8px 12px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid ${props => props.theme.colors.red};
+  }
+`;
+
 const ThumbnailWrapper = styled.div`
   z-index: 200;
   position: absolute;
@@ -134,6 +155,7 @@ const ThumbnailWrapper = styled.div`
   border: 1px solid ${props => props.theme.colors.grayBlueLight};
   background-color: ${props => props.theme.colors.grayBlueGhost};
   background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23e4e8f0' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+  transition: border 200ms;
 `;
 
 const Thumbnail = styled.img`
@@ -141,6 +163,7 @@ const Thumbnail = styled.img`
   height: 100%;
   overflow: hidden;
   z-index: 100;
+  object-fit: cover;
 
   &:not([src]),
   &[src=""] {
@@ -149,12 +172,84 @@ const Thumbnail = styled.img`
   }
 `;
 
+const Hidden = styled.div`
+  position: absolute;
+  z-index: -1;
+  visibility: hidden;
+  opacity: 0;
+`;
+
+const CoverWrapper = styled(CoverWrapperPartial)`
+  &[data-warning="true"] {
+    border-bottom: 1px solid ${props => props.theme.colors.red};
+    transition: border 200ms;
+    ${ThumbnailWrapper} {
+      border-bottom: 1px solid ${props => props.theme.colors.red};
+      transition: border 200ms;
+    }
+  }
+`;
+
 function Header({ className, reducer }) {
+  const inputRef = useRef();
+
+  const onChoose = useCallback(() => {
+    if (inputRef && inputRef.current) inputRef.current.click();
+  }, [inputRef]);
+
+  const onArticleCoverChoose = useCallback(
+    file => {
+      let payload = {
+        name: null,
+        value: null,
+        error: "File not accepted",
+      };
+      if (!_.isNil(file)) {
+        payload = {
+          name: file.name,
+          value: file,
+          preview: null,
+          error: guards.interpret(guards.isArticleCoverAcceptable, file),
+        };
+
+        console.log(payload);
+
+        if (payload.error === null)
+          readPreviewFromImage(file).then(preview => {
+            reducer.dispatch({
+              type: reducer.actions.UPDATE_COVER_PREVIEW,
+              payload: preview,
+            });
+          });
+        else
+          reducer.dispatch({
+            type: reducer.actions.UPDATE_COVER_PREVIEW,
+            payload: null,
+          });
+      }
+
+      reducer.dispatch({
+        type: reducer.actions.UPDATE_COVER,
+        payload,
+      });
+    },
+    [reducer],
+  );
+
+  const onArticleCoverDiscard = useCallback(() => {
+    reducer.dispatch({
+      type: reducer.actions.UPDATE_COVER,
+      payload: reducer.initial.cover,
+    });
+  }, [reducer]);
+
   return (
     <Wrapper className={className}>
-      <CoverWrapper>
-        <Cover />
-        <CoverButton>
+      <CoverWrapper data-warning={reducer.state.cover.error !== null}>
+        <CoverContainer>
+          <Cover alt="" src={reducer.state.cover.preview} />
+        </CoverContainer>
+        <CoverButton onClick={onChoose}>
           <IconPhotoAdd style={{ fontSize: "15pt" }} />
         </CoverButton>
         <CoverPill>
@@ -166,17 +261,21 @@ function Header({ className, reducer }) {
               <IconHelp style={{ fontSize: "13pt" }} />
             </CoverPillAction>
           </Helper>
-          <CoverPillAction title="Choose Picture" onClick={() => console.log("Choose")}>
+          <CoverPillAction title="Choose Picture" onClick={onChoose}>
             <IconPhoto style={{ fontSize: "13pt" }} />
           </CoverPillAction>
-          <CoverPillAction title="Delete" onClick={() => console.log("Delete")}>
+          <CoverPillAction title="Delete" onClick={onArticleCoverDiscard}>
             <IconDelete style={{ fontSize: "13pt" }} />
           </CoverPillAction>
         </CoverPill>
         <ThumbnailWrapper>
-          <Thumbnail />
+          <Thumbnail alt="" src={reducer.state.cover.preview} />
         </ThumbnailWrapper>
+        <CoverWarning value={reducer.state.cover.error} />
       </CoverWrapper>
+      <Hidden>
+        <InputImage id="manageArticleCover" label="Cover" isEventInterpreted onUpdate={onArticleCoverChoose} inputRef={inputRef} />
+      </Hidden>
     </Wrapper>
   );
 }

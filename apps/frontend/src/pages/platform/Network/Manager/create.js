@@ -176,7 +176,7 @@ function NetworkManager() {
   const auth = useSelector(state => state.auth);
   const reducer = useNetworkReducer();
   const machine = useNetworkCreateMachine();
-  const external = useExternalNetworks();
+  const external = useExternalNetworks() || { list: [] };
   const history = useHistory();
   const step = useMemo(() => machine.current.context.step, [machine]);
 
@@ -185,7 +185,6 @@ function NetworkManager() {
   const onForward = useCallback(() => {
     if (step === 3) {
       const network = {};
-      console.log(reducer.state);
       Object.keys(reducer.state).forEach(key => {
         network[key] = reducer.state[key].value;
       });

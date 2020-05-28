@@ -64,14 +64,14 @@ function Specific({ className, reducer }) {
             <LabelIcon data-purpose="external">
               <IconArticleExternal style={{ fontSize: "16pt" }} />
             </LabelIcon>
-            <LabelTitle>Connect to external source</LabelTitle>
+            <LabelTitle>Connect external source</LabelTitle>
           </>
         ) : (
           <>
             <LabelIcon>
               <IconArticleInternal style={{ fontSize: "16pt" }} />
             </LabelIcon>
-            <LabelTitle>Write content from scratch</LabelTitle>
+            <LabelTitle>Write from scratch</LabelTitle>
           </>
         )}
       </LabelWrapper>

@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { Machine, assign } from "xstate";
-import { NetworkRequest } from "../../requests";
+import { ArticleRequest } from "../../requests";
 import guards from "./guards";
 
 const states = {
@@ -26,9 +26,9 @@ const initialContext = {
   error: null,
 };
 
-/** {auth, networkId} =  event.payload */
+/** {auth, articleId} =  event.payload */
 async function attemptToRemove({ event }) {
-  return NetworkRequest.remove(event.payload);
+  return ArticleRequest.remove(event.payload);
 }
 
 const RESET = {
@@ -38,7 +38,7 @@ const RESET = {
 
 const machine = Machine(
   {
-    id: "removeNetworkMachine",
+    id: "removeArticleMachine",
     initial: "idle",
     context: { ...initialContext },
     states: {

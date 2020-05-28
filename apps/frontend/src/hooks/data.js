@@ -2,7 +2,7 @@ import _ from "lodash";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { redux, sagas } from "../constants";
-import { NetworkRequest } from "../requests";
+import { NetworkRequest, SkillRequest, CategoryRequest } from "../requests";
 
 export function useExternalNetworks() {
   const external = useSelector(state => state.resource.networks);
@@ -15,6 +15,7 @@ export function useExternalNetworks() {
         let result = { networks: [] };
         try {
           result = await NetworkRequest.listExternal();
+          if (result && result.networks) result.networks.sort((a, b) => a.title > b.title);
         } catch (e) {
           console.error(e);
         }
@@ -76,4 +77,66 @@ export function useArticles() {
   }, [auth, isLoading, isFetched, dispatch]);
 
   return articles;
+}
+
+export function useDefaultSkills() {
+  const skills = useSelector(state => state.resource.skills);
+  const dispatch = useDispatch();
+  const { isLoading, isFetched } = skills;
+  useEffect(() => {
+    if (!isLoading && !isFetched) {
+      (async () => {
+        dispatch({ type: redux.RESOURCE_DEFAULT_SKILLS_SET, payload: { isFetched: true, isLoading: true } });
+        let result = { skills: [] };
+        try {
+          result = await SkillRequest.listDefault();
+          if (result && result.skills) result.skills.sort((a, b) => a.title > b.title);
+        } catch (e) {
+          console.error(e);
+        }
+
+        dispatch({
+          type: redux.RESOURCE_DEFAULT_SKILLS_SET,
+          payload: {
+            list: result.skills,
+            isLoading: false,
+          },
+        });
+      })();
+    }
+    return () => {};
+  }, [isLoading, isFetched, dispatch]);
+
+  return skills;
+}
+
+export function useDefaultCategories() {
+  const categories = useSelector(state => state.resource.categories);
+  const dispatch = useDispatch();
+  const { isLoading, isFetched } = categories;
+  useEffect(() => {
+    if (!isLoading && !isFetched) {
+      (async () => {
+        dispatch({ type: redux.RESOURCE_DEFAULT_CATEGORIES_SET, payload: { isFetched: true, isLoading: true } });
+        let result = { categories: [] };
+        try {
+          result = await CategoryRequest.listDefault();
+          if (result && result.categories) result.categories.sort((a, b) => a.title > b.title);
+        } catch (e) {
+          console.error(e);
+        }
+
+        dispatch({
+          type: redux.RESOURCE_DEFAULT_CATEGORIES_SET,
+          payload: {
+            list: result.categories,
+            isLoading: false,
+          },
+        });
+      })();
+    }
+    return () => {};
+  }, [isLoading, isFetched, dispatch]);
+
+  return categories;
 }

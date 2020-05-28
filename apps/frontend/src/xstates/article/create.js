@@ -29,20 +29,21 @@ const initialContext = {
 };
 
 async function attemptToCreate({ event }) {
-  console.log(event.payload);
-  return true;
-  // return ArticleRequest.create(event.payload);
+  const { payload } = event;
+  if (!_.isNil(payload, "article.skills")) payload.article.skills = JSON.stringify(payload.article.skills);
+  if (!_.isNil(payload, "article.categories")) payload.article.categories = JSON.stringify(payload.article.categories);
+  return ArticleRequest.create(event.payload);
 }
 
 const RESET = {
-  target: states.idle,
+  target: states.body,
   actions: assign(() => initialContext),
 };
 
 const INVALIDATE = {
-  target: states.idle,
+  target: states.body,
   actions: assign({
-    error: () => "Invalid article configuration",
+    error: () => "Fill in all the available fields before publishing.",
   }),
 };
 
@@ -66,7 +67,6 @@ const machine = Machine(
         entry: assign({ error: null }),
         on: {
           [events.reset]: RESET,
-          [events.backward]: states.picker,
           [events.forward]: [
             {
               cond: "isInternalBodyAcceptable",
@@ -106,7 +106,7 @@ const machine = Machine(
       },
       [states.failure]: {
         on: {
-          "": states.idle,
+          "": states.body,
         },
       },
     },

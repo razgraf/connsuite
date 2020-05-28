@@ -11,35 +11,35 @@ function isIdProvided(__, event) {
 }
 
 function isTypeInternal(__, event) {
-  return _.get(event, "payload.type.value") === types.article.type.internal;
+  return _.get(event, "payload.article.type") === types.article.type.internal;
 }
 
 function isTypeExternal(__, event) {
-  return _.get(event, "payload.type.value") === types.article.type.external;
+  return _.get(event, "payload.article.type") === types.article.type.external;
 }
 
 function isTitleAcceptable(__, event) {
-  return official.isArticleTitleAcceptable(_.get(event, "payload.title.value"), false);
+  return official.isArticleTitleAcceptable(_.get(event, "payload.article.title"), false);
 }
 
 function isCoverAcceptable(__, event) {
-  return official.isArticleCoverAcceptable(_.get(event, "payload.cover.value"), false);
+  return official.isArticleCoverAcceptable(_.get(event, "payload.article.cover"), false);
 }
 
 function isUrlAcceptable(__, event) {
-  return official.isArticleUrlAcceptable(_.get(event, "payload.url.value"), false);
+  return official.isArticleUrlAcceptable(_.get(event, "payload.article.url"), false);
 }
 
 function isContentAcceptable(__, event) {
-  return official.isArticleContentAcceptable(_.get(event, "payload.content.value"), false);
+  return official.isArticleContentAcceptable(_.get(event, "payload.article.content"), false);
 }
 
 function isSkillListAcceptable(__, event) {
-  return official.isArticleSkillListAcceptable(_.get(event, "payload.skills.value"), false);
+  return official.isArticleSkillListAcceptable(_.get(event, "payload.article.skills"), false);
 }
 
 function isCategoryListAcceptable(__, event) {
-  return official.isArticleCategoryListAcceptable(_.get(event, "payload.categories.value"), false);
+  return official.isArticleCategoryListAcceptable(_.get(event, "payload.article.categories"), false);
 }
 
 function isInternalBodyAcceptable(context, event) {
@@ -49,7 +49,7 @@ function isInternalBodyAcceptable(context, event) {
     isTitleAcceptable(context, event) &&
     isSkillListAcceptable(context, event) &&
     isCategoryListAcceptable(context, event) &&
-    isUrlAcceptable(context, event)
+    isContentAcceptable(context, event)
   );
 }
 
@@ -60,8 +60,8 @@ function isExternalBodyAcceptable(context, event) {
     isTitleAcceptable(context, event) &&
     isSkillListAcceptable(context, event) &&
     isCategoryListAcceptable(context, event) &&
-    isContentAcceptable(context, event)
+    isUrlAcceptable(context, event)
   );
 }
 
-export { isIdProvided, isTypeInternal, isTypeExternal, isInternalBodyAcceptable, isExternalBodyAcceptable };
+export default { isIdProvided, isTypeInternal, isTypeExternal, isInternalBodyAcceptable, isExternalBodyAcceptable };

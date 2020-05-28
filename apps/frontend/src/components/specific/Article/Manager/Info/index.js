@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import guards, { policy } from "@connsuite/guards";
 import { InputText, InputTags } from "../../../../atoms";
+import { useDefaultSkills, useDefaultCategories } from "../../../../../hooks";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -23,6 +24,9 @@ const Form = styled.form`
 `;
 
 function Info({ className, reducer }) {
+  const skills = useDefaultSkills();
+  const categories = useDefaultCategories();
+
   return (
     <Wrapper className={className}>
       <Form>
@@ -46,6 +50,7 @@ function Info({ className, reducer }) {
           warning={reducer.state.title.error}
         />
         <InputTags
+          accent={t => t.orange}
           help={{
             value: `In order to advertise your work better, you could add some skills, products or techniques that you used or helped with this article/project. ${policy.article.skills.root}`,
           }}
@@ -63,16 +68,7 @@ function Info({ className, reducer }) {
           placeholder="e.g. Figma, React"
           value={reducer.state.skills.value}
           warning={reducer.state.skills.error}
-          source={[
-            {
-              _id: "A1",
-              title: "A1",
-            },
-            {
-              _id: "B1",
-              title: "B1",
-            },
-          ]}
+          source={skills.list}
         />
 
         <InputTags
@@ -91,18 +87,9 @@ function Info({ className, reducer }) {
             });
           }}
           placeholder="e.g. Design, Marketing"
-          value={reducer.state.skills.value}
-          warning={reducer.state.skills.error}
-          source={[
-            {
-              _id: "A1",
-              title: "A1",
-            },
-            {
-              _id: "B1",
-              title: "B1",
-            },
-          ]}
+          value={reducer.state.categories.value}
+          warning={reducer.state.categories.error}
+          source={categories.list}
         />
       </Form>
     </Wrapper>

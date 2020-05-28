@@ -294,9 +294,20 @@ function Action({ Icon, callback, title, type, url, route }) {
   );
 }
 
-function Article({ className, _id, thumbnail, title, type }) {
+function Article({ className, _id, thumbnail, categories, title, type }) {
   const actions = useMemo(() => actionFactory(_id), [_id]);
   const history = useHistory();
+
+  const categoryField = useMemo(() => {
+    if (!categories || !categories.length) return "";
+    let field = categories
+      .slice(0, 3)
+      .map(category => category.title)
+      .join(", ");
+    if (field.length > 30) return ellipsis(field, 30);
+    if (categories.length > 3) field += "...";
+    return field;
+  }, [categories]);
 
   return (
     <Wrapper className={className}>
@@ -318,7 +329,7 @@ function Article({ className, _id, thumbnail, title, type }) {
             <OverlayFooterTitle>{ellipsis(title, 80)}</OverlayFooterTitle>
             <OverlayFooterBottom>
               <OverlayFooterInfo>
-                <OverlayFooterInfoItem data-purpose="category">Categories</OverlayFooterInfoItem>
+                <OverlayFooterInfoItem data-purpose="category">{categoryField}</OverlayFooterInfoItem>
               </OverlayFooterInfo>
               {type === types.article.type.external ? (
                 <OverlayFooterButton
@@ -383,12 +394,18 @@ Article.propTypes = {
   }).isRequired,
   title: PropTypes.string,
   type: PropTypes.oneOf(Object.values(types.article.type)),
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+    }),
+  ),
 };
 
 Article.defaultProps = {
   className: "",
   title: "",
   type: types.article.type.internal,
+  categories: [],
 };
 
 Action.propTypes = {

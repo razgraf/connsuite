@@ -231,7 +231,6 @@ function Choose({ className, isActive, reducer }) {
             onUpdate={onNetworkIconChoose}
             placeholder="Pick an icon"
             name={reducer.state.icon.name}
-            value={reducer.state.icon.value}
             warning={reducer.state.icon.error}
           />
         </Form>

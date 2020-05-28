@@ -1,15 +1,15 @@
 import _ from "lodash";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { rgba } from "polished";
 import { useSelector } from "react-redux";
 import IconArticlePublish from "@material-ui/icons/PublicRounded";
-import { Button } from "../../../../components/atoms";
+import { Button, Warning } from "../../../../components/atoms";
 import { components } from "../../../../themes";
 import Nav from "../../../../components/shared/Nav";
 import { pages, types } from "../../../../constants";
-import { useHistory, useArticleReducer } from "../../../../hooks";
+import { useHistory, useArticleReducer, useArticleCreateMachine } from "../../../../hooks";
 import { Picker, Header, Info, Specific } from "../../../../components/specific/Article/Manager";
 
 const Page = styled.div`
@@ -56,16 +56,20 @@ const StyledNav = styled(Nav)`
   position: relative !important;
   z-index: 200 !important;
   order: 0 !important;
+  border-bottom: 1px solid ${props => props.theme.colors.grayBlueLight} !important;
 `;
 const Canvas = styled(components.Canvas)`
   position: relative;
   z-index: 100;
-  min-height: calc(100vh - ${props => props.theme.sizes.navHeight});
   background: ${props => props.theme.colors.white};
-  border: 1px solid ${props => props.theme.colors.grayLight};
+  border: 1px solid ${props => props.theme.colors.grayBlueLight};
   border-top: none;
   padding: 0;
-  margin-bottom: calc(${props => props.theme.sizes.edge});
+  margin-bottom: calc(calc(${props => props.theme.sizes.edge}) * 2.5);
+
+  & > * {
+    z-index: 10;
+  }
 
   &:before {
     content: "";
@@ -89,12 +93,19 @@ const Canvas = styled(components.Canvas)`
   }
 `;
 
+const BottomWarning = styled(Warning)`
+  margin: 0 auto;
+  & > p {
+    font-size: 10pt;
+  }
+`;
+
 const Actions = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin: calc(${props => props.theme.sizes.edge} * 3) 0 150px;
+  margin: calc(${props => props.theme.sizes.edge} * 2) 0 150px;
   & > * {
     margin-right: ${props => props.theme.sizes.edge};
     &:last-child {
@@ -135,23 +146,36 @@ const ButtonIconWrapper = styled.div`
 function ArticleManager() {
   const auth = useSelector(state => state.auth);
   const reducer = useArticleReducer();
-  //   const machine = useArticleCreateMachine();
+  const machine = useArticleCreateMachine();
   const history = useHistory();
 
-  //   useEffect(() => console.log(machine.current.value), [machine]);
+  useEffect(() => console.log(machine.current.value), [machine]);
 
-  const [type, setType] = useState("external");
+  const onPick = useCallback(
+    value => {
+      reducer.dispatch({ type: reducer.actions.UPDATE_TYPE, payload: { value } });
+      machine.send(machine.events.forward);
+    },
+    [reducer, machine],
+  );
 
   const onCancel = useCallback(() => {
     // check reducer
     // confirm modal
   }, []);
 
-  const onPublish = useCallback(() => {}, []);
+  const onPublish = useCallback(() => {
+    const article = {};
+    Object.keys(reducer.state).forEach(key => {
+      article[key] = reducer.state[key].value;
+    });
+    console.log("onPublish", article);
+    machine.send(machine.events.forward, { payload: { auth, article } });
+  }, [auth, machine, reducer]);
 
   return (
     <Page data-leaving={false}>
-      <Picker isActive={type === null} onPick={setType} />
+      <Picker isActive={reducer.state.type.value === null} onPick={onPick} />
       <Playground>
         <StyledNav
           appearance={types.nav.appearance.secondary}
@@ -166,9 +190,10 @@ function ArticleManager() {
           <Specific reducer={reducer} />
         </Canvas>
       </Playground>
+      <BottomWarning isCentered value={machine.current.context.error} />
       <Actions>
         <ButtonBox
-          // data-success={machine.current.value === machine.states.success}
+          data-success={machine.current.value === machine.states.success}
           onMouseEnter={() => {
             try {
               const list = document.getElementsByTagName("input");
@@ -186,16 +211,15 @@ function ArticleManager() {
               </ButtonIconWrapper>
             }
             onClick={onPublish}
-            // isLoading={machine.current.value === machine.states.create}
+            isLoading={machine.current.value === machine.states.create}
             type={t => t.button}
             appearance={t => t.solid}
             accent={t => t.secondary}
-            // isDisabledSoft={!isForwardEnabled}
           />
         </ButtonBox>
 
         <Button
-          isDisabled={false} // machine.current.value === machine.states.apply
+          isDisabled={machine.current.value === machine.states.create}
           type={t => t.button}
           appearance={t => t.outline}
           accent={t => t.cancel}
