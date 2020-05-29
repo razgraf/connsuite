@@ -20,11 +20,17 @@ export const StateInputTags = {
   error: null,
 };
 
+export const StateInputEditor = {
+  value: null,
+  error: null,
+};
+
 const state = {
   StateInputText,
   StateInputPassword,
   StateInputImage,
   StateInputTags,
+  StateInputEditor,
 };
 
 export default state;

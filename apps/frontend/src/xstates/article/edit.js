@@ -5,9 +5,9 @@ import guards from "./guards";
 
 const states = {
   idle: "idle",
-  picker: "picker",
+  retrieve: "retrieve",
   body: "body",
-  create: "create",
+  apply: "apply",
   success: "success",
   failure: "failure",
 };
@@ -21,6 +21,7 @@ const events = {
 /** Only the named actions coming from the prop chain */
 const actions = {
   approve: "approve",
+  bind: "bind",
 };
 
 const initialContext = {
@@ -28,13 +29,19 @@ const initialContext = {
   error: null,
 };
 
-/** {auth, article} =  event.payload */
-async function attemptToCreate({ event }) {
+/** {auth, articleId} =  event.payload */
+async function attemptToRetrieve({ context }) {
+  console.log("attemptToRetrieve", context);
+  return ArticleRequest.get(context);
+}
+
+/** {auth, articleId, article} =  event.payload */
+async function attemptToEdit({ event }) {
   const { payload } = event;
   if (!_.isNil(payload, "article.content")) payload.article.content = JSON.stringify(payload.article.content);
   if (!_.isNil(payload, "article.skills")) payload.article.skills = JSON.stringify(payload.article.skills);
   if (!_.isNil(payload, "article.categories")) payload.article.categories = JSON.stringify(payload.article.categories);
-  return ArticleRequest.create(event.payload);
+  return ArticleRequest.edit(event.payload);
 }
 
 const RESET = {
@@ -51,40 +58,53 @@ const INVALIDATE = {
 
 const machine = Machine(
   {
-    id: "createArticleMachine",
+    id: "editArticleMachine",
     initial: "idle",
     context: { ...initialContext },
     states: {
       [states.idle]: {
         on: {
-          "": states.picker,
+          "": states.retrieve,
         },
       },
-      [states.picker]: {
-        on: {
-          [events.forward]: states.body,
+      [states.retrieve]: {
+        invoke: {
+          src: (context, event) => attemptToRetrieve({ context, event }),
+          onDone: {
+            actions: assign({
+              data: (context, event) => event.data,
+            }),
+            target: states.body,
+          },
+          onError: {
+            actions: assign({
+              error: (context, event) => _.toString(_.get(event, "data.message")),
+            }),
+            target: states.forbidden,
+          },
         },
       },
       [states.body]: {
+        entry: [actions.bind],
         on: {
           [events.reset]: RESET,
           [events.forward]: [
             {
-              cond: "isInternalBodyAcceptable",
-              target: states.create,
+              cond: "isInternalBodyAcceptableEdit",
+              target: states.apply,
             },
             {
-              cond: "isExternalBodyAcceptable",
-              target: states.create,
+              cond: "isExternalBodyAcceptableEdit",
+              target: states.apply,
             },
             /** All article type and content guards failed */
             { ...INVALIDATE },
           ],
         },
       },
-      [states.create]: {
+      [states.apply]: {
         invoke: {
-          src: (context, event) => attemptToCreate({ context, event }),
+          src: (context, event) => attemptToEdit({ context, event }),
           onDone: {
             actions: assign({
               data: (context, event) => event.data,
@@ -110,6 +130,7 @@ const machine = Machine(
           "": states.body,
         },
       },
+      [states.forbidden]: {},
     },
   },
   {

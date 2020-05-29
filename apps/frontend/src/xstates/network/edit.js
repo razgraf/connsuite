@@ -64,7 +64,6 @@ const machine = Machine(
           onDone: {
             actions: assign({
               data: (context, event) => event.data,
-              isAuthorized: true,
             }),
             target: states.modify,
           },

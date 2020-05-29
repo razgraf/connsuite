@@ -1,5 +1,4 @@
-import _ from "lodash";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rgba } from "polished";
@@ -8,9 +7,11 @@ import IconArticlePublish from "@material-ui/icons/PublicRounded";
 import { Button, Warning } from "../../../../components/atoms";
 import { components } from "../../../../themes";
 import Nav from "../../../../components/shared/Nav";
-import { pages, types } from "../../../../constants";
-import { useHistory, useArticleReducer, useArticleCreateMachine } from "../../../../hooks";
+import { pages, types, modals } from "../../../../constants";
+import { useHistory, useArticleReducer, useArticleCreateMachine, useModal } from "../../../../hooks";
 import { Picker, Header, Info, Specific } from "../../../../components/specific/Article/Manager";
+import { ModalArticleLeave } from "../../../../components/specific/Modals";
+import { getValueOfInputEditorSync } from "../../../../components/atoms/Input/uncontrolled";
 
 const Page = styled.div`
   position: relative;
@@ -148,6 +149,8 @@ function ArticleManager() {
   const reducer = useArticleReducer();
   const machine = useArticleCreateMachine();
   const history = useHistory();
+  const modalLeave = useModal(modals.articleLeave);
+  const [contentInstance, setContentInstance] = useState(null);
 
   useEffect(() => console.log(machine.current.value), [machine]);
 
@@ -159,35 +162,42 @@ function ArticleManager() {
     [reducer, machine],
   );
 
-  const onCancel = useCallback(() => {
-    // check reducer
-    // confirm modal
-  }, []);
-
   const onPublish = useCallback(() => {
     const article = {};
     Object.keys(reducer.state).forEach(key => {
       article[key] = reducer.state[key].value;
     });
-    console.log("onPublish", article);
-    machine.send(machine.events.forward, { payload: { auth, article } });
-  }, [auth, machine, reducer]);
+
+    if (article.type === types.article.type.external) {
+      machine.send(machine.events.forward, { payload: { auth, article } });
+    } else {
+      getValueOfInputEditorSync(contentInstance, content => {
+        article.content = content;
+        machine.send(machine.events.forward, { payload: { auth, article } });
+      });
+    }
+  }, [auth, machine, reducer, contentInstance]);
+
+  const onCancel = useCallback(() => {
+    modalLeave.setOpen(true);
+  }, [modalLeave]);
 
   return (
-    <Page data-leaving={false}>
+    <Page data-leaving={machine.current.value === machine.states.success}>
       <Picker isActive={reducer.state.type.value === null} onPick={onPick} />
       <Playground>
         <StyledNav
+          isLight
+          hasParent
           appearance={types.nav.appearance.secondary}
           accent={types.nav.accent.white}
           title={pages.article.create.title}
-          hasParent
-          isLight
+          onBackClick={onCancel}
         />
         <Canvas>
           <Header reducer={reducer} />
           <Info reducer={reducer} />
-          <Specific reducer={reducer} />
+          <Specific reducer={reducer} setContentInstance={setContentInstance} />
         </Canvas>
       </Playground>
       <BottomWarning isCentered value={machine.current.context.error} />
@@ -227,6 +237,7 @@ function ArticleManager() {
           onClick={onCancel}
         />
       </Actions>
+      <ModalArticleLeave onSuccess={() => history.back()} />
     </Page>
   );
 }

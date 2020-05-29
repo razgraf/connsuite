@@ -140,7 +140,6 @@ const OverlayActionVisit = styled.div`
   justify-content: flex-start;
   width: 100%;
   margin-bottom: auto;
-  /* margin-bottom: calc(${props => props.theme.sizes.networkEdge} * 3 / 4); */
 `;
 
 const OverlayActionVisitIcon = styled.a`

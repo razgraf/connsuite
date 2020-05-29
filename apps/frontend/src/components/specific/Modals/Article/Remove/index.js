@@ -30,8 +30,9 @@ const Error = styled.p`
 `;
 
 function ModalArticleRemove({ className, article, onSuccess: onSuccessCallback }) {
+  const id = modals.articleRemove;
   const auth = useSelector(state => state.auth);
-  const { setOpen } = useModal(modals.articleRemove);
+  const { setOpen } = useModal(id);
 
   const onSuccess = useCallback(() => {
     setOpen(false);
@@ -54,7 +55,7 @@ function ModalArticleRemove({ className, article, onSuccess: onSuccessCallback }
   return (
     <Modal
       className={className}
-      id={modals.articleRemove}
+      id={id}
       title="Remove article"
       actions={
         <>

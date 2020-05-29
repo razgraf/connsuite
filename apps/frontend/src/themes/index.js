@@ -68,6 +68,10 @@ const GlobalStyle = createGlobalStyle`
   }
 
 
+  div.ce-block__content,  div.ce-toolbar__content{
+    max-width: calc(100% - 2 * 30px);
+  }
+
 `;
 
 function ThemeProvider({ children }) {

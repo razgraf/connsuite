@@ -143,7 +143,7 @@ const LoaderWrapper = styled.div`
   &:not([data-position="left"]) {
     order: 1000;
     & > div {
-      right: -10px;
+      right: -8px;
     }
   }
   &[data-position="left"] {

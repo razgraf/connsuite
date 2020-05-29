@@ -48,6 +48,7 @@ const Cover = styled.img`
   height: 100%;
   transform: scale(1.1);
   object-fit: cover;
+  user-select: none;
 
   &:not([src]),
   &[src=""] {
@@ -164,6 +165,7 @@ const Thumbnail = styled.img`
   overflow: hidden;
   z-index: 100;
   object-fit: cover;
+  user-select: none;
 
   &:not([src]),
   &[src=""] {

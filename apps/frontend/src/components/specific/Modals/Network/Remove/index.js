@@ -30,8 +30,9 @@ const Error = styled.p`
 `;
 
 function ModalNetworkRemove({ className, network, onSuccess: onSuccessCallback }) {
+  const id = modals.networkRemove;
   const auth = useSelector(state => state.auth);
-  const { setOpen } = useModal(modals.networkRemove);
+  const { setOpen } = useModal(id);
 
   const onSuccess = useCallback(() => {
     setOpen(false);
@@ -54,7 +55,7 @@ function ModalNetworkRemove({ className, network, onSuccess: onSuccessCallback }
   return (
     <Modal
       className={className}
-      id={modals.networkRemove}
+      id={id}
       title="Remove network"
       actions={
         <>

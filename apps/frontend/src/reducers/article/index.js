@@ -1,4 +1,4 @@
-import { StateInputText, StateInputImage, StateInputTags } from "../../components/atoms/Input/state";
+import { StateInputText, StateInputImage, StateInputTags, StateInputEditor } from "../../components/atoms/Input/state";
 
 export const initial = {
   type: {
@@ -9,7 +9,7 @@ export const initial = {
   title: { ...StateInputText },
   skills: { ...StateInputTags },
   categories: { ...StateInputTags },
-  content: { ...StateInputText }, // TODO EditorJs (?)
+  content: { ...StateInputEditor },
   url: { ...StateInputText },
 };
 
@@ -33,7 +33,35 @@ export function reducer(state, { type, payload }) {
 
     case actions.BIND:
       return {
-        ...state, // TODO
+        ...state,
+        type: {
+          ...state.type,
+          value: payload.type,
+        },
+        title: {
+          ...state.title,
+          value: payload.title,
+        },
+        skills: {
+          ...state.skills,
+          value: payload.skills,
+        },
+        categories: {
+          ...state.categories,
+          value: payload.categories,
+        },
+        content: {
+          ...state.content,
+          value: payload.content,
+        },
+        url: {
+          ...state.url,
+          value: payload.url,
+        },
+        cover: {
+          ...state.cover,
+          preview: payload.cover.preview,
+        },
       };
     case actions.UPDATE_TYPE:
       return {

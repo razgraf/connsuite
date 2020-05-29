@@ -52,7 +52,7 @@ function Info({ className, reducer }) {
         <InputTags
           accent={t => t.orange}
           help={{
-            value: `In order to advertise your work better, you could add some skills, products or techniques that you used or helped with this article/project. ${policy.article.skills.root}`,
+            value: "Add some skills, products or techniques that you used while working on this article/project.",
           }}
           id="manageArticleSkills"
           label="Skills and Tools"
@@ -73,7 +73,7 @@ function Info({ className, reducer }) {
 
         <InputTags
           help={{
-            value: `To make your portfolio of articles more organized, you can assign high-level categories to this element. ${policy.article.categories.root}`,
+            value: "To make your portfolio of articles more organized, you can assign high-level categories to this element.",
           }}
           id="manageArticleCategories"
           label="Categories"

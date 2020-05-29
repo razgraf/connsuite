@@ -112,7 +112,6 @@ async function get({ auth, articleId }, handle = true) {
   const response = await fetch(endpoint, {
     method: "GET",
     headers: buildHeaders({ auth }),
-    body: {},
     credentials: "omit",
   });
 

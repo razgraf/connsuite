@@ -251,6 +251,7 @@ export const MODAL_PORTAL = "van-modal__container";
 export const modals = {
   networkRemove: "modalNetworkRemove",
   articleRemove: "modalArticleRemove",
+  articleLeave: "modalArticleLeave",
 };
 
 const constants = {

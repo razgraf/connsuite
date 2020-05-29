@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rgba } from "polished";
@@ -89,17 +89,22 @@ const Wrapper = styled(WrapperPartial)`
   }
 `;
 
-function NavSecondary({ className, accent, hasAccount, hasParent, title }) {
+function NavSecondary({ className, accent, hasAccount, hasParent, title, onBackClick }) {
   const { history, pop } = useHistory();
-  const parentRoute = useMemo(() => (hasParent && history.length ? _.get(history[history.length - 1], "route") : pages.dashboard.root), [
-    hasParent,
-    history,
-  ]);
+  const parentRoute = useMemo(
+    () => (!_.isNil(onBackClick) ? null : hasParent && history.length ? _.get(history[history.length - 1], "route") : pages.dashboard.root),
+    [hasParent, history, onBackClick],
+  );
+
+  const onLogoClick = useCallback(() => {
+    if (!_.isNil(onBackClick) && _.isFunction(onBackClick)) onBackClick();
+    else pop();
+  }, [onBackClick, pop]);
 
   return (
     <Wrapper className={className} data-accent={accent}>
       <Content>
-        <NavLogo href={parentRoute} hasParent={hasParent} onClick={pop} />
+        <NavLogo href={parentRoute} hasParent={hasParent} onClick={onLogoClick} />
         <Main>
           <IconWrapper>
             <IconArrow style={{ fontSize: "16pt" }} />
@@ -122,6 +127,7 @@ NavSecondary.propTypes = {
   title: PropTypes.string.isRequired,
   hasAccount: PropTypes.bool,
   hasParent: PropTypes.bool,
+  onBackClick: PropTypes.func,
 };
 
 NavSecondary.defaultProps = {
@@ -129,6 +135,7 @@ NavSecondary.defaultProps = {
   className: null,
   hasAccount: true,
   hasParent: false,
+  onBackClick: null,
 };
 
 export default NavSecondary;

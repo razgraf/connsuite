@@ -26,6 +26,12 @@ function isCoverAcceptable(__, event) {
   return official.isArticleCoverAcceptable(_.get(event, "payload.article.cover"), false);
 }
 
+function isCoverOptionallyAcceptable(__, event) {
+  if (_.get(event, "payload.article.cover.value"))
+    return official.isCoverOptionallyAcceptable(_.get(event, "payload.article.cover"), false);
+  return true;
+}
+
 function isUrlAcceptable(__, event) {
   return official.isArticleUrlAcceptable(_.get(event, "payload.article.url"), false);
 }
@@ -64,4 +70,36 @@ function isExternalBodyAcceptable(context, event) {
   );
 }
 
-export default { isIdProvided, isTypeInternal, isTypeExternal, isInternalBodyAcceptable, isExternalBodyAcceptable };
+function isInternalBodyAcceptableEdit(context, event) {
+  return (
+    isIdProvided(context, event) &&
+    isTypeInternal(context, event) &&
+    isCoverOptionallyAcceptable(context, event) &&
+    isTitleAcceptable(context, event) &&
+    isSkillListAcceptable(context, event) &&
+    isCategoryListAcceptable(context, event) &&
+    isContentAcceptable(context, event)
+  );
+}
+
+function isExternalBodyAcceptableEdit(context, event) {
+  return (
+    isIdProvided(context, event) &&
+    isTypeExternal(context, event) &&
+    isCoverOptionallyAcceptable(context, event) &&
+    isTitleAcceptable(context, event) &&
+    isSkillListAcceptable(context, event) &&
+    isCategoryListAcceptable(context, event) &&
+    isUrlAcceptable(context, event)
+  );
+}
+
+export default {
+  isIdProvided,
+  isTypeInternal,
+  isTypeExternal,
+  isInternalBodyAcceptable,
+  isExternalBodyAcceptable,
+  isInternalBodyAcceptableEdit,
+  isExternalBodyAcceptableEdit,
+};
