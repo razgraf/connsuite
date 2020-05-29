@@ -17,7 +17,16 @@ export default class ArticleController extends BaseController {
       if (!article) throw new ArticleError.NotFound("The identifier doesn't match any article.");
 
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Found", article: toArticleDTO(article) });
+      res.json({
+        message: "Found",
+        article: toArticleDTO(article, {
+          categories: true,
+          skills: true,
+          images: true,
+          content: true,
+          user: true,
+        }),
+      });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });

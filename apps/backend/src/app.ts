@@ -3,8 +3,7 @@ import path from "path";
 import cors from "cors";
 import express, { Request, Response, NextFunction } from "express";
 
-import { ArticleRouter, AuthRouter, NetworkRouter } from "./routers";
-import { routes } from "./constants";
+import routers from "./routers";
 import { mongo } from "./vendors";
 
 mongo.config();
@@ -25,9 +24,7 @@ app.use((error: SyntaxError, req: Request, res: Response, next: NextFunction) =>
   next();
 });
 
-app.use(routes.article.root, ArticleRouter);
-app.use(routes.auth.root, AuthRouter);
-app.use(routes.network.root, NetworkRouter);
+routers.forEach(({ root, router }) => app.use(root, router));
 
 app.get("/", (req: express.Request, res: express.Response) => {
   res.send("Hi.");

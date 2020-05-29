@@ -17,7 +17,6 @@ export default class SkillRepository extends BaseRepository<Skill> {
   }
 
   public async create(payload: Request.SkillCreate, options = { admin: false }): Promise<Skill> {
-    console.log(payload);
     if (_.isNil(payload)) throw new ParamsError.Missing("No payload provided.");
     if (!_.get(payload, "userId")) throw new ParamsError.Missing("No creator provided. Missing user id.");
     if (!_.get(payload, "articleId")) throw new ParamsError.Missing("No purpose provided. Missing article id.");

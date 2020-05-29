@@ -30,6 +30,14 @@ export default {
     list: "/",
     listExternal: "/external/",
   },
+  skill: {
+    root: "/skills",
+    listDefault: "/default",
+  },
+  category: {
+    root: "/categories",
+    listDefault: "/default",
+  },
   auth: {
     root: "/auth",
     /** PROVIDERS **/

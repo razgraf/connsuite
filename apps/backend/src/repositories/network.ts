@@ -289,7 +289,7 @@ export default class NetworkRepository extends BaseRepository<Network> {
     }
 
     if (!_.get(payload, "username")) throw new ParamsError.Missing("Missing Username");
-    const usernameGuard = guards.isNetworkUrlAcceptable(payload.username, true);
+    const usernameGuard = guards.isNetworkUsernameAcceptable(payload.username, true);
     if (usernameGuard !== true) throw new ParamsError.Invalid(usernameGuard as string);
 
     if (_.get(payload, "description")) {

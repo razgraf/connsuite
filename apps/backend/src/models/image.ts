@@ -45,7 +45,7 @@ function interpret(image: Image, result: { [key: string]: any } = {}): void {
   } else if (image.parent === ImageParent.Article) {
     const type = _.attempt(() => _.toString(_.get(image || {}, "type") || "").split("/")[1]);
     if (_.isNil(image._id) || _.isError(type) || _.isNil(type)) return;
-    result.url = `${atoms.root}/${atoms.tree.article}/icon/${image._id}.${type}`;
+    result.url = `${atoms.root}/${atoms.tree.article}/${image._id}.${type}`;
   }
 }
 

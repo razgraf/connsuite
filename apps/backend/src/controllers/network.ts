@@ -104,7 +104,10 @@ export default class NetworkController extends BaseController {
   public static async listExternal(req: Request, res: Response): Promise<void> {
     try {
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Supported external networks.", networks: Object.values(external) });
+      res.json({
+        message: "Supported external networks.",
+        networks: Object.values(external).map(item => toNetworkDTO({ ...item, externalId: String(item._id) })),
+      });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });
@@ -120,6 +123,23 @@ export default class NetworkController extends BaseController {
       // };
 
       // seedSkills();
+
+      // const seedCategories: () => void = () => {
+      //   const categories: string[] = [
+      //     "Design",
+      //     "Development",
+      //     "Marketing",
+      //     "Business",
+      //     "Social Media",
+      //     "Sales",
+      //     "Engineering",
+      //     "Economics",
+      //   ];
+
+      //   categories.forEach(title => CategoryModel.create({ title, isDefault: true }));
+      // };
+
+      // seedCategories();
 
       res.status(HTTP_CODE.OK);
       res.json({ message: "Doing admin stuff" });

@@ -8,17 +8,7 @@ import SkillRepository from "./skill";
 import ImageRepository from "./image";
 import UserRepository from "./user";
 import { ArticleError, ParamsError } from "../errors";
-import {
-  Article,
-  ArticleModel,
-  ArticleType,
-  Category,
-  Image,
-  ImageParent,
-  ImagePurpose,
-  Request,
-  Skill,
-} from "../models";
+import { Article, ArticleModel, ArticleType, Image, ImageParent, ImagePurpose, Request } from "../models";
 
 export default class ArticleRepository extends BaseRepository<Article> {
   private static instance: ArticleRepository;
@@ -85,7 +75,7 @@ export default class ArticleRepository extends BaseRepository<Article> {
       return (
         ArticleModel.find(filters, this._projectByOptions(options)).populate(this._populateByOptions(options)) || []
       );
-    return ArticleModel.find(filters, this._projectByOptions(options)) || [];
+    return ArticleModel.find(filters, this._projectByOptions(options || {})) || [];
   }
 
   /**
@@ -178,7 +168,7 @@ export default class ArticleRepository extends BaseRepository<Article> {
     const projection: { [key: string]: boolean } = {};
     if (_.isNil(options)) return projection;
 
-    if (!options.hideContent) projection.content = false;
+    if (options.hideContent) projection.content = false;
 
     return projection;
   }
