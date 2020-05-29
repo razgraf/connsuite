@@ -36,7 +36,7 @@ const user_1 = __importStar(require("./user"));
  * @param {*} value
  */
 function interpret(gate, value) {
-    if (lodash_1.default.isNil(value) || lodash_1.default.isEmpty(value))
+    if (lodash_1.default.isNil(value) || (lodash_1.default.isString(value) && lodash_1.default.isEmpty(value)))
         return null;
     if (!lodash_1.default.isFunction(gate))
         throw new Error("Gate Method is not a function");

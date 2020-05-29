@@ -11,7 +11,7 @@ import userGuards, { policy as userPolicy } from "./user";
  * @param {*} value
  */
 function interpret(gate: Function, value: any): any {
-  if (_.isNil(value) || _.isEmpty(value)) return null;
+  if (_.isNil(value) || (_.isString(value) && _.isEmpty(value))) return null;
   if (!_.isFunction(gate)) throw new Error("Gate Method is not a function");
   const result = gate(value);
   return result === true ? null : result;

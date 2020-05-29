@@ -97,12 +97,16 @@ function isArticleUrlAcceptable(value, withPolicy = atoms_1.WITH_POLICY) {
             : false;
 }
 function isArticleContentAcceptable(value, withPolicy = atoms_1.WITH_POLICY, isStringified = false) {
-    const sections = isStringified && !lodash_1.default.isNil(value)
+    const editor = isStringified && !lodash_1.default.isNil(value)
         ? lodash_1.default.attempt(() => JSON.parse(value))
         : value;
-    if (lodash_1.default.isNil(sections) ||
-        !lodash_1.default.isArray(sections) ||
-        sections.length < atoms_1.limits.MIN_ARTICLE_SECTION_COUNT)
+    if (!lodash_1.default.has(editor, "blocks"))
+        return withPolicy ? "Editor configuration failure." : false;
+    const blocks = lodash_1.default.get(editor, "blocks");
+    console.log(blocks, lodash_1.default.isNil(blocks), !lodash_1.default.isArray(blocks), blocks.length < atoms_1.limits.MIN_ARTICLE_SECTION_COUNT);
+    if (lodash_1.default.isNil(blocks) ||
+        !lodash_1.default.isArray(blocks) ||
+        blocks.length < atoms_1.limits.MIN_ARTICLE_SECTION_COUNT)
         return withPolicy ? exports.policy.content[1] : false;
     return true;
 }

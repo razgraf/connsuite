@@ -132,15 +132,26 @@ function isArticleContentAcceptable(
   withPolicy = WITH_POLICY,
   isStringified = false
 ): string | boolean {
-  const sections =
+  const editor =
     isStringified && !_.isNil(value)
       ? _.attempt(() => JSON.parse(value as string))
       : value;
 
+  if (!_.has(editor, "blocks"))
+    return withPolicy ? "Editor configuration failure." : false;
+
+  const blocks = _.get(editor, "blocks");
+  console.log(
+    blocks,
+    _.isNil(blocks),
+    !_.isArray(blocks),
+    blocks.length < limits.MIN_ARTICLE_SECTION_COUNT
+  );
+
   if (
-    _.isNil(sections) ||
-    !_.isArray(sections) ||
-    sections.length < limits.MIN_ARTICLE_SECTION_COUNT
+    _.isNil(blocks) ||
+    !_.isArray(blocks) ||
+    blocks.length < limits.MIN_ARTICLE_SECTION_COUNT
   )
     return withPolicy ? policy.content[1] : false;
 
