@@ -12,6 +12,7 @@ export const pages = {
   landing: {
     Icon: null,
     root: "/",
+    route: "/",
     title: "Landing",
   },
   profile: {
@@ -24,21 +25,25 @@ export const pages = {
   dashboard: {
     Icon: IconDashboard,
     root: "/dashboard",
+    route: "/dashboard",
     title: "Dashboard",
   },
   portfolio: {
     Icon: IconPortfolio,
     root: "/portfolio",
+    route: "/portfolio",
     title: "Portfolio",
   },
   business: {
     Icon: IconBusiness,
     root: "/business",
+    route: "/business",
     title: "Business Book",
   },
   statistics: {
     Icon: IconStatistics,
     root: "/statistics",
+    route: "/statistics",
     title: "Statistics",
     isPrivate: true,
   },
@@ -196,6 +201,9 @@ export const API = {
 
   skillListDefault: () => `${API.root}/skills/default`,
   categoryListDefault: () => `${API.root}/categories/default`,
+
+  userGet: id => `${API.root}/users/${id}`,
+  userEdit: id => `${API.root}/users/${id}`,
 };
 
 export const links = {

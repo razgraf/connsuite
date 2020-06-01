@@ -109,11 +109,6 @@ async function remove({ auth, networkId }, handle = true) {
  */
 async function get({ auth, networkId }, handle = true) {
   const endpoint = new URL(API.networkGet(networkId));
-  const params = {
-    authorize: true,
-  };
-
-  Object.keys(params).forEach(key => (!_.isNil(params[key]) ? endpoint.searchParams.append(key, params[key]) : null));
   const response = await fetch(endpoint, {
     method: "GET",
     headers: buildHeaders({ auth }),

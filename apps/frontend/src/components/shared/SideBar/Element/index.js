@@ -85,9 +85,10 @@ const Bubble = styled(BubblePartial)`
   }
 `;
 
-function Element({ Icon, title, root, isActive, isPrivate }) {
+function Element({ Icon, title, href, isActive, isPrivate, as }) {
+  console.log(href, as);
   return (
-    <Link href={root}>
+    <Link href={href} as={as} passHref>
       <Wrapper>
         <Bubble data-private={isPrivate} data-active={isActive}>
           <Icon style={{ fontSize: "18pt" }} />
@@ -103,14 +104,16 @@ function Element({ Icon, title, root, isActive, isPrivate }) {
 Element.propTypes = {
   Icon: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
   title: PropTypes.string.isRequired,
-  root: PropTypes.string.isRequired,
+  href: PropTypes.string.isRequired,
   isPrivate: PropTypes.bool,
   isActive: PropTypes.bool,
+  as: PropTypes.string,
 };
 
 Element.defaultProps = {
   isPrivate: false,
   isActive: false,
+  as: null,
 };
 
 export default Element;

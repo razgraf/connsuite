@@ -59,7 +59,7 @@ const IconWrapper = styled.div`
 const Title = styled.p`
   margin: 0;
   font-family: ${props => props.theme.fonts.primary};
-  font-size: 15pt;
+  font-size: 14pt;
   color: ${props => props.theme.colors.white};
   text-align: left;
   font-weight: 400;

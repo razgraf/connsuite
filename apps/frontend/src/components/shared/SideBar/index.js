@@ -1,8 +1,10 @@
-import React from "react";
+import _ from "lodash";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { lighten } from "polished";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 import Element from "./Element";
 import { pages } from "../../../constants";
 
@@ -29,15 +31,27 @@ const Divider = styled.div`
 
 function SideBar({ className, reference }) {
   const router = useRouter();
+  const user = useSelector(state => state.auth.user);
+  const username = useMemo(
+    () =>
+      _.get(
+        _.toArray(_.get(user, "usernames")).find(item => item.isPrimary),
+        "value",
+      ),
+    [user],
+  );
+
+  console.log(pages.profile.builder(username));
+
   return (
     <Wrapper className={className} ref={reference}>
       <Content>
         {[pages.dashboard, pages.portfolio, pages.business, pages.statistics].map(page => (
-          <Element key={page.title} {...page} isActive={router.pathname === page.root} />
+          <Element key={page.title} {...page} isActive={router.pathname === page.root} href={page.route} />
         ))}
         <Divider />
         {[pages.profile].map(page => (
-          <Element key={page.title} {...page} isActive={router.pathname === page.root} />
+          <Element key={page.title} {...page} isActive={router.pathname === page.root} href={page.route} as={page.builder(username)} />
         ))}
       </Content>
     </Wrapper>
@@ -51,7 +65,7 @@ SideBar.propTypes = {
 
 SideBar.defaultProps = {
   className: null,
-  referece: null,
+  reference: null,
 };
 
 export default SideBar;

@@ -1,4 +1,4 @@
-import ArticleManager from "../../src/pages/platform/Article/Manager/create.js";
+import ArticleManager from "../../src/pages/platform/Article/Manager/create";
 import { validateAuth } from "../../src/utils";
 
 ArticleManager.getInitialProps = async context => {

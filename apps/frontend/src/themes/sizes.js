@@ -32,6 +32,8 @@ const sizes = {
   text: "11pt",
 
   articlePickerElevation: "600",
+
+  profileBlob: "400px",
 };
 
 export default sizes;
