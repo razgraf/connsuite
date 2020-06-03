@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useMachine } from "@xstate/react";
-import { dataListX, dataGetX } from "../../xstates";
+import { dataListX, dataGetX } from "../../machines";
 
 export function useDataListMachine({ resource, request = async () => {}, onSuccess = () => {} }) {
   const piece = useMachine(dataListX.machine, {

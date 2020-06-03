@@ -176,6 +176,12 @@ export const types = {
       internal: "internal",
     },
   },
+  placeholder: {
+    type: {
+      networks: "networks",
+      articles: "articles",
+    },
+  },
 };
 
 export const API = {

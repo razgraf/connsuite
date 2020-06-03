@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { useMemo } from "react";
 import { useMachine } from "@xstate/react";
-import { connectX } from "../../xstates";
+import { connectX } from "../../machines";
 import { redirectTo } from "../../utils";
 import { redux, pages } from "../../constants";
 

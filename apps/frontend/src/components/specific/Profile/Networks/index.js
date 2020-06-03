@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import SectionHeader from "../SectionHeader";
 import Network from "../../../shared/Network";
+import Placeholder from "../../../shared/Placeholder";
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,13 +18,20 @@ const Wrapper = styled.div`
   transition: border 200ms;
 `;
 
-const GridNetworks = styled.div`
+const Content = styled.div`
+  width: 100%;
+  position: relative;
+  min-height: 280px;
+`;
+
+const Grid = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   grid-column-gap: ${props => props.theme.sizes.edge};
   grid-row-gap: calc(${props => props.theme.sizes.edge} * 1.5);
   grid-auto-rows: 1fr;
+  z-index: 100;
   & > * {
     grid-column: span 1;
     flex-grow: 0;
@@ -40,11 +48,14 @@ function Networks({ className, networks, isLoading }) {
   return (
     <Wrapper className={className}>
       <SectionHeader title="Networks" isLoading={isLoading} />
-      <GridNetworks>
-        {networks.map(network => (
-          <Network key={network._id} {...network} />
-        ))}
-      </GridNetworks>
+      <Content>
+        <Grid>
+          {networks.map(network => (
+            <Network key={network._id} {...network} />
+          ))}
+        </Grid>
+        <Placeholder isActive={isLoading} type={t => t.networks} />
+      </Content>
     </Wrapper>
   );
 }

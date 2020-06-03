@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { useMachine } from "@xstate/react";
 import { useToasts } from "react-toast-notifications";
-import { articleCreateX, articleRemoveX, articleEditX } from "../../xstates";
+import { articleCreateX, articleRemoveX, articleEditX } from "../../machines";
 import { pages, sagas } from "../../constants";
 import { ArticleRequest } from "../../requests";
 import { useDataListMachine } from "./atoms";

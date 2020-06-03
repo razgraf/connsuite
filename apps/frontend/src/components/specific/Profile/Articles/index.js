@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import SectionHeader from "../SectionHeader";
 import Article from "../../../shared/Article";
+import Navigator from "./Navigator";
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,7 +22,7 @@ const Top = styled.div`
   padding: 0 calc(${props => props.theme.sizes.edge} * 2);
 `;
 
-const GridArticles = styled.div`
+const Grid = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -34,32 +35,39 @@ const GridArticles = styled.div`
   }
 `;
 
-function Articles({ className, isLoading, articles }) {
-  console.log(articles);
+function Articles({ className, isLoading, articles, categories, skills, controller }) {
   return (
     <Wrapper className={className}>
       <Top>
         <SectionHeader title="Articles" isLoading={isLoading} />
       </Top>
-
-      <GridArticles>
+      <Navigator categories={categories} skills={skills} controller={controller} />
+      <Grid>
         {articles.map(article => (
           <Article key={article._id} {...article} />
         ))}
-      </GridArticles>
+      </Grid>
     </Wrapper>
   );
 }
 
 Articles.propTypes = {
   className: PropTypes.string,
-  articles: PropTypes.arrayOf(PropTypes.shape({})),
+  articles: PropTypes.arrayOf(PropTypes.shape),
+  skills: PropTypes.arrayOf(PropTypes.shape),
+  categories: PropTypes.arrayOf(PropTypes.shape),
+  controller: PropTypes.shape({
+    get: PropTypes.func,
+    set: PropTypes.func,
+  }).isRequired,
   isLoading: PropTypes.bool,
 };
 
 Articles.defaultProps = {
   className: null,
   articles: [],
+  skills: [],
+  categories: [],
   isLoading: false,
 };
 

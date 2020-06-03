@@ -1,14 +1,14 @@
 import _ from "lodash";
 import PropTypes from "prop-types";
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import Router, { useRouter } from "next/router";
 import { rgba } from "polished";
 
 import { types, pages } from "../../../constants";
-import { useNetworksMachine, useArticlesMachine } from "../../../hooks";
-import { parseFullName } from "../../../utils";
+import { useNetworksMachine, useArticlesMachine, useProfileMachine } from "../../../hooks";
+import { parseFullName, getPrimaryUsername } from "../../../utils";
 
 import { components } from "../../../themes";
 import Nav from "../../../components/shared/Nav";
@@ -73,19 +73,16 @@ function replaceUsername({ username, identifier, router }) {
   }
 }
 
-function getPrimaryUsername(profile) {
-  return _.get(
-    _.toArray(_.get(profile, "usernames")).find(item => item.isPrimary),
-    "value",
-  );
-}
-
 function Profile({ profile, identifier }) {
   const auth = useSelector(state => state.auth);
   const router = useRouter();
   const machineNetworks = useNetworksMachine();
   const machineArticles = useArticlesMachine();
+  const machineProfile = useProfileMachine();
   const username = useMemo(() => getPrimaryUsername(profile), [profile]);
+
+  const active = useState(null);
+  const controller = useMemo(() => ({ get: () => active[0], set: value => active[1](value) }), [active]);
 
   useEffect(() => {
     replaceUsername({ username, identifier, router });
@@ -101,6 +98,13 @@ function Profile({ profile, identifier }) {
         user: { username },
       },
     });
+
+    machineProfile.send(machineProfile.events.request, {
+      payload: {
+        auth,
+        identifier: username,
+      },
+    });
   }, []); /* componentDidMount */ // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -108,9 +112,18 @@ function Profile({ profile, identifier }) {
       <Nav appearance={types.nav.appearance.profile} title={`${parseFullName({ user: profile }) || "ConnSuite"}'s`} hasParent />
       <Main>
         <Canvas>
-          <Header />
-          <Networks isLoading={machineNetworks.current.context.isLoading} networks={machineNetworks.current.context.list} />
-          <Articles isLoading={machineArticles.current.context.isLoading} articles={machineArticles.current.context.list} />
+          <Header isLoading={_.get(machineProfile, "current.context.isLoading")} profile={_.get(machineProfile, "current.context.data")} />
+          <Networks
+            isLoading={_.get(machineNetworks, "current.context.isLoading")}
+            networks={_.get(machineNetworks, "current.context.list")}
+          />
+          <Articles
+            isLoading={_.get(machineArticles, "current.context.isLoading") || _.get(machineProfile, "current.context.isLoading")}
+            articles={_.get(machineArticles, "current.context.list")}
+            skills={_.get(machineProfile, "current.context.data.skills")}
+            categories={_.get(machineProfile, "current.context.data.categories")}
+            controller={controller}
+          />
         </Canvas>
       </Main>
     </Page>

@@ -20,3 +20,10 @@ export function parseFullName(auth, max = null, forceEllipsis = false) {
     return null;
   }
 }
+
+export function getPrimaryUsername(profile) {
+  return _.get(
+    _.toArray(_.get(profile, "usernames")).find(item => item.isPrimary),
+    "value",
+  );
+}

@@ -30,6 +30,7 @@ const Content = styled.div`
   padding: 6px;
   background: #ffffff;
   border-radius: 100px;
+  border: 1px solid transparent;
 `;
 
 const ImageWrapper = styled.div`
@@ -196,12 +197,12 @@ function Account({ className }) {
           <Name>{name}</Name>
         </Main>
         <Action>
-          <ActionDropdown ref={ref} data-active={isDown} onClick={() => setIsDown(!isDown)}>
+          <ActionDropdown data-active={isDown} onClick={() => setIsDown(!isDown)}>
             <IconArrowDown style={{ fontSize: "11pt" }} />
           </ActionDropdown>
         </Action>
       </Content>
-      <Dropdown data-active={isDown}>
+      <Dropdown ref={ref} data-active={isDown}>
         {[pages.profile, pages.dashboard, pages.about].map(item => (
           <DropdownItem {...item} key={item.title} isActive={router.pathname === item.root} />
         ))}

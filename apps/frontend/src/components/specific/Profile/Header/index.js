@@ -1,13 +1,16 @@
 import _ from "lodash";
-import React, { useMemo, Fragment } from "react";
+import React, { useMemo, useState, Fragment } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+
 import { rgba } from "polished";
 import IconContact from "@material-ui/icons/WhatshotRounded";
 import Asset from "../../../../assets/projects/project-2.png";
 import Skill from "./Skill";
-import { useDefaultSkills } from "../../../../hooks";
+import { parseFullName, getPrimaryUsername } from "../../../../utils";
 import { Button } from "../../../atoms";
+
+const Skeleton = styled.span``;
 
 const Wrapper = styled.div`
   display: flex;
@@ -93,12 +96,37 @@ const LeftImage = styled.img`
   height: 100%;
   width: 100%;
   object-fit: cover;
+  user-select: none;
+  opacity: 0;
+
+  &:not([src]),
+  &[src=""] {
+    visibility: hidden;
+  }
+  &[data-loaded="true"] {
+    opacity: 1;
+    transition: opacity 300ms;
+  }
 `;
 
 const Right = styled.div`
   flex: 1;
   padding-left: calc(${props => props.theme.sizes.edge} * 3);
   padding-top: calc(${props => props.theme.sizes.edge} * 2);
+`;
+
+const RightContent = styled.div`
+  width: 100%;
+  opacity: 0;
+  padding-right: calc(${props => props.theme.sizes.edge} * 1);
+  overflow: hidden;
+  transform: translateX(50px);
+
+  &[data-ready="true"] {
+    opacity: 1;
+    transform: translateX(0);
+    transition: transform 200ms, opacity 300ms 100ms;
+  }
 `;
 
 const Title = styled.p`
@@ -192,12 +220,14 @@ function interpret(description, list) {
   return parts;
 }
 
-const source =
-  "Hi! Lorem ipsum dolor sit amet React consectetur adipiscing elit. Nunc React Native varius nulla ut tortor accumsan faucibus. Donec semper eget justo sit amet fermentum. Vivamus sed tellus fermentum, convallis nisi eget, imperdiet orci.  Vivamus sed tellus fermentum, convallis nisi eget, imperdiet orci. Node Vivamus sed tellus fermentum, convallis nisi eget, imperdiet orci. <br/> Vivamus sed tellus fermentum, convallis nisi eget, imperdiet orci.  Vivamus sed tellus fermentum, convallis nisi eget, imperdiet orci.";
+function Header({ className, profile, isLoading }) {
+  const skills = useMemo(() => _.toArray(_.get(profile, "skills")), [profile]);
+  const description = useMemo(() => _.toString(_.get(profile, "user.description")), [profile]);
+  const name = useMemo(() => parseFullName(profile), [profile]);
+  const username = useMemo(() => getPrimaryUsername(_.get(profile, "user")), [profile]);
+  const parts = useMemo(() => interpret(description, skills), [description, skills]);
 
-function Header({ className }) {
-  const skills = useDefaultSkills();
-  const parts = useMemo(() => interpret(source, skills.list), [skills]);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   return (
     <Wrapper className={className}>
@@ -210,37 +240,39 @@ function Header({ className }) {
           </LeftUnderlay>
           <LeftContent>
             <LeftImageWrapper>
-              <LeftImage src={Asset} alt="" />
+              <LeftImage src={Asset} alt="" onLoad={() => setIsImageLoaded(true)} data-loaded={isImageLoaded} />
             </LeftImageWrapper>
           </LeftContent>
         </LeftFloater>
       </Left>
       <Right>
-        <Title>Designer & Developer</Title>
-        <Identification>
-          <Name>Razvan Apostu</Name>
-          <Username>@razgraf</Username>
-        </Identification>
-        <Divider />
-        <Description>
-          {parts.map(({ text, isSkill, index }) => (
-            <Fragment key={`${index}-${text}`}>{isSkill ? <Skill title={text} /> : <span>{text}</span>}</Fragment>
-          ))}
-        </Description>
-        <Actions>
-          <Button
-            appearance={t => t.solid}
-            accent={t => t.secondary}
-            childrenLeft={
-              <ButtonIconWrapper>
-                <IconContact style={{ fontSize: "14pt" }} />
-              </ButtonIconWrapper>
-            }
-            title="Get in touch"
-            type={t => t.button}
-            onClick={() => console.log("click")}
-          />
-        </Actions>
+        <RightContent data-ready={!isLoading}>
+          <Title>Designer & Developer</Title>
+          <Identification>
+            <Name>{name}</Name>
+            <Username>{`@${username}`}</Username>
+          </Identification>
+          <Divider />
+          <Description>
+            {parts.map(({ text, isSkill, index }) => (
+              <Fragment key={`${index}-${text}`}>{isSkill ? <Skill title={text} /> : <span>{text}</span>}</Fragment>
+            ))}
+          </Description>
+          <Actions>
+            <Button
+              appearance={t => t.solid}
+              accent={t => t.secondary}
+              childrenLeft={
+                <ButtonIconWrapper>
+                  <IconContact style={{ fontSize: "14pt" }} />
+                </ButtonIconWrapper>
+              }
+              title="Get in touch"
+              type={t => t.button}
+              onClick={() => console.log("click")}
+            />
+          </Actions>
+        </RightContent>
       </Right>
     </Wrapper>
   );
@@ -248,10 +280,24 @@ function Header({ className }) {
 
 Header.propTypes = {
   className: PropTypes.string,
+  profile: PropTypes.shape({
+    skills: PropTypes.arrayOf(PropTypes.shape),
+    user: PropTypes.shape({
+      description: PropTypes.string,
+      name: PropTypes.shape({
+        first: PropTypes.string,
+        last: PropTypes.string,
+      }),
+      usernames: PropTypes.arrayOf(PropTypes.shape),
+    }),
+  }),
+  isLoading: PropTypes.bool,
 };
 
 Header.defaultProps = {
   className: null,
+  profile: {},
+  isLoading: true,
 };
 
 export default Header;
