@@ -1,16 +1,18 @@
 import _ from "lodash";
 import PropTypes from "prop-types";
-import React, { useEffect } from "react";
+import React, { useMemo, useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Router, { useRouter } from "next/router";
 import { rgba } from "polished";
-import { parseFullName } from "../../../utils";
-import { Button } from "../../../components/atoms";
+
 import { types, pages } from "../../../constants";
-import { Header } from "../../../components/specific/Profile";
+import { useNetworksMachine, useArticlesMachine } from "../../../hooks";
+import { parseFullName } from "../../../utils";
+
 import { components } from "../../../themes";
 import Nav from "../../../components/shared/Nav";
+import { Header, Articles, Networks } from "../../../components/specific/Profile";
 
 const Page = styled.div`
   position: relative;
@@ -62,28 +64,53 @@ const Canvas = styled(components.Canvas)`
   }
 `;
 
-function replaceUsername({ profile, identifier, router }) {
-  if (_.isNil(profile) || !_.has(profile, "usernames")) return;
-  const usernames = _.toArray(_.get(profile, "usernames"));
-  const primary = usernames.find(item => item.isPrimary);
-  if (_.isNil(primary)) return;
-  if (String(primary.value) !== String(identifier) && _.get(Router, "query.id") !== String(primary.value)) {
-    router.push(pages.profile.route, pages.profile.builder(primary.value), { shallow: true });
+function replaceUsername({ username, identifier, router }) {
+  if (_.isNil(username)) return;
+  if (_.isNil(identifier)) return;
+
+  if (String(username) !== String(identifier) && _.get(Router, "query.id") !== String(username)) {
+    router.push(pages.profile.route, pages.profile.builder(username), { shallow: true });
   }
 }
 
+function getPrimaryUsername(profile) {
+  return _.get(
+    _.toArray(_.get(profile, "usernames")).find(item => item.isPrimary),
+    "value",
+  );
+}
+
 function Profile({ profile, identifier }) {
-  const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
   const router = useRouter();
-  useEffect(() => replaceUsername({ profile, identifier, router }));
+  const machineNetworks = useNetworksMachine();
+  const machineArticles = useArticlesMachine();
+  const username = useMemo(() => getPrimaryUsername(profile), [profile]);
+
+  useEffect(() => {
+    replaceUsername({ username, identifier, router });
+    machineNetworks.send(machineNetworks.events.request, {
+      payload: {
+        auth,
+        user: { username },
+      },
+    });
+    machineArticles.send(machineArticles.events.request, {
+      payload: {
+        auth,
+        user: { username },
+      },
+    });
+  }, []); /* componentDidMount */ // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Page>
-      <Nav appearance={types.nav.appearance.profile} title={`${parseFullName({ user: profile }) || "ConnSuite"}'s`} />
+      <Nav appearance={types.nav.appearance.profile} title={`${parseFullName({ user: profile }) || "ConnSuite"}'s`} hasParent />
       <Main>
         <Canvas>
           <Header />
+          <Networks isLoading={machineNetworks.current.context.isLoading} networks={machineNetworks.current.context.list} />
+          <Articles isLoading={machineArticles.current.context.isLoading} articles={machineArticles.current.context.list} />
         </Canvas>
       </Main>
     </Page>

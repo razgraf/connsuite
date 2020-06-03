@@ -4,9 +4,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { useMachine } from "@xstate/react";
 import { useToasts } from "react-toast-notifications";
-import { connectX, networkCreateX, networkEditX, networkRemoveX, articleCreateX, articleRemoveX, articleEditX } from "../xstates";
+import {
+  connectX,
+  networkCreateX,
+  networkEditX,
+  networkRemoveX,
+  articleCreateX,
+  articleRemoveX,
+  articleEditX,
+  dataListX,
+  dataGetX,
+} from "../xstates";
 import { redirectTo } from "../utils";
 import { redux, pages, sagas } from "../constants";
+import { NetworkRequest, ArticleRequest, UserRequest } from "../requests";
 
 function connectActions(dispatch) {
   return {
@@ -293,4 +304,56 @@ export function useArticleEditMachine({ articleId, reducer }) {
   );
 
   return machine;
+}
+
+export function useDataListMachine({ resource, request = async () => {}, onSuccess = () => {} }) {
+  const piece = useMachine(dataListX.machine, {
+    actions: {
+      [dataListX.actions.approve]: onSuccess,
+    },
+    context: { resource, request },
+  });
+
+  const machine = useMemo(
+    () => ({
+      ...dataListX,
+      current: piece[0],
+      send: piece[1],
+    }),
+    [piece],
+  );
+
+  return machine;
+}
+
+export function useNetworksMachine({ onSuccess = () => {} } = {}) {
+  return useDataListMachine({ resource: "networks", request: NetworkRequest.list, onSuccess });
+}
+
+export function useArticlesMachine({ onSuccess = () => {} } = {}) {
+  return useDataListMachine({ resource: "articles", request: ArticleRequest.list, onSuccess });
+}
+
+export function useDataGetMachine({ request = async () => {}, onSuccess = () => {} }) {
+  const piece = useMachine(dataGetX.machine, {
+    actions: {
+      [dataGetX.actions.approve]: onSuccess,
+    },
+    context: { request },
+  });
+
+  const machine = useMemo(
+    () => ({
+      ...dataGetX,
+      current: piece[0],
+      send: piece[1],
+    }),
+    [piece],
+  );
+
+  return machine;
+}
+
+export function useSkillsAndCategoriesMachine({ onSuccess = () => {} } = {}) {
+  return useDataGetMachine({ request: UserRequest.listSkillsAndCategories, onSuccess });
 }

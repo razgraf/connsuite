@@ -1,11 +1,13 @@
 import _ from "lodash";
-import React, { useMemo } from "react";
+import React, { useMemo, Fragment } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rgba } from "polished";
+import IconContact from "@material-ui/icons/WhatshotRounded";
 import Asset from "../../../../assets/projects/project-2.png";
 import Skill from "./Skill";
 import { useDefaultSkills } from "../../../../hooks";
+import { Button } from "../../../atoms";
 
 const Wrapper = styled.div`
   display: flex;
@@ -74,7 +76,7 @@ const LeftContent = styled.div`
   position: relative;
   z-index: 200;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   width: 100%;
 `;
@@ -96,6 +98,7 @@ const LeftImage = styled.img`
 const Right = styled.div`
   flex: 1;
   padding-left: calc(${props => props.theme.sizes.edge} * 3);
+  padding-top: calc(${props => props.theme.sizes.edge} * 2);
 `;
 
 const Title = styled.p`
@@ -105,7 +108,7 @@ const Title = styled.p`
   text-align: left;
   font-size: 32pt;
   font-family: ${props => props.theme.fonts.primary};
-  color: ${props => props.theme.colors.grayBlueBlack};
+  color: ${props => props.theme.colors.dark};
   font-weight: 700;
 `;
 
@@ -117,7 +120,7 @@ const Identification = styled.div`
 
 const Name = styled.p`
   font-family: ${props => props.theme.fonts.primary};
-  color: ${props => props.theme.colors.grayBlueBlack};
+  color: ${props => props.theme.colors.dark};
   font-size: 15pt;
   font-weight: 600;
   margin: 0 5px 0 0;
@@ -134,17 +137,36 @@ const Divider = styled.div`
   width: 100%;
   height: 1px;
   background-color: ${props => props.theme.colors.grayBlueLight};
-  margin: calc(${props => props.theme.sizes.edge} * 3) 0;
+  margin: calc(${props => props.theme.sizes.edge} * 2) 0;
 `;
 
 const Description = styled.p`
   font-weight: 300;
   line-height: 1.7;
   font-family: ${props => props.theme.fonts.primary};
-  font-size: 12pt;
+  font-size: 11pt;
 `;
 
-const Actions = styled.div``;
+const Actions = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: calc(${props => props.theme.sizes.edge} * 2);
+  & > * {
+    margin-right: ${props => props.theme.sizes.edge};
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+`;
+
+const ButtonIconWrapper = styled.div`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 6px;
+  margin-left: -4px;
+`;
 
 function interpret(description, list) {
   if (_.isNil(list) || _.isNil(description)) return [];
@@ -164,7 +186,7 @@ function interpret(description, list) {
         }
       }
     });
-    parts = [...result];
+    parts = [...result].map((part, index) => ({ ...part, key: index }));
   });
 
   return parts;
@@ -201,11 +223,24 @@ function Header({ className }) {
         </Identification>
         <Divider />
         <Description>
-          {parts.map(({ text, isSkill }) => (
-            <>{isSkill ? <Skill title={text} /> : <span>{text}</span>}</>
+          {parts.map(({ text, isSkill, index }) => (
+            <Fragment key={`${index}-${text}`}>{isSkill ? <Skill title={text} /> : <span>{text}</span>}</Fragment>
           ))}
         </Description>
-        <Actions></Actions>
+        <Actions>
+          <Button
+            appearance={t => t.solid}
+            accent={t => t.secondary}
+            childrenLeft={
+              <ButtonIconWrapper>
+                <IconContact style={{ fontSize: "14pt" }} />
+              </ButtonIconWrapper>
+            }
+            title="Get in touch"
+            type={t => t.button}
+            onClick={() => console.log("click")}
+          />
+        </Actions>
       </Right>
     </Wrapper>
   );

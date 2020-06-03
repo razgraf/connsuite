@@ -204,6 +204,7 @@ export const API = {
 
   userGet: id => `${API.root}/users/${id}`,
   userEdit: id => `${API.root}/users/${id}`,
+  userListSkillsAndCategories: id => `${API.root}/users/${id}`,
 };
 
 export const links = {

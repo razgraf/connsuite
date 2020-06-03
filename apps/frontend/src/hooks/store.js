@@ -39,7 +39,7 @@ export function useExternalNetworks() {
  * Retrieve initial *personal* networks from storage or request them is missing.
  * It doesn't take into account limit or offset.
  */
-export function useNetworks() {
+export function useSelfNetworks() {
   const networks = useSelector(state => state.portfolio.networks);
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
@@ -61,7 +61,7 @@ export function useNetworks() {
  * Retrieve initial *personal* articles from storage or request them is missing.
  * It doesn't take into account limit or offset.
  */
-export function useArticles() {
+export function useSelfArticles() {
   const articles = useSelector(state => state.portfolio.articles);
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();

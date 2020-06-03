@@ -5,7 +5,7 @@ import { components } from "../../../themes";
 import { Button, Spinner } from "../../../components/atoms";
 import { Area } from "../../../components/shared";
 import { pages, modals } from "../../../constants";
-import { useNetworks, useArticles, useCover, useModal } from "../../../hooks";
+import { useSelfNetworks, useSelfArticles, useCover, useModal } from "../../../hooks";
 import Network, { NetworkAdd } from "../../../components/shared/Network";
 import Article, { ArticleAdd } from "../../../components/shared/Article";
 import Cover from "../../../components/shared/Cover";
@@ -91,8 +91,8 @@ const GridArticles = styled.div`
 `;
 
 function Portfolio() {
-  const networks = useNetworks();
-  const articles = useArticles();
+  const networks = useSelfNetworks();
+  const articles = useSelfArticles();
   const [articleRemove, setArticleRemove] = useState(null);
   const { setOpen: setArticleRemoveModalOpen } = useModal(modals.articleRemove);
   const { network: networkCover, setOpen: setOpenCover } = useCover();

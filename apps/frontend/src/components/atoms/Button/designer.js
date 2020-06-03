@@ -74,7 +74,7 @@ export const useDesigner = (accent, appearance) => {
         case types.button.accent.primary:
           return { ...baseSolid(colors.primary) };
         case types.button.accent.secondary:
-          return { ...baseSolid(colors.secondary) };
+          return { ...baseSolid(colors.secondary), backgroundHover: darken(0.1, colors.secondary) };
         case types.button.accent.dark:
           return { ...baseSolid(colors.dark) };
         case types.button.accent.white:
