@@ -1,5 +1,6 @@
 import _ from "lodash";
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
 import IconArrow from "@material-ui/icons/ArrowForwardRounded";
@@ -298,7 +299,7 @@ const Wrapper = styled(WrapperPartial)`
   }
 `;
 
-function Cover() {
+function Cover({ isSelf }) {
   const { isOpen, network, setOpen } = useCover();
   const { setOpen: setModalRemoveOpen } = useModal(modals.networkRemove);
   const { push } = useHistory();
@@ -323,11 +324,13 @@ function Cover() {
                   {_.get(network, "username") && <CardMainUsername>{_.get(network, "username")}</CardMainUsername>}
                 </CardMain>
                 <CardRight>
-                  <Link href={pages.statistics.root}>
-                    <CardRightAction data-purpose="statistics" title={pages.statistics.title} onClick={push}>
-                      <pages.statistics.Icon style={{ fontSize: "16pt" }} />
-                    </CardRightAction>
-                  </Link>
+                  {isSelf && (
+                    <Link href={pages.statistics.root}>
+                      <CardRightAction data-purpose="statistics" title={pages.statistics.title} onClick={push}>
+                        <pages.statistics.Icon style={{ fontSize: "16pt" }} />
+                      </CardRightAction>
+                    </Link>
+                  )}
                   <CardRightAction title="Visit Network" href={_.get(network, "url") || "#"} target="_blank" rel="noopener noreferrer">
                     <IconArrow style={{ fontSize: "16pt" }} />
                   </CardRightAction>
@@ -352,20 +355,24 @@ function Cover() {
                   Share: <span>connsuite.com/razgraf/facebook</span>
                 </ActionTitle>
               </Action>
-              <Link href={pages.network.edit.route} as={pages.network.edit.builder(_.get(network, "_id"))}>
-                <Action onClick={push}>
-                  <ActionIcon>
-                    <IconEdit style={{ fontSize: "12pt" }} />
-                  </ActionIcon>
-                  <ActionTitle>Edit Network</ActionTitle>
-                </Action>
-              </Link>
-              <Action as="div" data-purpose="delete" onClick={() => setModalRemoveOpen(true)}>
-                <ActionIcon>
-                  <IconDelete style={{ fontSize: "12pt" }} />
-                </ActionIcon>
-                <ActionTitle>Remove Network</ActionTitle>
-              </Action>
+              {isSelf && (
+                <>
+                  <Link href={pages.network.edit.route} as={pages.network.edit.builder(_.get(network, "_id"))}>
+                    <Action onClick={push}>
+                      <ActionIcon>
+                        <IconEdit style={{ fontSize: "12pt" }} />
+                      </ActionIcon>
+                      <ActionTitle>Edit Network</ActionTitle>
+                    </Action>
+                  </Link>
+                  <Action as="div" data-purpose="delete" onClick={() => setModalRemoveOpen(true)}>
+                    <ActionIcon>
+                      <IconDelete style={{ fontSize: "12pt" }} />
+                    </ActionIcon>
+                    <ActionTitle>Remove Network</ActionTitle>
+                  </Action>
+                </>
+              )}
             </Section>
           </Content>
         </Slide>
@@ -375,3 +382,11 @@ function Cover() {
 }
 
 export default Cover;
+
+Cover.propTypes = {
+  isSelf: PropTypes.bool,
+};
+
+Cover.defaultProps = {
+  isSelf: true,
+};

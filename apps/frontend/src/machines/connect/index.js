@@ -39,7 +39,6 @@ async function attemptToConnect({ context, event }) {
         ...event.identity,
       });
     else if (_.get(context, "type") === "REGISTER") {
-      console.log(event);
       return AuthRequest.register({
         ...event.identity,
       });

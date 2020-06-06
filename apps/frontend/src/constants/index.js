@@ -180,6 +180,15 @@ export const types = {
     type: {
       networks: "networks",
       articles: "articles",
+      networksBusinessCard: "networksBusinessCard",
+    },
+  },
+  profile: {
+    section: {
+      header: "header",
+      networks: "networks",
+      articles: "articles",
+      business: "business",
     },
   },
 };

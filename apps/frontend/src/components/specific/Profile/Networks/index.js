@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import SectionHeader from "../SectionHeader";
 import Network from "../../../shared/Network";
 import Placeholder from "../../../shared/Placeholder";
+import { useProfileIntersection } from "../../../../hooks";
+import { types } from "../../../../constants";
 
 const Wrapper = styled.div`
   display: flex;
@@ -44,10 +46,12 @@ const Grid = styled.div`
   }
 `;
 
-function Networks({ className, networks, isLoading }) {
+function Networks({ className, networks, isLoading, onIntersect }) {
+  const { ref, isObserved } = useProfileIntersection(payload => onIntersect(types.profile.section.networks, payload));
+
   return (
-    <Wrapper className={className}>
-      <SectionHeader title="Networks" isLoading={isLoading} />
+    <Wrapper className={className} ref={ref}>
+      <SectionHeader title="Networks" isLoading={isLoading} isObserved={isObserved} />
       <Content>
         <Grid>
           {networks.map(network => (
@@ -61,15 +65,19 @@ function Networks({ className, networks, isLoading }) {
 }
 
 Networks.propTypes = {
+  reference: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({})]),
   className: PropTypes.string,
   networks: PropTypes.arrayOf(PropTypes.shape({})),
   isLoading: PropTypes.bool,
+  onIntersect: PropTypes.func,
 };
 
 Networks.defaultProps = {
+  reference: null,
   className: null,
   networks: [],
   isLoading: false,
+  onIntersect: () => {},
 };
 
 export default Networks;

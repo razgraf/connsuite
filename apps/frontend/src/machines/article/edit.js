@@ -31,7 +31,6 @@ const initialContext = {
 
 /** {auth, articleId} =  event.payload */
 async function attemptToRetrieve({ context }) {
-  console.log("attemptToRetrieve", context);
   return ArticleRequest.get(context);
 }
 

@@ -60,6 +60,39 @@ const NetworksItem = styled.div`
   }
 `;
 
+const ArticlesGrid = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(300px, 1fr);
+  grid-gap: 0;
+  overflow: hidden;
+  padding-bottom: ${props => props.theme.sizes.edge};
+  & > * {
+    grid-column: span 1;
+  }
+`;
+
+const ArticlesItem = styled.div`
+  grid-column: span 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: ${props => props.theme.colors.background};
+  border-radius: 0;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+`;
+
 function PlaceholderNetworks({ isActive, isAnimated }) {
   return (
     <Wrapper data-active={isActive} isAnimated={isAnimated}>
@@ -76,11 +109,29 @@ function PlaceholderNetworks({ isActive, isAnimated }) {
   );
 }
 
+function PlaceholderArticles({ isActive, isAnimated }) {
+  return (
+    <Wrapper data-active={isActive} isAnimated={isAnimated}>
+      <ArticlesGrid>
+        {[...Array(3).keys()].map(item => (
+          <ArticlesItem key={item}>
+            <div>
+              <Spinner color={c => c.grayBlueLight} />
+            </div>
+          </ArticlesItem>
+        ))}
+      </ArticlesGrid>
+    </Wrapper>
+  );
+}
+
 function Placeholder({ type: rawType, ...otherProps }) {
   const type = useMemo(() => (_.isFunction(rawType) ? rawType(types.placeholder.type) : _.toString(rawType)), [rawType]);
   switch (type) {
     case types.placeholder.type.networks:
       return <PlaceholderNetworks {...otherProps} />;
+    case types.placeholder.type.articles:
+      return <PlaceholderArticles {...otherProps} />;
     default:
       return <></>;
   }
@@ -100,5 +151,7 @@ Placeholder.defaultProps = {
 
 PlaceholderNetworks.propTypes = Placeholder.propTypes;
 PlaceholderNetworks.defaultProps = Placeholder.defaultProps;
+PlaceholderArticles.propTypes = Placeholder.propTypes;
+PlaceholderArticles.defaultProps = Placeholder.defaultProps;
 
 export default Placeholder;

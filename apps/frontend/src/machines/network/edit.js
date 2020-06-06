@@ -32,13 +32,11 @@ const initialContext = {
 
 /** {auth, networkId} =  event.payload */
 async function attemptToRetrieve({ context }) {
-  console.log("attemptToRetrieve", context);
   return NetworkRequest.get(context);
 }
 
 /** {auth, networkId, network} =  event.payload */
 async function attemptToEdit({ event }) {
-  console.log("attemptToEdit", event);
   return NetworkRequest.edit(event.payload);
 }
 

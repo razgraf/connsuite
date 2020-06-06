@@ -71,7 +71,6 @@ const modal = (state = initialModal, { type, payload } = {}) => {
     }
     case redux.MODAL_REGISTER: {
       const { list } = state;
-      console.log(payload.id);
       if (!_.isNil(payload.id) && !list.find(item => item.id === _.get(payload, "id"))) list.push(payload);
       return {
         ...state,

@@ -34,8 +34,6 @@ const Title = styled.p`
     height: 2px;
     width: 50%;
     background-color: ${props => props.theme.colors.dark};
-    transform: translateX(80%);
-    transition: transform 300ms;
   }
 `;
 
@@ -43,8 +41,16 @@ const Wrapper = styled(WrapperPartial)`
   &[data-observed="true"] {
     ${Title} {
       &:after {
-        transform: translateX(0%);
+        transform: translateX(0);
         transition: transform 300ms 500ms;
+      }
+    }
+  }
+  &[data-observed="false"] {
+    ${Title} {
+      &:after {
+        transform: translateX(80%);
+        transition: transform 300ms;
       }
     }
   }

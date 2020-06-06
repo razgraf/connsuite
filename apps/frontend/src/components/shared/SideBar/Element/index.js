@@ -86,7 +86,6 @@ const Bubble = styled(BubblePartial)`
 `;
 
 function Element({ Icon, title, href, isActive, isPrivate, as }) {
-  console.log(href, as);
   return (
     <Link href={href} as={as} passHref>
       <Wrapper>

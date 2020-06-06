@@ -187,7 +187,7 @@ function Account({ className }) {
   const name = useMemo(() => parseFullName(auth), [auth]);
 
   return (
-    <Wrapper className={className}>
+    <Wrapper ref={ref} className={className}>
       <Content data-component="pill">
         <ImageWrapper>
           <Image src={AssetLogoCircle} alt="" />
@@ -202,7 +202,7 @@ function Account({ className }) {
           </ActionDropdown>
         </Action>
       </Content>
-      <Dropdown ref={ref} data-active={isDown}>
+      <Dropdown data-active={isDown}>
         {[pages.profile, pages.dashboard, pages.about].map(item => (
           <DropdownItem {...item} key={item.title} isActive={router.pathname === item.root} />
         ))}

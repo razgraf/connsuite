@@ -56,7 +56,7 @@ const Pill = styled.div`
   margin-top: calc(${props => props.theme.sizes.edge} * 0.5);
   margin-bottom: calc(${props => props.theme.sizes.edge} * 0.5);
   & > p {
-    font-size: 10pt;
+    font-size: 9pt;
     font-weight: 600;
     color: ${props => darken(0.1, props.theme.colors.grayBlueDark)};
     transition: color 100ms;
@@ -81,6 +81,17 @@ const Pill = styled.div`
         color: ${props => props.theme.colors.grayBlueBlack};
         transition: color 100ms;
       }
+    }
+  }
+`;
+
+const AllPill = styled(Pill)`
+  &[data-active="true"] {
+    background-color: ${props => props.theme.colors.dark};
+    transition: background-color 100ms;
+    & > p {
+      color: ${props => props.theme.colors.white};
+      transition: color 100ms;
     }
   }
 `;
@@ -153,9 +164,9 @@ function Navigator({ className, categories, skills, controller }) {
     <Wrapper className={className}>
       <Title>{title}</Title>
       <List>
-        <Pill data-active={_.isNil(chosen)} onClick={() => controller.set(null)}>
+        <AllPill data-active={_.isNil(chosen)} onClick={() => controller.set(null)}>
           <p>All</p>
-        </Pill>
+        </AllPill>
         {categories
           .sort((a, b) => a.title < b.title)
           .map(category => (

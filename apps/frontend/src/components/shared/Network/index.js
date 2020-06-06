@@ -320,7 +320,7 @@ const Wrapper = styled(WrapperPartial)`
 
 function Network({ className, isViewOnly, isFocused, isInEditMode, ...network }) {
   const { setOpen: setCoverOpen, setNetwork: setCoverNetwork } = useCover();
-  const { title, username, icon, thumbnail, url } = network;
+  const { title, username, thumbnail, url } = network;
 
   const doPick = useCallback(() => {
     if (!isViewOnly) {

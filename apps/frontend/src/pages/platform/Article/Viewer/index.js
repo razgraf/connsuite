@@ -60,13 +60,11 @@ function ArticleViewer({ query }) {
   //   const machine = useArticleCreateMachine();
   const history = useHistory();
 
-  //   useEffect(() => console.log(machine.current.value), [machine]);
-
   return (
     <Page data-leaving={false}>
       <StyledNav appearance={types.nav.appearance.secondary} title={pages.network.create.title} hasParent isLight />
       <Canvas>
-        <p>Edit {articleId}</p>
+        <p>View {articleId}</p>
       </Canvas>
     </Page>
   );

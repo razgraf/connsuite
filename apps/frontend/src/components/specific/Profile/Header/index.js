@@ -1,16 +1,16 @@
 import _ from "lodash";
-import React, { useMemo, useState, Fragment } from "react";
+import React, { Fragment, useCallback, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-
 import { rgba } from "polished";
+import { useRouter } from "next/router";
 import IconContact from "@material-ui/icons/WhatshotRounded";
 import Asset from "../../../../assets/projects/project-2.png";
 import Skill from "./Skill";
 import { parseFullName, getPrimaryUsername } from "../../../../utils";
+import { types } from "../../../../constants";
 import { Button } from "../../../atoms";
-
-const Skeleton = styled.span``;
+import { useIntersection } from "../../../../hooks";
 
 const Wrapper = styled.div`
   display: flex;
@@ -52,26 +52,50 @@ const LeftUnderlay = styled.div`
 
 const LeftUnderlayShape = styled.div`
   position: absolute;
-  border-radius: 30%;
-  background-color: ${props => props.theme.colors.secondary};
-  transform: rotate(45deg);
-  height: calc(100% - 50px);
-  width: calc(100% - 50px);
+  transform: translateX(0);
+  height: calc(100% - 30px);
+  width: calc(100% - 30px);
+
+  &:after {
+    content: "";
+    position: absolute;
+    border-radius: 30%;
+    background-color: ${props => props.theme.colors.secondary};
+    height: calc(100%);
+    width: calc(100%);
+    transform: rotate(45deg);
+  }
+
+  transition: transform 600ms;
+  &[data-observed="false"] {
+    transform: translateX(-60px);
+    transition: transform 1100px;
+  }
 
   &:nth-child(2) {
-    right: -10px;
+    right: -20px;
     top: 10px;
     height: 70px;
     width: 70px;
     border-radius: 25px;
+    transition: transform 600ms;
+    &[data-observed="false"] {
+      transform: translateX(-50px);
+      transition: transform 1000ms;
+    }
   }
 
   &:nth-child(3) {
-    right: -10px;
+    right: -30px;
     bottom: 20px;
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 60px;
     border-radius: 20px;
+    transition: transform 600ms;
+    &[data-observed="false"] {
+      transform: translateX(-20px);
+      transition: transform 1000ms;
+    }
   }
 `;
 
@@ -119,13 +143,12 @@ const RightContent = styled.div`
   width: 100%;
   opacity: 0;
   padding-right: calc(${props => props.theme.sizes.edge} * 1);
-  overflow: hidden;
   transform: translateX(50px);
 
   &[data-ready="true"] {
     opacity: 1;
     transform: translateX(0);
-    transition: transform 200ms, opacity 300ms 100ms;
+    transition: transform 300ms, opacity 300ms 100ms;
   }
 `;
 
@@ -220,7 +243,7 @@ function interpret(description, list) {
   return parts;
 }
 
-function Header({ className, profile, isLoading }) {
+function Header({ className, controller, profile, isLoading }) {
   const skills = useMemo(() => _.toArray(_.get(profile, "skills")), [profile]);
   const description = useMemo(() => _.toString(_.get(profile, "user.description")), [profile]);
   const name = useMemo(() => parseFullName(profile), [profile]);
@@ -229,14 +252,30 @@ function Header({ className, profile, isLoading }) {
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
+  const [ref, entry] = useIntersection({
+    rootMargin: "0px 0px 0px 0px",
+    threshold: 0.5,
+  });
+
+  const router = useRouter();
+
+  const isObserved = useMemo(() => entry.intersectionRatio >= 0.5, [entry.intersectionRatio]);
+  const onSkillClick = useCallback(
+    skill => {
+      controller.set({ ...skill, isSkill: true });
+      router.push(router.pathname, `${router.asPath}#${types.profile.section.articles}`, { shallow: true });
+    },
+    [controller, router],
+  );
+
   return (
-    <Wrapper className={className}>
+    <Wrapper className={className} ref={ref}>
       <Left>
         <LeftFloater>
           <LeftUnderlay>
-            <LeftUnderlayShape />
-            <LeftUnderlayShape />
-            <LeftUnderlayShape />
+            <LeftUnderlayShape data-observed={isObserved} />
+            <LeftUnderlayShape data-observed={isObserved} />
+            <LeftUnderlayShape data-observed={isObserved} />
           </LeftUnderlay>
           <LeftContent>
             <LeftImageWrapper>
@@ -255,7 +294,9 @@ function Header({ className, profile, isLoading }) {
           <Divider />
           <Description>
             {parts.map(({ text, isSkill, index }) => (
-              <Fragment key={`${index}-${text}`}>{isSkill ? <Skill title={text} /> : <span>{text}</span>}</Fragment>
+              <Fragment key={`${index}-${text}`}>
+                {isSkill ? <Skill title={text} onClick={() => onSkillClick({ title: text })} /> : <span>{text}</span>}
+              </Fragment>
             ))}
           </Description>
           <Actions>
@@ -280,6 +321,10 @@ function Header({ className, profile, isLoading }) {
 
 Header.propTypes = {
   className: PropTypes.string,
+  controller: PropTypes.shape({
+    get: PropTypes.func,
+    set: PropTypes.func,
+  }).isRequired,
   profile: PropTypes.shape({
     skills: PropTypes.arrayOf(PropTypes.shape),
     user: PropTypes.shape({

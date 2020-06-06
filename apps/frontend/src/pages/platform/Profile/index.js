@@ -1,18 +1,21 @@
 import _ from "lodash";
 import PropTypes from "prop-types";
-import React, { useMemo, useEffect, useState } from "react";
+import React, { useMemo, useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import Router, { useRouter } from "next/router";
 import { rgba } from "polished";
 
-import { types, pages } from "../../../constants";
-import { useNetworksMachine, useArticlesMachine, useProfileMachine } from "../../../hooks";
+import { components } from "../../../themes";
+import { modals, pages, types } from "../../../constants";
+import { useNetworksMachine, useArticlesMachine, useProfileMachine, useCover, useModal } from "../../../hooks";
 import { parseFullName, getPrimaryUsername } from "../../../utils";
 
-import { components } from "../../../themes";
 import Nav from "../../../components/shared/Nav";
-import { Header, Articles, Networks } from "../../../components/specific/Profile";
+import Footer from "../../../components/shared/Footer";
+import Cover from "../../../components/shared/Cover";
+import { ModalNetworkRemove, ModalArticleRemove } from "../../../components/specific/Modals";
+import { Articles, Business, Header, Networks } from "../../../components/specific/Profile";
 
 const Page = styled.div`
   position: relative;
@@ -30,13 +33,12 @@ const Main = styled.div`
 
 const Canvas = styled(components.Canvas)`
   position: relative;
-  z-index: 100;
   background: ${props => props.theme.colors.white};
   border: 1px solid ${props => props.theme.colors.grayBlueGhost};
   border-top: none;
   border-bottom: 0;
   padding: 0;
-  margin-bottom: calc(calc(${props => props.theme.sizes.edge}) * 2.5);
+  padding-bottom: ${props => props.theme.sizes.profileBusinessDistance};
 
   & > * {
     z-index: 10;
@@ -50,7 +52,7 @@ const Canvas = styled(components.Canvas)`
     left: 0;
     width: 10%;
     height: 80%;
-    box-shadow: 0 0 50px ${props => rgba(props.theme.colors.grayBlueDark, 0.2)};
+    box-shadow: 0 0 50px -10px ${props => rgba(props.theme.colors.dark, 0.1)};
   }
   &:after {
     content: "";
@@ -60,7 +62,7 @@ const Canvas = styled(components.Canvas)`
     right: 0;
     width: 10%;
     height: 80%;
-    box-shadow: 0 0 50px ${props => rgba(props.theme.colors.grayBlueDark, 0.2)};
+    box-shadow: 0 0 50px -10px ${props => rgba(props.theme.colors.dark, 0.1)};
   }
 `;
 
@@ -73,16 +75,28 @@ function replaceUsername({ username, identifier, router }) {
   }
 }
 
-function Profile({ profile, identifier }) {
+function Profile({ data, identifier, isSelf }) {
   const auth = useSelector(state => state.auth);
   const router = useRouter();
   const machineNetworks = useNetworksMachine();
   const machineArticles = useArticlesMachine();
   const machineProfile = useProfileMachine();
-  const username = useMemo(() => getPrimaryUsername(profile), [profile]);
+  const username = useMemo(() => getPrimaryUsername(data), [data]);
 
   const active = useState(null);
   const controller = useMemo(() => ({ get: () => active[0], set: value => active[1](value) }), [active]);
+
+  const [articleRemove, setArticleRemove] = useState(null);
+  const { setOpen: setArticleRemoveModalOpen } = useModal(modals.articleRemove);
+  const { network: networkCover, setOpen: setOpenCover } = useCover();
+
+  const onArticleRemoveClick = useCallback(
+    article => {
+      setArticleRemove(article);
+      setArticleRemoveModalOpen(true);
+    },
+    [setArticleRemove, setArticleRemoveModalOpen],
+  );
 
   useEffect(() => {
     replaceUsername({ username, identifier, router });
@@ -107,37 +121,55 @@ function Profile({ profile, identifier }) {
     });
   }, []); /* componentDidMount */ // eslint-disable-line react-hooks/exhaustive-deps
 
+  const person = useMemo(() => {
+    return {
+      data,
+      isSelf,
+      username,
+      profile: _.get(machineProfile, "current.context.data"),
+      skills: _.get(machineProfile, "current.context.data.skills"),
+      categories: _.get(machineProfile, "current.context.data.categories"),
+      networks: _.get(machineNetworks, "current.context.list"),
+      articles: _.get(machineArticles, "current.context.list"),
+      isLoadingProfile: _.get(machineProfile, "current.context.isLoading"),
+      isLoadingNetworks: _.get(machineNetworks, "current.context.isLoading"),
+      isLoadingArticles: _.get(machineArticles, "current.context.isLoading"),
+    };
+  }, [data, isSelf, username, machineProfile, machineNetworks, machineArticles]);
+
   return (
     <Page>
-      <Nav appearance={types.nav.appearance.profile} title={`${parseFullName({ user: profile }) || "ConnSuite"}'s`} hasParent />
+      <Nav hasParent appearance={types.nav.appearance.profile} title={`${parseFullName({ user: data }) || "ConnSuite"}'s`} />
       <Main>
         <Canvas>
-          <Header isLoading={_.get(machineProfile, "current.context.isLoading")} profile={_.get(machineProfile, "current.context.data")} />
-          <Networks
-            isLoading={_.get(machineNetworks, "current.context.isLoading")}
-            networks={_.get(machineNetworks, "current.context.list")}
-          />
-          <Articles
-            isLoading={_.get(machineArticles, "current.context.isLoading") || _.get(machineProfile, "current.context.isLoading")}
-            articles={_.get(machineArticles, "current.context.list")}
-            skills={_.get(machineProfile, "current.context.data.skills")}
-            categories={_.get(machineProfile, "current.context.data.categories")}
-            controller={controller}
-          />
+          <Header isLoading={person.isLoadingProfile} controller={controller} profile={person.profile} />
+          <Networks isLoading={person.isLoadingNetworks} networks={person.networks} />
+          <Articles person={person} controller={controller} onArticleRemoveClick={onArticleRemoveClick} />
         </Canvas>
+        <Business person={person} />
       </Main>
+      <Cover isSelf={person.isSelf} />
+      {isSelf && (
+        <>
+          <ModalNetworkRemove network={networkCover} onSuccess={() => setOpenCover(false)} />
+          <ModalArticleRemove article={articleRemove} onSuccess={() => setArticleRemove(null)} />
+        </>
+      )}
+      <Footer />
     </Page>
   );
 }
 
 Profile.propTypes = {
-  profile: PropTypes.shape({}),
+  data: PropTypes.shape({}),
   identifier: PropTypes.string,
+  isSelf: PropTypes.bool,
 };
 
 Profile.defaultProps = {
-  profile: null,
+  data: null,
   identifier: null,
+  isSelf: false,
 };
 
 export default Profile;

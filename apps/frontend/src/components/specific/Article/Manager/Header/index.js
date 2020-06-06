@@ -214,8 +214,6 @@ function Header({ className, reducer }) {
           error: guards.interpret(guards.isArticleCoverAcceptable, file),
         };
 
-        console.log(payload);
-
         if (payload.error === null)
           readPreviewFromImage(file).then(preview => {
             reducer.dispatch({

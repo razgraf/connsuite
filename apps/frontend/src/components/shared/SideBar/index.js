@@ -41,8 +41,6 @@ function SideBar({ className, reference }) {
     [user],
   );
 
-  console.log(pages.profile.builder(username));
-
   return (
     <Wrapper className={className} ref={reference}>
       <Content>

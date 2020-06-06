@@ -3,8 +3,8 @@ import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { components } from "../../../../../themes";
-import { pages, types } from "../../../../../constants";
-import { useHistory } from "../../../../../hooks";
+import { pages } from "../../../../../constants";
+import { useHistory, useIntersection } from "../../../../../hooks";
 import { Account, Logo } from "../../atoms";
 
 const WrapperPartial = styled.div`
@@ -15,6 +15,13 @@ const WrapperPartial = styled.div`
   width: 100%;
   background: ${props => props.theme.colors.white};
   border-bottom: 1px solid ${props => props.theme.colors.grayLight};
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 300ms;
+
+  &[data-top="true"] {
+    box-shadow: 0 10px 38px -12px rgba(0, 0, 0, 0);
+    transition: box-shadow 300ms;
+  }
 `;
 const Content = styled(components.Canvas)`
   display: flex;
@@ -85,6 +92,13 @@ const Title = styled.p`
 
 const Wrapper = styled(WrapperPartial)``;
 
+const Intersection = styled.div`
+  width: 100%;
+  height: 0;
+  position: relative;
+  order: 0;
+`;
+
 function NavProfile({ className, hasAccount, hasParent, title, onBackClick }) {
   const { history, pop } = useHistory();
   const parentRoute = useMemo(
@@ -97,23 +111,32 @@ function NavProfile({ className, hasAccount, hasParent, title, onBackClick }) {
     else pop();
   }, [onBackClick, pop]);
 
+  const [ref, entry] = useIntersection({
+    threshold: 0,
+    rootMargin: "0px",
+    root: null,
+  });
+
   return (
-    <Wrapper className={className}>
-      <Content>
-        <NavLogo href={parentRoute} hasParent={hasParent} onClick={onLogoClick} />
-        <Main>
-          <Title>{title}</Title>
-        </Main>
-        <AccountWrapper>
-          <NavAccountWrapper data-active={hasAccount}>
-            <NavAccount />
-          </NavAccountWrapper>
-          <NavNetworks data-active={!hasAccount}>
-            <p>Networks</p>
-          </NavNetworks>
-        </AccountWrapper>
-      </Content>
-    </Wrapper>
+    <>
+      <Wrapper className={className} data-top={entry.intersectionRatio === 1}>
+        <Content>
+          <NavLogo href={parentRoute} hasParent={hasParent} onClick={onLogoClick} />
+          <Main>
+            <Title>{title}</Title>
+          </Main>
+          <AccountWrapper>
+            <NavAccountWrapper data-active={hasAccount}>
+              <NavAccount />
+            </NavAccountWrapper>
+            <NavNetworks data-active={!hasAccount}>
+              <p>Networks</p>
+            </NavNetworks>
+          </AccountWrapper>
+        </Content>
+      </Wrapper>
+      <Intersection ref={ref} />
+    </>
   );
 }
 

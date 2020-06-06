@@ -34,6 +34,7 @@ const sizes = {
   articlePickerElevation: "600",
 
   profileBlob: "400px",
+  profileBusinessDistance: "200px",
 };
 
 export default sizes;

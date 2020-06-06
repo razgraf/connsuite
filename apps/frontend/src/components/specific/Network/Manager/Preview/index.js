@@ -203,9 +203,9 @@ function Preview({ className, reducer, network, isBarActive }) {
           <ContentMainNetwork {...network} isViewOnly isInEditMode />
         </ContentMain>
         <ContentSide>
-          <ContentSideNetwork network={network} isViewOnly />
-          <ContentSideNetwork network={network} isViewOnly />
-          <ContentSideNetwork network={network} isViewOnly />
+          <ContentSideNetwork {...network} isViewOnly />
+          <ContentSideNetwork {...network} isViewOnly />
+          <ContentSideNetwork {...network} isViewOnly />
         </ContentSide>
       </Content>
     </Wrapper>

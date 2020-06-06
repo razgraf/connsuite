@@ -152,8 +152,6 @@ function ArticleManager() {
   const modalLeave = useModal(modals.articleLeave);
   const [contentInstance, setContentInstance] = useState(null);
 
-  useEffect(() => console.log(machine.current.value), [machine]);
-
   const onPick = useCallback(
     value => {
       reducer.dispatch({ type: reducer.actions.UPDATE_TYPE, payload: { value } });

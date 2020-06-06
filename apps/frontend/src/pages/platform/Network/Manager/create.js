@@ -180,8 +180,6 @@ function NetworkManager() {
   const history = useHistory();
   const step = useMemo(() => machine.current.context.step, [machine]);
 
-  useEffect(() => console.log(machine.current.value), [machine]);
-
   const onForward = useCallback(() => {
     if (step === 3) {
       const network = {};

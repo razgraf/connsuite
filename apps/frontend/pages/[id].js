@@ -9,8 +9,8 @@ Profile.getInitialProps = async context => {
     const { store } = context;
     const auth = _.attempt(() => store.getState().auth);
     const identifier = _.get(context, "query.id");
-    const profile = await UserRequest.get({ auth, identifier });
-    return { profile: profile.user, identifier };
+    const data = await UserRequest.get({ auth, identifier });
+    return { data: data.user, identifier, isSelf: data.isSelf };
   } catch (e) {
     console.error(e);
     return {};

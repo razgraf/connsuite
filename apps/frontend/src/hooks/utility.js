@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import _ from "lodash";
+import { useEffect, useRef, useState, useMemo } from "react";
 
 export function useOnClickOutside(handler, reference = null) {
   const temp = useRef();
@@ -40,7 +41,7 @@ export function useOnKeyDown(handler, reference = null) {
 
   return [ref];
 }
-
+/** https://codesandbox.io/s/04vvrxj79p */
 export function useIntersection({ root = null, rootMargin, threshold = 0 }) {
   const [entry, updateEntry] = useState({});
   const [node, setNode] = useState(null);
@@ -63,4 +64,23 @@ export function useIntersection({ root = null, rootMargin, threshold = 0 }) {
   }, [node]);
 
   return [setNode, entry, node];
+}
+
+export function useProfileIntersection(callback = null, { rootMargin = null, threshold = null, root = null } = {}) {
+  const [ref, entry] = useIntersection({
+    threshold: threshold || [0.2, 0.8],
+    rootMargin: rootMargin || "80px 0px 0px 0px",
+    root: root || null,
+  });
+
+  const isObserved = useMemo(() => {
+    if (_.isFunction(callback) && entry.intersectionRatio >= 0.2) callback(entry.intersectionRatio);
+    return entry.intersectionRatio >= 0.2;
+  }, [entry.intersectionRatio, callback]);
+
+  return {
+    ref,
+    entry,
+    isObserved,
+  };
 }

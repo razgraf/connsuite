@@ -3,5 +3,6 @@ export { default as Footer } from "./Footer";
 export { default as Area } from "./Area";
 export { default as Backdrop } from "./Backdrop";
 export { default as Modal } from "./Modal";
+export { default as BusinessCard } from "./BusinessCard";
 export * from "./Network";
 export * from "./Article";

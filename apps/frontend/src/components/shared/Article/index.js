@@ -28,6 +28,7 @@ const Content = styled.div`
   width: 100%;
   height: 100%;
   z-index: 100;
+  position: relative;
   overflow: hidden;
 `;
 
@@ -272,7 +273,7 @@ function Action({ Icon, callback, title, type, url, route }) {
   );
 }
 
-function Article({ className, _id, thumbnail, categories, title, type, onRemoveClick }) {
+function Article({ className, _id, thumbnail, categories, title, type, onRemoveClick, isSelf }) {
   const history = useHistory();
 
   const categoryField = useMemo(() => {
@@ -297,9 +298,11 @@ function Article({ className, _id, thumbnail, categories, title, type, onRemoveC
               </OverlayHeaderLocation>
             )}
             <OverlayHeaderActions>
-              <Action Icon={IconEdit} title="Edit" type="link" url={pages.article.edit.builder(_id)} route={pages.article.edit.route} />
+              {isSelf && (
+                <Action Icon={IconEdit} title="Edit" type="link" url={pages.article.edit.builder(_id)} route={pages.article.edit.route} />
+              )}
               <Action Icon={IconShare} title="Share" type="button" callback={() => console.log(`Share ${_id}`)} />
-              <Action Icon={IconDelete} title="Delete" type="button" callback={() => onRemoveClick({ _id, title })} />
+              {isSelf && <Action Icon={IconDelete} title="Delete" type="button" callback={() => onRemoveClick({ _id, title })} />}
             </OverlayHeaderActions>
           </OverlayHeader>
           <OverlayFooter>
@@ -363,30 +366,6 @@ function ArticleAdd() {
   );
 }
 
-Article.propTypes = {
-  className: PropTypes.string,
-  _id: PropTypes.string.isRequired,
-  thumbnail: PropTypes.shape({
-    url: PropTypes.string.isRequired,
-  }).isRequired,
-  title: PropTypes.string,
-  type: PropTypes.oneOf(Object.values(types.article.type)),
-  categories: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-    }),
-  ),
-  onRemoveClick: PropTypes.func,
-};
-
-Article.defaultProps = {
-  className: "",
-  title: "",
-  type: types.article.type.internal,
-  categories: [],
-  onRemoveClick: () => {},
-};
-
 Action.propTypes = {
   Icon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
   title: PropTypes.string.isRequired,
@@ -401,5 +380,32 @@ Action.defaultProps = {
   route: null,
   callback: () => {},
 };
+
+Article.propTypes = {
+  className: PropTypes.string,
+  _id: PropTypes.string.isRequired,
+  thumbnail: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+  }).isRequired,
+  title: PropTypes.string,
+  type: PropTypes.oneOf(Object.values(types.article.type)),
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+    }),
+  ),
+  onRemoveClick: PropTypes.func,
+  isSelf: PropTypes.bool,
+};
+
+Article.defaultProps = {
+  className: "",
+  title: "",
+  type: types.article.type.internal,
+  categories: [],
+  onRemoveClick: () => {},
+  isSelf: true,
+};
+
 export default Article;
 export { ArticleAdd };

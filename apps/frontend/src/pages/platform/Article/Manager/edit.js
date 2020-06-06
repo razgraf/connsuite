@@ -176,8 +176,6 @@ function ArticleManager({ query }) {
   const modalLeave = useModal(modals.articleLeave);
   const [contentInstance, setContentInstance] = useState(null);
 
-  useEffect(() => console.log(machine.current.value), [machine]);
-
   const onPublish = useCallback(() => {
     const article = {};
     Object.keys(reducer.state).forEach(key => {

@@ -81,12 +81,13 @@ const GridArticles = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: minmax(300px, 1fr);
+  grid-auto-rows: 300px;
   grid-gap: 0;
   overflow: hidden;
   padding-bottom: ${props => props.theme.sizes.edge};
   & > * {
     grid-column: span 1;
+    height: 300px;
   }
 `;
 

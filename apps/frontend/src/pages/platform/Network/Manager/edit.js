@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useCallback, useMemo, useEffect } from "react";
+import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 import { rgba } from "polished";
@@ -177,10 +177,6 @@ function NetworkManager({ query }) {
   const reducer = useNetworkReducer();
   const machine = useNetworkEditMachine({ networkId, reducer });
   const history = useHistory();
-
-  useEffect(() => {
-    console.log(machine.current.value);
-  }, [machine]);
 
   const onForward = useCallback(() => {
     const network = {};

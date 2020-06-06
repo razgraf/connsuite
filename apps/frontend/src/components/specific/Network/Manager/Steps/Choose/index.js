@@ -177,7 +177,7 @@ function Choose({ className, isActive, reducer }) {
           {external.list.map(item => (
             <StyledNetworkMini
               key={item._id}
-              network={item}
+              {...item}
               isFocused={item._id === reducer.state.externalId.value}
               onClick={() => {
                 reducer.dispatch({

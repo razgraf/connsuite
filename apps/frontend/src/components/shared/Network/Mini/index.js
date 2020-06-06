@@ -103,7 +103,7 @@ const Wrapper = styled(WrapperPartial)`
     }
   }
 `;
-function NetworkMini({ className, network, isViewOnly, isFocused, onClick }) {
+function NetworkMini({ className, isViewOnly, isFocused, onClick, ...network }) {
   return (
     <Wrapper className={className} data-focused={isFocused} data-viewonly={isViewOnly} onClick={isViewOnly ? null : onClick}>
       <Icon src={_.get(network, "thumbnail.url")} alt="" />
