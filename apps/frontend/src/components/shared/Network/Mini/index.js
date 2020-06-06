@@ -3,8 +3,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import IconMore from "@material-ui/icons/MoreHorizRounded";
 import { rgba } from "polished";
-import { pages } from "../../../../constants";
+import { types, pages } from "../../../../constants";
 
 const WrapperPartial = styled.div`
   position: relative;
@@ -13,7 +15,7 @@ const WrapperPartial = styled.div`
   justify-content: center;
   padding: 12px;
   background-color: ${props => props.theme.colors.white};
-  box-shadow: 0 0 5px 1px ${props => rgba(props.theme.colors.dark, 0.05)};
+  box-shadow: 0 0 3px 0 ${props => rgba(props.theme.colors.dark, 0.05)};
   overflow: hidden;
   border: 1px solid ${props => props.theme.colors.grayLight};
   border-radius: 4px;
@@ -67,7 +69,7 @@ const Icon = styled.img`
 `;
 
 const Wrapper = styled(WrapperPartial)`
-  &[data-purpse="add"] {
+  &[data-purpose="add"] {
     border: 1px solid ${props => props.theme.colors.grayBlueNormal};
     box-shadow: 0;
     opacity: 0.7;
@@ -77,6 +79,22 @@ const Wrapper = styled(WrapperPartial)`
     &:active {
       opacity: 1;
       transition: opacity 150ms;
+    }
+  }
+
+  &[data-purpose="more"] {
+    border: 1px solid ${props => props.theme.colors.grayBlueNormal};
+    box-shadow: 0;
+    opacity: 0.8;
+    cursor: pointer;
+    transition: opacity 150ms, border 150ms;
+    &:hover,
+    &:active {
+      opacity: 1;
+      transition: opacity 150ms;
+    }
+    & > * {
+      color: ${props => props.theme.colors.grayBlueMedium};
     }
   }
 
@@ -123,6 +141,21 @@ function NetworkMiniAdd({ className }) {
   );
 }
 
+function NetworkMiniMore({ className }) {
+  const router = useRouter();
+  return (
+    <Wrapper
+      className={className}
+      data-purpose="more"
+      onClick={() => {
+        router.push(router.pathname, `${router.asPath}#${types.profile.section.networks}`, { shallow: true });
+      }}
+    >
+      <IconMore style={{ fontSize: "12pt" }} />
+    </Wrapper>
+  );
+}
+
 NetworkMini.propTypes = {
   className: PropTypes.string,
   isViewOnly: PropTypes.bool,
@@ -147,13 +180,21 @@ NetworkMini.defaultProps = {
   },
 };
 
-NetworkMiniAdd.defaultProps = {
+NetworkMiniAdd.propTypes = {
   className: PropTypes.string,
 };
 
-NetworkMiniAdd.propTypes = {
+NetworkMiniAdd.defaultProps = {
+  className: null,
+};
+
+NetworkMiniMore.propTypes = {
+  className: PropTypes.string,
+};
+
+NetworkMiniMore.defaultProps = {
   className: null,
 };
 
 export default NetworkMini;
-export { NetworkMiniAdd };
+export { NetworkMiniAdd, NetworkMiniMore };

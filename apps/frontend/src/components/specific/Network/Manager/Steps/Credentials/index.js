@@ -54,7 +54,7 @@ const Section = styled(SectionPartial)`
   }
 `;
 
-function Credential({ className, isActive, reducer }) {
+function Credential({ className, isActive, reducer, network }) {
   return (
     <Wrapper className={className} data-active={isActive}>
       <Section data-active={reducer.state.type.value === types.network.type.internal}>
@@ -101,7 +101,7 @@ function Credential({ className, isActive, reducer }) {
         </Form>
       </Section>
       <Section data-active={reducer.state.type.value === types.network.type.external}>
-        <Title>What is your username on Facebook?</Title>
+        <Title>What is your username on {_.get(network, "title")}?</Title>
         <Subtitle>
           Remember how every social network had to ask you for a username <Emoji symbol="🤔" />? You&apos;ll need it here.
         </Subtitle>
@@ -139,11 +139,13 @@ Credential.propTypes = {
     dispatch: PropTypes.func,
     state: PropTypes.shape({}),
   }).isRequired,
+  network: PropTypes.shape({}),
 };
 
 Credential.defaultProps = {
   className: null,
   isActive: false,
+  network: {},
 };
 
 export default Credential;

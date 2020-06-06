@@ -139,7 +139,12 @@ function Profile({ data, identifier, isSelf }) {
 
   return (
     <Page>
-      <Nav hasParent appearance={types.nav.appearance.profile} title={`${parseFullName({ user: data }) || "ConnSuite"}'s`} />
+      <Nav
+        hasParent
+        appearance={types.nav.appearance.profile}
+        title={`${parseFullName({ user: data }) || "ConnSuite"}'s`}
+        networks={person.networks}
+      />
       <Main>
         <Canvas>
           <Header isLoading={person.isLoadingProfile} controller={controller} profile={person.profile} />

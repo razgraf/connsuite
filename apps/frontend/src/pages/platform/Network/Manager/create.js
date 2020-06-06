@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useCallback, useMemo, useEffect } from "react";
+import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 import { rgba } from "polished";
@@ -236,7 +236,7 @@ function NetworkManager() {
           <Main>
             <Playground>
               <Choose isActive={step === 1} reducer={reducer} />
-              <Credentials isActive={step === 2} reducer={reducer} />
+              <Credentials isActive={step === 2} reducer={reducer} network={interpreted} />
               <Live isActive={step === 3} reducer={reducer} />
             </Playground>
             <Preview reducer={reducer} isBarActive={step === 2} network={interpreted} />

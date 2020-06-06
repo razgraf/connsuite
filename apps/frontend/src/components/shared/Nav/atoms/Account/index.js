@@ -8,7 +8,7 @@ import IconArrowDown from "@material-ui/icons/KeyboardArrowDownRounded";
 import AssetLogoCircle from "../../../../../assets/logo/logo.png";
 import { pages } from "../../../../../constants";
 import { useOnClickOutside } from "../../../../../hooks";
-import { parseFullName } from "../../../../../utils";
+import { getPrimaryUsername, parseFullName } from "../../../../../utils";
 
 const Wrapper = styled.div`
   position: relative;
@@ -167,9 +167,9 @@ const DropdownItemTitle = styled.p`
   color: ${props => props.theme.colors.grayBlueBlack};
 `;
 
-function DropdownItem({ root, title, isActive }) {
+function DropdownItem({ route, as, title, isActive }) {
   return (
-    <Link href={root}>
+    <Link href={route} as={as}>
       <DropdownItemWrapper data-active={isActive}>
         <DropdownItemTitle>{title}</DropdownItemTitle>
       </DropdownItemWrapper>
@@ -185,6 +185,7 @@ function Account({ className }) {
   const [ref] = useOnClickOutside(() => setIsDown(false));
 
   const name = useMemo(() => parseFullName(auth), [auth]);
+  const username = useMemo(() => getPrimaryUsername(auth.user), [auth]);
 
   return (
     <Wrapper ref={ref} className={className}>
@@ -203,8 +204,19 @@ function Account({ className }) {
         </Action>
       </Content>
       <Dropdown data-active={isDown}>
-        {[pages.profile, pages.dashboard, pages.about].map(item => (
-          <DropdownItem {...item} key={item.title} isActive={router.pathname === item.root} />
+        {[pages.profile].map(item => (
+          <DropdownItem
+            {...item}
+            key={item.title}
+            isActive={router.pathname === item.route}
+            route={item.route}
+            as={item.builder(username)}
+            title="Your Profile"
+          />
+        ))}
+
+        {[pages.dashboard, pages.about].map(item => (
+          <DropdownItem {...item} key={item.title} isActive={router.pathname === item.route} route={item.route} />
         ))}
       </Dropdown>
     </Wrapper>
@@ -222,9 +234,11 @@ Account.defaultProps = {
 
 DropdownItem.propTypes = {
   title: PropTypes.string.isRequired,
-  root: PropTypes.string.isRequired,
+  route: PropTypes.string.isRequired,
+  as: PropTypes.string,
   isActive: PropTypes.bool,
 };
 DropdownItem.defaultProps = {
   isActive: false,
+  as: null,
 };

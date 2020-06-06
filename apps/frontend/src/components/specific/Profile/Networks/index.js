@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import SectionHeader from "../SectionHeader";
@@ -50,7 +50,7 @@ function Networks({ className, networks, isLoading, onIntersect }) {
   const { ref, isObserved } = useProfileIntersection(payload => onIntersect(types.profile.section.networks, payload));
 
   return (
-    <Wrapper className={className} ref={ref}>
+    <Wrapper className={className} ref={ref} id={types.profile.section.networks}>
       <SectionHeader title="Networks" isLoading={isLoading} isObserved={isObserved} />
       <Content>
         <Grid>

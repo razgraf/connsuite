@@ -2,6 +2,7 @@ import _ from "lodash";
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled, { keyframes } from "styled-components";
+import { rgba } from "polished";
 import Network, { NetworkMini } from "../../../../shared/Network";
 import { ellipsis } from "../../../../../utils";
 
@@ -153,6 +154,7 @@ const ContentSideNetwork = styled(NetworkMini)`
   height: 60px;
   width: 60px;
   padding: 15px;
+  box-shadow: 0 0 5px 1px ${props => rgba(props.theme.colors.dark, 0.05)};
 
   &:nth-child(1) {
     top: 30px;

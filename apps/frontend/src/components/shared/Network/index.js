@@ -10,7 +10,7 @@ import { ellipsis } from "../../../utils";
 import { Button } from "../../atoms";
 import { useCover, useHistory } from "../../../hooks";
 
-import NetworkMini, { NetworkMiniAdd } from "./Mini";
+import NetworkMini, { NetworkMiniAdd, NetworkMiniMore } from "./Mini";
 
 const WrapperPartial = styled.div`
   grid-column: span 1;
@@ -414,4 +414,4 @@ Network.defaultProps = {
 };
 
 export default Network;
-export { NetworkAdd, NetworkMini, NetworkMiniAdd };
+export { NetworkAdd, NetworkMini, NetworkMiniAdd, NetworkMiniMore };

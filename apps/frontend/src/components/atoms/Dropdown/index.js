@@ -52,7 +52,7 @@ const ItemWrapper = styled.a`
 const ItemTitle = styled.p`
   margin: 0;
   flex: 1;
-  font-size: 10pt;
+  font-size: 9pt;
   text-align: center;
   font-weight: 600;
   color: ${props => props.theme.colors.grayBlueDark};

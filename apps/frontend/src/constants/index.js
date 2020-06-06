@@ -50,6 +50,7 @@ export const pages = {
   about: {
     Icon: null,
     root: "/about",
+    route: "/about",
     title: "About",
   },
   network: {

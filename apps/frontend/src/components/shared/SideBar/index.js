@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Element from "./Element";
 import { pages } from "../../../constants";
+import { getPrimaryUsername } from "../../../utils";
 
 const Wrapper = styled.div`
   /* position: fixed;
@@ -31,25 +32,26 @@ const Divider = styled.div`
 
 function SideBar({ className, reference }) {
   const router = useRouter();
-  const user = useSelector(state => state.auth.user);
-  const username = useMemo(
-    () =>
-      _.get(
-        _.toArray(_.get(user, "usernames")).find(item => item.isPrimary),
-        "value",
-      ),
-    [user],
-  );
-
+  const auth = useSelector(state => state.auth);
+  const username = useMemo(() => getPrimaryUsername(auth.user), [auth]);
   return (
     <Wrapper className={className} ref={reference}>
       <Content>
-        {[pages.dashboard, pages.portfolio, pages.business, pages.statistics].map(page => (
-          <Element key={page.title} {...page} isActive={router.pathname === page.root} href={page.route} />
+        {[pages.dashboard, pages.portfolio, pages.statistics].map((
+          page, // TODO add pages.business when possible
+        ) => (
+          <Element {...page} key={page.title} isActive={router.pathname === page.root} href={page.route} />
         ))}
         <Divider />
         {[pages.profile].map(page => (
-          <Element key={page.title} {...page} isActive={router.pathname === page.root} href={page.route} as={page.builder(username)} />
+          <Element
+            {...page}
+            key={page.title}
+            isActive={router.pathname === page.root}
+            href={page.route}
+            as={page.builder(username)}
+            title="Your Profile"
+          />
         ))}
       </Content>
     </Wrapper>

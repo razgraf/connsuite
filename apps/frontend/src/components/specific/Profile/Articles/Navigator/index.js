@@ -5,7 +5,7 @@ import styled from "styled-components";
 import IconArrowDown from "@material-ui/icons/KeyboardArrowDownRounded";
 import { darken } from "polished";
 import { useOnClickOutside } from "../../../../../hooks";
-import Dropdown from "./Dropdown";
+import { Dropdown } from "../../../../atoms";
 
 const Wrapper = styled.div`
   display: flex;

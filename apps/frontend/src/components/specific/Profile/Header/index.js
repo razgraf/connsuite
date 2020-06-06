@@ -55,6 +55,7 @@ const LeftUnderlayShape = styled.div`
   transform: translateX(0);
   height: calc(100% - 30px);
   width: calc(100% - 30px);
+  transition: transform 600ms;
 
   &:after {
     content: "";
@@ -64,12 +65,16 @@ const LeftUnderlayShape = styled.div`
     height: calc(100%);
     width: calc(100%);
     transform: rotate(45deg);
+    transition: transform 600ms;
   }
 
-  transition: transform 600ms;
   &[data-observed="false"] {
     transform: translateX(-60px);
     transition: transform 1100px;
+    &:after {
+      transform: rotate(60deg);
+      transition: transform 600ms;
+    }
   }
 
   &:nth-child(2) {
@@ -113,7 +118,7 @@ const LeftImageWrapper = styled.div`
   width: calc(${props => props.theme.sizes.profileBlob} - 80px);
   border-radius: 30px;
   overflow: hidden;
-  box-shadow: 0 5px 28px -6px ${props => rgba(props.theme.colors.dark, 0.2)};
+  box-shadow: 0 5px 40px -6px ${props => rgba(props.theme.colors.dark, 0.2)};
 `;
 
 const LeftImage = styled.img`
@@ -254,12 +259,12 @@ function Header({ className, controller, profile, isLoading }) {
 
   const [ref, entry] = useIntersection({
     rootMargin: "0px 0px 0px 0px",
-    threshold: 0.5,
+    threshold: 0.9,
   });
 
   const router = useRouter();
 
-  const isObserved = useMemo(() => entry.intersectionRatio >= 0.5, [entry.intersectionRatio]);
+  const isObserved = useMemo(() => entry.intersectionRatio >= 0.9, [entry.intersectionRatio]);
   const onSkillClick = useCallback(
     skill => {
       controller.set({ ...skill, isSkill: true });
