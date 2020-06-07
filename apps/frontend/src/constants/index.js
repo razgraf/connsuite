@@ -73,6 +73,11 @@ export const pages = {
       builder: id => `/network/edit/${id}`,
       title: "Edit the Network",
     },
+    view: {
+      root: "/network",
+      route: "/network/[id]/[[...slug]]",
+      builder: (id, extra) => `/network/${id}${extra ? `/${extra}` : ""}`,
+    },
   },
   article: {
     root: "/article",
@@ -83,7 +88,7 @@ export const pages = {
     view: {
       root: "/article",
       route: "/article/[id]",
-      builder: id => `/article/${id}`,
+      builder: (id, extra) => `/article/${id}${extra ? `/${extra}` : ""}`,
     },
     edit: {
       root: "/article/edit",

@@ -107,8 +107,13 @@ async function remove({ auth, networkId }, handle = true) {
  * @param {object} p0.networkId - Item identification
  * @param {boolean} [handle] - Handle response inside (OK vs Not OK)
  */
-async function get({ auth, networkId }, handle = true) {
+async function get({ auth, networkId, query = null }, handle = true) {
   const endpoint = new URL(API.networkGet(networkId));
+
+  if (!_.isNil(query) && _.isObject(query)) {
+    Object.keys(query).forEach(key => (!_.isNil(query[key]) ? endpoint.searchParams.append(key, query[key]) : null));
+  }
+
   const response = await fetch(endpoint, {
     method: "GET",
     headers: buildHeaders({ auth }),

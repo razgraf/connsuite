@@ -27,3 +27,8 @@ export function getPrimaryUsername(profile) {
     "value",
   );
 }
+
+export function getFriendlyTitle(source) {
+  if (_.isNil(source)) return "";
+  return encodeURIComponent(source.toLowerCase().replace(/[^a-z0-9 _-]+/gi, "-"));
+}

@@ -6,10 +6,9 @@ import Link from "next/link";
 import IconVisit from "@material-ui/icons/InsertLinkRounded";
 import { rgba } from "polished";
 import { pages } from "../../../constants";
-import { ellipsis } from "../../../utils";
+import { ellipsis, getFriendlyTitle } from "../../../utils";
 import { Button } from "../../atoms";
 import { useCover, useHistory } from "../../../hooks";
-
 import NetworkMini, { NetworkMiniAdd, NetworkMiniMore } from "./Mini";
 
 const WrapperPartial = styled.div`
@@ -320,7 +319,7 @@ const Wrapper = styled(WrapperPartial)`
 
 function Network({ className, isViewOnly, isFocused, isInEditMode, ...network }) {
   const { setOpen: setCoverOpen, setNetwork: setCoverNetwork } = useCover();
-  const { title, username, thumbnail, url } = network;
+  const { title, username, thumbnail, url, _id } = network;
 
   const doPick = useCallback(() => {
     if (!isViewOnly) {
@@ -336,7 +335,12 @@ function Network({ className, isViewOnly, isFocused, isInEditMode, ...network })
           <Overlay data-component="overlay">
             <OverlayActions>
               <OverlayActionVisit>
-                <OverlayActionVisitIcon href={url} target="_blank" rel="noopener noreferrer">
+                <OverlayActionVisitIcon
+                  data-url={url}
+                  href={pages.network.view.builder(_id, getFriendlyTitle(title))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <IconVisit style={{ fontSize: "14pt" }} />
                 </OverlayActionVisitIcon>
                 <OverlayActionVisitTitle>Visit network</OverlayActionVisitTitle>

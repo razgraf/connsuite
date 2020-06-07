@@ -1,5 +1,6 @@
 import _ from "lodash";
 import Router from "next/router";
+import status from "../constants/httpcodes";
 
 export function _getAsset({ type, source }) {
   let asset = null;
@@ -30,7 +31,7 @@ export function _getAsset({ type, source }) {
 }
 export function redirectTo(destination, { res = null } = {}) {
   if (res) {
-    res.writeHead(302, { Location: destination });
+    res.writeHead(status.FOUND, { Location: destination });
     res.end();
     return;
   }
