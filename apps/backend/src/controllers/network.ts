@@ -12,7 +12,10 @@ export default class NetworkController extends BaseController {
     try {
       const id = _.get(req, "params.id");
       if (!id) throw new ParamsError.Missing("Missing network identifier.");
-      const network: Network | null = await NetworkRepository.getInstance().getById(id, { populate: true });
+
+      const network: Network | null = await NetworkRepository.getInstance().getById(id, {
+        populate: !_.has(req, "query.minimal"),
+      });
       if (!network) throw new NetworkError.NotFound("The identifier doesn't match any network.");
 
       res.status(HTTP_CODE.OK);
@@ -80,7 +83,7 @@ export default class NetworkController extends BaseController {
     try {
       const { query } = req;
       if (_.isNil(query)) throw new ParamsError.Missing("Insuficient listing payload.");
-      const userId = await UserRepository.getInstance().interpretIdentificatorToId(query);
+      const userId = await UserRepository.getInstance().interpretIdentifierToId(query);
       if (_.isNil(userId)) throw new AuthError.UserNotFound("Missing user based on given auth details.");
 
       const networks: Network[] = await NetworkRepository.getInstance().list(

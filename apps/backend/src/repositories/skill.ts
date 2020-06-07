@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb";
 import BaseRepository from "./base";
 import ArticleRepository from "./article";
 import { ParamsError, SkillError } from "../errors";
-import { Skill, SkillModel, Request } from "../models";
+import { Skill, SkillModel, Request, ArticleModel } from "../models";
 
 export default class SkillRepository extends BaseRepository<Skill> {
   private static instance: SkillRepository;
@@ -82,6 +82,13 @@ export default class SkillRepository extends BaseRepository<Skill> {
 
   public async getByFilters(filters: { [key: string]: unknown }): Promise<Skill | null> {
     return SkillModel.findOne(filters);
+  }
+
+  public async listDistinctByUserId(userId: string): Promise<any[]> {
+    const ids = await ArticleModel.find({ user: new ObjectId(userId) }).distinct("skills");
+    if (_.isNil(ids) || !ids.length) return [];
+
+    return SkillModel.find({ _id: { $in: ids } });
   }
 
   /**

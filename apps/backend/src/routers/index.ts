@@ -5,6 +5,7 @@ import AuthRouter from "./auth";
 import CategoryRouter from "./category";
 import NetworkRouter from "./network";
 import SkillRouter from "./skill";
+import UserRouter from "./user";
 
 export default [
   { root: routes.article.root, router: ArticleRouter },
@@ -12,4 +13,5 @@ export default [
   { root: routes.category.root, router: CategoryRouter },
   { root: routes.network.root, router: NetworkRouter },
   { root: routes.skill.root, router: SkillRouter },
+  { root: routes.user.root, router: UserRouter },
 ];

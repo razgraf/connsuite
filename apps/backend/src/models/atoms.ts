@@ -52,6 +52,7 @@ export interface UserDTOOptions {
   usernames?: boolean;
   networks?: boolean;
   articles?: boolean;
+  images?: boolean;
 }
 
 export interface UsernameDTOOptions {

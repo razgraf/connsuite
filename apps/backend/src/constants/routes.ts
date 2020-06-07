@@ -15,6 +15,25 @@ export default {
 
     list: "/",
   },
+  auth: {
+    root: "/auth",
+    /** PROVIDERS **/
+
+    google: "/google",
+
+    classic: {
+      login: "/classic/login",
+      register: "/classic/register",
+    },
+
+    /** UTILITY **/
+    logout: "/logout",
+    status: "/status",
+  },
+  category: {
+    root: "/categories",
+    listDefault: "/default",
+  },
   network: {
     root: "/networks",
 
@@ -34,23 +53,11 @@ export default {
     root: "/skills",
     listDefault: "/default",
   },
-  category: {
-    root: "/categories",
-    listDefault: "/default",
-  },
-  auth: {
-    root: "/auth",
-    /** PROVIDERS **/
+  user: {
+    root: "/users",
+    get: "/:id",
+    update: "/:id",
 
-    google: "/google",
-
-    classic: {
-      login: "/classic/login",
-      register: "/classic/register",
-    },
-
-    /** UTILITY **/
-    logout: "/logout",
-    status: "/status",
+    listSkillsAndCategories: "/:id/skills-and-categories",
   },
 };

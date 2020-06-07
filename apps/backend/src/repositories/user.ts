@@ -4,8 +4,7 @@ import { ObjectId } from "mongodb";
 import BaseRepository, { BaseOptions } from "./base";
 import UsernameRepository from "./username";
 import { defaults } from "../constants";
-import { Vendor, User, Username, UserModel, Name, Request, Network, Article } from "../models";
-import { isValidObjectId } from "mongoose";
+import { Vendor, User, Username, UserModel, Name, Request } from "../models";
 
 export default class UserRepository extends BaseRepository<User> {
   private static instance: UserRepository;
@@ -62,10 +61,12 @@ export default class UserRepository extends BaseRepository<User> {
     return !found || !found.user ? null : String(found.user);
   }
 
-  public async interpretIdentificatorToId(payload: Request.UserIdentificator): Promise<string | null> {
+  public async interpretIdentifierToId(payload: Request.UserIdentifier): Promise<string | null> {
     if (_.isNil(payload)) return null;
 
-    if (!_.isNil(payload._id) && isValidObjectId(payload._id)) return payload._id;
+    try {
+      if (String(payload._id) === String(new ObjectId(payload._id))) return String(payload._id);
+    } catch (e) {} //eslint-disable-line
 
     if (!_.isNil(payload.username)) {
       const id = await this.getIdByUsername(payload.username || "");
@@ -80,6 +81,18 @@ export default class UserRepository extends BaseRepository<User> {
     }
 
     return null;
+  }
+
+  public async interpretIdOrUsernameToId(identifier: string): Promise<string | null> {
+    if (_.isNil(identifier)) return null;
+
+    try {
+      if (String(identifier) === String(new ObjectId(identifier))) return String(identifier);
+    } catch (e) {} //eslint-disable-line
+
+    const id = await this.getIdByUsername(identifier);
+    if (!id) return null;
+    return String(id);
   }
 
   public async addUsername(userId: string, usernameId: string): Promise<void> {
@@ -200,6 +213,7 @@ export default class UserRepository extends BaseRepository<User> {
     const population: { path: string; model: string }[] = [];
     if (_.isNil(options) || !_.get(options, "populate")) return population;
     if (!options.hideUsernames) population.push({ path: "usernames", model: "Username" });
+    if (!options.hideImages) population.push({ path: "icon", model: "Image" }, { path: "thumbnail", model: "Image" });
     return population;
   }
 

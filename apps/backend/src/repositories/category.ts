@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb";
 import BaseRepository from "./base";
 import ArticleRepository from "./article";
 import { ParamsError, CategoryError } from "../errors";
-import { Category, CategoryModel, Request } from "../models";
+import { Category, CategoryModel, Request, ArticleModel } from "../models";
 
 export default class CategoryRepository extends BaseRepository<Category> {
   private static instance: CategoryRepository;
@@ -82,6 +82,13 @@ export default class CategoryRepository extends BaseRepository<Category> {
 
   public async getByFilters(filters: { [key: string]: unknown }): Promise<Category | null> {
     return CategoryModel.findOne(filters);
+  }
+
+  public async listDistinctByUserId(userId: string): Promise<any[]> {
+    const ids = await ArticleModel.find({ user: new ObjectId(userId) }).distinct("categories");
+    if (_.isNil(ids) || !ids.length) return [];
+
+    return CategoryModel.find({ _id: { $in: ids } });
   }
 
   /**

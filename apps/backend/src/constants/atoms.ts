@@ -1,7 +1,7 @@
 export const host: { [key: string]: string } = {
   development: `http://localhost:${process.env.PORT || 3000}`,
-  staging: "https://www.staging.connsuite.com",
-  production: "https://www.connsuite.com",
+  staging: "https://www.staging.api.connsuite.com",
+  production: "https://www.api.connsuite.com",
 };
 
 export const root = host[process.env.NODE_ENV || "development"];

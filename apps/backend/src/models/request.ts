@@ -101,7 +101,7 @@ export type CategoryTransfer = {
   title?: string;
 };
 
-export type UserIdentificator = {
+export type UserIdentifier = {
   _id?: string;
   username?: string;
   email?: string;

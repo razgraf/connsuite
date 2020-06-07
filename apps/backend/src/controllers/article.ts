@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { Request, Response } from "express";
 import { ObjectId } from "mongodb";
+import shortid from "shortid";
 import BaseController from "./base";
 import { HTTP_CODE } from "../constants";
 import { ArticleRepository, UserRepository } from "../repositories";
@@ -13,7 +14,11 @@ export default class ArticleController extends BaseController {
       const id = _.get(req, "params.id");
       if (!id) throw new ParamsError.Missing("Missing article identifier.");
 
-      const article: Article | null = await ArticleRepository.getInstance().getById(id, { populate: true });
+      const populate = !_.has(req, "query.minimal");
+      const article: Article | null = shortid.isValid(id)
+        ? await ArticleRepository.getInstance().getByFilters({ shortId: String(id) }, { populate })
+        : await ArticleRepository.getInstance().getById(id, { populate });
+
       if (!article) throw new ArticleError.NotFound("The identifier doesn't match any article.");
 
       res.status(HTTP_CODE.OK);
@@ -90,7 +95,7 @@ export default class ArticleController extends BaseController {
     try {
       const { query } = req;
       if (_.isNil(query)) throw new ParamsError.Missing("Insuficient listing payload.");
-      const userId = await UserRepository.getInstance().interpretIdentificatorToId(query);
+      const userId = await UserRepository.getInstance().interpretIdentifierToId(query);
       if (_.isNil(userId)) throw new AuthError.UserNotFound("Missing user based on given auth details.");
 
       const articles: Article[] = await ArticleRepository.getInstance().list(

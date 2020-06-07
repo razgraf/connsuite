@@ -1,5 +1,6 @@
 import _ from "lodash";
 import mongoose from "mongoose";
+import shortid from "shortid";
 import { prop, arrayProp, getModelForClass, Ref, isDocument, isDocumentArray } from "@typegoose/typegoose";
 import { User, toUserDTO } from "./user";
 import { Skill, toSkillDTO } from "./skill";
@@ -9,6 +10,9 @@ import { Category, toCategoryDTO } from "./category";
 
 export class Article {
   readonly _id?: mongoose.Schema.Types.ObjectId | string;
+
+  @prop({ default: shortid.generate() })
+  shortId?: string;
 
   @prop({ required: true, enum: ArticleType, default: ArticleType.Internal })
   type!: ArticleType;
@@ -53,6 +57,7 @@ export function toArticleDTO(
   const result: { [key: string]: any } = {};
 
   result._id = article._id;
+  result.shortId = article.shortId;
   result.type = article.type;
   result.title = article.title;
   result.url = article.url;
