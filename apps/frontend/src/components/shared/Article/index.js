@@ -135,8 +135,11 @@ const OverlayFooter = styled.div`
 const OverlayFooterTitle = styled.p`
   margin: 0 0 5px 0;
   width: 100%;
-  font-size: 11pt;
-  font-weight: 600;
+  font-size: 12pt;
+  font-weight: 400;
+  font-family: ${props => props.theme.fonts.primary};
+  color: ${props => props.theme.colors.dark};
+  white-space: nowrap;
   max-width: calc(100% - 80px);
   text-align: left;
   color: ${props => props.theme.colors.dark};
@@ -322,7 +325,7 @@ function Article({ className, _id, thumbnail, categories, title, type, onRemoveC
                 />
               ) : (
                 <Link href={pages.article.edit.route} as={pages.article.edit.builder(_id)}>
-                  <a href="#" onClick={history.push}>
+                  <a href="#" onClick={() => history.push()}>
                     <OverlayFooterButton
                       type={t => t.button}
                       appearance={t => t.solid}

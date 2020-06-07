@@ -76,6 +76,7 @@ const NavAccount = styled(Account)`
 const NavNetworks = styled.div`
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   position: absolute;
   height: 100%;
   z-index: 200;
@@ -89,8 +90,8 @@ const NavNetworks = styled.div`
     transition: opacity 200ms;
   }
   & > * {
-    height: calc(${props => props.theme.sizes.navHeight} - 2 * 10px);
-    width: calc(${props => props.theme.sizes.navHeight} - 2 * 10px);
+    height: calc(${props => props.theme.sizes.navHeight} - 2 * 15px);
+    width: calc(${props => props.theme.sizes.navHeight} - 2 * 15px);
     padding: 10px;
     margin-right: 8px;
     &:last-child {
@@ -247,7 +248,8 @@ function NavProfile({ className, title, networks, hasParent, onBackClick }) {
                     title: "Business Card",
                   },
                 ]}
-                onItemClick={item => {
+                onItemClick={() => {
+                  // item TODO
                   setIsDown(false);
                 }}
               />

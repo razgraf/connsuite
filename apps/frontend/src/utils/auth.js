@@ -106,3 +106,18 @@ export async function validateAuth({ state, store, dispatch: d, res = null } = {
       return validateShared({ auth, shallow });
   }
 }
+
+export async function getServerAuth(context) {
+  if (_.isNil(context) || !_.has(context, "store")) return null;
+  try {
+    const { store } = context;
+    const auth = _.attempt(() => {
+      const s = store.getState();
+      return s.auth;
+    });
+    return !_.isError(auth) ? auth : null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}

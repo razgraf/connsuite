@@ -251,7 +251,7 @@ const Action = styled.a`
   padding: 10px 15px;
   border-radius: 4px;
   background: ${props => rgba(props.theme.colors.white, 0.1)};
-  margin-bottom: ${props => props.theme.sizes.edge};
+  margin-bottom: 10px;
   cursor: pointer;
   transition: opacity 150ms, background-color 150ms;
 
@@ -276,7 +276,7 @@ const ActionIcon = styled.div`
 
 const ActionTitle = styled.p`
   margin: 0;
-  font-size: 10pt;
+  font-size: 9pt;
   color: ${props => props.theme.colors.white};
   font-weight: 600;
   span {

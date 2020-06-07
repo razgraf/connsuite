@@ -153,7 +153,7 @@ const RightContent = styled.div`
   &[data-ready="true"] {
     opacity: 1;
     transform: translateX(0);
-    transition: transform 300ms, opacity 300ms 100ms;
+    transition: transform 300ms, opacity 300ms;
   }
 `;
 

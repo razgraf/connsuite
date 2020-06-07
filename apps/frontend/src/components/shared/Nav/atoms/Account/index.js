@@ -7,7 +7,7 @@ import Link from "next/link";
 import IconArrowDown from "@material-ui/icons/KeyboardArrowDownRounded";
 import AssetLogoCircle from "../../../../../assets/logo/logo.png";
 import { pages } from "../../../../../constants";
-import { useOnClickOutside } from "../../../../../hooks";
+import { useOnClickOutside, useHistory } from "../../../../../hooks";
 import { getPrimaryUsername, parseFullName } from "../../../../../utils";
 
 const Wrapper = styled.div`
@@ -168,9 +168,10 @@ const DropdownItemTitle = styled.p`
 `;
 
 function DropdownItem({ route, as, title, isActive }) {
+  const history = useHistory();
   return (
     <Link href={route} as={as}>
-      <DropdownItemWrapper data-active={isActive}>
+      <DropdownItemWrapper data-active={isActive} onClick={() => history.push()}>
         <DropdownItemTitle>{title}</DropdownItemTitle>
       </DropdownItemWrapper>
     </Link>

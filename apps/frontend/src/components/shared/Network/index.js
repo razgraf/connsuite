@@ -97,7 +97,7 @@ const ContentFooter = styled.div`
 const ContentFooterDetails = styled.p`
   text-align: center;
   color: ${props => props.theme.colors.grayBlueMedium};
-  font-size: 10pt;
+  font-size: 9pt;
   font-weight: 600;
   margin: 0;
   @media all and (max-width: ${props => props.theme.medias.medium}) {
@@ -198,7 +198,7 @@ const Title = styled.p`
   min-height: 25px;
   margin: 0 0 2px 0;
   text-align: center;
-  font-size: 13pt;
+  font-size: 12pt;
   font-weight: 300;
   font-family: ${props => props.theme.fonts.primary};
   color: ${props => props.theme.colors.dark};

@@ -8,6 +8,14 @@ import status from "./httpcodes";
 
 export { status };
 
+export const host = {
+  development: `http://localhost:${process.env.PORT || 3001}`,
+  staging: "https://www.staging.connsuite.com",
+  production: "https://www.connsuite.com",
+};
+
+export const root = host[process.env.NODE_ENV || "development"];
+
 export const pages = {
   landing: {
     Icon: null,
@@ -291,6 +299,8 @@ const constants = {
   status,
   vendors,
   footer,
+  root,
+  host,
 };
 
 export default constants;

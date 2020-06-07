@@ -85,7 +85,7 @@ const Wrapper = styled(WrapperPartial)`
   &[data-purpose="more"] {
     border: 1px solid ${props => props.theme.colors.grayBlueNormal};
     box-shadow: 0;
-    opacity: 0.8;
+    opacity: 0.4;
     cursor: pointer;
     transition: opacity 150ms, border 150ms;
     &:hover,
