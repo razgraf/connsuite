@@ -5,13 +5,8 @@ export type BaseOptions = {
   limit?: number | string;
   offset?: number | string;
 
-  hideUser?: boolean;
-  hideImages?: boolean;
-  hideSkills?: boolean;
-  hideArticle?: boolean;
-  hideContent?: boolean;
-  hideCategories?: boolean;
-  hideUsernames?: boolean;
+  start?: string;
+  end?: string;
 
   [key: string]: boolean | number | string | undefined;
 };
