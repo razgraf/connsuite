@@ -1,11 +1,10 @@
 import _ from "lodash";
-import dayjs from "dayjs";
 import { ObjectId } from "mongodb";
 import BaseRepository, { BaseOptions } from "./base";
 
 import { ParamsError } from "../errors";
 import { Request, Visit, VisitModel, VisitType } from "../models";
-import { isISODate, toISODate } from "../utils";
+import { isISODate } from "../utils";
 
 export default class VisitRepository extends BaseRepository<Visit> {
   private static instance: VisitRepository;
@@ -72,6 +71,8 @@ export default class VisitRepository extends BaseRepository<Visit> {
     switch (payload.type) {
       case VisitType.Network:
         return this._getForNetwork(payload, options);
+      case VisitType.Article:
+        return this._getForArticle(payload, options);
       default:
         return {};
     }
@@ -86,6 +87,8 @@ export default class VisitRepository extends BaseRepository<Visit> {
     switch (payload.type) {
       case VisitType.Network:
         return this._listForNetworks(payload, options);
+      case VisitType.Article:
+        return this._listForArticles(payload, options);
       default:
         return {};
     }
@@ -101,8 +104,44 @@ export default class VisitRepository extends BaseRepository<Visit> {
 
   private async _getForNetwork(payload: Request.VisitGetForItem, options?: BaseOptions): Promise<Request.Response> {
     const query: { [key: string]: any } = {
-      type: payload.type,
+      type: VisitType.Network,
       targetId: payload.targetId,
+    };
+    if (!_.isNil(options)) {
+      if (!_.isNil(options.start) && isISODate(options.start))
+        query.createdAt = { ...(query.createdAt || {}), $gte: new Date(options.start) };
+      if (!_.isNil(options.end) && isISODate(options.end))
+        query.createdAt = { ...(query.createdAt || {}), $lte: new Date(options.end) };
+    }
+
+    const count = await VisitModel.countDocuments(query);
+    return {
+      count: count || 0,
+    };
+  }
+
+  private async _getForArticle(payload: Request.VisitGetForItem, options?: BaseOptions): Promise<Request.Response> {
+    const query: { [key: string]: any } = {
+      type: VisitType.Article,
+      targetId: payload.targetId,
+    };
+    if (!_.isNil(options)) {
+      if (!_.isNil(options.start) && isISODate(options.start))
+        query.createdAt = { ...(query.createdAt || {}), $gte: new Date(options.start) };
+      if (!_.isNil(options.end) && isISODate(options.end))
+        query.createdAt = { ...(query.createdAt || {}), $lte: new Date(options.end) };
+    }
+
+    const count = await VisitModel.countDocuments(query);
+    return {
+      count: count || 0,
+    };
+  }
+
+  private async _getForProfile(payload: Request.VisitGetForItem, options?: BaseOptions): Promise<Request.Response> {
+    const query: { [key: string]: any } = {
+      type: VisitType.Profile,
+      targetId: payload.userId,
     };
     if (!_.isNil(options)) {
       if (!_.isNil(options.start) && isISODate(options.start))
@@ -145,7 +184,44 @@ export default class VisitRepository extends BaseRepository<Visit> {
         aggregation.$match.createdAt = { ...(aggregation.$match.createdAt || {}), $lte: new Date(options.end) };
     }
 
-    console.log(aggregation);
+    const count = await VisitModel.aggregate(
+      Object.keys(aggregation).map(key => ({
+        [key]: aggregation[key],
+      })),
+    );
+
+    return {
+      count: count || [],
+    };
+  }
+
+  private async _listForArticles(payload: Request.VisitListForType, options?: BaseOptions): Promise<Request.Response> {
+    const aggregation: { [key: string]: any } = {
+      $lookup: {
+        from: "articles",
+        localField: "targetId",
+        foreignField: "_id",
+        as: "articles",
+      },
+      $match: {
+        type: VisitType.Article,
+        articles: {
+          $elemMatch: {
+            user: new ObjectId(payload.userId),
+          },
+        },
+      },
+      $group: {
+        _id: "$targetId",
+        count: { $sum: 1 },
+      },
+    };
+    if (!_.isNil(options)) {
+      if (!_.isNil(options.start) && isISODate(options.start))
+        aggregation.$match.createdAt = { ...(aggregation.$match.createdAt || {}), $gte: new Date(options.start) };
+      if (!_.isNil(options.end) && isISODate(options.end))
+        aggregation.$match.createdAt = { ...(aggregation.$match.createdAt || {}), $lte: new Date(options.end) };
+    }
 
     const count = await VisitModel.aggregate(
       Object.keys(aggregation).map(key => ({

@@ -13,3 +13,10 @@ export enum VisitType {
 export interface VisitDTOOptions {
   ids?: boolean;
 }
+
+export enum UserTier {
+  Bronze = 5,
+  Silver = 10,
+  Gold = 15,
+  Platinum = 20,
+}

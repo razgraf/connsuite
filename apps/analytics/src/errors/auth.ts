@@ -33,6 +33,14 @@ export class Forbidden extends BaseError {
   }
 }
 
+export class Locked extends BaseError {
+  constructor(message?: string) {
+    super(message);
+    this.name = "AuthLocked";
+    this.code = HTTP_CODE.LOCKED;
+  }
+}
+
 /** Edge case */
 
 export class MissingVendorResponse extends BaseError {

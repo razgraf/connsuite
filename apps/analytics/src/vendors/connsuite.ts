@@ -1,15 +1,15 @@
-import _ from "lodash";
 import fetch, { Headers } from "node-fetch";
-import { atoms, HTTP_CODE } from "../constants";
-import { AuthError } from "../errors";
+import { atoms, HTTP_CODE, defaults } from "../constants";
 import { Request } from "../models";
 
 /**
  * @param authHeader Authorization header from req:Request
  */
-async function getAuthorizedIdentity(authHeader: string): Promise<Request.Response> {
+async function getAuthorizedIdentity(authHeader: string, tierCheck = false): Promise<Request.Response> {
+  const endpoint = `${atoms.dependency.backend.status}?${tierCheck ? `tier=${defaults.tier.analytics}` : ""}`;
+
   try {
-    const response = await fetch(atoms.dependency.backend.status, {
+    const response = await fetch(endpoint, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",

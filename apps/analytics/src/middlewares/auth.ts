@@ -13,8 +13,12 @@ class AuthMiddleware {
       const token = authorization?.split(" ")[1] || "";
       if (!token || !token.length) throw new AuthError.InvalidToken("Bearer Malformed");
 
-      const identity = await connsuite.getAuthorizedIdentity(_.get(req, "headers.authorization"));
+      const identity = await connsuite.getAuthorizedIdentity(_.get(req, "headers.authorization"), true);
       if (_.isNil(identity)) throw new AuthError.Forbidden("Access not authorized");
+
+      if (_.get(identity, "elite") !== true)
+        throw new AuthError.Locked("Access is locked due to missing user priviledges. Higher tier required.");
+
       if (!res.locals) res.locals = {};
       res.locals.identity = {
         user: _.get(identity, "user._id"),
