@@ -62,10 +62,14 @@ async function register(payload) {
  * Check if the user is authorized based on the Bearer Token
  * @throws ...
  */
-async function isAuthorized(auth) {
+async function isAuthorized(auth, tier = null) {
   if (_.isNil(auth) || !_.get(auth, "token.value")) return false;
 
-  const response = await fetch(API.authStatus(), {
+  const endpoint = `${API.authStatus()}${tier !== null ? `?tier=${tier}` : ""}`;
+
+  console.log(endpoint);
+
+  const response = await fetch(endpoint, {
     method: "GET",
     headers: buildHeaders({ auth }),
     credentials: "omit",

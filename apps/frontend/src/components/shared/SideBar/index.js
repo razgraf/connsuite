@@ -10,9 +10,6 @@ import { pages } from "../../../constants";
 import { getPrimaryUsername } from "../../../utils";
 
 const Wrapper = styled.div`
-  /* position: fixed;
-  left: calc((100vw - ${props => props.theme.sizes.canvasMaxWidth} - 2 * ${props => props.theme.sizes.edge}) / 2); */
-  /* height: 100vh; */
   border-right: 1px solid ${props => lighten(0.04, props.theme.colors.grayBlueLight)};
 `;
 
@@ -37,7 +34,7 @@ function SideBar({ className, reference }) {
   return (
     <Wrapper className={className} ref={reference}>
       <Content>
-        {[pages.dashboard, pages.portfolio, pages.statistics].map((
+        {[pages.dashboard, pages.portfolio, pages.analytics].map((
           page, // TODO add pages.business when possible
         ) => (
           <Element {...page} key={page.title} isActive={router.pathname === page.root} href={page.route} />

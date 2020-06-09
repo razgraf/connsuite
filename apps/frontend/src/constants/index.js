@@ -1,7 +1,7 @@
 import IconDashboard from "@material-ui/icons/HomeRounded";
 import IconPortfolio from "@material-ui/icons/FolderSpecialRounded";
 import IconBusiness from "@material-ui/icons/BusinessRounded";
-import IconStatistics from "@material-ui/icons/MultilineChartRounded";
+import IconAnalytics from "@material-ui/icons/MultilineChartRounded";
 import IconProfile from "@material-ui/icons/PersonRounded";
 
 import status from "./httpcodes";
@@ -48,11 +48,11 @@ export const pages = {
     route: "/business",
     title: "Business Book",
   },
-  statistics: {
-    Icon: IconStatistics,
-    root: "/statistics",
-    route: "/statistics",
-    title: "Statistics",
+  analytics: {
+    Icon: IconAnalytics,
+    root: "/analytics",
+    route: "/analytics",
+    title: "Analytics",
     isPrivate: true,
   },
   about: {
@@ -205,10 +205,31 @@ export const types = {
       business: "business",
     },
   },
+  visit: {
+    type: {
+      default: "default",
+      network: "network",
+      article: "article",
+      profile: "profile",
+      business: "businesscard",
+    },
+  },
+  tier: {
+    levels: {
+      bronze: 5,
+      silver: 10,
+      gold: 15,
+      platinum: 20,
+    },
+    access: {
+      analytics: 5,
+    },
+  },
 };
 
 export const API = {
   root: "http://localhost:3002",
+  analytics: "http://localhost:3005",
   authGoogle: () => `${API.root}/auth/google`,
   authStatus: () => `${API.root}/auth/status`,
   authRegister: () => `${API.root}/auth/classic/register`,
@@ -234,6 +255,10 @@ export const API = {
   userGet: id => `${API.root}/users/${id}`,
   userEdit: id => `${API.root}/users/${id}`,
   userListSkillsAndCategories: id => `${API.root}/users/${id}`,
+
+  analyticsVisitCreate: () => `${API.analytics}/visits`,
+  analyticsVisitGet: (type, id) => `${API.analytics}/visits/${id}?type=${type}`,
+  analyticsVisitList: type => `${API.analytics}/visits?type=${type}`,
 };
 
 export const links = {

@@ -1,4 +1,5 @@
 export { default as ArticleRequest } from "./article";
+export { default as AnalyticsRequest } from "./analytics";
 export { default as AuthRequest } from "./auth";
 export { default as CategoryRequest } from "./category";
 export { default as NetworkRequest } from "./network";

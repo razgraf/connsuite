@@ -169,7 +169,9 @@ function Portfolio() {
         </SectionArticles>
         <SectionQuick>
           <SectionHeader>
-            <SectionTitle>Quick Actions</SectionTitle>
+            <SectionTitle>
+              <p>Quick Actions</p>
+            </SectionTitle>
           </SectionHeader>
           <SectionQuickContent>
             <Button

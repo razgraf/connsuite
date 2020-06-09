@@ -213,7 +213,7 @@ const CardRightAction = styled.a`
       color: ${props => props.theme.colors.white};
     }
 
-    &[data-purpose="statistics"] {
+    &[data-purpose="analytics"] {
       background: ${props => props.theme.colors.orange};
       border: 1px solid ${props => props.theme.colors.orange};
       & > * {
@@ -229,7 +229,7 @@ const CardRightAction = styled.a`
   & > * {
     color: ${props => props.theme.colors.secondary};
   }
-  &[data-purpose="statistics"] {
+  &[data-purpose="analytics"] {
     & > * {
       color: ${props => props.theme.colors.orange};
     }
@@ -325,9 +325,9 @@ function Cover({ isSelf }) {
                 </CardMain>
                 <CardRight>
                   {isSelf && (
-                    <Link href={pages.statistics.root}>
-                      <CardRightAction data-purpose="statistics" title={pages.statistics.title} onClick={push}>
-                        <pages.statistics.Icon style={{ fontSize: "16pt" }} />
+                    <Link href={pages.analytics.root}>
+                      <CardRightAction data-purpose="analytics" title={pages.analytics.title} onClick={push}>
+                        <pages.analytics.Icon style={{ fontSize: "16pt" }} />
                       </CardRightAction>
                     </Link>
                   )}

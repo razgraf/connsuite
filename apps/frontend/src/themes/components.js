@@ -93,6 +93,7 @@ const SectionTitle = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
+  min-height: 40px;
   & > p {
     margin: 0 calc(${props => props.theme.sizes.edge} * 2 / 3) 0 0;
     text-align: left;

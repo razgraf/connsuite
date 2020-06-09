@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { PURGE } from "redux-persist";
 import AuthRequest from "../requests/auth";
-import { pages } from "../constants";
+import { pages, types } from "../constants";
 import { redirectTo } from "./atoms";
 
 /**
@@ -66,6 +66,25 @@ async function validatePrivateOnly({ auth, dispatch, res = null, shallow = true 
   }
 }
 
+async function validateEliteOnly({ auth, dispatch, res = null, tier = types.tier.access.analytics }) {
+  try {
+    const stored = await AuthRequest.isShallowAuthorized(auth);
+    if (!stored) return logout({ auth, dispatch, local: true, res });
+
+    const payload = await AuthRequest.isAuthorized(auth, tier);
+    if (!payload) throw new Error("Forbidden");
+
+    const user = payload && _.has(payload, "user") ? payload.user : null;
+    if (!user) throw new Error("Forbidden");
+
+    const elite = _.get(payload, "elite");
+
+    return { user, elite };
+  } catch (e) {
+    return logout({ auth, dispatch, res });
+  }
+}
+
 async function validateShared({ auth, shallow = true }) {
   try {
     const stored = await AuthRequest.isShallowAuthorized(auth);
@@ -97,6 +116,8 @@ export async function validateAuth({ state, store, dispatch: d, res = null } = {
     dispatch = store.dispatch;
   } else auth = state.auth;
   switch (visibility) {
+    case "analytics":
+      return validateEliteOnly({ auth, dispatch, res, tier: types.tier.access.analytics });
     case "private":
       return validatePrivateOnly({ auth, dispatch, res, shallow });
     case "public":
