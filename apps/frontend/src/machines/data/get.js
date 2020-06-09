@@ -76,6 +76,7 @@ const machine = Machine({
           }),
           target: states.failure,
         },
+        [events.reset]: [states.idle],
       },
     },
     [states.failure]: {},

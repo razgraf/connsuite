@@ -80,10 +80,10 @@ const Bubble = styled(BubblePartial)`
     }
 
     &[data-private="true"] {
-      background: ${props => props.theme.colors.grayBlueBlack};
+      background: ${props => props.theme.gradients.primary};
 
       & > * {
-        color: ${props => props.theme.colors.orange};
+        color: ${props => props.theme.colors.white};
       }
     }
   }

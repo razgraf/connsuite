@@ -9,6 +9,7 @@ export function useProfileMachine({ onSuccess = () => {} } = {}) {
   return useDataGetMachine({ request: UserRequest.profile, onSuccess });
 }
 
+export * from "./analytics";
 export * from "./article";
 export * from "./atoms";
 export * from "./auth";

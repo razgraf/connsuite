@@ -25,12 +25,23 @@ export const StateInputEditor = {
   error: null,
 };
 
+export const StateInputDate = {
+  value: {
+    day: null,
+    month: null,
+    year: null,
+    label: null,
+  },
+  error: null,
+};
+
 const state = {
   StateInputText,
   StateInputPassword,
   StateInputImage,
   StateInputTags,
   StateInputEditor,
+  StateInputDate,
 };
 
 export default state;
