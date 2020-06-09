@@ -3,14 +3,28 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Area } from "../../../components/shared";
 
-import { Networks, Unauthorized } from "../../../components/specific/Analytics";
+import { Articles, Networks, Unauthorized } from "../../../components/specific/Analytics";
 
 const Page = styled.div``;
+
+const Authorized = styled.div`
+  padding-bottom: 80px;
+  width: 100%;
+`;
 
 function Analytics({ elite }) {
   return (
     <Page>
-      <Area>{!elite ? <Unauthorized /> : <Networks />}</Area>
+      <Area>
+        {!elite ? (
+          <Unauthorized />
+        ) : (
+          <Authorized>
+            <Networks />
+            <Articles />
+          </Authorized>
+        )}
+      </Area>
     </Page>
   );
 }

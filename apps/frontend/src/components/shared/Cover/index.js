@@ -8,8 +8,8 @@ import IconShare from "@material-ui/icons/ShareRounded";
 import IconEdit from "@material-ui/icons/EditRounded";
 import IconDelete from "@material-ui/icons/RemoveCircleOutlineRounded";
 import { rgba } from "polished";
-
 import Backdrop from "../Backdrop";
+import { getFriendlyTitle } from "../../../utils";
 import { pages, modals } from "../../../constants";
 import { useCover, useHistory, useModal } from "../../../hooks";
 
@@ -331,7 +331,13 @@ function Cover({ isSelf }) {
                       </CardRightAction>
                     </Link>
                   )}
-                  <CardRightAction title="Visit Network" href={_.get(network, "url") || "#"} target="_blank" rel="noopener noreferrer">
+                  <CardRightAction
+                    title="Visit Network"
+                    data-url={_.get(network, "url") || "#"}
+                    href={pages.network.view.builder(_.get(network, "_id"), getFriendlyTitle(_.get(network, "title")))}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <IconArrow style={{ fontSize: "16pt" }} />
                   </CardRightAction>
                 </CardRight>
