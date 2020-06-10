@@ -59,6 +59,16 @@ declare const policy: {
             root: string;
             1: string;
         };
+        picture: {
+            root: string;
+            1: string;
+            2: string;
+            3: string;
+        };
+        description: {
+            root: string;
+            1: string;
+        };
     };
     network: {
         root: string;
@@ -111,13 +121,23 @@ declare const guards: {
     isNameAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
     isPasswordAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
     isUsernameAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
-    isArticleTitleAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
-    isArticleCoverAcceptable: (value: {
+    isUserDescriptionAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
+    isUserPictureAcceptable: (value: {
         [key: string]: string | number;
         name: string;
         type: string;
         size: string | number;
     } | Express.Multer.File, withPolicy: boolean | undefined, options: {
+        [key: string]: string;
+        vendor: string;
+    }) => string | boolean;
+    isArticleTitleAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
+    isArticleCoverAcceptable: (value: Express.Multer.File | {
+        [key: string]: string | number;
+        name: string;
+        type: string;
+        size: string | number;
+    }, withPolicy: boolean | undefined, options: {
         [key: string]: string;
         vendor: string;
     }) => string | boolean;

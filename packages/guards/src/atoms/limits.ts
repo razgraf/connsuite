@@ -7,6 +7,12 @@ export const MAX_NAME_LENGTH = 50;
 export const MIN_USERNAME_LENGTH = 3;
 export const MAX_USERNAME_LENGTH = 50;
 
+export const MAX_USER_PICTURE_SIZE = 12 * 1024 * 1024;
+export const ALLOWED_USER_PICTURE_FORMAT = ["jpeg", "png"];
+
+export const MIN_USER_DESCRIPTION_LENGTH = 2;
+export const MAX_USER_DESCRIPTION_LENGTH = 500;
+
 export const MIN_NETWORK_TITLE_LENGTH = 1;
 export const MAX_NETWORK_TITLE_LENGTH = 100;
 
