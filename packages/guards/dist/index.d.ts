@@ -104,12 +104,12 @@ declare const policy: {
 };
 declare const guards: {
     isNetworkTitleAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
-    isNetworkIconAcceptable: (value: Express.Multer.File | {
+    isNetworkIconAcceptable: (value: {
         [key: string]: string | number;
         name: string;
         type: string;
         size: string | number;
-    }, withPolicy: boolean | undefined, options: {
+    } | Express.Multer.File, withPolicy: boolean | undefined, options: {
         [key: string]: string;
         vendor: string;
     }) => string | boolean;
@@ -132,12 +132,12 @@ declare const guards: {
         vendor: string;
     }) => string | boolean;
     isArticleTitleAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
-    isArticleCoverAcceptable: (value: {
+    isArticleCoverAcceptable: (value: Express.Multer.File | {
         [key: string]: string | number;
         name: string;
         type: string;
         size: string | number;
-    } | Express.Multer.File, withPolicy: boolean | undefined, options: {
+    }, withPolicy: boolean | undefined, options: {
         [key: string]: string;
         vendor: string;
     }) => string | boolean;
