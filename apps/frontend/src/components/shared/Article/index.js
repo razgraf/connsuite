@@ -262,6 +262,7 @@ const Wrapper = styled(WrapperPartial)`
 `;
 
 function Action({ Icon, callback, title, type, url, route }) {
+  const history = useHistory();
   if (type === "button")
     return (
       <OverlayHeaderAction as="div" title={title} onClick={callback}>
@@ -270,7 +271,7 @@ function Action({ Icon, callback, title, type, url, route }) {
     );
   return (
     <Link href={route} as={url}>
-      <OverlayHeaderAction title={title}>
+      <OverlayHeaderAction title={title} onClick={() => history.push()}>
         <Icon style={{ fontSize: "13pt" }} />
       </OverlayHeaderAction>
     </Link>
@@ -388,6 +389,7 @@ Action.defaultProps = {
 Article.propTypes = {
   className: PropTypes.string,
   _id: PropTypes.string.isRequired,
+  shortId: PropTypes.string.isRequired,
   thumbnail: PropTypes.shape({
     url: PropTypes.string.isRequired,
   }).isRequired,

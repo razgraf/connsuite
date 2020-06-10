@@ -67,12 +67,12 @@ const Wrapper = styled(WrapperPartial)`
   }
 `;
 
-function Logo({ className, href, onClick, hasParent }) {
+function Logo({ className, href, onClick, isBackEnabled }) {
   const component = (
-    <Wrapper className={className} as={_.isNil(href) ? "div" : "a"} onClick={onClick} data-goingback={hasParent}>
+    <Wrapper className={className} as={_.isNil(href) ? "div" : "a"} onClick={onClick} data-goingback={isBackEnabled}>
       <Container>
         <Image src={AssetLogoCircle} alt="" />
-        {hasParent && (
+        {isBackEnabled && (
           <Back>
             <IconArrow style={{ fontSize: "20pt" }} />
           </Back>
@@ -87,14 +87,14 @@ Logo.propTypes = {
   className: PropTypes.string,
   href: PropTypes.string,
   onClick: PropTypes.func,
-  hasParent: PropTypes.bool,
+  isBackEnabled: PropTypes.bool,
 };
 
 Logo.defaultProps = {
   className: null,
   href: null,
   onClick: () => {},
-  hasParent: false,
+  isBackEnabled: true,
 };
 
 export default Logo;

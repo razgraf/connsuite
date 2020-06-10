@@ -33,7 +33,7 @@ export async function logout({ auth, dispatch, res = null, local = false } = {})
 
 async function validatePublicOnly({ auth, res = null, shallow = true }) {
   try {
-    const stored = await AuthRequest.isShallowAuthorized(auth);
+    const stored = AuthRequest.isShallowAuthorized(auth);
     if (shallow && stored) return redirectTo(pages.dashboard.root, { res });
 
     const payload = await AuthRequest.isAuthorized(auth);
@@ -51,7 +51,7 @@ async function validatePublicOnly({ auth, res = null, shallow = true }) {
 
 async function validatePrivateOnly({ auth, dispatch, res = null, shallow = true }) {
   try {
-    const stored = await AuthRequest.isShallowAuthorized(auth);
+    const stored = AuthRequest.isShallowAuthorized(auth);
     if (shallow && !stored) return logout({ auth, dispatch, local: true, res });
 
     const payload = await AuthRequest.isAuthorized(auth);
@@ -68,7 +68,7 @@ async function validatePrivateOnly({ auth, dispatch, res = null, shallow = true 
 
 async function validateEliteOnly({ auth, dispatch, res = null, tier = types.tier.access.analytics }) {
   try {
-    const stored = await AuthRequest.isShallowAuthorized(auth);
+    const stored = AuthRequest.isShallowAuthorized(auth);
     if (!stored) return logout({ auth, dispatch, local: true, res });
 
     const payload = await AuthRequest.isAuthorized(auth, tier);
@@ -87,7 +87,7 @@ async function validateEliteOnly({ auth, dispatch, res = null, tier = types.tier
 
 async function validateShared({ auth, shallow = true }) {
   try {
-    const stored = await AuthRequest.isShallowAuthorized(auth);
+    const stored = AuthRequest.isShallowAuthorized(auth);
     if (shallow && stored) return null;
 
     const payload = await AuthRequest.isAuthorized(auth);
@@ -138,7 +138,6 @@ export function getServerAuth(context) {
     });
     return !_.isError(auth) ? auth : null;
   } catch (error) {
-    console.error(error);
     return null;
   }
 }

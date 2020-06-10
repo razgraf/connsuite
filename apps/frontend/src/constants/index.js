@@ -24,11 +24,19 @@ export const pages = {
     title: "Landing",
   },
   profile: {
-    Icon: IconProfile,
     root: "/",
-    route: "/[id]",
-    builder: id => `/${id}`,
-    title: "Profile",
+    view: {
+      Icon: IconProfile,
+      root: "/",
+      route: "/[id]",
+      builder: id => `/${id}`,
+      title: "Your Profile",
+    },
+    edit: {
+      root: "/edit",
+      route: "/edit",
+      title: "Edit Profile",
+    },
   },
   dashboard: {
     Icon: IconDashboard,
@@ -272,7 +280,7 @@ export const footer = [
   [
     {
       title: "Profile",
-      url: pages.profile.root,
+      url: pages.profile.view.root,
     },
     {
       title: "Dashboard",
@@ -289,22 +297,22 @@ export const footer = [
       url: pages.about.root,
     },
     {
-      title: "FAQ",
-      url: pages.profile.root, // TODO
-    },
-    {
-      title: "Badge",
-      url: pages.profile.root, // TODO
+      title: "FAQ / Ask",
+      url: "https://www.twitter.com/connsuite",
     },
   ],
   [
     {
       title: "View on Product Hunt",
-      url: pages.profile.root, // TODO
+      url: "https://producthunt.com/connsuite-beta",
     },
     {
       title: "View on Twitter",
-      url: pages.profile.root, // TODO
+      url: "https://www.twitter.com/connsuite",
+    },
+    {
+      title: "Collaborations",
+      url: "https://www.vansoftware.ro",
     },
   ],
 ];

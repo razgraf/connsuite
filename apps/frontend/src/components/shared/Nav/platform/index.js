@@ -41,7 +41,7 @@ function NavPlatform({ className }) {
   return (
     <Wrapper className={className}>
       <Content>
-        <Logo href={pages.dashboard.root} />
+        <Logo href={pages.dashboard.root} isBackEnabled={false} />
         <Main />
         <AccountWrapper>
           <Account />

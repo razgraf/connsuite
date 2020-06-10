@@ -6,16 +6,18 @@ import { useSelector } from "react-redux";
 import Router, { useRouter } from "next/router";
 import { rgba } from "polished";
 
-import { components } from "../../../themes";
-import { modals, pages, types } from "../../../constants";
-import { useNetworksMachine, useArticlesMachine, useProfileMachine, useCover, useModal } from "../../../hooks";
-import { parseFullName, getPrimaryUsername } from "../../../utils";
+import { components } from "../../../../themes";
+import { modals, pages, types } from "../../../../constants";
+import { useNetworksMachine, useArticlesMachine, useProfileMachine, useCover, useModal } from "../../../../hooks";
+import { parseFullName, getPrimaryUsername } from "../../../../utils";
 
-import Nav from "../../../components/shared/Nav";
-import Footer from "../../../components/shared/Footer";
-import Cover from "../../../components/shared/Cover";
-import { ModalNetworkRemove, ModalArticleRemove } from "../../../components/specific/Modals";
-import { Articles, Business, Header, Networks } from "../../../components/specific/Profile";
+import Nav from "../../../../components/shared/Nav";
+import Footer from "../../../../components/shared/Footer";
+import Cover from "../../../../components/shared/Cover";
+import { ModalNetworkRemove, ModalArticleRemove } from "../../../../components/specific/Modals";
+import { Articles, Business, Header, Networks } from "../../../../components/specific/Profile";
+
+import Missing from "../Missing";
 
 const Page = styled.div`
   position: relative;
@@ -71,7 +73,7 @@ function replaceUsername({ username, identifier, router }) {
   if (_.isNil(identifier)) return;
 
   if (String(username) !== String(identifier) && _.get(Router, "query.id") !== String(username)) {
-    router.push(pages.profile.route, pages.profile.builder(username), { shallow: true });
+    router.push(pages.profile.view.route, pages.profile.view.builder(username), { shallow: true });
   }
 }
 
@@ -137,10 +139,11 @@ function Profile({ data, identifier, isSelf }) {
     };
   }, [data, isSelf, username, machineProfile, machineNetworks, machineArticles]);
 
+  if (_.isNil(data)) return <Missing />;
+
   return (
     <Page>
       <Nav
-        hasParent
         appearance={types.nav.appearance.profile}
         title={`${parseFullName({ user: data }) || "ConnSuite"}'s`}
         networks={person.networks}

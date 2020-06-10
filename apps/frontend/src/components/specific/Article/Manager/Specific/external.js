@@ -28,7 +28,7 @@ const LabelWrapper = styled.div`
   align-items: center;
   width: 100%;
   padding: calc(${props => props.theme.sizes.edge} * 1.5) calc(${props => props.theme.sizes.edge} * 2);
-  background-color: ${props => props.theme.colors.grayBlueGhost};
+  background-color: ${props => props.theme.colors.background};
   border-top: 1px solid ${props => props.theme.colors.grayBlueLight};
   border-bottom: 1px solid ${props => props.theme.colors.grayBlueLight};
 `;

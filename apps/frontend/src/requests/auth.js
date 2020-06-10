@@ -80,7 +80,7 @@ async function isAuthorized(auth, tier = null) {
   }
 }
 
-async function isShallowAuthorized(auth) {
+function isShallowAuthorized(auth) {
   try {
     const token = _.get(auth, "token.value");
 

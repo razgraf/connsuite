@@ -15,6 +15,7 @@ const Wrapper = styled.div`
   background: ${props => props.theme.colors.grayBlueBlack};
   position: relative;
   z-index: calc(${props => props.theme.sizes.areaElevation} + 10);
+  min-height: ${props => props.theme.sizes.footerMinHeight};
 `;
 const Canvas = styled(components.Canvas)`
   display: flex;

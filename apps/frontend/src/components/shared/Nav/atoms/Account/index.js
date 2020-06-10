@@ -7,8 +7,9 @@ import Link from "next/link";
 import IconArrowDown from "@material-ui/icons/KeyboardArrowDownRounded";
 import AssetLogoCircle from "../../../../../assets/logo/logo.png";
 import { pages } from "../../../../../constants";
-import { useOnClickOutside, useHistory } from "../../../../../hooks";
+import { useOnClickOutside, useHistory, useShallowAuth } from "../../../../../hooks";
 import { getPrimaryUsername, parseFullName } from "../../../../../utils";
+import Button from "../../../../atoms/Button";
 
 const Wrapper = styled.div`
   position: relative;
@@ -16,6 +17,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   height: calc(${props => props.theme.sizes.navHeight} - ${props => props.theme.sizes.navVerticalEdge} * 2);
+`;
+
+const WrapperUnauthorized = styled(Wrapper)`
+  justify-content: center;
 `;
 
 const Content = styled.div`
@@ -188,6 +193,21 @@ function Account({ className }) {
   const name = useMemo(() => parseFullName(auth), [auth]);
   const username = useMemo(() => getPrimaryUsername(auth.user), [auth]);
 
+  const isAuthorized = useShallowAuth();
+
+  if (!isAuthorized)
+    return (
+      <WrapperUnauthorized>
+        <Button
+          type={t => t.router}
+          appearance={a => a.solid}
+          accent={a => a.secondary}
+          to={pages.landing.route}
+          title="Connect to ConnSuite"
+        />
+      </WrapperUnauthorized>
+    );
+
   return (
     <Wrapper ref={ref} className={className}>
       <Content data-component="pill">
@@ -205,7 +225,7 @@ function Account({ className }) {
         </Action>
       </Content>
       <Dropdown data-active={isDown}>
-        {[pages.profile].map(item => (
+        {[pages.profile.view].map(item => (
           <DropdownItem
             {...item}
             key={item.title}
@@ -216,7 +236,7 @@ function Account({ className }) {
           />
         ))}
 
-        {[pages.dashboard, pages.about].map(item => (
+        {[pages.profile.edit, pages.dashboard, pages.about].map(item => (
           <DropdownItem {...item} key={item.title} isActive={router.pathname === item.route} route={item.route} />
         ))}
       </Dropdown>

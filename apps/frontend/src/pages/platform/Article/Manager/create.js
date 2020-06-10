@@ -18,8 +18,9 @@ const Page = styled.div`
   width: 100vw;
   overflow-x: hidden;
   overflow-y: hidden;
-  background: ${props => props.theme.colors.white};
+  background: ${props => props.theme.colors.background};
   opacity: 1;
+  min-height: 100vh;
 
   &:after {
     position: absolute;
@@ -186,7 +187,6 @@ function ArticleManager() {
       <Playground>
         <StyledNav
           isLight
-          hasParent
           appearance={types.nav.appearance.secondary}
           accent={types.nav.accent.white}
           title={pages.article.create.title}

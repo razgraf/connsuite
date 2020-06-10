@@ -164,8 +164,6 @@ function Profile() {
     });
   }, [statistics, timeQuery]);
 
-  useEffect(() => console.log(machine), [machine]);
-
   const data = useCallback(
     canvas => {
       const ctx = canvas.getContext("2d");

@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { validateAuth } from "../utils";
+import { AuthRequest } from "../requests";
 
 /**
  *
@@ -11,4 +12,9 @@ export function useAuth(visibility, shallow = true) {
   const dispatch = useDispatch();
 
   validateAuth({ state: { auth }, dispatch }, visibility, shallow);
+}
+
+export function useShallowAuth() {
+  const auth = useSelector(state => state.auth);
+  return AuthRequest.isShallowAuthorized(auth);
 }

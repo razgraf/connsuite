@@ -62,7 +62,7 @@ function ArticleViewer({ query }) {
 
   return (
     <Page data-leaving={false}>
-      <StyledNav appearance={types.nav.appearance.secondary} title={pages.network.create.title} hasParent isLight />
+      <StyledNav appearance={types.nav.appearance.secondary} title={pages.network.create.title} isLight />
       <Canvas>
         <p>View {articleId}</p>
       </Canvas>

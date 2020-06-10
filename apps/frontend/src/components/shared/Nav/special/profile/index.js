@@ -192,17 +192,11 @@ const NavigatorDropdown = styled(Dropdown)`
   }
 `;
 
-function NavProfile({ className, title, networks, hasParent, onBackClick }) {
-  const { setOpen: setCoverOpen, setNetwork: setCoverNetwork } = useCover();
+function NavProfile({ className, title, networks, isMissing }) {
   const { history, pop } = useHistory();
-  const parentRoute = useMemo(
-    () => (!_.isNil(onBackClick) ? null : hasParent && history.length ? _.get(history[history.length - 1], "route") : pages.dashboard.root),
-    [hasParent, history, onBackClick],
-  );
-  const onLogoClick = useCallback(() => {
-    if (!_.isNil(onBackClick) && _.isFunction(onBackClick)) onBackClick();
-    else pop();
-  }, [onBackClick, pop]);
+  const { setOpen: setCoverOpen, setNetwork: setCoverNetwork } = useCover();
+  const parentRoute = useMemo(() => (history.length ? _.get(history[history.length - 1], "route") : pages.dashboard.root), [history]);
+  const onLogoClick = useCallback(() => pop(), [pop]);
 
   const [ref, entry] = useIntersection({
     threshold: 0,
@@ -221,45 +215,49 @@ function NavProfile({ className, title, networks, hasParent, onBackClick }) {
   const [isDown, setIsDown] = useState(false);
   const [navigatorRef] = useOnClickOutside(() => setIsDown(false));
 
+  const isAccountActive = useMemo(() => entry.intersectionRatio === 1 || !networks.length, [entry, networks]);
+
   return (
     <>
       <Wrapper className={className} data-top={entry.intersectionRatio === 1}>
         <Content>
-          <NavLogo href={parentRoute} hasParent={hasParent} onClick={onLogoClick} />
+          <NavLogo href={parentRoute} onClick={onLogoClick} />
           <Main>
             <Title>{title}</Title>
-            <Navigator ref={navigatorRef}>
-              <Box>
-                <p>Profile</p>
-                <Action>
-                  <ActionDropdown data-active={isDown} onClick={() => setIsDown(!isDown)}>
-                    <IconArrowDown style={{ fontSize: "11pt" }} />
-                  </ActionDropdown>
-                </Action>
-              </Box>
-              <NavigatorDropdown
-                isActive={isDown}
-                items={[
-                  {
-                    title: "Profile",
-                    isActive: true,
-                  },
-                  {
-                    title: "Business Card",
-                  },
-                ]}
-                onItemClick={() => {
-                  // item TODO
-                  setIsDown(false);
-                }}
-              />
-            </Navigator>
+            {!isMissing && (
+              <Navigator ref={navigatorRef}>
+                <Box>
+                  <p>Profile</p>
+                  <Action>
+                    <ActionDropdown data-active={isDown} onClick={() => setIsDown(!isDown)}>
+                      <IconArrowDown style={{ fontSize: "11pt" }} />
+                    </ActionDropdown>
+                  </Action>
+                </Box>
+                <NavigatorDropdown
+                  isActive={isDown}
+                  items={[
+                    {
+                      title: "Profile",
+                      isActive: true,
+                    },
+                    {
+                      title: "Business Card",
+                    },
+                  ]}
+                  onItemClick={() => {
+                    // item TODO
+                    setIsDown(false);
+                  }}
+                />
+              </Navigator>
+            )}
           </Main>
           <AccountWrapper>
-            <NavAccountWrapper data-active={entry.intersectionRatio === 1}>
+            <NavAccountWrapper data-active={isAccountActive}>
               <NavAccount />
             </NavAccountWrapper>
-            <NavNetworks data-active={entry.intersectionRatio !== 1}>
+            <NavNetworks data-active={!isAccountActive}>
               {_.toArray(networks)
                 .slice(0, 4)
                 .map(network => (
@@ -279,15 +277,15 @@ NavProfile.propTypes = {
   className: PropTypes.string,
   title: PropTypes.string.isRequired,
   networks: PropTypes.arrayOf(PropTypes.shape({})),
-  hasParent: PropTypes.bool,
   onBackClick: PropTypes.func,
+  isMissing: PropTypes.bool,
 };
 
 NavProfile.defaultProps = {
   className: null,
   networks: [],
-  hasParent: false,
   onBackClick: null,
+  isMissing: false,
 };
 
 export default NavProfile;

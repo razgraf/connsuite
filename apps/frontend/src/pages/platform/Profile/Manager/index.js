@@ -1,18 +1,18 @@
 import _ from "lodash";
-import React, { useCallback, useState } from "react";
+import React, { useMemo, useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rgba } from "polished";
 import { useSelector } from "react-redux";
 import IconArticlePublish from "@material-ui/icons/PublicRounded";
-import { Button, Warning, Spinner } from "../../../../components/atoms";
 import { components } from "../../../../themes";
+import { pages, types } from "../../../../constants";
+import { useHistory, useProfileReducer, useProfileMachine } from "../../../../hooks";
+import { parseFullName, getPrimaryUsername } from "../../../../utils";
+
+import { Button, Warning } from "../../../../components/atoms";
 import Nav from "../../../../components/shared/Nav";
-import { pages, types, modals } from "../../../../constants";
-import { useHistory, useArticleReducer, useArticleEditMachine, useModal } from "../../../../hooks";
-import { Header, Info, Specific } from "../../../../components/specific/Article/Manager";
-import { ModalArticleLeave } from "../../../../components/specific/Modals";
-import { getValueOfInputEditorSync } from "../../../../components/atoms/Input/uncontrolled";
+import { Header } from "../../../../components/specific/Profile/Manager";
 
 const Page = styled.div`
   position: relative;
@@ -21,7 +21,6 @@ const Page = styled.div`
   overflow-y: hidden;
   background: ${props => props.theme.colors.background};
   opacity: 1;
-  min-height: 100vh;
 
   &:after {
     position: absolute;
@@ -64,12 +63,11 @@ const StyledNav = styled(Nav)`
 `;
 const Canvas = styled(components.Canvas)`
   position: relative;
-  z-index: 100;
   background: ${props => props.theme.colors.white};
   border: 1px solid ${props => props.theme.colors.grayBlueLight};
   border-top: none;
-  padding: 0;
   margin-bottom: calc(calc(${props => props.theme.sizes.edge}) * 2.5);
+  min-height: calc(100vh - ${props => props.theme.sizes.navHeight});
 
   & > * {
     z-index: 10;
@@ -94,34 +92,6 @@ const Canvas = styled(components.Canvas)`
     width: 10%;
     height: 80%;
     box-shadow: 0 0 50px ${props => rgba(props.theme.colors.grayBlueDark, 0.2)};
-  }
-`;
-
-const Loader = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  z-index: 1000;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  padding-top: 100px;
-  background-color: ${props => props.theme.colors.white};
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 300ms;
-  &[data-active="true"] {
-    opacity: 1;
-    pointer-events: all;
-  }
-`;
-
-const BottomWarning = styled(Warning)`
-  margin: 0 auto;
-  & > p {
-    font-size: 10pt;
   }
 `;
 
@@ -168,58 +138,46 @@ const ButtonIconWrapper = styled.div`
   }
 `;
 
-function ArticleManager({ query }) {
-  const articleId = _.get(query, "id");
+function ProfileManager() {
   const auth = useSelector(state => state.auth);
-  const reducer = useArticleReducer();
-  const machine = useArticleEditMachine({ articleId, reducer });
   const history = useHistory();
-  const modalLeave = useModal(modals.articleLeave);
-  const [contentInstance, setContentInstance] = useState(null);
+  const reducer = useProfileReducer();
+  const machineProfile = useProfileMachine();
+  const username = useMemo(() => getPrimaryUsername(_.get(auth, "user")), [auth]);
 
-  const onPublish = useCallback(() => {
-    const article = {};
-    Object.keys(reducer.state).forEach(key => {
-      article[key] = reducer.state[key].value;
+  useEffect(() => {
+    machineProfile.send(machineProfile.events.request, {
+      payload: {
+        auth,
+        identifier: username,
+      },
     });
+  }, []); /* componentDidMount */ // eslint-disable-line react-hooks/exhaustive-deps
 
-    if (article.type === types.article.type.external) {
-      machine.send(machine.events.forward, { payload: { auth, article, articleId } });
-    } else {
-      getValueOfInputEditorSync(contentInstance, content => {
-        article.content = content;
-        machine.send(machine.events.forward, { payload: { auth, article, articleId } });
-      });
-    }
-  }, [auth, machine, reducer, articleId, contentInstance]);
+  const person = useMemo(() => _.get(machineProfile, "current.context.data"), [machineProfile]);
+  console.log(person);
 
   const onCancel = useCallback(() => {
-    modalLeave.setOpen(true);
-  }, [modalLeave]);
+    console.log("Ask for cancel");
+  }, []);
 
   return (
-    <Page data-leaving={machine.current.value === machine.states.success}>
+    <Page data-leaving={false}>
       <Playground>
         <StyledNav
           isLight
           appearance={types.nav.appearance.secondary}
           accent={types.nav.accent.white}
-          title={pages.article.create.title}
+          title={pages.profile.edit.title}
           onBackClick={onCancel}
         />
         <Canvas>
-          <Loader data-active={machine.current.value === machine.states.retrieve}>
-            <Spinner color={c => c.secondary} size={50} thickness={2} />
-          </Loader>
           <Header reducer={reducer} />
-          <Info reducer={reducer} />
-          <Specific reducer={reducer} setContentInstance={setContentInstance} />
         </Canvas>
       </Playground>
-      <BottomWarning isCentered value={machine.current.context.error} />
       <Actions>
         <ButtonBox
-          data-success={machine.current.value === machine.states.success}
+          data-success={false}
           onMouseEnter={() => {
             try {
               const list = document.getElementsByTagName("input");
@@ -236,9 +194,8 @@ function ArticleManager({ query }) {
                 <IconArticlePublish style={{ fontSize: "14pt" }} />
               </ButtonIconWrapper>
             }
-            onClick={onPublish}
-            isLoading={[machine.states.create].includes(machine.current.value)}
-            isDisabledSoft={[machine.states.create, machine.states.retrieve].includes(machine.current.value)}
+            onClick={() => {}}
+            isLoading={false}
             type={t => t.button}
             appearance={t => t.solid}
             accent={t => t.secondary}
@@ -246,7 +203,7 @@ function ArticleManager({ query }) {
         </ButtonBox>
 
         <Button
-          isDisabled={machine.current.value === machine.states.create}
+          isDisabled={false}
           type={t => t.button}
           appearance={t => t.outline}
           accent={t => t.cancel}
@@ -254,17 +211,16 @@ function ArticleManager({ query }) {
           onClick={onCancel}
         />
       </Actions>
-      <ModalArticleLeave onSuccess={() => history.back()} />
     </Page>
   );
 }
 
-ArticleManager.propTypes = {
+ProfileManager.propTypes = {
   query: PropTypes.shape({}),
 };
 
-ArticleManager.defaultProps = {
+ProfileManager.defaultProps = {
   query: {},
 };
 
-export default ArticleManager;
+export default ProfileManager;

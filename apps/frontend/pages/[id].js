@@ -1,5 +1,5 @@
 import _ from "lodash";
-import Profile from "../src/pages/platform/Profile";
+import Profile from "../src/pages/platform/Profile/Viewer";
 import { validateAuth } from "../src/utils";
 import { UserRequest, AnalyticsRequest } from "../src/requests";
 import { types } from "../src/constants";

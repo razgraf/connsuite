@@ -229,7 +229,7 @@ function NetworkManager() {
 
   return (
     <Page data-leaving={machine.current.value === machine.states.success}>
-      <StyledNav appearance={types.nav.appearance.secondary} title={pages.network.create.title} hasParent />
+      <StyledNav appearance={types.nav.appearance.secondary} title={pages.network.create.title} />
       <Canvas>
         <Card>
           <Header step={step} source={source} />

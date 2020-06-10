@@ -89,11 +89,11 @@ const Wrapper = styled(WrapperPartial)`
   }
 `;
 
-function NavSecondary({ className, accent, hasAccount, hasParent, title, onBackClick }) {
+function NavSecondary({ className, accent, hasAccount, title, onBackClick }) {
   const { history, pop } = useHistory();
   const parentRoute = useMemo(
-    () => (!_.isNil(onBackClick) ? null : hasParent && history.length ? _.get(history[history.length - 1], "route") : pages.dashboard.root),
-    [hasParent, history, onBackClick],
+    () => (!_.isNil(onBackClick) ? null : history.length ? _.get(history[history.length - 1], "route") : pages.dashboard.root),
+    [history, onBackClick],
   );
 
   const onLogoClick = useCallback(() => {
@@ -104,7 +104,7 @@ function NavSecondary({ className, accent, hasAccount, hasParent, title, onBackC
   return (
     <Wrapper className={className} data-accent={accent}>
       <Content>
-        <NavLogo href={parentRoute} hasParent={hasParent} onClick={onLogoClick} />
+        <NavLogo href={parentRoute} onClick={onLogoClick} />
         <Main>
           <IconWrapper>
             <IconArrow style={{ fontSize: "16pt" }} />
@@ -126,7 +126,6 @@ NavSecondary.propTypes = {
   className: PropTypes.string,
   title: PropTypes.string.isRequired,
   hasAccount: PropTypes.bool,
-  hasParent: PropTypes.bool,
   onBackClick: PropTypes.func,
 };
 
@@ -134,7 +133,6 @@ NavSecondary.defaultProps = {
   accent: types.nav.accent.transparent,
   className: null,
   hasAccount: true,
-  hasParent: false,
   onBackClick: null,
 };
 

@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { loginReducer, registerReducer, networkReducer, articleReducer, analyticsTimelineReducer } from "../reducers";
+import { loginReducer, registerReducer, networkReducer, articleReducer, analyticsTimelineReducer, profileReducer } from "../reducers";
 
 export function useLoginReducer() {
   const [state, dispatch] = useReducer(loginReducer.reducer, loginReducer.initial);
@@ -24,4 +24,9 @@ export function useArticleReducer() {
 export function useAnalyticsTimelineReducer() {
   const [state, dispatch] = useReducer(analyticsTimelineReducer.reducer, analyticsTimelineReducer.initial);
   return { ...analyticsTimelineReducer, state, dispatch };
+}
+
+export function useProfileReducer() {
+  const [state, dispatch] = useReducer(profileReducer.reducer, profileReducer.initial);
+  return { ...profileReducer, state, dispatch };
 }

@@ -33,7 +33,7 @@ const CoverWrapperPartial = styled.div`
   height: 300px;
   width: 100%;
   border: 1px solid ${props => props.theme.colors.grayBlueLight};
-  background-color: ${props => props.theme.colors.grayBlueGhost};
+  background-color: ${props => props.theme.colors.background};
 `;
 
 const CoverContainer = styled.div`
@@ -154,7 +154,7 @@ const ThumbnailWrapper = styled.div`
   width: 340px;
   height: 280px;
   border: 1px solid ${props => props.theme.colors.grayBlueLight};
-  background-color: ${props => props.theme.colors.grayBlueGhost};
+  background-color: ${props => props.theme.colors.background};
   background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23e4e8f0' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
   transition: border 200ms;
 `;

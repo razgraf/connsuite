@@ -7,6 +7,8 @@ const sizes = {
   navHorizontalEdge: "10px",
   navElevation: "500",
 
+  footerMinHeight: "340px",
+
   areaElevation: "300",
   areaContentElevation: "100",
 

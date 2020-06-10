@@ -40,7 +40,7 @@ function SideBar({ className, reference }) {
           <Element {...page} key={page.title} isActive={router.pathname === page.root} href={page.route} />
         ))}
         <Divider />
-        {[pages.profile].map(page => (
+        {[pages.profile.view].map(page => (
           <Element
             {...page}
             key={page.title}
