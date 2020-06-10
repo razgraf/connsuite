@@ -72,9 +72,9 @@ const machine = Machine(
             target: states.forbidden,
           },
         },
+        exit: [actions.bind],
       },
       [states.modify]: {
-        entry: [actions.bind],
         on: {
           [events.reset]: RESET,
           [events.forward]: states.apply,

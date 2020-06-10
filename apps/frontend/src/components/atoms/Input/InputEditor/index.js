@@ -28,6 +28,7 @@ const EditorWrapper = styled.div`
 `;
 
 function InputEditor({ className, id, help, label, placeholder, setInstance, value, warning }) {
+  console.log("da");
   return (
     <StyledFrame className={className} id={id} label={label} warning={warning} help={help}>
       <EditorWrapper data-gramm_editor="false" data-gramm="false">

@@ -23,7 +23,7 @@ const Page = styled.div`
   min-height: 100vh;
 
   &:after {
-    position: absolute;
+    position: fixed;
     z-index: ${props => props.theme.sizes.toastContainerElevation};
     left: 0;
     top: 0;

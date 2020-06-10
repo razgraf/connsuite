@@ -259,6 +259,36 @@ const Wrapper = styled(WrapperPartial)`
       transition: opacity 200ms;
     }
   }
+
+  &[data-style="missing"] {
+    opacity: 1;
+    transition: opacity 200ms;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    ${Card} {
+      flex: 1;
+      padding: 20px;
+    }
+    ${Content} {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-shadow: none;
+      border-radius: 4px;
+      border: 1px solid ${props => props.theme.colors.grayBlueNormal};
+      & > p {
+        margin: 0;
+        font-size: 9pt;
+        font-weight: 400;
+        text-align: center;
+        width: 100%;
+        font-family: ${props => props.theme.fonts.primary};
+        color: ${props => props.theme.colors.grayBlueDark};
+      }
+    }
+  }
 `;
 
 function Action({ Icon, callback, title, type, url, route }) {
@@ -371,6 +401,18 @@ function ArticleAdd() {
   );
 }
 
+function ArticleMissing() {
+  return (
+    <Wrapper data-style="missing">
+      <Card>
+        <Content>
+          <p>Stories coming soon</p>
+        </Content>
+      </Card>
+    </Wrapper>
+  );
+}
+
 Action.propTypes = {
   Icon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
   title: PropTypes.string.isRequired,
@@ -414,4 +456,4 @@ Article.defaultProps = {
 };
 
 export default Article;
-export { ArticleAdd };
+export { ArticleAdd, ArticleMissing };

@@ -15,7 +15,7 @@ import Nav from "../../../../components/shared/Nav";
 import Footer from "../../../../components/shared/Footer";
 import Cover from "../../../../components/shared/Cover";
 import { ModalNetworkRemove, ModalArticleRemove } from "../../../../components/specific/Modals";
-import { Articles, Business, Header, Networks } from "../../../../components/specific/Profile";
+import { Articles, Business, Header, Networks } from "../../../../components/specific/Profile/Viewer";
 
 import Missing from "../Missing";
 

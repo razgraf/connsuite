@@ -27,8 +27,7 @@ function isCoverAcceptable(__, event) {
 }
 
 function isCoverOptionallyAcceptable(__, event) {
-  if (_.get(event, "payload.article.cover.value"))
-    return official.isCoverOptionallyAcceptable(_.get(event, "payload.article.cover"), false);
+  if (_.get(event, "payload.article.cover.value")) return official.isCoverAcceptable(_.get(event, "payload.article.cover"), false);
   return true;
 }
 

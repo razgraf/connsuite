@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useMemo, useCallback, useEffect, useState, useRef } from "react";
+import React, { Fragment, useMemo, useCallback, useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rgba } from "polished";
@@ -10,7 +10,7 @@ import IconDelete from "@material-ui/icons/DeleteOutlineRounded";
 
 import { components } from "../../../../../themes";
 import { InputArea, InputImage, InputText, Warning } from "../../../../atoms";
-import { readPreviewFromImage } from "../../../../../utils";
+import { readPreviewFromImage, parseSkilledDescription, blur } from "../../../../../utils";
 
 const Wrapper = styled(components.Section)`
   width: 100%;
@@ -188,7 +188,8 @@ const Description = styled.div`
   grid-column: span 2;
   & > * {
     textarea {
-      min-height: 200px;
+      min-height: 148px;
+      line-height: 1.6;
     }
   }
 `;
@@ -197,28 +198,35 @@ const DescriptionInterpreted = styled.div`
   position: absolute;
   z-index: 300;
   right: 0;
-  top: 40px;
+  top: 20px;
   width: 100%;
-  max-width: 500px;
-  padding: 20px;
+  max-width: 600px;
+  padding: 15px;
   border-radius: 2px;
   background-color: ${props => props.theme.colors.white};
-  box-shadow: 0px 12px 30px -15px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 12px 30px -15px rgba(0, 0, 0, 0.2);
   border: 1px solid ${props => props.theme.colors.grayBlueLight};
   opacity: 0;
   transition: opacity 250ms;
+  pointer-events: none;
 `;
 
-const DescriptionPreview = styled.div`
+const Preview = styled.div`
   display: flex;
-
+  justify-content: flex-end;
   position: absolute;
   right: 0;
   top: 0;
+  width: 100%;
+  pointer-events: none;
+`;
+
+const PreviewButton = styled.div`
   padding: 4px 14px;
   border-radius: 2px;
   background-color: ${props => props.theme.colors.grayBlueLight};
   cursor: pointer;
+  pointer-events: all;
   & > p {
     margin: 0;
     font-weight: 600;
@@ -227,15 +235,23 @@ const DescriptionPreview = styled.div`
   }
   &:hover,
   &:active {
-    ${DescriptionInterpreted} {
+    & + ${DescriptionInterpreted} {
       opacity: 1;
       transition: opacity 250ms;
     }
   }
 `;
 
-function Header({ className, reducer }) {
+const Skill = styled.span`
+  position: relative;
+  font-weight: 500;
+  color: ${props => props.theme.colors.orange};
+`;
+
+function Header({ className, reducer, person }) {
   const inputRef = useRef();
+  const skills = useMemo(() => _.toArray(_.get(person, "skills")), [person]);
+  const parts = useMemo(() => parseSkilledDescription(reducer.state.description.value, skills), [reducer, skills]);
 
   const onChoose = useCallback(() => {
     if (inputRef && inputRef.current) inputRef.current.click();
@@ -380,10 +396,18 @@ function Header({ className, reducer }) {
                 value={reducer.state.description.value}
                 warning={reducer.state.description.error}
               />
-              <DescriptionPreview>
-                <p>Preview</p>
-                <DescriptionInterpreted>...sd.as.das.d.sad.as.</DescriptionInterpreted>
-              </DescriptionPreview>
+              <Preview>
+                <PreviewButton onMouseEnter={blur}>
+                  <p>Preview</p>
+                </PreviewButton>
+                <DescriptionInterpreted>
+                  {parts.map(({ text, isSkill, index }) => (
+                    <Fragment key={`${index}-${text}`}>
+                      {isSkill ? <Skill data-id={`${index}-${text}`}>{text}</Skill> : <span>{text}</span>}
+                    </Fragment>
+                  ))}
+                </DescriptionInterpreted>
+              </Preview>
             </Description>
           </Form>
         </Right>
@@ -394,10 +418,12 @@ function Header({ className, reducer }) {
 
 Header.propTypes = {
   className: PropTypes.string,
+  person: PropTypes.shape({}),
 };
 
 Header.defaultProps = {
   className: null,
+  person: {},
 };
 
 export default Header;

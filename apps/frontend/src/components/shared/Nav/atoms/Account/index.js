@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
@@ -5,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import IconArrowDown from "@material-ui/icons/KeyboardArrowDownRounded";
-import AssetLogoCircle from "../../../../../assets/logo/logo.png";
+import ProfilePictureFallback from "../../../../../assets/images/profile_fallback.jpg";
 import { pages } from "../../../../../constants";
 import { useOnClickOutside, useHistory, useShallowAuth } from "../../../../../hooks";
 import { getPrimaryUsername, parseFullName } from "../../../../../utils";
@@ -195,6 +196,8 @@ function Account({ className }) {
 
   const isAuthorized = useShallowAuth();
 
+  const picture = useMemo(() => _.get(auth, "user.thumbnail.url") || ProfilePictureFallback, [auth]);
+
   if (!isAuthorized)
     return (
       <WrapperUnauthorized>
@@ -212,7 +215,7 @@ function Account({ className }) {
     <Wrapper ref={ref} className={className}>
       <Content data-component="pill">
         <ImageWrapper>
-          <Image src={AssetLogoCircle} alt="" />
+          <Image src={picture} alt="" />
         </ImageWrapper>
         <Main>
           <Label>ConnSuite</Label>

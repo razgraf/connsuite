@@ -32,3 +32,27 @@ export function getFriendlyTitle(source) {
   if (_.isNil(source)) return "";
   return encodeURIComponent(source.toLowerCase().replace(/[^a-z0-9_-]+/gi, "-"));
 }
+
+export function parseSkilledDescription(description, list) {
+  if (_.isNil(list) || _.isNil(description)) return [];
+  const sorted = list.map(s => s.title).sort((a, b) => b.length - a.length);
+  let parts = [{ text: description }];
+
+  sorted.forEach(skill => {
+    let result = [];
+    parts.forEach(({ text, isSkill }) => {
+      if (isSkill) result.push({ text, isSkill });
+      else {
+        const split = text.split(skill);
+        if (split.length === 1) result.push({ text });
+        if (split.length > 1) {
+          const found = split.reduce((acc, val) => acc.concat({ text: val }, { text: skill, isSkill: true }), []).slice(0, -1);
+          result = result.concat(found);
+        }
+      }
+    });
+    parts = [...result].map((part, index) => ({ ...part, key: index, index }));
+  });
+
+  return parts;
+}

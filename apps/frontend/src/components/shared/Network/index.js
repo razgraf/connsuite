@@ -308,6 +308,28 @@ const Wrapper = styled(WrapperPartial)`
       transition: opacity 200ms;
     }
   }
+
+  &[data-purpose="missing"] {
+    opacity: 1;
+    transition: opacity 200ms;
+    cursor: default;
+    ${Content} {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px !important;
+      & > p {
+        margin: 0;
+        font-size: 9pt;
+        font-weight: 400;
+        text-align: center;
+        width: 100%;
+        font-family: ${props => props.theme.fonts.primary};
+        color: ${props => props.theme.colors.grayBlueDark};
+      }
+    }
+  }
+
   &[data-editmode="false"] {
     ${Title}, ${Username} {
       &:empty {
@@ -397,6 +419,22 @@ function NetworkAdd() {
   );
 }
 
+function NetworkMissing() {
+  const { push } = useHistory();
+
+  return (
+    <Wrapper data-purpose="missing" onClick={push}>
+      <Card>
+        <Content>
+          <p>
+            <i>Human by day, Legend by night.</i>
+          </p>
+        </Content>
+      </Card>
+    </Wrapper>
+  );
+}
+
 Network.propTypes = {
   className: PropTypes.string,
   _id: PropTypes.string,
@@ -418,4 +456,4 @@ Network.defaultProps = {
 };
 
 export default Network;
-export { NetworkAdd, NetworkMini, NetworkMiniAdd, NetworkMiniMore };
+export { NetworkAdd, NetworkMissing, NetworkMini, NetworkMiniAdd, NetworkMiniMore };

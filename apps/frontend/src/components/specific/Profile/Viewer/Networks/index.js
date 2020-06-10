@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import SectionHeader from "../SectionHeader";
-import Network from "../../../shared/Network";
-import Placeholder from "../../../shared/Placeholder";
-import { useProfileIntersection } from "../../../../hooks";
-import { types } from "../../../../constants";
+import Network, { NetworkMissing } from "../../../../shared/Network";
+import Placeholder from "../../../../shared/Placeholder";
+import { useProfileIntersection } from "../../../../../hooks";
+import { types } from "../../../../../constants";
 
 const Wrapper = styled.div`
   display: flex;
@@ -54,6 +54,7 @@ function Networks({ className, networks, isLoading, onIntersect }) {
       <SectionHeader title="Networks" isLoading={isLoading} isObserved={isObserved} />
       <Content>
         <Grid>
+          {!isLoading && !networks.length ? <NetworkMissing /> : null}
           {networks.map(network => (
             <Network key={network._id} {...network} />
           ))}

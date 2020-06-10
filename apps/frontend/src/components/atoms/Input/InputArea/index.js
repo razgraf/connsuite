@@ -6,6 +6,7 @@ import { descriptor, Frame } from "../atoms";
 
 const Area = styled.textarea`
   resize: none;
+  line-height: 1.6;
   &:focus {
     & ~ *[data-component="focuser"] {
       opacity: 1;

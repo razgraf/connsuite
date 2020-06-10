@@ -13,6 +13,7 @@ import { useHistory, useArticleReducer, useArticleEditMachine, useModal } from "
 import { Header, Info, Specific } from "../../../../components/specific/Article/Manager";
 import { ModalArticleLeave } from "../../../../components/specific/Modals";
 import { getValueOfInputEditorSync } from "../../../../components/atoms/Input/uncontrolled";
+import { blur } from "../../../../utils";
 
 const Page = styled.div`
   position: relative;
@@ -24,7 +25,7 @@ const Page = styled.div`
   min-height: 100vh;
 
   &:after {
-    position: absolute;
+    position: fixed;
     z-index: ${props => props.theme.sizes.toastContainerElevation};
     left: 0;
     top: 0;
@@ -218,17 +219,7 @@ function ArticleManager({ query }) {
       </Playground>
       <BottomWarning isCentered value={machine.current.context.error} />
       <Actions>
-        <ButtonBox
-          data-success={machine.current.value === machine.states.success}
-          onMouseEnter={() => {
-            try {
-              const list = document.getElementsByTagName("input");
-              Array.prototype.forEach.call(list, item => item.blur());
-            } catch (e) {
-              console.error(e);
-            }
-          }}
-        >
+        <ButtonBox data-success={machine.current.value === machine.states.success} onMouseEnter={blur}>
           <StyledButton
             title="Publish Article"
             childrenLeft={
@@ -237,8 +228,8 @@ function ArticleManager({ query }) {
               </ButtonIconWrapper>
             }
             onClick={onPublish}
-            isLoading={[machine.states.create].includes(machine.current.value)}
-            isDisabledSoft={[machine.states.create, machine.states.retrieve].includes(machine.current.value)}
+            isLoading={[machine.states.apply].includes(machine.current.value)}
+            isDisabledSoft={[machine.states.apply, machine.states.retrieve].includes(machine.current.value)}
             type={t => t.button}
             appearance={t => t.solid}
             accent={t => t.secondary}
@@ -246,7 +237,7 @@ function ArticleManager({ query }) {
         </ButtonBox>
 
         <Button
-          isDisabled={machine.current.value === machine.states.create}
+          isDisabled={machine.current.value === machine.states.apply}
           type={t => t.button}
           appearance={t => t.outline}
           accent={t => t.cancel}

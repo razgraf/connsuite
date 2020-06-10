@@ -5,12 +5,12 @@ import styled from "styled-components";
 import { rgba } from "polished";
 import { useRouter } from "next/router";
 import IconContact from "@material-ui/icons/WhatshotRounded";
-import Asset from "../../../../assets/projects/project-2.png";
+import ProfilePictureFallback from "../../../../../assets/images/profile_fallback.jpg";
 import Skill from "./Skill";
-import { parseFullName, getPrimaryUsername } from "../../../../utils";
-import { types } from "../../../../constants";
-import { Button } from "../../../atoms";
-import { useIntersection } from "../../../../hooks";
+import { parseFullName, getPrimaryUsername, parseSkilledDescription } from "../../../../../utils";
+import { types } from "../../../../../constants";
+import { Button } from "../../../../atoms";
+import { useIntersection } from "../../../../../hooks";
 
 const Wrapper = styled.div`
   display: flex;
@@ -224,36 +224,12 @@ const ButtonIconWrapper = styled.div`
   margin-left: -4px;
 `;
 
-function interpret(description, list) {
-  if (_.isNil(list) || _.isNil(description)) return [];
-  const sorted = list.map(s => s.title).sort((a, b) => b.length - a.length);
-  let parts = [{ text: description }];
-
-  sorted.forEach(skill => {
-    let result = [];
-    parts.forEach(({ text, isSkill }) => {
-      if (isSkill) result.push({ text, isSkill });
-      else {
-        const split = text.split(skill);
-        if (split.length === 1) result.push({ text });
-        if (split.length > 1) {
-          const found = split.reduce((acc, val) => acc.concat({ text: val }, { text: skill, isSkill: true }), []).slice(0, -1);
-          result = result.concat(found);
-        }
-      }
-    });
-    parts = [...result].map((part, index) => ({ ...part, key: index }));
-  });
-
-  return parts;
-}
-
 function Header({ className, controller, profile, isLoading }) {
   const skills = useMemo(() => _.toArray(_.get(profile, "skills")), [profile]);
   const description = useMemo(() => _.toString(_.get(profile, "user.description")), [profile]);
   const name = useMemo(() => parseFullName(profile), [profile]);
   const username = useMemo(() => getPrimaryUsername(_.get(profile, "user")), [profile]);
-  const parts = useMemo(() => interpret(description, skills), [description, skills]);
+  const parts = useMemo(() => parseSkilledDescription(description, skills), [description, skills]);
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
@@ -273,6 +249,8 @@ function Header({ className, controller, profile, isLoading }) {
     [controller, router],
   );
 
+  const picture = useMemo(() => _.get(profile, "user.picture.url") || ProfilePictureFallback, [profile]);
+
   return (
     <Wrapper className={className} ref={ref}>
       <Left>
@@ -284,7 +262,7 @@ function Header({ className, controller, profile, isLoading }) {
           </LeftUnderlay>
           <LeftContent>
             <LeftImageWrapper>
-              <LeftImage src={Asset} alt="" onLoad={() => setIsImageLoaded(true)} data-loaded={isImageLoaded} />
+              <LeftImage src={picture} alt="" onLoad={() => setIsImageLoaded(true)} data-loaded={isImageLoaded} />
             </LeftImageWrapper>
           </LeftContent>
         </LeftFloater>

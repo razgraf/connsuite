@@ -3,12 +3,12 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import SectionHeader from "../SectionHeader";
-import Article from "../../../shared/Article";
+import Article, { ArticleMissing } from "../../../../shared/Article";
 import Navigator from "./Navigator";
-import Placeholder from "../../../shared/Placeholder";
+import Placeholder from "../../../../shared/Placeholder";
 
-import { useProfileIntersection } from "../../../../hooks";
-import { types } from "../../../../constants";
+import { useProfileIntersection } from "../../../../../hooks";
+import { types } from "../../../../../constants";
 
 const Wrapper = styled.div`
   display: flex;
@@ -71,6 +71,7 @@ function Articles({ className, person, controller, onIntersect, onArticleRemoveC
       <Navigator categories={categories} skills={skills} controller={controller} />
       <Content>
         <Grid>
+          {!isLoadingArticles && !articles.length ? <ArticleMissing /> : null}
           {chosen.map(article => (
             <Article key={article._id} {...article} isSelf={isSelf} onRemoveClick={onArticleRemoveClick} />
           ))}

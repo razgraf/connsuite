@@ -1,16 +1,16 @@
 import _ from "lodash";
-import React, { useMemo, useCallback, useEffect, useState } from "react";
+import React, { useMemo, useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rgba } from "polished";
 import { useSelector } from "react-redux";
-import IconArticlePublish from "@material-ui/icons/PublicRounded";
+import IconArticlePublish from "@material-ui/icons/FaceRounded";
 import { components } from "../../../../themes";
 import { pages, types } from "../../../../constants";
-import { useHistory, useProfileReducer, useProfileMachine } from "../../../../hooks";
-import { parseFullName, getPrimaryUsername } from "../../../../utils";
+import { useProfileReducer, useProfileEditMachine } from "../../../../hooks";
+import { blur, getPrimaryUsername } from "../../../../utils";
 
-import { Button, Warning } from "../../../../components/atoms";
+import { Button, Spinner, Warning } from "../../../../components/atoms";
 import Nav from "../../../../components/shared/Nav";
 import { Header } from "../../../../components/specific/Profile/Manager";
 
@@ -21,9 +21,10 @@ const Page = styled.div`
   overflow-y: hidden;
   background: ${props => props.theme.colors.background};
   opacity: 1;
+  min-height: 100vh;
 
   &:after {
-    position: absolute;
+    position: fixed;
     z-index: ${props => props.theme.sizes.toastContainerElevation};
     left: 0;
     top: 0;
@@ -67,7 +68,7 @@ const Canvas = styled(components.Canvas)`
   border: 1px solid ${props => props.theme.colors.grayBlueLight};
   border-top: none;
   margin-bottom: calc(calc(${props => props.theme.sizes.edge}) * 2.5);
-  min-height: calc(100vh - ${props => props.theme.sizes.navHeight});
+  padding-bottom: calc(calc(${props => props.theme.sizes.edge}) * 2.5);
 
   & > * {
     z-index: 10;
@@ -138,31 +139,66 @@ const ButtonIconWrapper = styled.div`
   }
 `;
 
+const BottomWarning = styled(Warning)`
+  margin: 0 auto;
+  & > p {
+    font-size: 10pt;
+  }
+`;
+
+const Loader = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 1000;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding-top: 100px;
+  background-color: ${props => props.theme.colors.white};
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms;
+  &[data-active="true"] {
+    opacity: 1;
+    pointer-events: all;
+  }
+`;
+
 function ProfileManager() {
   const auth = useSelector(state => state.auth);
-  const history = useHistory();
   const reducer = useProfileReducer();
-  const machineProfile = useProfileMachine();
   const username = useMemo(() => getPrimaryUsername(_.get(auth, "user")), [auth]);
+  const machine = useProfileEditMachine({ identifier: username, reducer });
 
   useEffect(() => {
-    machineProfile.send(machineProfile.events.request, {
-      payload: {
-        auth,
-        identifier: username,
-      },
-    });
-  }, []); /* componentDidMount */ // eslint-disable-line react-hooks/exhaustive-deps
+    console.log(machine);
+  }, [machine]); /* componentDidMount */ // eslint-disable-line react-hooks/exhaustive-deps
 
-  const person = useMemo(() => _.get(machineProfile, "current.context.data"), [machineProfile]);
-  console.log(person);
+  const person = useMemo(() => _.get(machine, "current.context.data"), [machine]);
 
   const onCancel = useCallback(() => {
     console.log("Ask for cancel");
   }, []);
 
+  const onPublish = useCallback(() => {
+    const profile = {
+      firstName: reducer.state.firstName.value,
+      lastName: reducer.state.lastName.value,
+      description: reducer.state.description.value,
+      picture: reducer.state.picture.value,
+    };
+
+    machine.send(machine.events.forward, {
+      payload: { auth, profile },
+      PICTURE_REQUIRED: _.isNil(_.get(machine, "current.context.data.user.picture.url")),
+    });
+  }, [auth, machine, reducer]);
+
   return (
-    <Page data-leaving={false}>
+    <Page data-leaving={machine.current.value === machine.states.success}>
       <Playground>
         <StyledNav
           isLight
@@ -172,30 +208,27 @@ function ProfileManager() {
           onBackClick={onCancel}
         />
         <Canvas>
-          <Header reducer={reducer} />
+          <Loader data-active={machine.current.value === machine.states.retrieve}>
+            <Spinner color={c => c.secondary} size={50} thickness={2} />
+          </Loader>
+          <Header reducer={reducer} person={person} />
         </Canvas>
       </Playground>
+
+      <BottomWarning isCentered value={machine.current.context.error} />
+
       <Actions>
-        <ButtonBox
-          data-success={false}
-          onMouseEnter={() => {
-            try {
-              const list = document.getElementsByTagName("input");
-              Array.prototype.forEach.call(list, item => item.blur());
-            } catch (e) {
-              console.error(e);
-            }
-          }}
-        >
+        <ButtonBox data-success={machine.current.value === machine.states.success} onMouseEnter={blur}>
           <StyledButton
-            title="Publish Article"
+            title="Update Profile"
             childrenLeft={
               <ButtonIconWrapper>
                 <IconArticlePublish style={{ fontSize: "14pt" }} />
               </ButtonIconWrapper>
             }
-            onClick={() => {}}
-            isLoading={false}
+            onClick={onPublish}
+            isLoading={[machine.states.apply].includes(machine.current.value)}
+            isDisabledSoft={[machine.states.apply, machine.states.retrieve].includes(machine.current.value)}
             type={t => t.button}
             appearance={t => t.solid}
             accent={t => t.secondary}
@@ -203,7 +236,7 @@ function ProfileManager() {
         </ButtonBox>
 
         <Button
-          isDisabled={false}
+          isDisabled={machine.current.value === machine.states.apply}
           type={t => t.button}
           appearance={t => t.outline}
           accent={t => t.cancel}

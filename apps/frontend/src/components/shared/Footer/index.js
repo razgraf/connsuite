@@ -114,13 +114,19 @@ function Footer({ reference }) {
           <Grid>
             {footer.map(column => (
               <Column key={`col-${column[0].title}`}>
-                {column.map(({ title, url }) => (
-                  <Link href={url} key={title}>
-                    <Item>
+                {column.map(({ title, url }) => {
+                  return url.startsWith("http") ? (
+                    <Item key={title} href={url} target="_blank" rel="noopener noreferrer">
                       <p>{title}</p>
                     </Item>
-                  </Link>
-                ))}
+                  ) : (
+                    <Link href={url} key={title}>
+                      <Item>
+                        <p>{title}</p>
+                      </Item>
+                    </Link>
+                  );
+                })}
               </Column>
             ))}
           </Grid>

@@ -64,29 +64,27 @@ function Internal({ className, reducer, setContentInstance }) {
         <LabelTitle>Write from scratch</LabelTitle>
       </LabelWrapper>
       <Form>
-        {_.get(reducer, "state.content.value.blocks") && (
-          <InputEditor
-            help={{
-              value:
-                "Add text, images, quotes and more. Tip: if grammarly or any other plug-in is interfering, please disable it while editing content format.",
-            }}
-            id="manageArticleUrl"
-            setInstance={setContentInstance}
-            label="Content"
-            onUpdate={e => {
-              reducer.dispatch({
-                type: reducer.actions.UPDATE_CONTENT,
-                payload: {
-                  value: e.target.value,
-                  error: guards.interpret(guards.isArticleContentAcceptable, e.target.value),
-                },
-              });
-            }}
-            placeholder="Start writing here"
-            value={reducer.state.content.value}
-            warning={reducer.state.content.error}
-          />
-        )}
+        <InputEditor
+          help={{
+            value:
+              "Add text, images, quotes and more. Tip: if grammarly or any other plug-in is interfering, please disable it while editing content format.",
+          }}
+          id="manageArticleUrl"
+          setInstance={setContentInstance}
+          label="Content"
+          onUpdate={e => {
+            reducer.dispatch({
+              type: reducer.actions.UPDATE_CONTENT,
+              payload: {
+                value: e.target.value,
+                error: guards.interpret(guards.isArticleContentAcceptable, e.target.value),
+              },
+            });
+          }}
+          placeholder="Start writing here"
+          value={reducer.state.content.value}
+          warning={reducer.state.content.error}
+        />
       </Form>
     </Wrapper>
   );

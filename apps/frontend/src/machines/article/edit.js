@@ -40,7 +40,7 @@ async function attemptToEdit({ event }) {
   if (!_.isNil(payload, "article.content")) payload.article.content = JSON.stringify(payload.article.content);
   if (!_.isNil(payload, "article.skills")) payload.article.skills = JSON.stringify(payload.article.skills);
   if (!_.isNil(payload, "article.categories")) payload.article.categories = JSON.stringify(payload.article.categories);
-  return ArticleRequest.edit(event.payload);
+  return ArticleRequest.edit(payload);
 }
 
 const RESET = {
@@ -82,9 +82,9 @@ const machine = Machine(
             target: states.forbidden,
           },
         },
+        exit: [actions.bind],
       },
       [states.body]: {
-        entry: [actions.bind],
         on: {
           [events.reset]: RESET,
           [events.forward]: [

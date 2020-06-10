@@ -1,13 +1,13 @@
 import _ from "lodash";
 import { Machine, assign } from "xstate";
-import { ArticleRequest } from "../../requests";
+import { UserRequest } from "../../requests";
 import guards from "./guards";
 
 const states = {
   idle: "idle",
-  picker: "picker",
+  retrieve: "retrieve",
   body: "body",
-  create: "create",
+  apply: "apply",
   success: "success",
   failure: "failure",
 };
@@ -21,6 +21,7 @@ const events = {
 /** Only the named actions coming from the prop chain */
 const actions = {
   approve: "approve",
+  bind: "bind",
 };
 
 const initialContext = {
@@ -28,13 +29,15 @@ const initialContext = {
   error: null,
 };
 
-/** {auth, article} =  event.payload */
-async function attemptToCreate({ event }) {
-  const { payload } = event;
-  if (!_.isNil(payload, "article.content")) payload.article.content = JSON.stringify(payload.article.content);
-  if (!_.isNil(payload, "article.skills")) payload.article.skills = JSON.stringify(payload.article.skills);
-  if (!_.isNil(payload, "article.categories")) payload.article.categories = JSON.stringify(payload.article.categories);
-  return ArticleRequest.create(payload);
+/** {auth, userId} =  event.payload */
+async function attemptToRetrieve({ context }) {
+  return UserRequest.profile(context);
+}
+
+/** {auth, profile} =  event.payload */
+async function attemptToEdit({ event }) {
+  console.log(event);
+  return UserRequest.edit(event.payload);
 }
 
 const RESET = {
@@ -45,46 +48,55 @@ const RESET = {
 const INVALIDATE = {
   target: states.body,
   actions: assign({
-    error: () => "Fill in all the available fields before publishing.",
+    error: () => "Fill in all the available fields before updating.",
   }),
 };
 
 const machine = Machine(
   {
-    id: "createArticleMachine",
+    id: "editProfileMachine",
     initial: "idle",
     context: { ...initialContext },
     states: {
       [states.idle]: {
         on: {
-          "": states.picker,
+          "": states.retrieve,
         },
       },
-      [states.picker]: {
-        on: {
-          [events.forward]: states.body,
+      [states.retrieve]: {
+        invoke: {
+          src: (context, event) => attemptToRetrieve({ context, event }),
+          onDone: {
+            actions: assign({
+              data: (context, event) => event.data,
+            }),
+            target: states.body,
+          },
+          onError: {
+            actions: assign({
+              error: (context, event) => _.toString(_.get(event, "data.message")),
+            }),
+            target: states.forbidden,
+          },
         },
+        exit: [actions.bind],
       },
       [states.body]: {
         on: {
           [events.reset]: RESET,
           [events.forward]: [
             {
-              cond: "isInternalBodyAcceptable",
-              target: states.create,
-            },
-            {
-              cond: "isExternalBodyAcceptable",
-              target: states.create,
+              cond: "isProfileAcceptable",
+              target: states.apply,
             },
             /** All article type and content guards failed */
             { ...INVALIDATE },
           ],
         },
       },
-      [states.create]: {
+      [states.apply]: {
         invoke: {
-          src: (context, event) => attemptToCreate({ context, event }),
+          src: (context, event) => attemptToEdit({ context, event }),
           onDone: {
             actions: assign({
               data: (context, event) => event.data,
@@ -110,6 +122,7 @@ const machine = Machine(
           "": states.body,
         },
       },
+      [states.forbidden]: {},
     },
   },
   {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../../../components/atoms";
@@ -12,6 +12,10 @@ function Dashboard() {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
   const modal = useModal("test");
+
+  useEffect(() => {
+    if (window) window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Page>

@@ -1,8 +1,12 @@
 import _ from "lodash";
-import React, { useCallback } from "react";
+import React, { useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import ActionIcon from "@material-ui/icons/MoreVertRounded";
+
+import ProfilePictureFallback from "../../../assets/images/profile_fallback.jpg";
+import AssetLogo from "../../../assets/logo/logo.png";
+
 import { parseFullName } from "../../../utils";
 import { useCover } from "../../../hooks";
 import Placeholder from "../Placeholder";
@@ -39,13 +43,13 @@ const LeftImageWrapper = styled.div`
   height: 100px;
   width: 100px;
   border-radius: 50%;
-  overflow: hidden;
 `;
 
 const LeftImage = styled.img`
   height: 100%;
   width: 100%;
   object-fit: cover;
+  border-radius: 50%;
   opacity: 1;
   &:not([src]),
   &[src=""] {
@@ -55,6 +59,7 @@ const LeftImage = styled.img`
 
 const LeftLogoWrapper = styled.div`
   position: absolute;
+  z-index: 100;
   right: -1px;
   bottom: -1px;
   height: 36px;
@@ -129,18 +134,18 @@ const Action = styled.div`
   justify-content: center;
   margin-left: calc(${props => props.theme.sizes.edge});
   margin-bottom: calc(${props => props.theme.sizes.edge});
-  background-color: ${props => props.theme.colors.grayBlueGhost};
+  background-color: ${props => props.theme.colors.grayBlueLight};
   cursor: pointer;
   transition: background-color 200ms;
 
   &:hover,
   &:active {
-    background-color: ${props => props.theme.colors.grayBlueLight};
+    background-color: ${props => props.theme.colors.grayBlueNormal};
     transition: background-color 200ms;
   }
 
   & > * {
-    color: ${props => props.theme.colors.grayBlueMedium};
+    color: ${props => props.theme.colors.grayBlueDark};
   }
 `;
 
@@ -169,14 +174,16 @@ function BusinessCard({ className, data, networks, username }) {
     [setCoverNetwork, setCoverOpen],
   );
 
+  const picture = useMemo(() => _.get(data, "thumbnail.url") || ProfilePictureFallback, [data]);
+
   return (
     <Wrapper className={className}>
       <Card>
         <Left>
           <LeftImageWrapper>
-            <LeftImage src="" alt="Profile" />
+            <LeftImage src={picture} alt="Profile" />
             <LeftLogoWrapper>
-              <LeftLogo src="" alt="ConnSuite" />
+              <LeftLogo src={AssetLogo} alt="ConnSuite" />
             </LeftLogoWrapper>
           </LeftImageWrapper>
         </Left>

@@ -1,16 +1,16 @@
 import _ from "lodash";
-import React, { useMemo } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import IconContact from "@material-ui/icons/WhatshotRounded";
 
-import { components } from "../../../../themes";
-import { useProfileIntersection } from "../../../../hooks";
-import { types } from "../../../../constants";
+import { components } from "../../../../../themes";
+import { useProfileIntersection } from "../../../../../hooks";
+import { types } from "../../../../../constants";
 
 import SectionHeader from "../SectionHeader";
-import { Button, Spinner } from "../../../atoms";
-import { BusinessCard } from "../../../shared";
+import { Button, Spinner } from "../../../../atoms";
+import { BusinessCard } from "../../../../shared";
 
 const Wrapper = styled.div`
   display: flex;
@@ -120,15 +120,6 @@ const CardStatsItem = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 90px;
-`;
-
-const CardStatsItemLoader = styled.div`
-  opacity: 1;
-  pointer-events: none;
-  position: absolute;
-  &[data-visible="false"] {
-    opacity: 0;
-  }
 `;
 
 const CardStatsItemTitle = styled.p`
