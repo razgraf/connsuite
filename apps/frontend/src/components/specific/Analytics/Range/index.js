@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import dayjs from "dayjs";
@@ -62,13 +62,14 @@ const TimelineItem = styled.div`
 const timeSlots = {
   all: "All Time",
   day: "Last 24h",
+  yesterday: "Yesterday",
   week: "Last Week",
   month: "Last Month",
   //   custom: "Custom",
 };
 
-function Range({ className, onPickRange, isLoading, title }) {
-  const [timeSlot, setTimeSlot] = useState(timeSlots.all);
+function Range({ className, onPickRange, isLoading, title, defaultSlot }) {
+  const [timeSlot, setTimeSlot] = useState(defaultSlot || timeSlots.all);
 
   const onTimeSlotPick = useCallback(
     slot => {
@@ -77,7 +78,25 @@ function Range({ className, onPickRange, isLoading, title }) {
         case timeSlots.day: {
           const today = dayjs();
           const yersterday = dayjs().subtract(1, "day");
-          onPickRange({ from: today.toISOString(), to: yersterday.toISOString() });
+          onPickRange({ from: yersterday.toISOString(), to: today.toISOString() });
+          break;
+        }
+        case timeSlots.yesterday: {
+          const yesterday = dayjs().subtract(1, "day");
+          const theDayBefore = dayjs().subtract(2, "day");
+          onPickRange({ from: theDayBefore.toISOString(), to: yesterday.toISOString() });
+          break;
+        }
+        case timeSlots.week: {
+          const today = dayjs();
+          const lastWeek = dayjs().subtract(1, "week").add(1, "day");
+          onPickRange({ from: lastWeek.toISOString(), to: today.toISOString() });
+          break;
+        }
+        case timeSlots.month: {
+          const today = dayjs();
+          const lastMonth = dayjs().subtract(1, "month").add(1, "day");
+          onPickRange({ from: lastMonth.toISOString(), to: today.toISOString() });
           break;
         }
         case timeSlots.all:
@@ -98,7 +117,13 @@ function Range({ className, onPickRange, isLoading, title }) {
       {Object.keys(timeSlots).map(key => {
         const slot = timeSlots[key];
         return (
-          <TimelineItem key={key} data-active={slot === timeSlot} onClick={() => onTimeSlotPick(slot)}>
+          <TimelineItem
+            key={key}
+            data-active={slot === timeSlot}
+            onClick={() => {
+              if (slot !== timeSlot) onTimeSlotPick(slot);
+            }}
+          >
             <p>{slot}</p>
           </TimelineItem>
         );
@@ -112,6 +137,7 @@ Range.propTypes = {
   onPickRange: PropTypes.func,
   isLoading: PropTypes.bool,
   title: PropTypes.string,
+  defaultSlot: PropTypes.string,
 };
 
 Range.defaultProps = {
@@ -119,6 +145,7 @@ Range.defaultProps = {
   onPickRange: () => {},
   isLoading: true,
   title: "Events",
+  defaultSlot: null,
 };
 
 export default Range;

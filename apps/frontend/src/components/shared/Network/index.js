@@ -319,7 +319,7 @@ const Wrapper = styled(WrapperPartial)`
 
 function Network({ className, isViewOnly, isFocused, isInEditMode, ...network }) {
   const { setOpen: setCoverOpen, setNetwork: setCoverNetwork } = useCover();
-  const { title, username, thumbnail, url, _id } = network;
+  const { title, username, thumbnail, url, _id, shortId } = network;
 
   const doPick = useCallback(() => {
     if (!isViewOnly) {
@@ -337,7 +337,7 @@ function Network({ className, isViewOnly, isFocused, isInEditMode, ...network })
               <OverlayActionVisit>
                 <OverlayActionVisitIcon
                   data-url={url}
-                  href={pages.network.view.builder(_id, getFriendlyTitle(title))}
+                  href={pages.network.view.builder(shortId || _id, getFriendlyTitle(_.get(title)))}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

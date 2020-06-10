@@ -1,7 +1,7 @@
 import _ from "lodash";
 import ArticleViewer from "../../../src/pages/platform/Article/Viewer";
 import { getServerAuth } from "../../../src/utils";
-import { ArticleRequest } from "../../../src/requests";
+import { ArticleRequest, AnalyticsRequest } from "../../../src/requests";
 import { types, status } from "../../../src/constants";
 
 ArticleViewer.getInitialProps = async context => {
@@ -16,6 +16,10 @@ ArticleViewer.getInitialProps = async context => {
     if (_.isNil(result) || !_.get(result, "article.type")) {
       throw new Error();
     }
+    if (_.get(result, "article._id") && !_.get(result, "isSelf")) {
+      AnalyticsRequest.visitCreate({ auth, targetId: _.get(result, "article._id"), type: types.visit.type.article });
+    }
+
     if (_.get(result, "article.type") === types.article.type.external) {
       res.writeHead(status.FOUND, { Location: _.get(result, "article.url") });
       res.end();

@@ -87,7 +87,7 @@ export const pages = {
     },
     view: {
       root: "/article",
-      route: "/article/[id]",
+      route: "/article/[id]/[[...slug]]",
       builder: (id, extra) => `/article/${id}${extra ? `/${extra}` : ""}`,
     },
     edit: {

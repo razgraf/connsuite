@@ -10,7 +10,7 @@ import IconVisit from "@material-ui/icons/InsertLinkRounded";
 import { rgba } from "polished";
 import { pages, types } from "../../../constants";
 import { useHistory } from "../../../hooks";
-import { ellipsis } from "../../../utils";
+import { ellipsis, getFriendlyTitle } from "../../../utils";
 import { Button } from "../../atoms";
 
 const WrapperPartial = styled.div`
@@ -166,6 +166,7 @@ const OverlayFooterInfoItem = styled.p`
   }
 `;
 
+const OverlayFooterAnchor = styled.a``;
 const OverlayFooterButton = styled(Button)``;
 
 const Shape = styled.div`
@@ -276,7 +277,7 @@ function Action({ Icon, callback, title, type, url, route }) {
   );
 }
 
-function Article({ className, _id, thumbnail, categories, title, type, onRemoveClick, isSelf }) {
+function Article({ className, _id, shortId, thumbnail, categories, title, type, onRemoveClick, isSelf }) {
   const history = useHistory();
 
   const categoryField = useMemo(() => {
@@ -321,11 +322,11 @@ function Article({ className, _id, thumbnail, categories, title, type, onRemoveC
                   accent={t => t.secondary}
                   isMini
                   title="Visit Article"
-                  to={pages.article.edit.builder(_id)}
+                  to={pages.article.view.builder(shortId, getFriendlyTitle(title))}
                 />
               ) : (
-                <Link href={pages.article.edit.route} as={pages.article.edit.builder(_id)}>
-                  <a href="#" onClick={() => history.push()}>
+                <Link href={pages.article.view.route} as={pages.article.view.builder(shortId, getFriendlyTitle(title))}>
+                  <OverlayFooterAnchor onClick={() => history.push()}>
                     <OverlayFooterButton
                       type={t => t.button}
                       appearance={t => t.solid}
@@ -333,7 +334,7 @@ function Article({ className, _id, thumbnail, categories, title, type, onRemoveC
                       isMini
                       title="Read Article"
                     />
-                  </a>
+                  </OverlayFooterAnchor>
                 </Link>
               )}
             </OverlayFooterBottom>

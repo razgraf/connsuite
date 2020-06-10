@@ -67,8 +67,6 @@ async function isAuthorized(auth, tier = null) {
 
   const endpoint = `${API.authStatus()}${tier !== null ? `?tier=${tier}` : ""}`;
 
-  console.log(endpoint);
-
   const response = await fetch(endpoint, {
     method: "GET",
     headers: buildHeaders({ auth }),

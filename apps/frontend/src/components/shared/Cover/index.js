@@ -334,7 +334,10 @@ function Cover({ isSelf }) {
                   <CardRightAction
                     title="Visit Network"
                     data-url={_.get(network, "url") || "#"}
-                    href={pages.network.view.builder(_.get(network, "_id"), getFriendlyTitle(_.get(network, "title")))}
+                    href={pages.network.view.builder(
+                      _.get(network, "shortId") || _.get(network, "_id"),
+                      getFriendlyTitle(_.get(network, "title")),
+                    )}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

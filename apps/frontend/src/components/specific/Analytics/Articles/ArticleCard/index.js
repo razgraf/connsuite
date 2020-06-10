@@ -1,13 +1,11 @@
 import _ from "lodash";
-import React, { useCallback } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import IconVisit from "@material-ui/icons/InsertLinkRounded";
 import IconRead from "@material-ui/icons/DescriptionOutlined";
 
 import { rgba } from "polished";
-import { Line } from "react-chartjs-2";
-import { colors, fonts } from "../../../../../themes";
 
 import { types, pages } from "../../../../../constants";
 import { getFriendlyTitle } from "../../../../../utils";
@@ -87,7 +85,7 @@ const ValueWrapper = styled.div`
     transition: background-color 200ms;
     & > p,
     & > span {
-      color: ${props => props.theme.colors.grayBlueNormal} !important;
+      color: ${props => props.theme.colors.grayBlueMedium} !important;
       transition: color 200ms;
     }
   }
@@ -130,9 +128,9 @@ const Action = styled.a`
   }
 `;
 
-function ArticleCard({ className, _id, thumbnail, title, url, value, type, shortId }) {
+function ArticleCard({ className, thumbnail, title, url, value, type, shortId }) {
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <Header>
         <Thumbnail src={_.get(thumbnail, "url")} />
       </Header>
@@ -145,7 +143,7 @@ function ArticleCard({ className, _id, thumbnail, title, url, value, type, short
         <Action
           title={`${type === types.article.type.external ? "Visit" : "Read"} Article`}
           data-url={url || "#"}
-          href={pages.article.view.builder(_id, getFriendlyTitle(title))}
+          href={pages.article.view.builder(shortId, getFriendlyTitle(title))}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -158,7 +156,6 @@ function ArticleCard({ className, _id, thumbnail, title, url, value, type, short
 
 ArticleCard.propTypes = {
   className: PropTypes.string,
-  _id: PropTypes.string.isRequired,
   shortId: PropTypes.string.isRequired,
   thumbnail: PropTypes.shape({
     url: PropTypes.string.isRequired,

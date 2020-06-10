@@ -1,43 +1,19 @@
 import _ from "lodash";
 import React, { useCallback, useMemo, useEffect, useState } from "react";
 import styled from "styled-components";
-import IconStatistics from "@material-ui/icons/MultilineChartRounded";
-import IconPortfolio from "@material-ui/icons/StarBorderRounded";
 import { useSelector } from "react-redux";
 import { rgba } from "polished";
 import { Bar } from "react-chartjs-2";
-import { components, colors, fonts } from "../../../../themes";
-import { useSelfNetworks, useVisitListMachine } from "../../../../hooks";
-import { Button, Spinner } from "../../../atoms";
-import { types, pages } from "../../../../constants";
+import { colors, fonts } from "../../../../themes";
+import { useSelfNetworks, useVisitMachine } from "../../../../hooks";
+import { Spinner } from "../../../atoms";
+import { types } from "../../../../constants";
 import Range from "../Range";
 
-const SectionHeader = styled(components.SectionHeader)``;
-const SectionTitle = styled(components.SectionTitle)`
-  & > p {
-    color: ${props => props.theme.colors.grayBlueBlack};
-    margin-left: 6px;
-  }
-
-  & > svg {
-    color: ${props => props.theme.colors.grayBlueBlack};
-  }
-`;
-
-const Section = styled(components.Section)`
-  padding: 0 ${props => props.theme.sizes.sectionEdge};
+const Wrapper = styled.div`
   margin-bottom: calc(${props => props.theme.sizes.edge} * 1);
+  width: 100%;
   overflow-x: hidden;
-`;
-
-const SectionActions = styled(components.SectionActions)``;
-
-const ButtonIconWrapper = styled.div`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 4px;
-  margin-top: 0.5px;
 `;
 
 const ChartWrapper = styled.div`
@@ -49,16 +25,29 @@ const ChartWrapper = styled.div`
   background-color: ${props => props.theme.colors.grayBlueBlack};
   border-radius: 0 0 4px 4px;
   padding: 30px 30px 20px 20px;
+`;
 
-  &[data-empty="true"] {
-    &:after {
-      content: "No activity registered for this time slot";
-      position: absolute;
-      z-index: 200;
-      color: ${props => props.theme.colors.white};
-      font-size: 11pt;
-      font-weight: 500;
-    }
+const ChartEmpty = styled.div`
+  position: absolute;
+  z-index: 200;
+  opacity: 0;
+  &[data-active="true"] {
+    opacity: 1;
+  }
+  & > p {
+    margin: 0;
+    color: ${props => props.theme.colors.white};
+    font-size: 11pt;
+    font-weight: 500;
+  }
+`;
+
+const ChartLoading = styled.div`
+  position: absolute;
+  z-index: 200;
+  opacity: 0;
+  &[data-active="true"] {
+    opacity: 1;
   }
 `;
 
@@ -104,7 +93,7 @@ function Networks() {
   const [timeQuery, setTimeQuery] = useState({ from: null, to: null });
 
   const networks = useSelfNetworks();
-  const machine = useVisitListMachine();
+  const machine = useVisitMachine();
   const auth = useSelector(state => state.auth);
 
   useEffect(() => {
@@ -161,34 +150,18 @@ function Networks() {
     [setTimeQuery, machine],
   );
   return (
-    <Section>
-      <SectionHeader>
-        <SectionTitle>
-          <IconStatistics style={{ fontSize: "15pt" }} />
-          <p>Analytics and Audience</p>
-          <Spinner color={c => c.orange} isVisible={networks.isLoading} />
-        </SectionTitle>
-        <SectionActions>
-          <Button
-            appearance={t => t.outline}
-            accent={t => t.grayBlueBlack}
-            childrenLeft={
-              <ButtonIconWrapper>
-                <IconPortfolio style={{ fontSize: "12pt" }} />
-              </ButtonIconWrapper>
-            }
-            isMini
-            title="View Protfolio"
-            to={pages.portfolio.route}
-            type={t => t.router}
-          />
-        </SectionActions>
-      </SectionHeader>
+    <Wrapper>
       <Range onPickRange={onPickRange} isLoading={machine.current.value === machine.states.request} title="Network Events" />
       <ChartWrapper data-empty={_.toArray(statistics).length === 0}>
+        <ChartEmpty data-active={!networks.isLoading && _.toArray(statistics).length === 0}>
+          <p>No activity registered for this time slot</p>
+        </ChartEmpty>
+        <ChartLoading data-active={networks.isLoading}>
+          <Spinner color={c => c.orange} />
+        </ChartLoading>
         <Bar data={data} options={options} />
       </ChartWrapper>
-    </Section>
+    </Wrapper>
   );
 }
 

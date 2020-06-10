@@ -128,7 +128,7 @@ export async function validateAuth({ state, store, dispatch: d, res = null } = {
   }
 }
 
-export async function getServerAuth(context) {
+export function getServerAuth(context) {
   if (_.isNil(context) || !_.has(context, "store")) return null;
   try {
     const { store } = context;

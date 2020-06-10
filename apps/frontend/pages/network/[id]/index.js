@@ -1,9 +1,8 @@
 import _ from "lodash";
 import Visit from "../../../src/pages/presentation/Visit";
-import { root } from "../../../src/constants";
 import { getServerAuth } from "../../../src/utils";
-import { NetworkRequest } from "../../../src/requests";
-import status from "../../../src/constants/httpcodes";
+import { NetworkRequest, AnalyticsRequest } from "../../../src/requests";
+import { root, types, status } from "../../../src/constants";
 
 Visit.getInitialProps = async context => {
   const { res, query } = context;
@@ -15,6 +14,10 @@ Visit.getInitialProps = async context => {
     if (_.isNil(result) || !_.get(result, "network.url")) {
       throw new Error();
     } else {
+      if (_.get(result, "network._id") && !_.get(result, "isSelf")) {
+        AnalyticsRequest.visitCreate({ auth, targetId: _.get(result, "network._id"), type: types.visit.type.network });
+      }
+
       res.writeHead(status.FOUND, { Location: _.get(result, "network.url") });
       res.end();
       return {};

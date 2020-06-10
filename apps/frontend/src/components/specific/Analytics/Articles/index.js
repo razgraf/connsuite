@@ -1,29 +1,15 @@
 import _ from "lodash";
 import React, { useCallback, useMemo, useEffect, useState } from "react";
 import styled from "styled-components";
-import IconStatistics from "@material-ui/icons/DescriptionOutlined";
 import { useSelector } from "react-redux";
 import { components } from "../../../../themes";
-import { useVisitListMachine, useSelfArticles } from "../../../../hooks";
-import { Spinner } from "../../../atoms";
+import { useVisitMachine, useSelfArticles } from "../../../../hooks";
 import { types } from "../../../../constants";
 import Range from "../Range";
 import ArticleCard from "./ArticleCard";
 
-const SectionHeader = styled(components.SectionHeader)``;
-const SectionTitle = styled(components.SectionTitle)`
-  & > p {
-    color: ${props => props.theme.colors.grayBlueBlack};
-    margin-left: 6px;
-  }
-
-  & > svg {
-    color: ${props => props.theme.colors.grayBlueBlack};
-  }
-`;
-
-const Section = styled(components.Section)`
-  padding: 0 ${props => props.theme.sizes.sectionEdge};
+const Wrapper = styled(components.Section)`
+  width: 100%;
   overflow-x: hidden;
 `;
 
@@ -54,7 +40,7 @@ function Articles() {
   const [timeQuery, setTimeQuery] = useState({ from: null, to: null });
 
   const articles = useSelfArticles();
-  const machine = useVisitListMachine();
+  const machine = useVisitMachine();
   const auth = useSelector(state => state.auth);
 
   useEffect(() => {
@@ -95,17 +81,15 @@ function Articles() {
     [setTimeQuery, machine],
   );
 
-  useEffect(() => console.log(dataset), [dataset]);
-
   return (
-    <Section>
+    <Wrapper>
       <Range onPickRange={onPickRange} isLoading={machine.current.value === machine.states.request} title="Article Events" />
       <ChartWrapper>
         {dataset.map(item => (
           <ArticleCard key={item._id} {...item} />
         ))}
       </ChartWrapper>
-    </Section>
+    </Wrapper>
   );
 }
 
