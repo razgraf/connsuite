@@ -5,8 +5,8 @@ export type BaseOptions = {
   limit?: number | string;
   offset?: number | string;
 
-  start?: string;
-  end?: string;
+  from?: string;
+  to?: string;
 
   [key: string]: boolean | number | string | undefined;
 };

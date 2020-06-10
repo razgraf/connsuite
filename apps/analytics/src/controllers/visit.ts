@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { ManagerController } from "./base";
 import { HTTP_CODE } from "../constants";
 import { VisitRepository } from "../repositories";
-import { Visit, toVisitDTO, VisitType } from "../models";
+import { VisitType } from "../models";
 
 export default class VisitController extends ManagerController {
   public static async get(req: Request, res: Response): Promise<void> {
@@ -17,8 +17,8 @@ export default class VisitController extends ManagerController {
           type: _.get(query, "type") as VisitType,
         },
         {
-          start: _.get(query, "start") as string,
-          end: _.get(query, "end") as string,
+          from: _.get(query, "from") as string,
+          to: _.get(query, "to") as string,
         },
       );
 
@@ -54,7 +54,7 @@ export default class VisitController extends ManagerController {
 
   public static async list(req: Request, res: Response): Promise<void> {
     try {
-      const { query, params } = req;
+      const { query } = req;
 
       const result: any = await VisitRepository.getInstance().listForType(
         {
@@ -62,8 +62,8 @@ export default class VisitController extends ManagerController {
           type: _.get(query, "type") as VisitType,
         },
         {
-          start: _.get(query, "start") as string,
-          end: _.get(query, "end") as string,
+          from: _.get(query, "from") as string,
+          to: _.get(query, "to") as string,
         },
       );
 
@@ -75,7 +75,7 @@ export default class VisitController extends ManagerController {
     } catch (e) {
       console.error(e);
       res.status(HTTP_CODE.BAD_REQUEST);
-      res.json({ message: "Nope" });
+      res.json({ message: "Query not supported" });
     }
   }
 }

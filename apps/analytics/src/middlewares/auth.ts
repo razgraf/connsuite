@@ -5,7 +5,7 @@ import { AuthError } from "../errors";
 import { connsuite } from "../vendors";
 
 class AuthMiddleware {
-  public static async bearer(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public static async bearer(req: Request, res: Response, next: NextFunction, isFriendly = false): Promise<void> {
     try {
       const authorization = _.get(req, "headers.authorization");
       if (!authorization) throw new AuthError.InvalidToken("Bearer Missing");
@@ -24,24 +24,24 @@ class AuthMiddleware {
         user: _.get(identity, "user._id"),
       };
 
-      next();
-    } catch (e) {
-      console.error(e);
-      res.status(e.code || HTTP_CODE.BAD_REQUEST);
-      res.json({ message: e.message });
+      if (!isFriendly) next();
       return;
+    } catch (e) {
+      if (!isFriendly) {
+        res.status(e.code || HTTP_CODE.BAD_REQUEST);
+        res.json({ message: e.message });
+      }
     }
   }
 
   public static async bearerFriendly(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      await AuthMiddleware.bearer(req, res, next);
-      return;
+      await AuthMiddleware.bearer(req, res, next, true);
     } catch (e) {
       console.error(e);
       res.locals.identity = null;
+    } finally {
       next();
-      return;
     }
   }
 }

@@ -2,7 +2,7 @@ import _ from "lodash";
 import { ObjectId } from "mongodb";
 import BaseRepository, { BaseOptions } from "./base";
 
-import { ParamsError } from "../errors";
+import { ParamsError, VisitError } from "../errors";
 import { Request, Visit, VisitModel, VisitType } from "../models";
 import { isISODate } from "../utils";
 
@@ -73,6 +73,8 @@ export default class VisitRepository extends BaseRepository<Visit> {
         return this._getForNetwork(payload, options);
       case VisitType.Article:
         return this._getForArticle(payload, options);
+      case VisitType.Profile:
+        return this._getForProfile(payload, options);
       default:
         return {};
     }
@@ -90,6 +92,7 @@ export default class VisitRepository extends BaseRepository<Visit> {
       case VisitType.Article:
         return this._listForArticles(payload, options);
       default:
+        throw new VisitError.NotFound("Type not supported");
         return {};
     }
   }
@@ -108,15 +111,17 @@ export default class VisitRepository extends BaseRepository<Visit> {
       targetId: payload.targetId,
     };
     if (!_.isNil(options)) {
-      if (!_.isNil(options.start) && isISODate(options.start))
-        query.createdAt = { ...(query.createdAt || {}), $gte: new Date(options.start) };
-      if (!_.isNil(options.end) && isISODate(options.end))
-        query.createdAt = { ...(query.createdAt || {}), $lte: new Date(options.end) };
+      if (!_.isNil(options.from) && isISODate(options.from))
+        query.createdAt = { ...(query.createdAt || {}), $gte: new Date(options.from) };
+      if (!_.isNil(options.to) && isISODate(options.to))
+        query.createdAt = { ...(query.createdAt || {}), $lte: new Date(options.to) };
     }
 
-    const count = await VisitModel.countDocuments(query);
+    const statistics = await VisitModel.countDocuments(query);
+
     return {
-      count: count || 0,
+      statistics,
+      timeline: this._interpretTimeline(options),
     };
   }
 
@@ -126,33 +131,67 @@ export default class VisitRepository extends BaseRepository<Visit> {
       targetId: payload.targetId,
     };
     if (!_.isNil(options)) {
-      if (!_.isNil(options.start) && isISODate(options.start))
-        query.createdAt = { ...(query.createdAt || {}), $gte: new Date(options.start) };
-      if (!_.isNil(options.end) && isISODate(options.end))
-        query.createdAt = { ...(query.createdAt || {}), $lte: new Date(options.end) };
+      if (!_.isNil(options.from) && isISODate(options.from))
+        query.createdAt = { ...(query.createdAt || {}), $gte: new Date(options.from) };
+      if (!_.isNil(options.to) && isISODate(options.to))
+        query.createdAt = { ...(query.createdAt || {}), $lte: new Date(options.to) };
     }
 
-    const count = await VisitModel.countDocuments(query);
+    const statistics = await VisitModel.countDocuments(query);
+
     return {
-      count: count || 0,
+      statistics,
+      timeline: this._interpretTimeline(options),
     };
   }
 
   private async _getForProfile(payload: Request.VisitGetForItem, options?: BaseOptions): Promise<Request.Response> {
-    const query: { [key: string]: any } = {
-      type: VisitType.Profile,
-      targetId: payload.userId,
+    const aggregation: { [key: string]: any } = {
+      $match: {
+        type: VisitType.Profile,
+        targetId: new ObjectId(payload.userId),
+      },
+      $project: {
+        targetId: "$targetId",
+        date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+      },
+      $group: {
+        _id: "$date",
+        count: { $sum: 1 },
+      },
+      $sort: {
+        _id: 1,
+      },
     };
+
+    let isAll = true;
+
     if (!_.isNil(options)) {
-      if (!_.isNil(options.start) && isISODate(options.start))
-        query.createdAt = { ...(query.createdAt || {}), $gte: new Date(options.start) };
-      if (!_.isNil(options.end) && isISODate(options.end))
-        query.createdAt = { ...(query.createdAt || {}), $lte: new Date(options.end) };
+      if (!_.isNil(options.from) && isISODate(options.from)) {
+        aggregation.$match.createdAt = { ...(aggregation.$match.createdAt || {}), $gte: new Date(options.from) };
+        isAll = false;
+      }
+      if (!_.isNil(options.to) && isISODate(options.to)) {
+        aggregation.$match.createdAt = { ...(aggregation.$match.createdAt || {}), $lte: new Date(options.to) };
+        isAll = false;
+      }
     }
 
-    const count = await VisitModel.countDocuments(query);
+    const statistics = isAll
+      ? [
+          {
+            _id: "All",
+            count: await VisitModel.countDocuments({ type: VisitType.Profile, targetId: payload.userId }),
+          },
+        ]
+      : await VisitModel.aggregate(
+          Object.keys(aggregation).map(key => ({
+            [key]: aggregation[key],
+          })),
+        );
     return {
-      count: count || 0,
+      statistics,
+      timeline: this._interpretTimeline(options),
     };
   }
 
@@ -178,20 +217,21 @@ export default class VisitRepository extends BaseRepository<Visit> {
       },
     };
     if (!_.isNil(options)) {
-      if (!_.isNil(options.start) && isISODate(options.start))
-        aggregation.$match.createdAt = { ...(aggregation.$match.createdAt || {}), $gte: new Date(options.start) };
-      if (!_.isNil(options.end) && isISODate(options.end))
-        aggregation.$match.createdAt = { ...(aggregation.$match.createdAt || {}), $lte: new Date(options.end) };
+      if (!_.isNil(options.from) && isISODate(options.from))
+        aggregation.$match.createdAt = { ...(aggregation.$match.createdAt || {}), $gte: new Date(options.from) };
+      if (!_.isNil(options.to) && isISODate(options.to))
+        aggregation.$match.createdAt = { ...(aggregation.$match.createdAt || {}), $lte: new Date(options.to) };
     }
 
-    const count = await VisitModel.aggregate(
+    const statistics = await VisitModel.aggregate(
       Object.keys(aggregation).map(key => ({
         [key]: aggregation[key],
       })),
     );
 
     return {
-      count: count || [],
+      statistics,
+      timeline: this._interpretTimeline(options),
     };
   }
 
@@ -217,20 +257,21 @@ export default class VisitRepository extends BaseRepository<Visit> {
       },
     };
     if (!_.isNil(options)) {
-      if (!_.isNil(options.start) && isISODate(options.start))
-        aggregation.$match.createdAt = { ...(aggregation.$match.createdAt || {}), $gte: new Date(options.start) };
-      if (!_.isNil(options.end) && isISODate(options.end))
-        aggregation.$match.createdAt = { ...(aggregation.$match.createdAt || {}), $lte: new Date(options.end) };
+      if (!_.isNil(options.from) && isISODate(options.from))
+        aggregation.$match.createdAt = { ...(aggregation.$match.createdAt || {}), $gte: new Date(options.from) };
+      if (!_.isNil(options.to) && isISODate(options.to))
+        aggregation.$match.createdAt = { ...(aggregation.$match.createdAt || {}), $lte: new Date(options.to) };
     }
 
-    const count = await VisitModel.aggregate(
+    const statistics = await VisitModel.aggregate(
       Object.keys(aggregation).map(key => ({
         [key]: aggregation[key],
       })),
     );
 
     return {
-      count: count || [],
+      statistics,
+      timeline: this._interpretTimeline(options),
     };
   }
 
@@ -254,5 +295,19 @@ export default class VisitRepository extends BaseRepository<Visit> {
     }
 
     return format;
+  }
+
+  private _interpretTimeline(options?: BaseOptions): { [key: string]: string } {
+    const timeline: any = {
+      from: "creation",
+      to: "now",
+    };
+
+    if (!_.isNil(options)) {
+      if (!_.isNil(options.from) && isISODate(options.from)) timeline.from = options.from;
+      if (!_.isNil(options.to) && isISODate(options.to)) timeline.to = options.to;
+    }
+
+    return timeline;
   }
 }
