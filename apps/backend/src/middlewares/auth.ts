@@ -11,7 +11,7 @@ class AuthMiddleware {
       const header = _.get(req, "headers.authorization");
       if (!header) throw new AuthError.InvalidToken("Bearer Missing");
       const token = header?.split(" ")[1] || "";
-      if (!token) throw new AuthError.InvalidToken("Bearer Malformed");
+      if (!token || !token.length) throw new AuthError.InvalidToken("Bearer Malformed");
 
       const usersafe: Usersafe = await AuthRepository.getInstance().validate(token);
       if (!res.locals) res.locals = {};
@@ -32,11 +32,11 @@ class AuthMiddleware {
       const usersafe: Usersafe = await AuthRepository.getInstance().validate(token);
       if (!res.locals) res.locals = {};
       res.locals.identity = usersafe;
-      next();
     } catch (e) {
       res.locals.identity = null;
-      return;
     }
+    next();
+    return;
   }
 }
 

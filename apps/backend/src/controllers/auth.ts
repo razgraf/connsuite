@@ -64,10 +64,22 @@ export default class AuthController extends ManagerController {
   public static async status(req: Request, res: Response): Promise<void> {
     try {
       const user = await UserRepository.getInstance().getById(res.locals.identity.user, { populate: true });
-      if (!user) throw new AuthError.UserNotFound("Final error when searching for user.");
+      if (!user) throw new AuthError.UserNotFound("Error when searching for user.");
+
+      const { query } = req;
+
+      const elite = _.get(query, "tier")
+        ? _.attempt(() => {
+            if (!_.get(user, "tier")) return false;
+            const uTier = _.toNumber(_.get(user, "tier"));
+            const qTier = _.toNumber(_.get(query, "tier"));
+            if (_.isNaN(uTier) || _.isNaN(qTier)) return false;
+            return qTier <= uTier;
+          })
+        : undefined;
 
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Validated", user: toUserDTO(user, { usernames: true }) });
+      res.json({ message: "Validated", user: toUserDTO(user, { usernames: true }), elite });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });

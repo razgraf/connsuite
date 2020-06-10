@@ -11,7 +11,7 @@ import { Category, toCategoryDTO } from "./category";
 export class Article {
   readonly _id?: mongoose.Schema.Types.ObjectId | string;
 
-  @prop({ default: shortid.generate() })
+  @prop({ default: `${shortid.generate()}_` })
   shortId?: string;
 
   @prop({ required: true, enum: ArticleType, default: ArticleType.Internal })

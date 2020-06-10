@@ -1,7 +1,7 @@
 import _ from "lodash";
 import mongoose from "mongoose";
 import { prop, arrayProp, getModelForClass, Ref, isDocument, isDocumentArray } from "@typegoose/typegoose";
-import { Name, UserDTOOptions } from "./atoms";
+import { Name, UserDTOOptions, UserTier } from "./atoms";
 import { Article, toArticleDTO } from "./article";
 import { Image, toImageDTO } from "./image";
 import { Network, toNetworkDTO } from "./network";
@@ -42,6 +42,9 @@ export class User {
 
   @prop({ ref: { name: "Image" }, default: null })
   thumbnail?: Ref<Image>;
+
+  @prop({ required: true, enum: UserTier, default: UserTier.Bronze })
+  tier?: UserTier;
 
   readonly createdAt?: mongoose.Schema.Types.Date | string;
   readonly updatedAt?: mongoose.Schema.Types.Date | string;

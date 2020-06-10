@@ -1,12 +1,12 @@
 import _ from "lodash";
 import { Request, Response } from "express";
 import { ObjectId } from "mongodb";
-import shortid from "shortid";
 import BaseController from "./base";
 import { HTTP_CODE } from "../constants";
 import { ArticleRepository, UserRepository } from "../repositories";
 import { Article, toArticleDTO } from "../models";
 import { ArticleError, AuthError, ParamsError } from "../errors";
+import { isShortId, isSelf } from "../utils";
 
 export default class ArticleController extends BaseController {
   public static async get(req: Request, res: Response): Promise<void> {
@@ -15,7 +15,7 @@ export default class ArticleController extends BaseController {
       if (!id) throw new ParamsError.Missing("Missing article identifier.");
 
       const populate = !_.has(req, "query.minimal");
-      const article: Article | null = shortid.isValid(id)
+      const article: Article | null = isShortId(id)
         ? await ArticleRepository.getInstance().getByFilters({ shortId: String(id) }, { populate })
         : await ArticleRepository.getInstance().getById(id, { populate });
 
@@ -31,6 +31,7 @@ export default class ArticleController extends BaseController {
           content: true,
           user: true,
         }),
+        isSelf: isSelf(article, res),
       });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);

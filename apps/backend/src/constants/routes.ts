@@ -1,6 +1,6 @@
 export default {
   admin: {
-    root: "/admin", //TODO REMOVE THIS IN PRODUCTION
+    root: "/admin" /* For testing purposes, not available in production */,
   },
   article: {
     root: "/articles",

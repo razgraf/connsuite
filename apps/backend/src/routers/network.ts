@@ -5,11 +5,11 @@ import { AuthMiddleware, UploadMiddleware } from "../middlewares";
 
 const NetworkRouter = express.Router();
 
-NetworkRouter.get(routes.admin.root, NetworkController.admin);
+// NetworkRouter.get(routes.admin.root, [AuthMiddleware.bearerFriendly], NetworkController.admin);
 
 NetworkRouter.get(routes.network.listExternal, NetworkController.listExternal);
-NetworkRouter.get(routes.network.get, NetworkController.get);
-NetworkRouter.get(routes.network.list, NetworkController.list);
+NetworkRouter.get(routes.network.get, [AuthMiddleware.bearerFriendly], NetworkController.get);
+NetworkRouter.get(routes.network.list, [AuthMiddleware.bearerFriendly], NetworkController.list);
 
 NetworkRouter.post(
   routes.network.create,
@@ -21,6 +21,6 @@ NetworkRouter.patch(
   [AuthMiddleware.bearer, UploadMiddleware.upload.single("icon")],
   NetworkController.update,
 );
-NetworkRouter.delete(routes.network.remove, AuthMiddleware.bearer, NetworkController.remove);
+NetworkRouter.delete(routes.network.remove, [AuthMiddleware.bearer], NetworkController.remove);
 
 export default NetworkRouter;

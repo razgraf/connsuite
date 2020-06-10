@@ -6,6 +6,7 @@ import { HTTP_CODE, networks as external } from "../constants";
 import { NetworkRepository, UserRepository } from "../repositories";
 import { Network, toNetworkDTO } from "../models";
 import { AuthError, NetworkError, ParamsError } from "../errors";
+import { isShortId, isSelf } from "../utils";
 
 export default class NetworkController extends BaseController {
   public static async get(req: Request, res: Response): Promise<void> {
@@ -13,13 +14,20 @@ export default class NetworkController extends BaseController {
       const id = _.get(req, "params.id");
       if (!id) throw new ParamsError.Missing("Missing network identifier.");
 
-      const network: Network | null = await NetworkRepository.getInstance().getById(id, {
-        populate: !_.has(req, "query.minimal"),
-      });
+      const populate = !_.has(req, "query.minimal");
+
+      const network: Network | null = isShortId(id)
+        ? await NetworkRepository.getInstance().getByFilters({ shortId: String(id) }, { populate })
+        : await NetworkRepository.getInstance().getById(id, { populate });
+
       if (!network) throw new NetworkError.NotFound("The identifier doesn't match any network.");
 
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Found", network: toNetworkDTO(network) });
+      res.json({
+        message: "Found",
+        network: toNetworkDTO(network),
+        isSelf: isSelf({ user: { _id: network.user } }, res),
+      });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });

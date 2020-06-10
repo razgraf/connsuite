@@ -81,3 +81,10 @@ export enum ArticleType {
   External = "external",
   Internal = "internal",
 }
+
+export enum UserTier {
+  Bronze = 5,
+  Silver = 10,
+  Gold = 15,
+  Platinum = 20,
+}

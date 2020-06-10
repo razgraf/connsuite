@@ -1,5 +1,6 @@
 import _ from "lodash";
 import mongoose from "mongoose";
+import shortid from "shortid";
 import { prop, getModelForClass, Ref, isDocument } from "@typegoose/typegoose";
 import { networks as external } from "../constants";
 import { NetworkType, NetworkDTOOptions } from "./atoms";
@@ -8,6 +9,9 @@ import { Image, toImageDTO } from "./image";
 
 export class Network {
   readonly _id?: mongoose.Schema.Types.ObjectId | string;
+
+  @prop({ default: `${shortid.generate()}_` })
+  shortId?: string;
 
   @prop({ required: true, enum: NetworkType, default: NetworkType.Internal })
   type!: NetworkType;
@@ -64,6 +68,7 @@ export function toNetworkDTO(
   const result: { [key: string]: any } = {};
 
   result._id = network._id;
+  result.shortId = network.shortId;
   result.type = network.type;
   result.priority = network.priority;
 
