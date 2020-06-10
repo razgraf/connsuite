@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { ManagerController } from "./base";
 import { HTTP_CODE } from "../constants";
 import { UserRepository, SkillRepository, CategoryRepository } from "../repositories";
-import { toUserDTO, toCategoryDTO, toSkillDTO } from "../models";
+import { toUserDTO, toCategoryDTO, toSkillDTO, User } from "../models";
 import { ParamsError, AuthError } from "../errors";
 
 export default class UserController extends ManagerController {
@@ -46,10 +46,23 @@ export default class UserController extends ManagerController {
   }
 
   public static async update(req: Request, res: Response): Promise<void> {
-    res.status(HTTP_CODE.OK);
-    res.json({
-      message: "Found",
-    });
+    try {
+      const userId = _.get(res, "locals.identity.user");
+      if (!userId) throw new ParamsError.Missing("Missing user identifier.");
+
+      const { body, file } = req;
+      body.userId = res.locals.identity.user;
+      body.picture = file;
+
+      const holder = ((await UserRepository.getInstance().update(userId, body)) as User) || {};
+
+      res.status(HTTP_CODE.OK);
+      res.json({ message: "Updated", _id: holder._id, user: toUserDTO(holder) });
+    } catch (e) {
+      console.error(e);
+      res.status(e.code || HTTP_CODE.BAD_REQUEST);
+      res.json({ message: e.message });
+    }
   }
 
   public static async listSkillsAndCategories(req: Request, res: Response): Promise<void> {

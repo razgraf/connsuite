@@ -35,6 +35,7 @@ export interface NetworkDTOOptions {
 export enum ImageParent {
   Network = "network",
   Article = "article",
+  User = "user",
 }
 
 export enum ImagePurpose {

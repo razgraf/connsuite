@@ -9,6 +9,7 @@ import { sizes } from "../constants";
 import { ImageError } from "../errors";
 import { Image, ImageModel, ImageParent, ImagePurpose } from "../models";
 import { tree } from "../constants/atoms";
+import { UserRepository } from ".";
 
 export default class ImageRepository extends BaseRepository<Image> {
   private static instance: ImageRepository;
@@ -97,6 +98,30 @@ export default class ImageRepository extends BaseRepository<Image> {
 
         return file;
       }
+    } else if (file.parent === ImageParent.User) {
+      if (file.purpose === ImagePurpose.Cover) {
+        await this._bind(file);
+
+        sharp(source.buffer)
+          .resize(sizes.user.picture.WIDTH, sizes.user.picture.HEIGHT, {
+            fit: sharp.fit.inside,
+            withoutEnlargement: true,
+          })
+          .toFile(`${tree.user}/${file._id}.${type}`);
+
+        return file;
+      } else if (image.purpose === ImagePurpose.Thumbnail) {
+        await this._bind(file);
+
+        sharp(source.buffer)
+          .resize(sizes.user.thumbnail.WIDTH, sizes.user.thumbnail.HEIGHT, {
+            fit: sharp.fit.inside,
+            withoutEnlargement: true,
+          })
+          .toFile(`${tree.user}/${file._id}.${type}`);
+
+        return file;
+      }
     }
     return null;
   }
@@ -113,7 +138,8 @@ export default class ImageRepository extends BaseRepository<Image> {
       let path = "";
 
       if (image.parent === ImageParent.Network) path = `/../../${tree.internalNetwork}/${id}.${type}`;
-      if (image.parent === ImageParent.Network) path = `/../../${tree.article}/${id}.${type}`;
+      if (image.parent === ImageParent.Article) path = `/../../${tree.article}/${id}.${type}`;
+      if (image.parent === ImageParent.User) path = `/../../${tree.user}/${id}.${type}`;
 
       fs.exists(__dirname + path, exists => {
         if (exists)
@@ -154,6 +180,17 @@ export default class ImageRepository extends BaseRepository<Image> {
             }
           : {
               cover: image,
+            },
+      );
+    } else if (image.parent === ImageParent.User) {
+      await UserRepository.getInstance().bindImage(
+        String(image.user),
+        image.purpose === ImagePurpose.Thumbnail
+          ? {
+              thumbnail: image,
+            }
+          : {
+              picture: image,
             },
       );
     }

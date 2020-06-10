@@ -1,10 +1,14 @@
 import _ from "lodash";
 import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
+import guards from "@connsuite/guards";
+import { isDocument } from "@typegoose/typegoose";
 import BaseRepository, { BaseOptions } from "./base";
 import UsernameRepository from "./username";
 import { defaults } from "../constants";
-import { Vendor, User, Username, UserModel, Name, Request } from "../models";
+import { ParamsError, AuthError } from "../errors";
+import { Vendor, User, Username, UserModel, Name, Request, ImageParent, ImagePurpose, Image } from "../models";
+import { ImageRepository } from ".";
 
 export default class UserRepository extends BaseRepository<User> {
   private static instance: UserRepository;
@@ -21,8 +25,32 @@ export default class UserRepository extends BaseRepository<User> {
   public async create(payload: User): Promise<User> {
     return UserModel.create(payload);
   }
-  public async update(id: string, payload: User): Promise<User | null> {
-    return UserModel.findByIdAndUpdate(id, payload, { new: true });
+  public async update(id: string, payload: Request.UserUpdate): Promise<User | null> {
+    if (_.isNil(payload)) throw new ParamsError.Missing("No payload provided.");
+    if (!_.get(payload, "userId")) throw new ParamsError.Missing("No user provided.");
+    if (!_.get(payload, "firstName")) throw new ParamsError.Missing("Missing first name");
+    if (!_.get(payload, "lastName")) throw new ParamsError.Missing("Missing last name");
+    if (!_.get(payload, "description")) throw new ParamsError.Missing("Missing Description");
+
+    const holder: User | null = await this.getById(_.get(payload, "userId"), { populate: true });
+    if (!holder) throw new AuthError.UserNotFound("Unknown user or access not granted.");
+
+    await this._profileGuards(payload, holder);
+
+    const user = await UserModel.findByIdAndUpdate(holder._id, {
+      name: {
+        first: payload.firstName,
+        last: payload.lastName,
+      },
+      description: payload.description,
+    });
+
+    if (!_.isNil(payload.picture)) {
+      await this._removeImages(holder);
+      await this._generateImages(payload.picture, holder);
+    }
+
+    return user;
   }
   public async remove(id: string): Promise<void> {
     await UserModel.findByIdAndRemove(id);
@@ -201,6 +229,10 @@ export default class UserRepository extends BaseRepository<User> {
     return user;
   }
 
+  public async bindImage(userId: string, payload: { picture: Image } | { thumbnail: Image }): Promise<void> {
+    await UserModel.findByIdAndUpdate(userId, payload);
+  }
+
   /**
    *
    *
@@ -209,11 +241,67 @@ export default class UserRepository extends BaseRepository<User> {
    *
    */
 
+  private async _profileGuards(payload: Request.UserUpdate, historic: User): Promise<void> {
+    if (!_.get(payload, "firstName")) throw new ParamsError.Missing("Missing first name.");
+    const firstNameGuard = guards.isNameAcceptable(_.get(payload, "firstName"), true);
+    if (firstNameGuard !== true) throw new ParamsError.Invalid(("First Name: " + firstNameGuard) as string);
+
+    if (!_.get(payload, "lastName")) throw new ParamsError.Missing("Missing last name.");
+    const lastNameGuard = guards.isNameAcceptable(_.get(payload, "lastName"), true);
+    if (lastNameGuard !== true) throw new ParamsError.Invalid(("Last Name: " + lastNameGuard) as string);
+
+    if (!_.get(payload, "description")) throw new ParamsError.Missing("Missing Description");
+    const descriptionGuard = guards.isUserDescriptionAcceptable(_.get(payload, "description"), true);
+    if (descriptionGuard !== true) throw new ParamsError.Invalid(("Description: " + descriptionGuard) as string);
+
+    /** If there is no picture historically-available (e.g. fresh user), don't update until the user uploads one */
+    if (
+      !_.get(historic, "picture") ||
+      !_.get(historic, "picture.url") ||
+      !_.get(historic, "thumbnail") ||
+      !_.get(historic, "thumbnail.url")
+    ) {
+      if (!_.get(payload, "picture") || !payload.picture) throw new ParamsError.Missing("Missing Picture");
+      const pictureGuard = guards.isUserPictureAcceptable(payload.picture, true, { vendor: "multer" });
+      if (pictureGuard !== true) throw new ParamsError.Invalid(pictureGuard as string);
+    }
+  }
+
+  private async _removeImages(user: User): Promise<void> {
+    try {
+      if (!_.isNil(user.picture) && isDocument(user.picture)) {
+        await ImageRepository.getInstance().remove(user.picture._id);
+        ImageRepository.getInstance().unlink(user.picture);
+      }
+
+      if (!_.isNil(user.thumbnail) && isDocument(user.thumbnail)) {
+        await ImageRepository.getInstance().remove(user.thumbnail._id);
+        ImageRepository.getInstance().unlink(user.thumbnail);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  private async _generateImages(source: Express.Multer.File, user: User): Promise<void> {
+    const specimen: Image = {
+      parent: ImageParent.User,
+      purpose: ImagePurpose.Cover,
+
+      user,
+      type: source.mimetype as string,
+    };
+
+    await ImageRepository.getInstance().save(source, specimen);
+    await ImageRepository.getInstance().save(source, { ...specimen, purpose: ImagePurpose.Thumbnail });
+  }
+
   private _populateByOptions(options?: BaseOptions): { path: string; model: string }[] {
     const population: { path: string; model: string }[] = [];
     if (_.isNil(options) || !_.get(options, "populate")) return population;
     if (!options.hideUsernames) population.push({ path: "usernames", model: "Username" });
-    if (!options.hideImages) population.push({ path: "icon", model: "Image" }, { path: "thumbnail", model: "Image" });
+    if (!options.hideImages)
+      population.push({ path: "picture", model: "Image" }, { path: "thumbnail", model: "Image" });
     return population;
   }
 

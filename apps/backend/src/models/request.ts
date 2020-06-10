@@ -106,3 +106,11 @@ export type UserIdentifier = {
   username?: string;
   email?: string;
 };
+
+export type UserUpdate = {
+  userId: string;
+  firstName: string;
+  lastName: string;
+  description: string;
+  picture?: Express.Multer.File;
+};

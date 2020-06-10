@@ -25,6 +25,16 @@ export const sizes = {
       HEIGHT: 400,
     },
   },
+  user: {
+    picture: {
+      WIDTH: 1200,
+      HEIGHT: 1200,
+    },
+    thumbnail: {
+      WIDTH: 400,
+      HEIGHT: 400,
+    },
+  },
   article: {
     cover: {
       WIDTH: 1400,

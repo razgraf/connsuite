@@ -6,6 +6,7 @@ import { networks as external } from "../constants";
 import { ImageParent, ImagePurpose, ImageDTOOptions } from "./atoms";
 import { Article, toArticleDTO } from "./article";
 import { Network, toNetworkDTO } from "./network";
+import { User, toUserDTO } from "./user";
 
 export class Image {
   readonly _id?: mongoose.Schema.Types.ObjectId | string;
@@ -29,6 +30,9 @@ export class Image {
   @prop({ ref: { name: "Article" }, default: null })
   article?: Ref<Article>;
 
+  @prop({ ref: { name: "User" }, default: null })
+  user?: Ref<User>;
+
   readonly createdAt?: mongoose.Schema.Types.Date | string;
   readonly updatedAt?: mongoose.Schema.Types.Date | string;
 
@@ -46,6 +50,10 @@ function interpret(image: Image, result: { [key: string]: any } = {}): void {
     const type = _.attempt(() => _.toString(_.get(image || {}, "type") || "").split("/")[1]);
     if (_.isNil(image._id) || _.isError(type) || _.isNil(type)) return;
     result.url = `${atoms.root}/${atoms.tree.article}/${image._id}.${type}`;
+  } else if (image.parent === ImageParent.User) {
+    const type = _.attempt(() => _.toString(_.get(image || {}, "type") || "").split("/")[1]);
+    if (_.isNil(image._id) || _.isError(type) || _.isNil(type)) return;
+    result.url = `${atoms.root}/${atoms.tree.user}/${image._id}.${type}`;
   }
 }
 
@@ -54,9 +62,6 @@ export function toImageDTO(
   options: ImageDTOOptions = { parent: false, interpret: true },
 ): { [key: string]: any } {
   const result: { [key: string]: any } = {};
-
-  // result._id = image._id;
-  // result.purpose = image.purpose;
 
   result.type = image.type;
   result.parent = image.parent;
@@ -68,6 +73,9 @@ export function toImageDTO(
         break;
       case ImageParent.Network:
         if (!_.isNil(image.network) && isDocument(image.network)) result.network = toNetworkDTO(image.network);
+        break;
+      case ImageParent.User:
+        if (!_.isNil(image.user) && isDocument(image.user)) result.user = toUserDTO(image.user);
         break;
       default:
         break;

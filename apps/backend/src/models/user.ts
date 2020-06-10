@@ -38,7 +38,7 @@ export class User {
   articles?: Ref<Article>[];
 
   @prop({ ref: { name: "Image" }, default: null })
-  icon?: Ref<Image>;
+  picture?: Ref<Image>;
 
   @prop({ ref: { name: "Image" }, default: null })
   thumbnail?: Ref<Image>;
@@ -52,7 +52,7 @@ export class User {
 
 export function toUserDTO(
   user: User,
-  options: UserDTOOptions = { usernames: false, networks: false, articles: false, images: false },
+  options: UserDTOOptions = { usernames: false, networks: false, articles: false, images: true },
 ): { [key: string]: any } {
   const result: { [key: string]: any } = {};
   result._id = user._id;
@@ -77,8 +77,8 @@ export function toUserDTO(
   }
 
   if (_.get(options, "images") === true) {
-    if (!_.isNil(result.icon) && isDocument(result.icon)) result.icon = toImageDTO(result.icon);
-    if (!_.isNil(result.thumbnail) && isDocument(result.thumbnail)) result.thumbnail = toImageDTO(result.thumbnail);
+    if (!_.isNil(user.picture) && isDocument(user.picture)) result.picture = toImageDTO(user.picture);
+    if (!_.isNil(user.thumbnail) && isDocument(user.thumbnail)) result.thumbnail = toImageDTO(user.thumbnail);
   }
 
   return result;

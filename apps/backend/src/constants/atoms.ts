@@ -9,6 +9,7 @@ export const tree = {
   article: "public/data/article",
   externalNetwork: "public/static/network",
   internalNetwork: "public/data/network",
+  user: "public/data/user",
 };
 
 export const configs = {
