@@ -257,9 +257,9 @@ export default class UserRepository extends BaseRepository<User> {
     /** If there is no picture historically-available (e.g. fresh user), don't update until the user uploads one */
     if (
       !_.get(historic, "picture") ||
-      !_.get(historic, "picture.url") ||
+      !_.get(historic, "picture._id") ||
       !_.get(historic, "thumbnail") ||
-      !_.get(historic, "thumbnail.url")
+      !_.get(historic, "thumbnail._id")
     ) {
       if (!_.get(payload, "picture") || !payload.picture) throw new ParamsError.Missing("Missing Picture");
       const pictureGuard = guards.isUserPictureAcceptable(payload.picture, true, { vendor: "multer" });

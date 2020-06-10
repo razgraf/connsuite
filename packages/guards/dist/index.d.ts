@@ -122,22 +122,22 @@ declare const guards: {
     isPasswordAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
     isUsernameAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
     isUserDescriptionAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
-    isUserPictureAcceptable: (value: {
-        [key: string]: string | number;
-        name: string;
-        type: string;
-        size: string | number;
-    } | Express.Multer.File, withPolicy: boolean | undefined, options: {
-        [key: string]: string;
-        vendor: string;
-    }) => string | boolean;
-    isArticleTitleAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
-    isArticleCoverAcceptable: (value: Express.Multer.File | {
+    isUserPictureAcceptable: (value: Express.Multer.File | {
         [key: string]: string | number;
         name: string;
         type: string;
         size: string | number;
     }, withPolicy: boolean | undefined, options: {
+        [key: string]: string;
+        vendor: string;
+    }) => string | boolean;
+    isArticleTitleAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
+    isArticleCoverAcceptable: (value: {
+        [key: string]: string | number;
+        name: string;
+        type: string;
+        size: string | number;
+    } | Express.Multer.File, withPolicy: boolean | undefined, options: {
         [key: string]: string;
         vendor: string;
     }) => string | boolean;

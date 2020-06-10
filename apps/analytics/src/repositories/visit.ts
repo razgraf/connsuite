@@ -189,6 +189,7 @@ export default class VisitRepository extends BaseRepository<Visit> {
             [key]: aggregation[key],
           })),
         );
+
     return {
       statistics,
       timeline: this._interpretTimeline(options),

@@ -26,6 +26,9 @@
     "packages": [
       "apps/*",
       "packages/*"
+    ],
+    "nohoist": [
+      "resources/*"
     ]
   }
 }

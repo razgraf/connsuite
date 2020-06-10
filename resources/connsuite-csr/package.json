@@ -1,6 +1,6 @@
 {
-  "name": "connsuite",
-  "version": "0.1.0",
+  "name": "connsuite-csr",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@editorjs/code": "^2.4.1",
