@@ -112,5 +112,6 @@ export type UserUpdate = {
   firstName: string;
   lastName: string;
   description: string;
+  tagline: string;
   picture?: Express.Multer.File;
 };

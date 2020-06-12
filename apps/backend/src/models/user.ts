@@ -6,11 +6,12 @@ import { Article, toArticleDTO } from "./article";
 import { Image, toImageDTO } from "./image";
 import { Network, toNetworkDTO } from "./network";
 import { Username, toUsernameDTO } from "./username";
+import { defaults } from "../constants";
 
 export class User {
   readonly _id?: mongoose.Schema.Types.ObjectId | string;
 
-  @prop({ required: true })
+  @prop({ required: true, default: defaults.tagline })
   description!: string;
 
   @prop({ required: true })
@@ -25,7 +26,7 @@ export class User {
   @prop({ required: true })
   name!: Name;
 
-  @prop()
+  @prop({ default: defaults.tagline })
   tagline?: string;
 
   @arrayProp({ itemsRef: "Username" })
@@ -59,6 +60,8 @@ export function toUserDTO(
   result.description = user.description;
   result.email = user.email;
   result.tagline = user.tagline;
+  result.tier = user.tier;
+
   result.name = {
     first: _.get(user, "name.first"),
     last: _.get(user, "name.last"),
