@@ -31,6 +31,8 @@ export default class ArticleController extends BaseController {
         populate: true,
       })) as User;
 
+      if (!user) throw new ArticleError.NotFound("The owner is not available.");
+
       res.status(HTTP_CODE.OK);
       res.json({
         message: "Found",

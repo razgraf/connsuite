@@ -249,8 +249,8 @@ export default class ArticleRepository extends BaseRepository<Article> {
   }
 
   private _generateSummary(content: string): string {
-    if (content) return "ConnSuite Article - X";
-    return "ConnSuite Article - O"; // TODO
+    if (content) return "ConnSuite Article";
+    return "ConnSuite Article"; // TODO
   }
 
   private async _removeImages(article: Article): Promise<void> {

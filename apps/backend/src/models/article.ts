@@ -11,7 +11,7 @@ import { Category, toCategoryDTO } from "./category";
 export class Article {
   readonly _id?: mongoose.Schema.Types.ObjectId | string;
 
-  @prop({ default: `${shortid.generate()}_` })
+  @prop({ default: () => `${shortid.generate()}_` })
   shortId?: string;
 
   @prop({ required: true, enum: ArticleType, default: ArticleType.Internal })
@@ -61,6 +61,8 @@ export function toArticleDTO(
   result.type = article.type;
   result.title = article.title;
   result.url = article.url;
+
+  result.createdAt = article.createdAt;
 
   if (result.type === ArticleType.Internal) {
     result.summary = article.summary;
