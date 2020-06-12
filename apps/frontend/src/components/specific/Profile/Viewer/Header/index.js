@@ -249,7 +249,7 @@ function Header({ className, controller, profile, isLoading }) {
     [controller, router],
   );
 
-  const picture = useMemo(() => _.get(profile, "user.picture.url") || ProfilePictureFallback, [profile]);
+  const picture = useMemo(() => (isLoading ? null : _.get(profile, "user.picture.url") || ProfilePictureFallback), [profile, isLoading]);
 
   return (
     <Wrapper className={className} ref={ref}>

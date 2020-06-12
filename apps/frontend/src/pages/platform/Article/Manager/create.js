@@ -12,6 +12,7 @@ import { useHistory, useArticleReducer, useArticleCreateMachine, useModal } from
 import { Picker, Header, Info, Specific } from "../../../../components/specific/Article/Manager";
 import { ModalArticleLeave } from "../../../../components/specific/Modals";
 import { getValueOfInputEditorSync } from "../../../../components/atoms/Input/uncontrolled";
+import * as Head from "../../../../components/specific/Head";
 
 const Page = styled.div`
   position: relative;
@@ -183,6 +184,7 @@ function ArticleManager() {
 
   return (
     <Page data-leaving={machine.current.value === machine.states.success}>
+      <Head.ArticleCreate />
       <Picker isActive={reducer.state.type.value === null} onPick={onPick} />
       <Playground>
         <StyledNav

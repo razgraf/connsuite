@@ -8,6 +8,7 @@ import { components } from "../../../../themes";
 import Nav from "../../../../components/shared/Nav";
 import { pages, types } from "../../../../constants";
 import { useHistory } from "../../../../hooks";
+import * as Head from "../../../../components/specific/Head";
 
 const Page = styled.div`
   position: relative;
@@ -62,6 +63,7 @@ function ArticleViewer({ query }) {
 
   return (
     <Page data-leaving={false}>
+      <Head.ArticleViewer />
       <StyledNav appearance={types.nav.appearance.secondary} title={pages.network.create.title} isLight />
       <Canvas>
         <p>View {articleId}</p>

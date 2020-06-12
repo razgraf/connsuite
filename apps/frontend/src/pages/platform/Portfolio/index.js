@@ -10,6 +10,7 @@ import Network, { NetworkAdd } from "../../../components/shared/Network";
 import Article, { ArticleAdd } from "../../../components/shared/Article";
 import Cover from "../../../components/shared/Cover";
 import { ModalNetworkRemove, ModalArticleRemove } from "../../../components/specific/Modals";
+import * as Head from "../../../components/specific/Head";
 
 const Page = styled.div``;
 
@@ -108,6 +109,7 @@ function Portfolio() {
 
   return (
     <Page>
+      <Head.Portfolio />
       <Area>
         <SectionNetworks>
           <SectionHeader>

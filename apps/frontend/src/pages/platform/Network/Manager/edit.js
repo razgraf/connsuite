@@ -11,6 +11,7 @@ import { Warning, Spinner } from "../../../../components/atoms";
 import { pages, types } from "../../../../constants";
 import { useNetworkReducer, useNetworkEditMachine, useHistory } from "../../../../hooks";
 import { Header, Preview, Footer, Steps } from "../../../../components/specific/Network/Manager";
+import * as Head from "../../../../components/specific/Head";
 
 const Page = styled.div`
   position: relative;
@@ -209,6 +210,7 @@ function NetworkManager({ query }) {
 
   return (
     <Page data-leaving={machine.current.value === machine.states.success}>
+      <Head.NetworkEdit title={_.get(reducer, "state.title.value") || "Network"} />
       <StyledNav appearance={types.nav.appearance.secondary} title={pages.network.edit.title} />
       <Canvas>
         <Card>

@@ -18,8 +18,8 @@ const history = (state = initialHistory, { type, payload } = {}) => {
     case redux.HISTORY_CLEAR: {
       return [];
     }
-    case REHYDRATE:
-      return initialHistory;
+    // case REHYDRATE:
+    //   return initialHistory;
     case PURGE:
       return initialHistory;
     default:
@@ -51,8 +51,8 @@ const cover = (state = initialCover, { type, payload } = {}) => {
     case redux.COVER_NETWORK_CLEAR: {
       return { ...state, network: payload.network };
     }
-    case REHYDRATE:
-      return initialCover;
+    // case REHYDRATE:
+    //   return initialCover;
     case PURGE:
       return initialCover;
     default:
@@ -98,8 +98,8 @@ const modal = (state = initialModal, { type, payload } = {}) => {
       };
     }
 
-    case REHYDRATE:
-      return initialModal;
+    // case REHYDRATE:
+    //   return initialModal;
     case PURGE:
       return initialModal;
     default:

@@ -183,7 +183,7 @@ const Form = styled.div`
   grid-column-gap: calc(${props => props.theme.sizes.edge} * 1.5);
 `;
 
-const Description = styled.div`
+const Single = styled.div`
   position: relative;
   grid-column: span 2;
   & > * {
@@ -373,7 +373,26 @@ function Header({ className, reducer, person }) {
               value={reducer.state.lastName.value}
               warning={reducer.state.lastName.error}
             />
-            <Description>
+            <Single>
+              <InputText
+                help={{ value: policy.user.tagline.root }}
+                id="managerTagline"
+                label="Tagline"
+                onUpdate={e => {
+                  reducer.dispatch({
+                    type: reducer.actions.UPDATE_TAGLINE,
+                    payload: {
+                      value: e.target.value,
+                      error: guards.interpret(guards.isUserTaglineAcceptable, e.target.value),
+                    },
+                  });
+                }}
+                placeholder="Hello!"
+                value={reducer.state.tagline.value}
+                warning={reducer.state.tagline.error}
+              />
+            </Single>
+            <Single>
               <InputArea
                 help={{
                   value: `Your personal description. Include some skills and a few *legendary* words about yourself. ${policy.user.description.root}`,
@@ -392,7 +411,7 @@ function Header({ className, reducer, person }) {
                     },
                   });
                 }}
-                placeholder="e.g. My story in 500 chars..."
+                placeholder="e.g. My story in 500 chars... Welcome to my online business card!"
                 value={reducer.state.description.value}
                 warning={reducer.state.description.error}
               />
@@ -408,7 +427,7 @@ function Header({ className, reducer, person }) {
                   ))}
                 </DescriptionInterpreted>
               </Preview>
-            </Description>
+            </Single>
           </Form>
         </Right>
       </Content>

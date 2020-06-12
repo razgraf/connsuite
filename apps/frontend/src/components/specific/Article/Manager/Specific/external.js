@@ -78,7 +78,7 @@ function External({ className, reducer }) {
               },
             });
           }}
-          placeholder="e.g. www.behance.net/john/project"
+          placeholder="e.g. https://www.behance.net/john/project"
           value={reducer.state.url.value}
           warning={reducer.state.url.error}
         />

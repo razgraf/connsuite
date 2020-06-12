@@ -2,14 +2,14 @@ import _ from "lodash";
 import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import IconArrowDown from "@material-ui/icons/KeyboardArrowDownRounded";
 import ProfilePictureFallback from "../../../../../assets/images/profile_fallback.jpg";
 import { pages } from "../../../../../constants";
 import { useOnClickOutside, useHistory, useShallowAuth } from "../../../../../hooks";
-import { getPrimaryUsername, parseFullName } from "../../../../../utils";
+import { getPrimaryUsername, parseFullName, logout } from "../../../../../utils";
 import Button from "../../../../atoms/Button";
 
 const Wrapper = styled.div`
@@ -187,6 +187,7 @@ function DropdownItem({ route, as, title, isActive }) {
 function Account({ className }) {
   const router = useRouter();
   const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
 
   const [isDown, setIsDown] = useState(false);
   const [ref] = useOnClickOutside(() => setIsDown(false));
@@ -242,6 +243,9 @@ function Account({ className }) {
         {[pages.profile.edit, pages.dashboard, pages.about].map(item => (
           <DropdownItem {...item} key={item.title} isActive={router.pathname === item.route} route={item.route} />
         ))}
+        <DropdownItemWrapper onClick={() => logout({ auth, dispatch })}>
+          <DropdownItemTitle>Log Out</DropdownItemTitle>
+        </DropdownItemWrapper>
       </Dropdown>
     </Wrapper>
   );

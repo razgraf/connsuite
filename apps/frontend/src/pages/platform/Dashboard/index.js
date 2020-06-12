@@ -5,6 +5,7 @@ import { Button } from "../../../components/atoms";
 import { Area, Modal } from "../../../components/shared";
 import { logout } from "../../../utils";
 import { useModal } from "../../../hooks";
+import * as Head from "../../../components/specific/Head";
 
 const Page = styled.div``;
 
@@ -19,6 +20,7 @@ function Dashboard() {
 
   return (
     <Page>
+      <Head.Dashboard />
       <Area>
         <p>Dashboard</p>
         <Button

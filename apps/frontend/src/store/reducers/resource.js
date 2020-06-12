@@ -60,8 +60,8 @@ const resource = (state = initialResource, { type, payload }) => {
       return { ...state, categories: { ...state.categories, isFetched: payload.isFetched } };
     }
 
-    case REHYDRATE:
-      return initialResource;
+    // case REHYDRATE:
+    //   return initialResource;
     case PURGE:
       return initialResource;
     default:

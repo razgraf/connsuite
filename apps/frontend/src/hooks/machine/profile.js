@@ -18,7 +18,7 @@ export function useProfileMachine({ onSuccess = () => {} } = {}) {
 function useProfileEditActions({ auth, dispatch, toast, router, reducer }) {
   return {
     [profileEditX.actions.approve]: () => {
-      // dispatch({ type: sagas.AUTH_UPDATE });
+      dispatch({ type: sagas.AUTH_UPDATE, payload: { auth } });
       toast.addToast("Profile successfully updated!", {
         appearance: "success",
         autoDismiss: true,
@@ -31,12 +31,11 @@ function useProfileEditActions({ auth, dispatch, toast, router, reducer }) {
     [profileEditX.actions.bind]: context => {
       const user = _.get(context, "data.user");
 
-      console.log("1");
-
       const binder = {
         firstName: _.get(user, "name.first"),
         lastName: _.get(user, "name.last"),
         description: _.get(user, "description"),
+        tagline: _.get(user, "tagline"),
         picture: {
           preview: _.get(user, "picture.url"),
         },

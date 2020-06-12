@@ -14,6 +14,7 @@ import { Header, Info, Specific } from "../../../../components/specific/Article/
 import { ModalArticleLeave } from "../../../../components/specific/Modals";
 import { getValueOfInputEditorSync } from "../../../../components/atoms/Input/uncontrolled";
 import { blur } from "../../../../utils";
+import * as Head from "../../../../components/specific/Head";
 
 const Page = styled.div`
   position: relative;
@@ -200,6 +201,7 @@ function ArticleManager({ query }) {
 
   return (
     <Page data-leaving={machine.current.value === machine.states.success}>
+      <Head.ArticleEdit title={_.get(reducer, "state.title.value") || "Article"} />
       <Playground>
         <StyledNav
           isLight

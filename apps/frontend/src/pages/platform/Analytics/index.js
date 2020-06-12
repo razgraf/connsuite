@@ -9,6 +9,7 @@ import { Articles, Networks, Profile, Unauthorized } from "../../../components/s
 import { Area } from "../../../components/shared";
 import { Button } from "../../../components/atoms";
 import { pages } from "../../../constants";
+import * as Head from "../../../components/specific/Head";
 
 const Page = styled.div``;
 
@@ -44,6 +45,7 @@ const ButtonIconWrapper = styled.div`
 function Analytics({ elite }) {
   return (
     <Page>
+      <Head.Analytics />
       <Area>
         {!elite ? (
           <Unauthorized />

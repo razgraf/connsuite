@@ -129,6 +129,10 @@ const SkillDropdown = styled(Dropdown)`
 
 const SkillPillWrapper = styled.div`
   position: relative;
+  display: none;
+  &[data-active="true"] {
+    display: flex;
+  }
 `;
 
 const SkillPill = styled(Pill)`
@@ -181,7 +185,7 @@ function Navigator({ className, categories, skills, controller }) {
             </Pill>
           ))}
       </List>
-      <SkillPillWrapper ref={ref}>
+      <SkillPillWrapper ref={ref} data-active={skills.length > 0}>
         <SkillPill data-active={_.has(chosen, "isSkill")} onClick={() => setIsDown(!isDown)}>
           <p>Skill: {chosen && _.get(chosen, "isSkill") ? _.get(chosen, "title") : "Browse"}</p>
           <Arrow data-active={isDown}>

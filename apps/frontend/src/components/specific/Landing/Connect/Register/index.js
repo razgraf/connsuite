@@ -197,6 +197,7 @@ function Register({ className }) {
           appearance={t => t.outline}
           accent={t => t.secondary}
           isDisabledSoft={!isFormValid}
+          isLoading={[machine.states.connect].includes(machine.current.value)}
           isDisabled={![machine.states.idle, machine.states.failure].includes(machine.current.value)}
           onClick={() => {
             if (!isFormValid) return;

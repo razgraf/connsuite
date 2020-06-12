@@ -71,7 +71,10 @@ export function useSelfArticles() {
     if (!isLoading && !isFetched) {
       dispatch({ type: redux.ARTICLES_SET_IS_FETCHED, payload: { isFetched: true } });
       const username = _.attempt(() => auth.user.usernames.find(item => item.isPrimary === true).value);
-      dispatch({ type: sagas.ARTICLES_LIST, payload: { auth, user: { username: !_.isError(username) ? username : null } } });
+      dispatch({
+        type: sagas.ARTICLES_LIST,
+        payload: { auth, user: { username: !_.isError(username) ? username : null } },
+      });
     }
     return () => {};
   }, [auth, isLoading, isFetched, dispatch]);

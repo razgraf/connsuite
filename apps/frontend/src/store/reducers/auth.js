@@ -16,12 +16,8 @@ const initialUser = {
 const user = (state = initialUser, action) => {
   switch (action.type) {
     case redux.AUTH_USER_SET: {
-      const data = { ...initialUser };
-      data.description = _.get(action.payload, "description");
-      data.usernames = _.get(action.payload, "usernames") || [];
-      data.name.first = _.get(action.payload, "name.first");
-      data.name.last = _.get(action.payload, "name.last");
-      data.tier = _.get(action.payload, "tier");
+      const payload = _.isObject(action, "payload") ? _.get(action, "payload") : {};
+      const data = { ...initialUser, ...payload };
 
       return { ...state, ...data };
     }

@@ -9,25 +9,24 @@ import migrations from "./migrations";
 import rootReducer from "./reducers";
 import rootSaga from "./sagas";
 
-export default initial => {
+export const persistConfig = {
+  key: "root",
+  version: 1,
+  storage,
+  stateReconciler: autoMergeLevel2,
+  migrate: createMigrate(migrations, { debug: true }),
+  whitelist: ["auth"],
+  blacklist: ["portfolio", "resource", "view"],
+};
+
+export default (initial, { isServer, req = null }) => {
   let store;
 
   const isClient = typeof window !== "undefined";
 
   const sagaMiddleware = createSagaMiddleware();
 
-  const persistedReducer = persistReducer(
-    {
-      key: "root",
-      version: 1,
-      storage,
-      stateReconciler: autoMergeLevel2,
-      migrate: createMigrate(migrations, { debug: true }),
-      whitelist: ["auth"],
-      blacklist: ["portfolio", "resource", "view"],
-    },
-    rootReducer,
-  );
+  const persistedReducer = persistReducer(persistConfig, rootReducer);
 
   if (isClient) {
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -37,7 +36,9 @@ export default initial => {
     store = createStore(rootReducer, initial, compose(applyMiddleware(sagaMiddleware)));
   }
 
-  store.sagaTask = sagaMiddleware.run(rootSaga);
+  if (req || !isServer) {
+    store.sagaTask = sagaMiddleware.run(rootSaga);
+  }
 
   return store;
 };

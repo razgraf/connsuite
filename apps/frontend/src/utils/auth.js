@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { PURGE } from "redux-persist";
 import AuthRequest from "../requests/auth";
-import { pages, types } from "../constants";
+import { pages, types, status, sagas } from "../constants";
 import { redirectTo } from "./atoms";
 
 /**
@@ -21,7 +21,15 @@ export async function logout({ auth, dispatch, res = null, local = false } = {})
     if (dispatch) dispatch({ type: PURGE, result: () => null });
   }
 
-  redirectTo(pages.landing.root, { res });
+  try {
+    if (window !== undefined) window.location.href = "/";
+    throw new Error("Server side");
+  } catch (e) {
+    if (res) {
+      res.writeHead(status.FOUND, { Location: "/" });
+      res.end();
+    }
+  }
 }
 
 /**
@@ -139,5 +147,37 @@ export function getServerAuth(context) {
     return !_.isError(auth) ? auth : null;
   } catch (error) {
     return null;
+  }
+}
+
+export async function updateAuth(context = null) {
+  if (_.isNil(context)) return;
+  let pepeHands = false;
+  const { store } = context;
+
+  if (_.isNil(store)) return;
+
+  try {
+    const auth = _.attempt(() => {
+      const s = store.getState();
+      return s.auth;
+    });
+    if (_.isError(auth)) return;
+
+    const dispatch = _.isFunction(store.dispatch) ? store.dispatch : () => {};
+
+    dispatch({
+      type: sagas.AUTH_UPDATE,
+      payload: { auth },
+      callback: (isDiff = true) => {
+        if (isDiff)
+          _.attempt(() => {
+            context.flushReduxStateToCookies();
+          });
+      },
+    });
+  } catch (e) {
+    console.error(e);
+    if (!pepeHands) pepeHands = true;
   }
 }

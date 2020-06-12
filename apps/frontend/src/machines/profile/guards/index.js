@@ -17,6 +17,10 @@ function isDescriptionAcceptable(__, event) {
   return official.isUserDescriptionAcceptable(_.get(event, "payload.profile.description"), false);
 }
 
+function isTaglineAcceptable(__, event) {
+  return official.isUserTaglineAcceptable(_.get(event, "payload.profile.tagline"), false);
+}
+
 function isPictureNecessaryAcceptable(__, event) {
   return official.isUserPictureAcceptable(_.get(event, "payload.profile.picture"), false);
 }
@@ -36,6 +40,7 @@ function isProfileAcceptable(context, event) {
     isFistNameAcceptable(context, event) &&
     isLastNameAcceptable(context, event) &&
     isDescriptionAcceptable(context, event) &&
+    isTaglineAcceptable(context, event) &&
     isPictureAcceptable(context, event)
   );
 }

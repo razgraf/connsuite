@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Nav from "../../../components/shared/Nav";
 import { Header, Value, Finder, Connect } from "../../../components/specific/Landing";
 import { types } from "../../../constants";
-import { useAuth } from "../../../hooks";
+// import { useAuth } from "../../../hooks";
 
 const Page = styled.div`
   width: 100%;
@@ -33,7 +33,7 @@ const Main = styled.div`
   width: 100%;
 `;
 function Landing() {
-  useAuth("public");
+  // useAuth("public"); // TODO Why did I do this?
 
   return (
     <Page>

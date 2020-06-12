@@ -6,13 +6,16 @@ import { rgba } from "polished";
 import { useSelector } from "react-redux";
 import IconArticlePublish from "@material-ui/icons/FaceRounded";
 import { components } from "../../../../themes";
-import { pages, types } from "../../../../constants";
-import { useProfileReducer, useProfileEditMachine } from "../../../../hooks";
+import { modals, pages, types } from "../../../../constants";
+import { useProfileReducer, useProfileEditMachine, useHistory, useModal } from "../../../../hooks";
 import { blur, getPrimaryUsername } from "../../../../utils";
 
 import { Button, Spinner, Warning } from "../../../../components/atoms";
 import Nav from "../../../../components/shared/Nav";
 import { Header } from "../../../../components/specific/Profile/Manager";
+import { ModalProfileLeave } from "../../../../components/specific/Modals/Profile";
+
+import * as Head from "../../../../components/specific/Head";
 
 const Page = styled.div`
   position: relative;
@@ -170,8 +173,10 @@ const Loader = styled.div`
 function ProfileManager() {
   const auth = useSelector(state => state.auth);
   const reducer = useProfileReducer();
+  const history = useHistory();
   const username = useMemo(() => getPrimaryUsername(_.get(auth, "user")), [auth]);
   const machine = useProfileEditMachine({ identifier: username, reducer });
+  const modalLeave = useModal(modals.profileLeave);
 
   useEffect(() => {
     console.log(machine);
@@ -180,14 +185,15 @@ function ProfileManager() {
   const person = useMemo(() => _.get(machine, "current.context.data"), [machine]);
 
   const onCancel = useCallback(() => {
-    console.log("Ask for cancel");
-  }, []);
+    modalLeave.setOpen(true);
+  }, [modalLeave]);
 
   const onPublish = useCallback(() => {
     const profile = {
       firstName: reducer.state.firstName.value,
       lastName: reducer.state.lastName.value,
       description: reducer.state.description.value,
+      tagline: reducer.state.tagline.value,
       picture: reducer.state.picture.value,
     };
 
@@ -199,6 +205,7 @@ function ProfileManager() {
 
   return (
     <Page data-leaving={machine.current.value === machine.states.success}>
+      <Head.ProfileEdit />
       <Playground>
         <StyledNav
           isLight
@@ -244,6 +251,7 @@ function ProfileManager() {
           onClick={onCancel}
         />
       </Actions>
+      <ModalProfileLeave onSuccess={() => history.back()} />
     </Page>
   );
 }

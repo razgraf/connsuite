@@ -12,6 +12,7 @@ import Nav from "../../../../components/shared/Nav";
 import { pages, types } from "../../../../constants";
 import { useNetworkReducer, useNetworkCreateMachine, useExternalNetworks, useHistory } from "../../../../hooks";
 import { Header, Preview, Footer, Steps } from "../../../../components/specific/Network/Manager";
+import * as Head from "../../../../components/specific/Head";
 
 const Page = styled.div`
   position: relative;
@@ -229,6 +230,7 @@ function NetworkManager() {
 
   return (
     <Page data-leaving={machine.current.value === machine.states.success}>
+      <Head.NetworkCreate />
       <StyledNav appearance={types.nav.appearance.secondary} title={pages.network.create.title} />
       <Canvas>
         <Card>

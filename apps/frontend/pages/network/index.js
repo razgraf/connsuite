@@ -3,6 +3,7 @@ import { validateAuth } from "../../src/utils";
 
 NetworkManager.getInitialProps = async context => {
   await validateAuth(context, "private");
+  updateAuth(context);
 };
 
 export default NetworkManager;

@@ -1,11 +1,13 @@
 import _ from "lodash";
 import Profile from "../src/pages/platform/Profile/Viewer";
-import { validateAuth } from "../src/utils";
+import { validateAuth, updateAuth } from "../src/utils";
 import { UserRequest, AnalyticsRequest } from "../src/requests";
 import { types } from "../src/constants";
 
 Profile.getInitialProps = async context => {
   await validateAuth(context, "shared");
+  updateAuth(context);
+
   try {
     const { store } = context;
     const auth = _.attempt(() => store.getState().auth);

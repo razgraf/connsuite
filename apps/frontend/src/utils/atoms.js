@@ -78,6 +78,14 @@ export function ellipsis(value, max = null) {
   }
 }
 
+export function capitalize(source) {
+  try {
+    return source.charAt(0).toUpperCase() + source.slice(1);
+  } catch (e) {
+    return "";
+  }
+}
+
 export async function readPreviewFromImage(file) {
   return new Promise((resolve, reject) => {
     try {

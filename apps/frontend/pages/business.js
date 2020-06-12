@@ -1,8 +1,10 @@
 import Business from "../src/pages/platform/Business";
-import { validateAuth } from "../src/utils";
+import { validateAuth, updateAuth } from "../src/utils";
 
 Business.getInitialProps = async context => {
   await validateAuth(context, "private");
+  updateAuth(context);
+
   return {};
 };
 

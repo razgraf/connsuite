@@ -1,12 +1,13 @@
 import _ from "lodash";
 import ArticleViewer from "../../../src/pages/platform/Article/Viewer";
-import { getServerAuth } from "../../../src/utils";
+import { getServerAuth, updateAuth } from "../../../src/utils";
 import { ArticleRequest, AnalyticsRequest } from "../../../src/requests";
 import { types, status } from "../../../src/constants";
 
 ArticleViewer.getInitialProps = async context => {
   const { res, query } = context;
   const auth = getServerAuth(context);
+  if (auth) updateAuth(context);
   const identifier = _.get(query, "id");
 
   const data = null;

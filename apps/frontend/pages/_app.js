@@ -2,10 +2,11 @@ import React from "react";
 import NextApp from "next/app";
 import { Provider } from "react-redux";
 import { withReduxCookiePersist } from "next-redux-cookie-wrapper";
+import withReduxSaga from "next-redux-saga";
 import { PersistGate } from "redux-persist/integration/react";
 import { ToastProvider } from "react-toast-notifications";
 import { ThemeProvider, GlobalStyle } from "../src/themes";
-import reduxStore from "../src/store";
+import reduxStore, { persistConfig } from "../src/store";
 import Toast, { ToastContainer } from "../src/components/atoms/Toast";
 
 class App extends NextApp {
@@ -32,4 +33,4 @@ class App extends NextApp {
   }
 }
 
-export default withReduxCookiePersist(reduxStore)(App);
+export default withReduxCookiePersist(reduxStore, { persistConfig })(withReduxSaga(App));

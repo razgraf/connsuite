@@ -16,8 +16,8 @@ import Footer from "../../../../components/shared/Footer";
 import Cover from "../../../../components/shared/Cover";
 import { ModalNetworkRemove, ModalArticleRemove } from "../../../../components/specific/Modals";
 import { Articles, Business, Header, Networks } from "../../../../components/specific/Profile/Viewer";
-
 import Missing from "../Missing";
+import * as Head from "../../../../components/specific/Head";
 
 const Page = styled.div`
   position: relative;
@@ -84,6 +84,7 @@ function Profile({ data, identifier, isSelf }) {
   const machineArticles = useArticlesMachine();
   const machineProfile = useProfileMachine();
   const username = useMemo(() => getPrimaryUsername(data), [data]);
+  const name = useMemo(() => parseFullName({ user: data }), [data]);
 
   const active = useState(null);
   const controller = useMemo(() => ({ get: () => active[0], set: value => active[1](value) }), [active]);
@@ -143,6 +144,7 @@ function Profile({ data, identifier, isSelf }) {
 
   return (
     <Page>
+      <Head.ProfileViewer username={username} first={_.get(person, "data.name.first")} last={_.get(person, "data.name.last")} name={name} />
       <Nav
         appearance={types.nav.appearance.profile}
         title={`${parseFullName({ user: data }) || "ConnSuite"}'s`}
