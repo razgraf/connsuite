@@ -4,7 +4,7 @@ import { ObjectId } from "mongodb";
 import BaseController from "./base";
 import { HTTP_CODE } from "../constants";
 import { ArticleRepository, UserRepository } from "../repositories";
-import { Article, toArticleDTO } from "../models";
+import { Article, toArticleDTO, User, toUserDTO } from "../models";
 import { ArticleError, AuthError, ParamsError } from "../errors";
 import { isShortId, isSelf } from "../utils";
 
@@ -15,22 +15,35 @@ export default class ArticleController extends BaseController {
       if (!id) throw new ParamsError.Missing("Missing article identifier.");
 
       const populate = !_.has(req, "query.minimal");
+
+      const options = {
+        populate,
+        hideUser: true,
+      };
+
       const article: Article | null = isShortId(id)
-        ? await ArticleRepository.getInstance().getByFilters({ shortId: String(id) }, { populate })
-        : await ArticleRepository.getInstance().getById(id, { populate });
+        ? await ArticleRepository.getInstance().getByFilters({ shortId: String(id) }, options)
+        : await ArticleRepository.getInstance().getById(id, options);
 
       if (!article) throw new ArticleError.NotFound("The identifier doesn't match any article.");
+
+      const user = (await UserRepository.getInstance().getById(String(article.user), {
+        populate: true,
+      })) as User;
 
       res.status(HTTP_CODE.OK);
       res.json({
         message: "Found",
-        article: toArticleDTO(article, {
-          categories: true,
-          skills: true,
-          images: true,
-          content: true,
-          user: true,
-        }),
+        article: {
+          ...toArticleDTO(article, {
+            categories: true,
+            skills: true,
+            images: true,
+            content: true,
+            user: true,
+          }),
+          user: toUserDTO(user, { usernames: true, images: true }),
+        },
         isSelf: isSelf(article, res),
       });
     } catch (e) {
