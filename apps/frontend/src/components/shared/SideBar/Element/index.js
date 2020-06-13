@@ -11,6 +11,21 @@ const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   margin-bottom: calc(${props => props.theme.sizes.edge} * 1.2);
+
+  @media ${props => props.theme.medias.tablet} {
+    grid-column: span 1;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    height: 100%;
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    box-shadow: none;
+    background: ${props => props.theme.colors.grayBlueLight};
+  }
 `;
 
 const Helper = styled.div`
@@ -29,6 +44,9 @@ const Helper = styled.div`
     font-weight: 400;
     font-size: 9pt;
     margin: 0;
+  }
+  @media ${props => props.theme.medias.tablet} {
+    display: none;
   }
 `;
 
@@ -54,7 +72,8 @@ const BubblePartial = styled.a`
       opacity: 1;
     }
   }
-  & > * {
+  & > svg {
+    font-size: 18pt;
     color: ${props => props.theme.colors.secondary};
   }
 `;
@@ -75,16 +94,43 @@ const Bubble = styled(BubblePartial)`
       transition: box-shadow 200ms, background 200ms, background-position 200ms;
     }
 
-    & > * {
+    & > svg {
       color: ${props => props.theme.colors.white};
     }
 
     &[data-private="true"] {
       background: ${props => props.theme.gradients.primary};
 
-      & > * {
+      & > svg {
         color: ${props => props.theme.colors.white};
       }
+    }
+  }
+
+  @media ${props => props.theme.medias.tablet} {
+    border-radius: 0;
+    box-shadow: none;
+    height: 100%;
+    width: 100%;
+    background: ${props => props.theme.colors.transparent};
+
+    & > svg {
+      font-size: 22pt;
+      color: ${props => props.theme.colors.grayBlueDark};
+      pointer-events: none;
+    }
+    &[data-active="true"] {
+      background: ${props => props.theme.colors.transparent};
+      & > svg {
+        color: ${props => props.theme.colors.secondary};
+      }
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+      box-shadow: none;
+      background: ${props => props.theme.colors.grayBlueLight};
     }
   }
 `;
@@ -94,7 +140,7 @@ function Element({ Icon, title, href, isActive, isPrivate, as }) {
     <Link href={href} as={as} passHref>
       <Wrapper>
         <Bubble data-private={isPrivate} data-active={isActive}>
-          <Icon style={{ fontSize: "18pt" }} />
+          <Icon />
         </Bubble>
         <Helper>
           <p>{title}</p>

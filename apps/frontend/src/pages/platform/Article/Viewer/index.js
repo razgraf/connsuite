@@ -1,19 +1,18 @@
 import _ from "lodash";
-import React, { useMemo } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import styled, { css } from "styled-components";
-import { rgba } from "polished";
+import styled from "styled-components";
 import dayjs from "dayjs";
 import dayjsFormat from "dayjs/plugin/advancedFormat";
 
-import { components } from "../../../../themes";
-import { pages, types } from "../../../../constants";
+import { types } from "../../../../constants";
 import * as Head from "../../../../components/specific/Head";
 import Nav from "../../../../components/shared/Nav";
 import Footer from "../../../../components/shared/Footer";
 import { parseFullName, getPrimaryUsername } from "../../../../utils";
 
 import { Header, Content, Author } from "../../../../components/specific/Article/Viewer";
+import Missing from "../Missing";
 
 const Page = styled.div`
   position: relative;
@@ -33,8 +32,8 @@ const Main = styled.div`
 
 dayjs.extend(dayjsFormat);
 
-function ArticleViewer({ article }) {
-  console.log(article);
+function ArticleViewer(props = {}) {
+  const { article } = props;
 
   const user = _.get(article, "user");
   const name = parseFullName({ user });
@@ -50,6 +49,8 @@ function ArticleViewer({ article }) {
   const categories = _.get(article, "categories");
 
   const createdAt = _.attempt(() => dayjs(_.get(article, "createdAt")).format("MMMM Do, YYYY - hh:mm"));
+
+  if (_.isNil(article)) return <Missing />;
 
   return (
     <Page data-leaving={false}>
@@ -87,9 +88,11 @@ ArticleViewer.propTypes = {
         url: PropTypes.string.isRequired,
       }),
     }),
-  }).isRequired,
+  }),
 };
 
-ArticleViewer.defaultProps = {};
+ArticleViewer.defaultProps = {
+  article: null,
+};
 
 export default ArticleViewer;

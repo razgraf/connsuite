@@ -64,6 +64,9 @@ const OverlayHeader = styled.div`
   width: 100%;
   flex: 1;
   padding: ${props => props.theme.sizes.edge};
+  @media ${props => props.theme.medias.tablet} {
+    padding: 10px;
+  }
 `;
 
 const OverlayHeaderLocation = styled.div`
@@ -130,6 +133,17 @@ const OverlayFooter = styled.div`
   transform: translateY(100%);
   transition: transform 200ms;
   will-change: transform;
+  @media ${props => props.theme.medias.tablet} {
+    transform: translateY(0);
+    transition: transform 200ms;
+    will-change: transform;
+    flex-direction: row;
+    align-items: center;
+    width: calc(100% - 2 * 10px);
+    margin: 10px;
+    padding: 10px;
+    border-radius: 2px;
+  }
 `;
 
 const OverlayFooterTitle = styled.p`
@@ -143,18 +157,32 @@ const OverlayFooterTitle = styled.p`
   max-width: calc(100% - 80px);
   text-align: left;
   color: ${props => props.theme.colors.dark};
+  @media ${props => props.theme.medias.tablet} {
+    flex: 1;
+    max-width: calc(100% - 120px);
+    margin-right: auto;
+    margin-bottom: 0;
+    font-size: 11pt;
+  }
+  ${props => props.theme.extensions.ellipsis};
 `;
 
 const OverlayFooterBottom = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  @media ${props => props.theme.medias.tablet} {
+    width: auto;
+  }
 `;
 
 const OverlayFooterInfo = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+  @media ${props => props.theme.medias.tablet} {
+    display: none;
+  }
 `;
 
 const OverlayFooterInfoItem = styled.p`
@@ -166,7 +194,6 @@ const OverlayFooterInfoItem = styled.p`
   }
 `;
 
-const OverlayFooterAnchor = styled.a``;
 const OverlayFooterButton = styled(Button)``;
 
 const Shape = styled.div`
@@ -229,6 +256,9 @@ const Wrapper = styled(WrapperPartial)`
   &:not([data-style="add"]) {
     ${Card} {
       box-shadow: 0 0 15px 0 ${props => rgba(props.theme.colors.dark, 0.1)};
+      @media ${props => props.theme.medias.tablet} {
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+      }
     }
   }
   &[data-style="add"] {

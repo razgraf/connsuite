@@ -26,6 +26,9 @@ const Content = styled(components.Canvas)`
   height: ${props => props.theme.sizes.navHeight};
   padding: 0 ${props => props.theme.sizes.navHorizontalEdge};
   max-width: calc(${props => props.theme.sizes.canvasMaxWidth});
+  @media ${props => props.theme.medias.mobile} {
+    height: ${props => props.theme.sizes.navHeightMobile};
+  }
 `;
 
 const NavLogo = styled(Logo)``;

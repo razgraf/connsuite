@@ -9,8 +9,6 @@ import Nav from "../../../../components/shared/Nav";
 import Footer from "../../../../components/shared/Footer";
 import { Emoji } from "../../../../components/atoms";
 
-import Illustration from "../../../../assets/illustrations/illustration_symbols.png";
-
 const Page = styled.div`
   position: relative;
   width: 100%;
@@ -65,17 +63,9 @@ const Canvas = styled(components.Canvas)`
     height: 80%;
     box-shadow: 0 0 50px -10px ${props => rgba(props.theme.colors.dark, 0.1)};
   }
-
   @media ${props => props.theme.medias.mobile} {
     min-height: calc(100vh - ${props => props.theme.sizes.footerMinHeight} - ${props => props.theme.sizes.navHeightMobile});
   }
-`;
-
-const Image = styled.img`
-  object-fit: contain;
-  position: absolute;
-  z-index: 10;
-  padding-bottom: 40px;
 `;
 
 const Title = styled.p`
@@ -108,18 +98,14 @@ function Missing() {
         appearance={types.nav.appearance.profile}
         title={
           <span>
-            <span style={{ marginRight: "5px" }}>Oops</span> <Emoji symbol="👻" />
+            <span style={{ marginRight: "5px" }}>Oops</span> <Emoji symbol="📄" />
           </span>
         }
       />
       <Main>
         <Canvas>
-          <Title>The search continues...</Title>
-          <Content>
-            We couldn&apos;t find the profile you were looking for. This user might not be registered.. or maybe is gone on a top-secret
-            mission.
-          </Content>
-          <Image src={Illustration} />
+          <Title>We searched the entire universe, but..</Title>
+          <Content>We couldn&apos;t find the article you were looking for.</Content>
         </Canvas>
       </Main>
       <Footer />

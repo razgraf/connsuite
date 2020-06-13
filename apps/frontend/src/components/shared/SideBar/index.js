@@ -1,22 +1,30 @@
-import _ from "lodash";
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { lighten } from "polished";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Element from "./Element";
 import { pages } from "../../../constants";
 import { getPrimaryUsername } from "../../../utils";
 
-const Wrapper = styled.div`
-  border-right: 1px solid ${props => lighten(0.04, props.theme.colors.grayBlueLight)};
-`;
+const Wrapper = styled.div``;
 
 const Content = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: calc(${props => props.theme.sizes.navHeight} + ${props => props.theme.sizes.edge});
+
+  @media ${props => props.theme.medias.tablet} {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    justify-content: center;
+    padding-top: 0;
+    background-color: ${props => props.theme.colors.white};
+    box-shadow: 0 -5px 10px -5px rgba(0, 0, 0, 0.05);
+  }
 `;
 
 const Divider = styled.div`
@@ -25,6 +33,9 @@ const Divider = styled.div`
   height: 1px;
   margin-bottom: calc(${props => props.theme.sizes.edge} * 1.2);
   background: ${props => props.theme.colors.grayBlueLight};
+  @media ${props => props.theme.medias.tablet} {
+    display: none;
+  }
 `;
 
 function SideBar({ className, reference }) {

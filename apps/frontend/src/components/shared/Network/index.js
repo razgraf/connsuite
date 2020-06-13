@@ -35,6 +35,10 @@ const Content = styled.div`
   border: 1px solid ${props => props.theme.colors.grayLight};
   border-radius: ${props => props.theme.sizes.networkEdge};
   box-shadow: 0 0 15px 0 ${props => rgba(props.theme.colors.dark, 0.05)};
+
+  @media ${props => props.theme.medias.mobile} {
+    border-radius: 10px;
+  }
 `;
 
 const ContentHeader = styled.div`
@@ -190,6 +194,9 @@ const Info = styled.div`
   padding-top: calc(${props => props.theme.sizes.networkEdge} * 3 / 4);
   & > * {
     max-width: 170px;
+  }
+  @media ${props => props.theme.medias.tablet} {
+    padding-top: calc(${props => props.theme.sizes.networkEdgeMobile} * 3 / 4);
   }
 `;
 

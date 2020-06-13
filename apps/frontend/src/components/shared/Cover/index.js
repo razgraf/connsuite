@@ -63,6 +63,10 @@ const Content = styled.div`
   width: 100%;
   max-width: calc(${props => props.theme.sizes.canvasMaxWidth} * 1 / 2);
   padding-top: calc(${props => props.theme.sizes.navHeight});
+
+  @media ${props => props.theme.medias.mobile} {
+    padding-top: ${props => props.theme.sizes.navHeightMobile};
+  }
 `;
 
 const Header = styled.div`

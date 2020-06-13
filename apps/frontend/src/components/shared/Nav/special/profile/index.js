@@ -34,6 +34,10 @@ const Content = styled(components.Canvas)`
   height: ${props => props.theme.sizes.navHeight};
   padding: 0 ${props => props.theme.sizes.navHorizontalEdge};
   max-width: calc(${props => props.theme.sizes.canvasMaxWidth});
+
+  @media ${props => props.theme.medias.mobile} {
+    height: ${props => props.theme.sizes.navHeightMobile};
+  }
 `;
 
 const NavLogo = styled(Logo)`
@@ -96,6 +100,11 @@ const NavNetworks = styled.div`
     margin-right: 8px;
     &:last-child {
       margin-right: 0;
+    }
+
+    @media ${props => props.theme.medias.mobile} {
+      height: calc(${props => props.theme.sizes.navHeightMobile} - 2 * 15px);
+      width: calc(${props => props.theme.sizes.navHeightMobile} - 2 * 15px);
     }
   }
 `;
@@ -190,6 +199,9 @@ const NavigatorDropdown = styled(Dropdown)`
       color: ${props => props.theme.colors.dark};
     }
   }
+  @media ${props => props.theme.medias.mobile} {
+    top: calc(${props => props.theme.sizes.navHeightMobile} + 5px);
+  }
 `;
 
 function NavProfile({ className, title, networks, isMissing }) {
@@ -275,7 +287,7 @@ function NavProfile({ className, title, networks, isMissing }) {
 
 NavProfile.propTypes = {
   className: PropTypes.string,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]).isRequired,
   networks: PropTypes.arrayOf(PropTypes.shape({})),
   onBackClick: PropTypes.func,
   isMissing: PropTypes.bool,

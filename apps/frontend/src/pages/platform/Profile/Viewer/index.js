@@ -31,6 +31,9 @@ const Main = styled.div`
   justify-content: flex-start;
   width: 100%;
   padding-top: ${props => props.theme.sizes.navHeight};
+  @media ${props => props.theme.medias.mobile} {
+    padding-top: ${props => props.theme.sizes.navHeightMobile};
+  }
 `;
 
 const Canvas = styled(components.Canvas)`

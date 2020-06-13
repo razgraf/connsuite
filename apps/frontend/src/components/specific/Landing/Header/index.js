@@ -52,6 +52,9 @@ const Canvas = styled(components.Canvas)`
   height: 650px;
   width: 100%;
   padding-bottom: calc(150px + ${props => props.theme.sizes.navHeight});
+  @media ${props => props.theme.medias.mobile} {
+    padding-bottom: calc(150px + ${props => props.theme.sizes.navHeightMobile});
+  }
 `;
 
 const Left = styled.div`

@@ -170,6 +170,31 @@ const ButtonIconWrapper = styled.div`
   }
 `;
 
+const StyledWarning = styled(Warning)`
+  & > p {
+    font-size: 11pt;
+  }
+`;
+
+const Explainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: ${props => props.theme.colors.white};
+  opacity: 0;
+  pointer-events: none;
+  &[data-active="true"] {
+    opacity: 1;
+    pointer-events: all;
+  }
+`;
+
 function ArticleManager({ query }) {
   const articleId = _.get(query, "id");
   const auth = useSelector(state => state.auth);
@@ -196,8 +221,9 @@ function ArticleManager({ query }) {
   }, [auth, machine, reducer, articleId, contentInstance]);
 
   const onCancel = useCallback(() => {
-    modalLeave.setOpen(true);
-  }, [modalLeave]);
+    if ([machine.states.forbidden].includes(machine.current.value)) history.back();
+    else modalLeave.setOpen(true);
+  }, [modalLeave, machine, history]);
 
   return (
     <Page data-leaving={machine.current.value === machine.states.success}>
@@ -214,6 +240,9 @@ function ArticleManager({ query }) {
           <Loader data-active={machine.current.value === machine.states.retrieve}>
             <Spinner color={c => c.secondary} size={50} thickness={2} />
           </Loader>
+          <Explainer data-active={machine.current.value === machine.states.forbidden}>
+            <StyledWarning isCentered value={machine.current.context.error} />
+          </Explainer>
           <Header reducer={reducer} />
           <Info reducer={reducer} />
           <Specific reducer={reducer} setContentInstance={setContentInstance} />
@@ -231,6 +260,7 @@ function ArticleManager({ query }) {
             }
             onClick={onPublish}
             isLoading={[machine.states.apply].includes(machine.current.value)}
+            isDisabled={[machine.states.forbidden].includes(machine.current.value)}
             isDisabledSoft={[machine.states.apply, machine.states.retrieve].includes(machine.current.value)}
             type={t => t.button}
             appearance={t => t.solid}
@@ -239,7 +269,7 @@ function ArticleManager({ query }) {
         </ButtonBox>
 
         <Button
-          isDisabled={machine.current.value === machine.states.apply}
+          isDisabled={[machine.states.apply, machine.states.forbidden].includes(machine.current.value)}
           type={t => t.button}
           appearance={t => t.outline}
           accent={t => t.cancel}

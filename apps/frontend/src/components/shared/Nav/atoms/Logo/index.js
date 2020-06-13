@@ -13,6 +13,10 @@ const WrapperPartial = styled.a`
   background-color: ${props => props.theme.colors.white};
   border: 1px solid transparent;
   cursor: pointer;
+  @media ${props => props.theme.medias.mobile} {
+    height: calc(${props => props.theme.sizes.navHeightMobile} - 2 * ${props => props.theme.sizes.navVerticalEdge});
+    width: calc(${props => props.theme.sizes.navHeightMobile} - 2 * ${props => props.theme.sizes.navVerticalEdge});
+  }
 `;
 
 const Container = styled.div`

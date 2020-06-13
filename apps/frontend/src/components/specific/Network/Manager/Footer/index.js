@@ -77,6 +77,7 @@ function Footer({ className, step, onForward, onBackward, machine, checkForward 
           appearance={t => t.transparent}
           accent={t => t.grayBlueNight}
           onClick={onBackward}
+          isDisabled={machine.current.value === machine.states.forbidden}
         />
       </ButtonBox>
       <StyledWarning isCentered value={machine.current.context.error} />
@@ -106,6 +107,7 @@ function Footer({ className, step, onForward, onBackward, machine, checkForward 
           accent={t => t.secondary}
           onClick={onForward}
           isDisabledSoft={!isForwardEnabled}
+          isDisabled={machine.current.value === machine.states.forbidden}
         />
       </ButtonBox>
     </Wrapper>

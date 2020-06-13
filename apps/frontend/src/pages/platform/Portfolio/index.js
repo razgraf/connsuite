@@ -22,6 +22,9 @@ const SectionNetworks = styled(components.Section)`
   padding: 0 ${props => props.theme.sizes.sectionEdge};
   overflow-x: hidden;
   margin-bottom: ${props => props.theme.sizes.edge};
+  @media ${props => props.theme.medias.tablet} {
+    padding: 0 ${props => props.theme.sizes.sectionEdgeMobile};
+  }
 `;
 
 const SectionArticles = styled(components.Section)`
@@ -45,11 +48,28 @@ const SectionQuickContent = styled.div`
       margin-right: 0;
     }
   }
+  @media ${props => props.theme.medias.tablet} {
+    flex-direction: column;
+    width: 100%;
+
+    & > * {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: calc(${props => props.theme.sizes.edge} * 1.5);
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 `;
 
 const SectionHeaderArticles = styled(SectionHeader)`
   padding-left: calc(${props => props.theme.sizes.edge} * 1.5);
   padding-right: calc(${props => props.theme.sizes.edge} * 1.5);
+  @media ${props => props.theme.medias.tablet} {
+    padding-left: calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+    padding-right: calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+  }
 `;
 
 const ButtonIconWrapper = styled.div`
@@ -70,11 +90,15 @@ const GridNetworks = styled.div`
     grid-column: span 1;
     flex-grow: 0;
   }
-  @media all and (max-width: ${props => props.theme.medias.medium}) {
+
+  @media ${props => props.theme.medias.tablet} {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  @media all and (max-width: ${props => props.theme.medias.small}) {
+
+  @media ${props => props.theme.medias.mobile} {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-column-gap: ${props => props.theme.sizes.sectionEdgeMobile};
+    grid-row-gap: calc(${props => props.theme.sizes.edge} * 1);
   }
 `;
 
@@ -89,6 +113,14 @@ const GridArticles = styled.div`
   & > * {
     grid-column: span 1;
     height: 300px;
+  }
+  @media ${props => props.theme.medias.tablet} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media ${props => props.theme.medias.mobile} {
+    grid-template-columns: repeat(1, 1fr);
+    grid-row-gap: 15px;
   }
 `;
 

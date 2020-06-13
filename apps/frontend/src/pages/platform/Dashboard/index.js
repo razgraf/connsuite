@@ -5,9 +5,19 @@ import { Button } from "../../../components/atoms";
 import { Area, Modal } from "../../../components/shared";
 import { logout } from "../../../utils";
 import { useModal } from "../../../hooks";
+import { components } from "../../../themes";
 import * as Head from "../../../components/specific/Head";
 
 const Page = styled.div``;
+
+const SectionHeader = styled(components.SectionHeader)``;
+const SectionTitle = styled(components.SectionTitle)``;
+
+const Section = styled(components.Section)`
+  padding: 0 ${props => props.theme.sizes.sectionEdge};
+  overflow-x: hidden;
+  margin-bottom: ${props => props.theme.sizes.edge};
+`;
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -22,25 +32,21 @@ function Dashboard() {
     <Page>
       <Head.Dashboard />
       <Area>
-        <p>Dashboard</p>
-        <Button
-          type={t => t.button}
-          accent={t => t.red}
-          appearance={t => t.solid}
-          title="Logout"
-          onClick={() => logout({ auth, dispatch })}
-        />
-        <Button
-          type={t => t.button}
-          accent={t => t.secondary}
-          appearance={t => t.outline}
-          title="Modal"
-          onClick={() => modal.setOpen(true)}
-        />
+        <Section>
+          <SectionHeader>
+            <SectionTitle>
+              <p>Dashboard</p>
+            </SectionTitle>
+          </SectionHeader>
+          <Button
+            type={t => t.button}
+            accent={t => t.red}
+            appearance={t => t.solid}
+            title="Logout"
+            onClick={() => logout({ auth, dispatch })}
+          />
+        </Section>
       </Area>
-      <Modal title="Test" id="test">
-        <p>Salut</p>
-      </Modal>
     </Page>
   );
 }

@@ -10,6 +10,7 @@ const states = {
   apply: "apply",
   success: "success",
   failure: "failure",
+  forbidden: "forbidden",
 };
 
 const events = {
@@ -77,7 +78,7 @@ const machine = Machine(
           },
           onError: {
             actions: assign({
-              error: (context, event) => _.toString(_.get(event, "data.message")),
+              error: "We cannot find this article in our system", // (context, event) => _.toString(_.get(event, "data.message")),
             }),
             target: states.forbidden,
           },

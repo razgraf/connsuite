@@ -57,8 +57,8 @@ const wrapperCss = css`
       width: 100%;
     `};
 
-  @media all and (max-width: ${props => props.theme.medias.medium}){
-    padding: 15px 10px;
+  @media ${props => props.theme.medias.mobile} {
+    padding: 12px 15px;
     ${props =>
       props.isMini &&
       css`

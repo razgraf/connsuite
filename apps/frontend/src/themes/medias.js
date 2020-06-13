@@ -4,8 +4,8 @@ const medias = {
 
   canvas: "1200px",
 
-  mobile: "480px",
-  tablet: "600px",
+  mobile: "all and (max-width: 480px)",
+  tablet: "all and (max-width: 600px)",
 };
 
 export default medias;

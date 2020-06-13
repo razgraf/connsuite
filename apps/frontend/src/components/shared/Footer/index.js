@@ -16,6 +16,10 @@ const Wrapper = styled.div`
   position: relative;
   z-index: calc(${props => props.theme.sizes.areaElevation} + 10);
   min-height: ${props => props.theme.sizes.footerMinHeight};
+
+  @media ${props => props.theme.medias.tablet} {
+    z-index: calc(${props => props.theme.sizes.areaElevation} - 10);
+  }
 `;
 const Canvas = styled(components.Canvas)`
   display: flex;
