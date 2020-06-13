@@ -43,8 +43,6 @@ const Image = styled.img`
 function Header({ className, cover }) {
   const [isLoadingImage, setIsLoadingImage] = useState(true);
 
-  console.log(cover);
-
   return (
     <Wrapper className={className}>
       <Loader>

@@ -5,7 +5,6 @@ Dashboard.getInitialProps = async context => {
   await validateAuth(context, "private");
   updateAuth(context);
 
-  console.info("Dashboard");
   return {};
 };
 

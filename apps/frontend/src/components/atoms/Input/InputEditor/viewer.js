@@ -161,7 +161,8 @@ const Image = styled.div`
   &[data-background="true"] {
     ${ImageWrapper} {
       padding: 10px;
-      background-color: ${props => props.theme.colors.background};
+      border: 1px solid ${props => props.theme.colors.grayBlueLight};
+      background-color: ${props => props.theme.colors.grayGhost};
 
       & > img {
         max-width: 500px;
@@ -178,11 +179,13 @@ const ImageCaption = styled.div`
   text-align: center;
   width: 100%;
   border-radius: 2px;
-  background-color: ${props => props.theme.colors.background};
+  border: 1px solid ${props => props.theme.colors.grayBlueLight};
   & > p {
     padding: 0;
     margin: 0;
     text-align: center;
+    font-size: 10pt;
+    font-weight: 600;
   }
 `;
 
@@ -249,19 +252,13 @@ function Section({ payload }) {
       const content = _.toArray(_.get(data, "content"));
       return (
         <Table>
-          {content.map((column, index) => (
+          {content.map(column => (
             <tr>
-              {column.map(item => {
-                return index === 0 ? (
-                  <th>
-                    <Section payload={{ type: "paragraph", data: { text: item } }} />
-                  </th>
-                ) : (
-                  <td>
-                    <Section payload={{ type: "paragraph", data: { text: item } }} />
-                  </td>
-                );
-              })}
+              {column.map(item => (
+                <td>
+                  <Section payload={{ type: "paragraph", data: { text: item } }} />
+                </td>
+              ))}
             </tr>
           ))}
         </Table>

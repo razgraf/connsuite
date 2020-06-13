@@ -23,6 +23,7 @@ const actions = {
 };
 
 async function attemptToConnect({ context, event }) {
+  return;
   const payload = {
     vendor: _.get(context, "vendor"),
   };

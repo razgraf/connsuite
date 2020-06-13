@@ -12,8 +12,6 @@ ArticleViewer.getInitialProps = async context => {
 
   let article = null;
 
-  console.log(identifier);
-
   try {
     const result = await ArticleRequest.get({ auth, articleId: identifier });
 

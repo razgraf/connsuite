@@ -22,11 +22,11 @@ export async function logout({ auth, dispatch, res = null, local = false } = {})
   }
 
   try {
-    if (window !== undefined) window.location.href = "/";
+    if (window !== undefined) window.location.href = "/logout";
     throw new Error("Server side");
   } catch (e) {
     if (res) {
-      res.writeHead(status.FOUND, { Location: "/" });
+      res.writeHead(status.FOUND, { Location: "/logout" });
       res.end();
     }
   }
