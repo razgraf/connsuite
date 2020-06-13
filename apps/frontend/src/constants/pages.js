@@ -80,13 +80,16 @@ export default {
     create: {
       root: "/article",
       title: "Create a new Article",
+      route: "/article",
     },
     view: {
+      title: "Article",
       root: "/article",
       route: "/article/[id]/[[...slug]]",
       builder: (id, extra) => `/article/${id}${extra ? `/${extra}` : ""}`,
     },
     edit: {
+      title: "Edit Artcle",
       root: "/article/edit",
       route: "/article/edit/[id]",
       builder: id => `/article/edit/${id}`,

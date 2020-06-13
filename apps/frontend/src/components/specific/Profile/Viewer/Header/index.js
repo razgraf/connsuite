@@ -227,6 +227,7 @@ const ButtonIconWrapper = styled.div`
 function Header({ className, controller, profile, isLoading }) {
   const skills = useMemo(() => _.toArray(_.get(profile, "skills")), [profile]);
   const description = useMemo(() => _.toString(_.get(profile, "user.description")), [profile]);
+  const tagline = useMemo(() => _.toString(_.get(profile, "user.tagline")), [profile]);
   const name = useMemo(() => parseFullName(profile), [profile]);
   const username = useMemo(() => getPrimaryUsername(_.get(profile, "user")), [profile]);
   const parts = useMemo(() => parseSkilledDescription(description, skills), [description, skills]);
@@ -269,7 +270,7 @@ function Header({ className, controller, profile, isLoading }) {
       </Left>
       <Right>
         <RightContent data-ready={!isLoading}>
-          <Title>Designer & Developer</Title>
+          <Title>{tagline}</Title>
           <Identification>
             <Name>{name}</Name>
             <Username>{`@${username}`}</Username>

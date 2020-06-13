@@ -144,7 +144,13 @@ function Profile({ data, identifier, isSelf }) {
 
   return (
     <Page>
-      <Head.ProfileViewer username={username} first={_.get(person, "data.name.first")} last={_.get(person, "data.name.last")} name={name} />
+      <Head.ProfileViewer
+        username={username}
+        first={_.get(person, "data.name.first")}
+        last={_.get(person, "data.name.last")}
+        name={name}
+        descripton={_.get(person, "data.description")}
+      />
       <Nav
         appearance={types.nav.appearance.profile}
         title={`${parseFullName({ user: data }) || "ConnSuite"}'s`}

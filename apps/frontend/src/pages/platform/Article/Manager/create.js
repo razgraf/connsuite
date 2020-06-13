@@ -188,7 +188,6 @@ function ArticleManager() {
       <Picker isActive={reducer.state.type.value === null} onPick={onPick} />
       <Playground>
         <StyledNav
-          isLight
           appearance={types.nav.appearance.secondary}
           accent={types.nav.accent.white}
           title={pages.article.create.title}

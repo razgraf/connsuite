@@ -14,10 +14,11 @@ function Common() {
       <meta property="og:title" content={meta.general.title} />
 
       <meta name="description" key="description" content={meta.general.description} />
+      <meta property="og:description" key="og:description" content={meta.general.description} />
+      <meta name="twitter:description" key="twitter:description" content={meta.general.description} />
 
       <meta property="og:type" key="og:type" content="website" />
       <meta property="og:url" key="og:url" content={meta.general.baseUrl} />
-      <meta property="og:description" key="og:description" content={meta.general.description} />
       <meta property="og:image" key="og:image" content={`${meta.general.baseUrl}/meta/facebook.png`} />
       <meta property="og:image:alt" key="og:image:alt" content={meta.general.alt} />
       <meta property="og:image:height" key="og:image:height" content="838" />
@@ -25,7 +26,6 @@ function Common() {
       <meta property="og:locale" key="og:locale" content="en_GB" />
 
       <meta name="twitter:card" key="twitter:card" content="summary_large_image" />
-      <meta name="twitter:description" key="twitter:description" content={meta.general.description} />
       <meta name="twitter:image" key="twitter:image" content={`${meta.general.baseUrl}/meta/twitter.png`} />
       <meta name="twitter:image:alt" key="twitter:image:alt" content={meta.general.alt} />
       <meta name="twitter:site" key="twitter:site" content={meta.general.site} />
@@ -90,7 +90,7 @@ export function NetworkCreate() {
 }
 
 export function NetworkEdit({ title: network }) {
-  const title = `${capitalize(network)} | ${meta.network.edit.title}`;
+  const title = `Edit ${capitalize(network)}`;
 
   return (
     <Head>
@@ -114,7 +114,7 @@ export function ArticleCreate() {
 }
 
 export function ArticleEdit({ title: article }) {
-  const title = `${capitalize(article)} | ${meta.article.edit.title}`;
+  const title = `Edit ${capitalize(article)}`;
 
   return (
     <Head>
@@ -137,7 +137,7 @@ export function ProfileEdit() {
   );
 }
 
-export function ArticleViewer({ name = "", title: article = "", username = "", createdAt = "" }) {
+export function ArticleViewer({ name = "", title: article = "", username = "", createdAt = "", description = "" }) {
   const title = `${article} by @${username}| ${meta.general.title}`;
 
   return (
@@ -150,11 +150,15 @@ export function ArticleViewer({ name = "", title: article = "", username = "", c
       <meta property="og:type" key="og:type" content="article" />
       <meta property="og:article:author" key="og:article:author" content={name} />
       <meta property="og:article:published_time" key="og:type" content={createdAt} />
+
+      <meta name="description" key="description" content={description} />
+      <meta property="og:description" key="og:description" content={description} />
+      <meta name="twitter:description" key="twitter:description" content={description} />
     </Head>
   );
 }
 
-export function ProfileViewer({ first = "", last = "", name = "", username = "" }) {
+export function ProfileViewer({ first = "", last = "", name = "", username = "", description = "" }) {
   const title = `${name} @${username}`;
 
   return (
@@ -168,6 +172,10 @@ export function ProfileViewer({ first = "", last = "", name = "", username = "" 
       <meta property="og:profile:first_name" key="og:profile:first_name" content={first} />
       <meta property="og:profile:last_name" key="og:profile:last_name" content={last} />
       <meta property="og:profile:username" key="og:profile:username" content={username} />
+
+      <meta name="description" key="description" content={description} />
+      <meta property="og:description" key="og:description" content={description} />
+      <meta name="twitter:description" key="twitter:description" content={description} />
     </Head>
   );
 }

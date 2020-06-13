@@ -30,7 +30,7 @@ const CoverWrapperPartial = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: 300px;
+  height: ${props => props.theme.sizes.articleCoverHeight};
   width: 100%;
   border: 1px solid ${props => props.theme.colors.grayBlueLight};
   background-color: ${props => props.theme.colors.background};

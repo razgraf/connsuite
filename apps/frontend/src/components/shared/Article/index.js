@@ -301,7 +301,7 @@ function Action({ Icon, callback, title, type, url, route }) {
     );
   return (
     <Link href={route} as={url}>
-      <OverlayHeaderAction title={title} onClick={() => history.push()}>
+      <OverlayHeaderAction as="a" title={title} onClick={() => history.push()}>
         <Icon style={{ fontSize: "13pt" }} />
       </OverlayHeaderAction>
     </Link>
@@ -309,8 +309,6 @@ function Action({ Icon, callback, title, type, url, route }) {
 }
 
 function Article({ className, _id, shortId, thumbnail, categories, title, type, onRemoveClick, isSelf }) {
-  const history = useHistory();
-
   const categoryField = useMemo(() => {
     if (!categories || !categories.length) return "";
     let field = categories
@@ -346,28 +344,15 @@ function Article({ className, _id, shortId, thumbnail, categories, title, type, 
               <OverlayFooterInfo>
                 <OverlayFooterInfoItem data-purpose="category">{categoryField}</OverlayFooterInfoItem>
               </OverlayFooterInfo>
-              {type === types.article.type.external ? (
-                <OverlayFooterButton
-                  type={t => t.link}
-                  appearance={t => t.solid}
-                  accent={t => t.secondary}
-                  isMini
-                  title="Visit Article"
-                  to={pages.article.view.builder(shortId, getFriendlyTitle(title))}
-                />
-              ) : (
-                <Link href={pages.article.view.route} as={pages.article.view.builder(shortId, getFriendlyTitle(title))}>
-                  <OverlayFooterAnchor onClick={() => history.push()}>
-                    <OverlayFooterButton
-                      type={t => t.button}
-                      appearance={t => t.solid}
-                      accent={t => t.secondary}
-                      isMini
-                      title="Read Article"
-                    />
-                  </OverlayFooterAnchor>
-                </Link>
-              )}
+
+              <OverlayFooterButton
+                type={t => t.link}
+                appearance={t => t.solid}
+                accent={t => t.secondary}
+                isMini
+                title={type === types.article.type.external ? "Visit Article" : "Read Article"}
+                to={pages.article.view.builder(shortId, getFriendlyTitle(title))}
+              />
             </OverlayFooterBottom>
           </OverlayFooter>
         </Overlay>

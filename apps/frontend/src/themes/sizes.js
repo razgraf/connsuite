@@ -37,6 +37,8 @@ const sizes = {
 
   profileBlob: "400px",
   profileBusinessDistance: "200px",
+
+  articleCoverHeight: "300px",
 };
 
 export default sizes;

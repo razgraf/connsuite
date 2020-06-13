@@ -20,7 +20,6 @@ const tools = {
   },
   code: {
     class: Code,
-    inlineToolbar: true,
   },
   delimiter: {
     class: Delimiter,
@@ -45,7 +44,6 @@ const tools = {
   },
   simpleImage: {
     class: SimpleImage,
-    inlineToolbar: true,
   },
   table: {
     class: Table,
@@ -53,7 +51,7 @@ const tools = {
   },
   header: {
     class: Header,
-    inlineToolbar: true,
+    inlineToolbar: false,
   },
 };
 
