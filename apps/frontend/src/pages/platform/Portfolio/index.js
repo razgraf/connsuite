@@ -120,7 +120,13 @@ const GridArticles = styled.div`
 
   @media ${props => props.theme.medias.mobile} {
     grid-template-columns: repeat(1, 1fr);
-    grid-row-gap: 15px;
+    grid-row-gap: ${props => props.theme.sizes.canvasEdgeMobile};
+    grid-auto-rows: 270px;
+    padding: 0 ${props => props.theme.sizes.canvasEdgeMobile};
+    & > * {
+      grid-column: span 1;
+      height: 270px;
+    }
   }
 `;
 

@@ -18,13 +18,13 @@ const Wrapper = styled.div`
     justify-content: center;
     margin: 0;
     height: 100%;
-  }
 
-  &:hover,
-  &:active,
-  &:focus {
-    box-shadow: none;
-    background: ${props => props.theme.colors.grayBlueLight};
+    &:hover,
+    &:active,
+    &:focus {
+      box-shadow: none;
+      background: ${props => props.theme.colors.grayBlueLight};
+    }
   }
 `;
 

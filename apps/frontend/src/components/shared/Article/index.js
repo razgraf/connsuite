@@ -22,6 +22,9 @@ const Card = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
+  @media ${props => props.theme.medias.tablet} {
+    border-radius: 2px;
+  }
 `;
 
 const Content = styled.div`
@@ -30,6 +33,9 @@ const Content = styled.div`
   z-index: 100;
   position: relative;
   overflow: hidden;
+  @media ${props => props.theme.medias.mobile} {
+    border-radius: 2px;
+  }
 `;
 
 const ContentImage = styled.img`
@@ -256,8 +262,8 @@ const Wrapper = styled(WrapperPartial)`
   &:not([data-style="add"]) {
     ${Card} {
       box-shadow: 0 0 15px 0 ${props => rgba(props.theme.colors.dark, 0.1)};
-      @media ${props => props.theme.medias.tablet} {
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+      @media ${props => props.theme.medias.mobile} {
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
       }
     }
   }
@@ -270,6 +276,9 @@ const Wrapper = styled(WrapperPartial)`
     ${Card} {
       flex: 1;
       padding: 20px;
+      @media ${props => props.theme.medias.mobile} {
+        padding: 0px 0px 20px 0px;
+      }
     }
     ${Content} {
       display: flex;

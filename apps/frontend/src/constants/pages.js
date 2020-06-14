@@ -1,7 +1,7 @@
 import IconDashboard from "@material-ui/icons/HomeRounded";
 import IconPortfolio from "@material-ui/icons/FolderSpecialRounded";
 import IconBusiness from "@material-ui/icons/BusinessRounded";
-import IconAnalytics from "@material-ui/icons/MultilineChartRounded";
+import IconAnalytics from "@material-ui/icons/PollRounded";
 import IconProfile from "@material-ui/icons/PersonRounded";
 
 export default {
