@@ -22,6 +22,9 @@ const Form = styled.form`
       grid-column: span 2;
     }
   }
+  @media ${props => props.theme.medias.small} {
+    padding: calc(${props => props.theme.sizes.canvasEdgeMobile});
+  }
 `;
 
 const LabelWrapper = styled.div`
@@ -32,6 +35,10 @@ const LabelWrapper = styled.div`
   background-color: ${props => props.theme.colors.background};
   border-top: 1px solid ${props => props.theme.colors.grayBlueLight};
   border-bottom: 1px solid ${props => props.theme.colors.grayBlueLight};
+  @media ${props => props.theme.medias.small} {
+    padding-left: calc(${props => props.theme.sizes.canvasEdgeMobile});
+    padding-right: calc(${props => props.theme.sizes.canvasEdgeMobile});
+  }
 `;
 
 const LabelIcon = styled.div`

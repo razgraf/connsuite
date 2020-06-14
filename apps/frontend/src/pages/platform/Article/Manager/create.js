@@ -115,6 +115,16 @@ const Actions = styled.div`
       margin-right: 0;
     }
   }
+  @media ${props => props.theme.medias.medium} {
+    flex-direction: column;
+    & > * {
+      margin-bottom: ${props => props.theme.sizes.edge};
+      margin-right: 0;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 `;
 
 const StyledButton = styled(Button)`
@@ -143,6 +153,12 @@ const ButtonIconWrapper = styled.div`
     left: -10px;
     position: absolute;
     color: ${props => props.theme.colors.white};
+  }
+  @media ${props => props.theme.medias.medium} {
+    width: 20px;
+    & > * {
+      left: -3px;
+    }
   }
 `;
 

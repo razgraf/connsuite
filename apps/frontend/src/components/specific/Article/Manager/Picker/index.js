@@ -52,6 +52,9 @@ const Card = styled.div`
   background-color: ${props => props.theme.colors.white};
   border-radius: 10px;
   overflow: hidden;
+  @media ${props => props.theme.medias.small} {
+    margin-top: 160px;
+  }
 `;
 
 const Header = styled.div`
@@ -79,6 +82,11 @@ const Main = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: calc(${props => props.theme.sizes.edge} * 1);
   padding: calc(${props => props.theme.sizes.edge} * 1.5);
+
+  @media ${props => props.theme.medias.small} {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
 `;
 
 const ElementPartial = styled.div`
@@ -110,6 +118,10 @@ const ElementIcon = styled.div`
     color: ${props => props.theme.colors.grayBlueMedium};
     transition: color 150ms;
   }
+  @media ${props => props.theme.medias.small} {
+    height: 80px;
+    width: 80px;
+  }
 `;
 
 const ElementTitle = styled.p`
@@ -131,6 +143,10 @@ const ElementDescriptions = styled.p`
   opacity: 0;
   transform: translateY(200px);
   transition: transform 150ms, opacity 100ms;
+  @media ${props => props.theme.medias.small} {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 `;
 
 const Element = styled(ElementPartial)`
@@ -157,6 +173,9 @@ const Element = styled(ElementPartial)`
         transform: translateY(0);
         transition: transform 150ms, opacity 100ms;
       }
+    }
+    @media ${props => props.theme.medias.small} {
+      box-shadow: 0 10px 48px -8px ${props => rgba(props.theme.colors.secondary, 0.25)};
     }
   }
 
