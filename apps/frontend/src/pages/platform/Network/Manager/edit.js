@@ -35,7 +35,7 @@ const Page = styled.div`
   }
 
   &:after {
-    position: absolute;
+    position: fixed;
     z-index: ${props => props.theme.sizes.toastContainerElevation};
     left: 0;
     top: 0;
@@ -60,13 +60,27 @@ const Page = styled.div`
       transition: opacity 1500ms;
     }
   }
+
+  @media ${props => props.theme.medias.medium} {
+    min-height: 0;
+    height: auto;
+  }
 `;
 const StyledNav = styled(Nav)`
   position: relative;
   z-index: 200;
+  @media ${props => props.theme.medias.medium} {
+    order: -1;
+  }
 `;
 const Canvas = styled(components.Canvas)`
   z-index: 100;
+  @media ${props => props.theme.medias.medium} {
+    padding: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const Card = styled.div`
@@ -78,6 +92,11 @@ const Card = styled.div`
   overflow: hidden;
   margin-top: 20px;
   margin-bottom: 20px;
+  @media ${props => props.theme.medias.medium} {
+    border-radius: 0;
+    margin: 0;
+    min-height: calc(100vh - ${props => props.theme.sizes.navHeightMobile});
+  }
 `;
 
 const Main = styled.div`
@@ -85,11 +104,18 @@ const Main = styled.div`
   display: flex;
   flex-direction: row;
 
-  min-height: 440px;
+  min-height: 500px;
   width: 100%;
   padding: calc(${props => props.theme.sizes.edge} * 2);
-
   overflow: hidden;
+
+  @media ${props => props.theme.medias.medium} {
+    padding: calc(${props => props.theme.sizes.canvasEdgeMobile} * 1);
+    padding-bottom: calc(${props => props.theme.sizes.canvasEdgeMobile} * 1 + ${props => props.theme.sizes.sideBarHeightMobile});
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: flex-start;
+  }
 
   &:after {
     position: absolute;
@@ -113,7 +139,6 @@ const Playground = styled.div`
   flex: 1;
   height: 100%;
   transition: height 0.3s;
-  margin-right: calc(${props => props.theme.sizes.edge} * 6);
 `;
 
 const StepCss = css`
@@ -135,6 +160,14 @@ const StepCss = css`
     transition: opacity 300ms 300ms;
     pointer-events: all;
   }
+
+  @media ${props => props.theme.medias.medium} {
+    position: absolute;
+
+    &[data-active="true"] {
+      position: relative;
+    }
+  }
 `;
 
 const StyledWarning = styled(Warning)`
@@ -148,6 +181,7 @@ const Loader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 300px;
 `;
 
 const Explainer = styled.div`

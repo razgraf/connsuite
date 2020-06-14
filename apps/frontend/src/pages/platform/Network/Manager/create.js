@@ -168,9 +168,9 @@ const StepCss = css`
   @media ${props => props.theme.medias.medium} {
     position: absolute;
 
-  &[data-active="true"] {
-    position: relative;
-  }
+    &[data-active="true"] {
+     position: relative;
+    }
   }
 `;
 
