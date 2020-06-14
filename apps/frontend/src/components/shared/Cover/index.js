@@ -7,6 +7,8 @@ import IconArrow from "@material-ui/icons/ArrowForwardRounded";
 import IconShare from "@material-ui/icons/ShareRounded";
 import IconEdit from "@material-ui/icons/EditRounded";
 import IconDelete from "@material-ui/icons/RemoveCircleOutlineRounded";
+import IconClose from "@material-ui/icons/CloseRounded";
+
 import { rgba } from "polished";
 import Backdrop from "../Backdrop";
 import { getFriendlyTitle } from "../../../utils";
@@ -24,6 +26,9 @@ const WrapperPartial = styled.div`
   top: 0;
   pointer-events: none;
   overflow: hidden;
+  @media ${props => props.theme.medias.small} {
+    z-index: calc(${props => props.theme.sizes.navElevation} + 10);
+  }
 `;
 
 const CoverBackdrop = styled(Backdrop)`
@@ -40,6 +45,10 @@ const Container = styled.div`
   width: 100vw;
   z-index: 200;
   padding-left: calc(${props => props.theme.sizes.edge} * 2);
+
+  @media ${props => props.theme.medias.medium} {
+    padding-left: calc(${props => props.theme.sizes.edge} * 1);
+  }
 `;
 
 const Slide = styled.div`
@@ -65,12 +74,40 @@ const Content = styled.div`
   padding-top: calc(${props => props.theme.sizes.navHeight});
 
   @media ${props => props.theme.medias.small} {
-    padding-top: ${props => props.theme.sizes.navHeightMobile};
+    padding-top: 0;
   }
 `;
 
 const Header = styled.div`
   display: none;
+  @media ${props => props.theme.medias.small} {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: calc(${props => props.theme.sizes.sectionEdgeMobile} * 2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  & > p {
+    font-weight: 600;
+    color: ${props => props.theme.colors.white};
+    margin: 0 0 0 15px;
+  }
+`;
+
+const CloseArrow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  width: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: rotate(180deg);
+  & > svg {
+    font-size: 16pt;
+    color: ${props => props.theme.colors.white};
+  }
 `;
 
 const Section = styled.section`
@@ -80,6 +117,9 @@ const Section = styled.section`
   justify-content: flex-start;
   width: 100%;
   padding: 0 calc(${props => props.theme.sizes.edge} * 2);
+  @media ${props => props.theme.medias.small} {
+    padding: 0 calc(${props => props.theme.sizes.sectionEdgeMobile} * 2);
+  }
 `;
 
 const SectionHeader = styled.div`
@@ -88,6 +128,9 @@ const SectionHeader = styled.div`
   align-items: center;
   justify-content: flex-start;
   padding: calc(${props => props.theme.sizes.edge} * 2) 0;
+  @media ${props => props.theme.medias.small} {
+    padding-top: calc(${props => props.theme.sizes.sectionEdgeMobile} * 2) 0;
+  }
 `;
 
 const SectionTitle = styled.p`
@@ -118,6 +161,9 @@ const Card = styled.div`
   border-radius: calc(${props => props.theme.sizes.edge} * 1);
   background: ${props => props.theme.colors.white};
   box-shadow: 0 12px 30px -15px r ${props => rgba(props.theme.colors.dark, 0.3)};
+  @media ${props => props.theme.medias.medium} {
+    height: 160px;
+  }
 `;
 
 const CardLeft = styled.div`
@@ -126,6 +172,9 @@ const CardLeft = styled.div`
   justify-content: center;
   height: 100%;
   padding: 0 calc(${props => props.theme.sizes.edge} * 2.5);
+  @media ${props => props.theme.medias.medium} {
+    padding: 0 calc(${props => props.theme.sizes.edge} * 1.5);
+  }
 `;
 
 const CardLeftImage = styled.img`
@@ -142,6 +191,10 @@ const CardLeftImage = styled.img`
     opacity: 0;
     transition: opacity 150ms;
   }
+  @media ${props => props.theme.medias.medium} {
+    max-width: 70px;
+    max-height: 70px;
+  }
 `;
 
 const CardMain = styled.div`
@@ -155,6 +208,10 @@ const CardMain = styled.div`
   padding-top: ${props => props.theme.sizes.edge};
   padding-bottom: ${props => props.theme.sizes.edge};
   padding-left: calc(${props => props.theme.sizes.edge} * 2);
+
+  @media ${props => props.theme.medias.medium} {
+    padding-left: calc(${props => props.theme.sizes.edge} * 1.5);
+  }
 `;
 
 const CardMainTitle = styled.p`
@@ -167,6 +224,9 @@ const CardMainTitle = styled.p`
   color: ${props => props.theme.colors.dark};
   white-space: nowrap;
   overflow: hidden;
+  @media ${props => props.theme.medias.medium} {
+    font-size: 14pt;
+  }
 `;
 
 const CardMainUsername = styled.p`
@@ -191,6 +251,9 @@ const CardRight = styled.div`
   align-items: center;
   height: 100%;
   padding: 0 calc(${props => props.theme.sizes.edge} * 2);
+  @media ${props => props.theme.medias.medium} {
+    padding: 0 calc(${props => props.theme.sizes.edge} * 1);
+  }
 `;
 
 const CardRightAction = styled.a`
@@ -314,7 +377,12 @@ function Cover({ isSelf }) {
       <Container>
         <Slide>
           <Content>
-            <Header />
+            <Header onClick={() => setOpen(false)}>
+              <CloseArrow>
+                <IconClose />
+              </CloseArrow>
+              <p>Close cover</p>
+            </Header>
             <Section>
               <SectionHeader>
                 <SectionTitle>Network Details</SectionTitle>

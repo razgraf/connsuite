@@ -27,6 +27,9 @@ const Canvas = styled(components.Canvas)`
   position: relative;
   z-index: 200;
   padding: 0 calc(${props => props.theme.sizes.edge} * 2);
+  @media ${props => props.theme.medias.medium} {
+    padding: 0 calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+  }
 `;
 
 const Underlay = styled.div`
@@ -45,10 +48,17 @@ const Content = styled.div`
   justify-content: flex-start;
   width: 100%;
   padding-bottom: 60px;
+  @media ${props => props.theme.medias.medium} {
+    padding: 0;
+    flex-direction: column;
+  }
 `;
 
 const Left = styled.div`
   width: 460px;
+  @media ${props => props.theme.medias.medium} {
+    width: 100%;
+  }
 `;
 
 const Right = styled.div`
@@ -57,6 +67,17 @@ const Right = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: calc(${props => props.theme.sizes.edge} * 3);
   padding-left: calc(${props => props.theme.sizes.edge} * 3);
+  @media ${props => props.theme.medias.medium} {
+    width: 100%;
+    margin-top: calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+    grid-gap: calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+    padding-bottom: calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+    padding-left: 0;
+  }
+
+  @media ${props => props.theme.medias.small} {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const Card = styled.div`
