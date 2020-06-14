@@ -16,6 +16,9 @@ const Wrapper = styled(components.Section)`
   width: 100%;
   padding: 0 ${props => props.theme.sizes.sectionEdge};
   overflow: hidden;
+  @media ${props => props.theme.medias.medium} {
+    padding: 0;
+  }
 `;
 
 const SectionHeader = styled(components.SectionHeader)``;
@@ -31,6 +34,9 @@ const Content = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
+  @media ${props => props.theme.medias.medium} {
+    flex-direction: column;
+  }
 `;
 
 const Left = styled.div`
@@ -38,12 +44,24 @@ const Left = styled.div`
   flex-direction: column;
   flex-shrink: 0;
   padding-right: calc(${props => props.theme.sizes.edge} * 2);
+  @media ${props => props.theme.medias.medium} {
+    flex: none;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-right: 0;
+    padding-bottom: calc(${props => props.theme.sizes.sectionEdge} * 1);
+  }
 `;
 
 const Right = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  @media ${props => props.theme.medias.medium} {
+    flex: none;
+    width: 100%;
+  }
 `;
 
 const CoverWrapperPartial = styled.div`
@@ -57,6 +75,10 @@ const CoverWrapperPartial = styled.div`
   width: 300px;
   border: 1px solid ${props => props.theme.colors.grayBlueLight};
   background-color: ${props => props.theme.colors.background};
+  @media ${props => props.theme.medias.medium} {
+    height: 200px;
+    width: 200px;
+  }
 `;
 
 const CoverContainer = styled.div`
@@ -181,6 +203,13 @@ const Form = styled.div`
   display: grid;
   grid-template-columns: repeat(${props => props.columns || 1}, 1fr);
   grid-column-gap: calc(${props => props.theme.sizes.edge} * 1.5);
+  @media ${props => props.theme.medias.medium} {
+    grid-template-columns: 1fr 1fr !important;
+    grid-gap: 0;
+    & > * {
+      grid-column: span 2 !important;
+    }
+  }
 `;
 
 const Single = styled.div`
@@ -219,6 +248,9 @@ const Preview = styled.div`
   top: 0;
   width: 100%;
   pointer-events: none;
+  @media ${props => props.theme.medias.medium} {
+    display: none;
+  }
 `;
 
 const PreviewButton = styled.div`

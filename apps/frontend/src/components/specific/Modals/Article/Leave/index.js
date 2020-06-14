@@ -50,7 +50,7 @@ function ModalArticleLeave({ className, onSuccess: onSuccessCallback }) {
         </>
       }
     >
-      <Explainer>Leaving now will discard all the changes you&amp;ve made to this article. Are you sure you want to continue?</Explainer>
+      <Explainer>Leaving now will discard all the changes you&apos;ve made to this article. Are you sure you want to continue?</Explainer>
     </Modal>
   );
 }

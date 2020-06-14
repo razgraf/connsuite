@@ -150,7 +150,7 @@ function Live({ className, isActive, reducer }) {
           You are almost there <Emoji symbol="👌" />
         </Title>
         <Subtitle>
-          Once you go live, you&amp;ll have one more network added to your online business card! To confirm everything, click on the
+          Once you go live, you&apos;ll have one more network added to your online business card! To confirm everything, click on the
           &quot;Go Live&quot; button.
         </Subtitle>
         <Grid>

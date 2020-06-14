@@ -24,6 +24,7 @@ const WrapperPartial = styled.div`
   top: 0;
   overflow-x: hidden;
   overflow-y: auto;
+  padding: 15px;
 `;
 const ModalBackdrop = styled(Backdrop)`
   z-index: 100;
@@ -49,6 +50,9 @@ const Header = styled.div`
   align-items: center;
   width: 100%;
   padding: calc(${props => props.theme.sizes.edge} * 1.5) calc(${props => props.theme.sizes.edge} * 2);
+  @media ${props => props.theme.medias.small} {
+    padding: 15px;
+  }
 `;
 
 const Title = styled.div`
@@ -94,6 +98,9 @@ const Main = styled.div`
   padding: calc(${props => props.theme.sizes.edge} * 1) calc(${props => props.theme.sizes.edge} * 2)
     calc(${props => props.theme.sizes.edge} * 1.5);
   line-height: 1.6;
+  @media ${props => props.theme.medias.small} {
+    padding: 15px;
+  }
 `;
 
 const Footer = styled.div`
@@ -107,6 +114,9 @@ const Footer = styled.div`
     &:first-child {
       margin-left: 0;
     }
+  }
+  @media ${props => props.theme.medias.small} {
+    padding: 15px;
   }
 `;
 
