@@ -24,7 +24,7 @@ const Content = styled(components.Canvas)`
   padding: 0 ${props => props.theme.sizes.navHorizontalEdge};
   max-width: calc(${props => props.theme.sizes.canvasMaxWidth});
 
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     height: ${props => props.theme.sizes.navHeightMobile};
   }
 `;
@@ -43,13 +43,13 @@ const AccountWrapper = styled.div`
 
 const IconLogo = styled(Logo)`
   display: flex;
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     display: none;
   }
 `;
 const FullLogo = styled(LogoType)`
   display: none;
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     display: flex;
   }
 `;

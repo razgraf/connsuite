@@ -21,7 +21,7 @@ const Main = styled.div`
   justify-content: flex-start;
   width: 100%;
   padding-top: ${props => props.theme.sizes.navHeight};
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     padding-top: ${props => props.theme.sizes.navHeightMobile};
   }
 `;
@@ -63,7 +63,7 @@ const Canvas = styled(components.Canvas)`
     height: 80%;
     box-shadow: 0 0 50px -10px ${props => rgba(props.theme.colors.dark, 0.1)};
   }
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     min-height: calc(100vh - ${props => props.theme.sizes.footerMinHeight} - ${props => props.theme.sizes.navHeightMobile});
   }
 `;

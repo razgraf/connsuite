@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   height: calc(${props => props.theme.sizes.navHeight} - ${props => props.theme.sizes.navVerticalEdge} * 2);
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     height: calc(${props => props.theme.sizes.navHeightMobile} - ${props => props.theme.sizes.navVerticalEdge} * 2);
   }
 `;
@@ -41,7 +41,7 @@ const Content = styled.div`
   border-radius: 100px;
   border: 1px solid transparent;
 
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     background: transparent;
     min-width: auto;
     padding: 0;
@@ -56,7 +56,7 @@ const ImageWrapper = styled.div`
   border: 1px solid ${props => props.theme.colors.grayLight};
   pointer-events: none;
 
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     border: none;
     pointer-events: all;
     height: calc(${props => props.theme.sizes.navHeightMobile} - 2 * ${props => props.theme.sizes.navVerticalEdge});
@@ -84,7 +84,7 @@ const Main = styled.div`
   flex: 1;
   padding: 0 calc(${props => props.theme.sizes.edge} * 2 / 3);
 
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     display: none;
   }
 `;
@@ -109,7 +109,7 @@ const Name = styled.p`
 const Action = styled.div`
   margin: 0 calc(${props => props.theme.sizes.edge} * 1 / 3) 0 0;
 
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -155,7 +155,7 @@ const ActionDropdown = styled.div`
     font-size: 11pt;
   }
 
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     background: transparent;
     & > svg {
       color: ${props => props.theme.colors.grayBlueDark};
@@ -190,7 +190,7 @@ const Dropdown = styled.div`
     transition: opacity 100ms, transform 100ms;
   }
 
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     width: 200px;
     right: 0;
     top: calc((${props => props.theme.sizes.navHeightMobile} - ${props => props.theme.sizes.navVerticalEdge} * 1) + 5px);

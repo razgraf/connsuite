@@ -25,6 +25,9 @@ const Wrapper = styled.div`
 const Top = styled.div`
   width: 100%;
   padding: 0 calc(${props => props.theme.sizes.edge} * 2);
+  @media ${props => props.theme.medias.medium} {
+    padding: 0 calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+  }
 `;
 
 const Content = styled.div`
@@ -46,6 +49,19 @@ const Grid = styled.div`
   & > * {
     grid-column: span 1;
     height: 300px;
+  }
+  @media ${props => props.theme.medias.medium} {
+    grid-template-columns: repeat(2, 1fr);
+    padding-top: ${props => props.theme.sizes.canvasEdgeMobile};
+  }
+
+  @media ${props => props.theme.medias.small} {
+    grid-template-columns: repeat(1, 1fr);
+    grid-row-gap: ${props => props.theme.sizes.canvasEdgeMobile};
+    padding: ${props => props.theme.sizes.canvasEdgeMobile};
+    & > * {
+      grid-column: span 1;
+    }
   }
 `;
 

@@ -17,6 +17,10 @@ const Wrapper = styled.div`
   border-top: 1px solid ${props => props.theme.colors.grayBlueLight};
   border-bottom: 1px solid ${props => props.theme.colors.grayBlueLight};
   z-index: 250;
+  @media ${props => props.theme.medias.medium} {
+    padding: 0 calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+    justify-content: flex-start;
+  }
 `;
 
 const Title = styled.p`
@@ -25,6 +29,9 @@ const Title = styled.p`
   font-family: ${props => props.theme.fonts.primary};
   color: ${props => props.theme.colors.dark};
   margin: 0 15px 0 0;
+  @media ${props => props.theme.medias.small} {
+    display: none;
+  }
 `;
 
 const List = styled.div`
@@ -37,6 +44,10 @@ const List = styled.div`
 
   & > * {
     margin-right: 10px;
+  }
+  @media ${props => props.theme.medias.medium} {
+    justify-content: flex-start;
+    flex: none;
   }
 `;
 
@@ -69,6 +80,11 @@ const Pill = styled.div`
     & > p {
       color: ${props => props.theme.colors.white};
       transition: color 100ms;
+      @media ${props => props.theme.medias.medium} {
+        & > span[data-purpose="tag"] {
+          display: none;
+        }
+      }
     }
   }
 
@@ -80,6 +96,13 @@ const Pill = styled.div`
       & > p {
         color: ${props => props.theme.colors.grayBlueBlack};
         transition: color 100ms;
+      }
+    }
+    & > p {
+      @media ${props => props.theme.medias.medium} {
+        & > span:not([data-purpose="tag"]) {
+          display: none;
+        }
       }
     }
   }
@@ -153,15 +176,61 @@ const SkillPill = styled(Pill)`
   }
 `;
 
+const CategoryDropdown = styled(Dropdown)`
+  top: 55px;
+  right: 0;
+  min-width: 180px;
+`;
+
+const CategoryPillWrapper = styled.div`
+  position: relative;
+  display: none;
+  margin-right: 10px;
+  &[data-active="true"] {
+    display: flex;
+  }
+`;
+
+const CategoryPill = styled(Pill)`
+  &[data-active="true"] {
+    background-color: ${props => props.theme.colors.secondary};
+    transition: background-color 100ms;
+    & > p {
+      color: ${props => props.theme.colors.white};
+      transition: color 100ms;
+    }
+    ${Arrow} {
+      background-color: rgba(255, 255, 255, 0.2) !important;
+      background-color: color 100ms;
+      & > * {
+        color: ${props => props.theme.colors.white};
+      }
+    }
+  }
+`;
+
 function Navigator({ className, categories, skills, controller }) {
   const [isDown, setIsDown] = useState(false);
+  const [isCategoryDown, setIsCategoryDown] = useState(false);
   const [ref] = useOnClickOutside(() => setIsDown(false));
+  const [refCategory] = useOnClickOutside(() => setIsCategoryDown(false));
 
   const chosen = useMemo(() => controller.get(), [controller]);
   const title = useMemo(() => {
     if (_.isNil(chosen)) return "All";
-    if (_.get(chosen, "isCategory")) return `Category: ${_.get(chosen, "title")}`;
-    return `Skill: ${_.get(chosen, "title")}`;
+    if (_.get(chosen, "isCategory"))
+      return (
+        <>
+          <span>Category: </span>
+          {_.get(chosen, "title")}
+        </>
+      );
+    return (
+      <>
+        <span>Skill: </span>
+        {_.get(chosen, "title")}
+      </>
+    );
   }, [chosen]);
 
   return (
@@ -171,30 +240,40 @@ function Navigator({ className, categories, skills, controller }) {
         <AllPill data-active={_.isNil(chosen)} onClick={() => controller.set(null)}>
           <p>All</p>
         </AllPill>
-        {categories
-          .sort((a, b) => a.title < b.title)
-          .map(category => (
-            <Pill
-              key={_.get(category, "_id")}
-              data-active={!!(chosen && _.get(chosen, "isCategory") && _.get(chosen, "title") === _.get(category, "title"))}
-              onClick={() => {
-                controller.set({ ...category, isCategory: true });
-              }}
-            >
-              <p>{_.get(category, "title")}</p>
-            </Pill>
-          ))}
       </List>
+      <CategoryPillWrapper ref={refCategory} data-active={categories.length > 0}>
+        <CategoryPill data-active={_.has(chosen, "isCategory")} onClick={() => setIsCategoryDown(!isCategoryDown)}>
+          <p>
+            <span data-purpose="tag">Category: </span>
+            <span>{chosen && _.get(chosen, "isCategory") ? _.get(chosen, "title") : "Browse"}</span>
+          </p>
+          <Arrow data-active={isCategoryDown}>
+            <IconArrowDown style={{ fontSize: "11pt" }} />
+          </Arrow>
+        </CategoryPill>
+        <CategoryDropdown
+          isActive={isCategoryDown}
+          items={categories.sort((a, b) => a.title < b.title)}
+          onItemClick={category => {
+            controller.set({ ...category, isCategory: true });
+            setIsDown(false);
+            setIsCategoryDown(false);
+          }}
+        />
+      </CategoryPillWrapper>
       <SkillPillWrapper ref={ref} data-active={skills.length > 0}>
         <SkillPill data-active={_.has(chosen, "isSkill")} onClick={() => setIsDown(!isDown)}>
-          <p>Skill: {chosen && _.get(chosen, "isSkill") ? _.get(chosen, "title") : "Browse"}</p>
+          <p>
+            <span data-purpose="tag">Skill: </span>
+            <span>{chosen && _.get(chosen, "isSkill") ? _.get(chosen, "title") : "Browse"}</span>
+          </p>
           <Arrow data-active={isDown}>
             <IconArrowDown style={{ fontSize: "11pt" }} />
           </Arrow>
         </SkillPill>
         <SkillDropdown
           isActive={isDown}
-          items={skills}
+          items={skills.sort((a, b) => a.title < b.title)}
           onItemClick={item => {
             controller.set({ ...item, isSkill: true });
             setIsDown(false);

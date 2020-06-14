@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   z-index: calc(${props => props.theme.sizes.areaElevation} + 10);
   min-height: ${props => props.theme.sizes.footerMinHeight};
 
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.small} {
     z-index: calc(${props => props.theme.sizes.areaElevation} - 10);
     min-height: 0;
   }
@@ -28,7 +28,7 @@ const Canvas = styled(components.Canvas)`
   padding-top: calc(${props => props.theme.sizes.edge} * 4);
   padding-bottom: calc(${props => props.theme.sizes.edge} * 3);
 
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.small} {
     padding-top: calc(${props => props.theme.sizes.edge} * 1);
     padding-bottom: calc(${props => props.theme.sizes.sideBarHeightMobile} + ${props => props.theme.sizes.edge} * 1);
   }
@@ -37,7 +37,7 @@ const Canvas = styled(components.Canvas)`
 const Header = styled.div`
   width: 100%;
   margin-bottom: calc(${props => props.theme.sizes.edge} * 3);
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.small} {
     margin-bottom: 0;
   }
 `;
@@ -61,7 +61,7 @@ const Content = styled.div`
   justify-content: flex-start;
   width: 100%;
 
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.small} {
     flex-direction: column;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin-top: calc(${props => props.theme.sizes.edge} * 2);
@@ -81,7 +81,7 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: calc(${props => props.theme.sizes.edge} * 2);
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.small} {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: calc(${props => props.theme.sizes.edge} * 1);
     width: 100%;
@@ -118,7 +118,7 @@ const Item = styled.a`
 const Shill = styled.div`
   width: 250px;
   padding-left: calc(${props => props.theme.sizes.edge} * 2);
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.small} {
     padding: 0;
     width: 100%;
   }
@@ -173,7 +173,7 @@ const Expand = styled.div`
     transition: background-color 150ms, transform 150ms;
   }
 
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.small} {
     display: flex;
     pointer-events: all;
   }

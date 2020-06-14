@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const Overlay = styled.div`
+const Underlay = styled.div`
   position: absolute;
   z-index: 200;
   left: 0;
@@ -52,7 +52,7 @@ const Canvas = styled(components.Canvas)`
   height: 650px;
   width: 100%;
   padding-bottom: calc(150px + ${props => props.theme.sizes.navHeight});
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     padding-bottom: calc(150px + ${props => props.theme.sizes.navHeightMobile});
   }
 `;
@@ -106,11 +106,11 @@ const Actions = styled.div`
 function Header() {
   return (
     <Wrapper>
-      <Overlay>
+      <Underlay>
         <Wave1 />
         <Wave2 />
         <Wave3 />
-      </Overlay>
+      </Underlay>
       <Canvas>
         <Left>
           <Title>Create the ultimate online business card</Title>

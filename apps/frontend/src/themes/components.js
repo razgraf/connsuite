@@ -87,7 +87,7 @@ const SectionHeader = styled.div`
   display: flex;
   align-items: center;
   padding: calc(${props => props.theme.sizes.edge} * 2) 0;
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.small} {
     padding: calc(${props => props.theme.sizes.edge} * 1) 0;
   }
 `;
@@ -105,7 +105,7 @@ const SectionTitle = styled.div`
     font-size: 13pt;
     font-weight: 400;
   }
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.small} {
     & > p {
       font-size: 14pt;
     }

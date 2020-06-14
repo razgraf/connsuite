@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   height: calc(${props => props.theme.sizes.navHeight} - 2 * ${props => props.theme.sizes.navVerticalEdge} - 2 * 10px);
   width: auto;
   cursor: pointer;
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     height: calc(${props => props.theme.sizes.navHeightMobile} - 2 * ${props => props.theme.sizes.navVerticalEdge} - 2 * 10px);
   }
 `;

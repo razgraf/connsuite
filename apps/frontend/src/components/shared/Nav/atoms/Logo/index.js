@@ -12,8 +12,9 @@ const WrapperPartial = styled.a`
   border-radius: 50%;
   background-color: ${props => props.theme.colors.white};
   border: 1px solid transparent;
+  flex-shrink: 0;
   cursor: pointer;
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     height: calc(${props => props.theme.sizes.navHeightMobile} - 2 * ${props => props.theme.sizes.navVerticalEdge});
     width: calc(${props => props.theme.sizes.navHeightMobile} - 2 * ${props => props.theme.sizes.navVerticalEdge});
   }
@@ -52,6 +53,10 @@ const Back = styled.div`
   transition: transform 200ms;
   & > * {
     color: ${props => props.theme.colors.secondary};
+  }
+  @media ${props => props.theme.medias.small} {
+    transform: translateX(0);
+    transition: transform 200ms;
   }
 `;
 

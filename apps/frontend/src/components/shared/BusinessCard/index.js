@@ -147,6 +147,8 @@ const Action = styled.div`
   & > * {
     color: ${props => props.theme.colors.grayBlueDark};
   }
+
+  display: none;
 `;
 
 const NetworkGrid = styled.div`

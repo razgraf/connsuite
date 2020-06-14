@@ -14,7 +14,7 @@ const Content = styled(components.Canvas)`
   display: flex;
   align-items: center;
   height: ${props => props.theme.sizes.navHeight};
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     height: ${props => props.theme.sizes.navHeightMobile};
   }
 `;

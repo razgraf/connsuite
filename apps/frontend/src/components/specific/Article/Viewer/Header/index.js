@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   width: 100%;
   background: ${props => props.theme.colors.background};
   margin-top: ${props => props.theme.sizes.navHeight};
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     margin-top: ${props => props.theme.sizes.navHeightMobile};
   }
 `;

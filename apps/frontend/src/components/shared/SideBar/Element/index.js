@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   width: 100%;
   margin-bottom: calc(${props => props.theme.sizes.edge} * 1.2);
 
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.small} {
     grid-column: span 1;
     align-items: center;
     justify-content: center;
@@ -45,7 +45,7 @@ const Helper = styled.div`
     font-size: 9pt;
     margin: 0;
   }
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.small} {
     display: none;
   }
 `;
@@ -107,7 +107,7 @@ const Bubble = styled(BubblePartial)`
     }
   }
 
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.small} {
     border-radius: 0;
     box-shadow: none;
     height: 100%;

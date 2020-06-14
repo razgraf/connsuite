@@ -22,7 +22,7 @@ const Card = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.medium} {
     border-radius: 2px;
   }
 `;
@@ -33,7 +33,7 @@ const Content = styled.div`
   z-index: 100;
   position: relative;
   overflow: hidden;
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.medium} {
     border-radius: 2px;
   }
 `;
@@ -70,7 +70,7 @@ const OverlayHeader = styled.div`
   width: 100%;
   flex: 1;
   padding: ${props => props.theme.sizes.edge};
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.medium} {
     padding: 10px;
   }
 `;
@@ -139,7 +139,7 @@ const OverlayFooter = styled.div`
   transform: translateY(100%);
   transition: transform 200ms;
   will-change: transform;
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.medium} {
     transform: translateY(0);
     transition: transform 200ms;
     will-change: transform;
@@ -163,7 +163,7 @@ const OverlayFooterTitle = styled.p`
   max-width: calc(100% - 80px);
   text-align: left;
   color: ${props => props.theme.colors.dark};
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.medium} {
     flex: 1;
     max-width: calc(100% - 120px);
     margin-right: auto;
@@ -177,7 +177,7 @@ const OverlayFooterBottom = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.medium} {
     width: auto;
   }
 `;
@@ -186,7 +186,7 @@ const OverlayFooterInfo = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.medium} {
     display: none;
   }
 `;
@@ -262,7 +262,7 @@ const Wrapper = styled(WrapperPartial)`
   &:not([data-style="add"]) {
     ${Card} {
       box-shadow: 0 0 15px 0 ${props => rgba(props.theme.colors.dark, 0.1)};
-      @media ${props => props.theme.medias.mobile} {
+      @media ${props => props.theme.medias.medium} {
         box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
       }
     }
@@ -276,7 +276,7 @@ const Wrapper = styled(WrapperPartial)`
     ${Card} {
       flex: 1;
       padding: 20px;
-      @media ${props => props.theme.medias.mobile} {
+      @media ${props => props.theme.medias.medium} {
         padding: 0px 0px 20px 0px;
       }
     }

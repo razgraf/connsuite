@@ -14,7 +14,7 @@ const Content = styled.div`
   flex-direction: column;
   padding-top: calc(${props => props.theme.sizes.navHeight} + ${props => props.theme.sizes.edge});
 
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.small} {
     height: 100%;
     width: 100%;
     display: grid;
@@ -33,7 +33,7 @@ const Divider = styled.div`
   height: 1px;
   margin-bottom: calc(${props => props.theme.sizes.edge} * 1.2);
   background: ${props => props.theme.colors.grayBlueLight};
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.small} {
     display: none;
   }
 `;

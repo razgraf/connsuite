@@ -31,7 +31,7 @@ const Main = styled.div`
   justify-content: flex-start;
   width: 100%;
   padding-top: ${props => props.theme.sizes.navHeight};
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     padding-top: ${props => props.theme.sizes.navHeightMobile};
   }
 `;
@@ -94,7 +94,7 @@ function Profile({ data, identifier, isSelf }) {
 
   const [articleRemove, setArticleRemove] = useState(null);
   const { setOpen: setArticleRemoveModalOpen } = useModal(modals.articleRemove);
-  const { network: networkCover, setOpen: setOpenCover } = useCover();
+  const { network: networkCover, setOpen: setOpenCover, setNetwork: setCoverNetwork } = useCover();
 
   const onArticleRemoveClick = useCallback(
     article => {
@@ -132,6 +132,7 @@ function Profile({ data, identifier, isSelf }) {
       data,
       isSelf,
       username,
+      description: _.get(data, "description"),
       profile: _.get(machineProfile, "current.context.data"),
       skills: _.get(machineProfile, "current.context.data.skills"),
       categories: _.get(machineProfile, "current.context.data.categories"),
@@ -142,6 +143,16 @@ function Profile({ data, identifier, isSelf }) {
       isLoadingArticles: _.get(machineArticles, "current.context.isLoading"),
     };
   }, [data, isSelf, username, machineProfile, machineNetworks, machineArticles]);
+
+  const onGetInTouchClick = useCallback(() => {
+    const networks = _.toArray(_.get(person, "networks"));
+    if (!networks.length) return;
+
+    const network = networks[0];
+
+    setCoverNetwork(network);
+    setOpenCover(true);
+  }, [setCoverNetwork, setOpenCover, person]);
 
   if (_.isNil(data)) return <Missing />;
 
@@ -154,18 +165,20 @@ function Profile({ data, identifier, isSelf }) {
         name={name}
         descripton={_.get(person, "data.description")}
       />
-      <Nav
-        appearance={types.nav.appearance.profile}
-        title={`${parseFullName({ user: data }) || "ConnSuite"}'s`}
-        networks={person.networks}
-      />
+      <Nav appearance={types.nav.appearance.profile} title={`${parseFullName({ user: data }) || "ConnSuite"}`} networks={person.networks} />
       <Main>
         <Canvas>
-          <Header isLoading={person.isLoadingProfile} controller={controller} profile={person.profile} />
+          <Header
+            isLoading={person.isLoadingProfile}
+            controller={controller}
+            profile={person.profile}
+            description={person.description}
+            onGetInTouchClick={onGetInTouchClick}
+          />
           <Networks isLoading={person.isLoadingNetworks} networks={person.networks} />
           <Articles person={person} controller={controller} onArticleRemoveClick={onArticleRemoveClick} />
         </Canvas>
-        <Business person={person} />
+        <Business person={person} onGetInTouchClick={onGetInTouchClick} />
       </Main>
       <Cover isSelf={person.isSelf} />
       {isSelf && (

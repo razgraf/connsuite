@@ -39,7 +39,7 @@ const Content = styled.div`
   padding-top: ${props => props.theme.sizes.navHeight};
   padding-left: ${props => props.theme.sizes.sideBarWidth};
 
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     padding-top: ${props => props.theme.sizes.navHeightMobile};
     padding-left: 0;
   }
@@ -63,7 +63,7 @@ const StyledSideBar = styled(SideBar)`
     width: ${props => props.theme.sizes.sideBarWidth};
   }
 
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.small} {
     position: fixed;
     bottom: 0;
     left: 0;

@@ -64,7 +64,7 @@ const Content = styled.div`
   max-width: calc(${props => props.theme.sizes.canvasMaxWidth} * 1 / 2);
   padding-top: calc(${props => props.theme.sizes.navHeight});
 
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     padding-top: ${props => props.theme.sizes.navHeightMobile};
   }
 `;
@@ -306,7 +306,7 @@ const Wrapper = styled(WrapperPartial)`
 function Cover({ isSelf }) {
   const { isOpen, network, setOpen } = useCover();
   const { setOpen: setModalRemoveOpen } = useModal(modals.networkRemove);
-  const { push } = useHistory();
+  const history = useHistory();
 
   return (
     <Wrapper data-visible={isOpen}>
@@ -330,7 +330,13 @@ function Cover({ isSelf }) {
                 <CardRight>
                   {isSelf && (
                     <Link href={pages.analytics.root}>
-                      <CardRightAction data-purpose="analytics" title={pages.analytics.title} onClick={push}>
+                      <CardRightAction
+                        data-purpose="analytics"
+                        title={pages.analytics.title}
+                        onClick={() => {
+                          history.push();
+                        }}
+                      >
                         <pages.analytics.Icon style={{ fontSize: "16pt" }} />
                       </CardRightAction>
                     </Link>
@@ -371,7 +377,7 @@ function Cover({ isSelf }) {
               {isSelf && (
                 <>
                   <Link href={pages.network.edit.route} as={pages.network.edit.builder(_.get(network, "_id"))}>
-                    <Action onClick={push}>
+                    <Action onClick={() => history.push()}>
                       <ActionIcon>
                         <IconEdit style={{ fontSize: "12pt" }} />
                       </ActionIcon>

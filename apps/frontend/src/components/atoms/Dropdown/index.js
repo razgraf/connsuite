@@ -29,7 +29,7 @@ const Wrapper = styled.div`
     transform: translateY(0);
     transition: opacity 100ms, transform 100ms;
   }
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     top: calc((${props => props.theme.sizes.navHeightMobile} - ${props => props.theme.sizes.navVerticalEdge} * 1) + 5px);
   }
 `;

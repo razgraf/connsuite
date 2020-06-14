@@ -158,7 +158,7 @@ const ButtonIconWrapper = styled.div`
   margin-left: -4px;
 `;
 
-function Business({ className, person, onIntersect }) {
+function Business({ className, person, onIntersect, onGetInTouchClick }) {
   const { ref, isObserved } = useProfileIntersection(payload => onIntersect(types.profile.section.business, payload));
 
   return (
@@ -228,15 +228,15 @@ function Business({ className, person, onIntersect }) {
                 }
                 title="Get in touch"
                 type={t => t.button}
-                onClick={() => console.log("click")}
+                onClick={onGetInTouchClick}
                 isFullWidth
               />
               <Button
                 appearance={t => t.solid}
                 accent={t => t.grayBlueNormal}
-                title="Request business card"
+                title="Share business card"
                 type={t => t.button}
-                onClick={() => console.log("click")}
+                onClick={() => console.log("share")}
                 isFullWidth
               />
             </CardActions>
@@ -262,6 +262,7 @@ Business.propTypes = {
     isLoadingProfile: PropTypes.bool,
   }),
   onIntersect: PropTypes.func,
+  onGetInTouchClick: PropTypes.func,
 };
 
 Business.defaultProps = {
@@ -278,6 +279,7 @@ Business.defaultProps = {
     isLoadingNetworks: true,
     isLoadingProfile: true,
   },
+  onGetInTouchClick: () => {},
 };
 
 export default Business;

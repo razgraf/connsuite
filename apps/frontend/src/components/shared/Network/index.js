@@ -36,7 +36,7 @@ const Content = styled.div`
   border-radius: ${props => props.theme.sizes.networkEdge};
   box-shadow: 0 0 15px 0 ${props => rgba(props.theme.colors.dark, 0.05)};
 
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     border-radius: 10px;
   }
 `;
@@ -82,7 +82,7 @@ const ContentImage = styled.img`
     visibility: hidden;
   }
 
-  @media all and (max-width: ${props => props.theme.medias.medium}) {
+  @media ${props => props.theme.medias.small} {
     height: 80%;
     width: 80%;
   }
@@ -103,7 +103,7 @@ const ContentFooterDetails = styled.p`
   font-size: 9pt;
   font-weight: 600;
   margin: 0;
-  @media all and (max-width: ${props => props.theme.medias.medium}) {
+  @media ${props => props.theme.medias.small} {
     font-size: 9pt;
   }
 `;
@@ -195,7 +195,7 @@ const Info = styled.div`
   & > * {
     max-width: 170px;
   }
-  @media ${props => props.theme.medias.tablet} {
+  @media ${props => props.theme.medias.small} {
     padding-top: calc(${props => props.theme.sizes.networkEdgeMobile} * 3 / 4);
   }
 `;

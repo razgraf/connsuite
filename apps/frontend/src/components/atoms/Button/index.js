@@ -57,7 +57,7 @@ const wrapperCss = css`
       width: 100%;
     `};
 
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     padding: 12px 15px;
     ${props =>
       props.isMini &&

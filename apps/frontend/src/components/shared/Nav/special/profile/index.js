@@ -18,7 +18,7 @@ const WrapperPartial = styled.div`
   order: 1;
   width: 100%;
   background: ${props => props.theme.colors.white};
-  border-bottom: 1px solid ${props => props.theme.colors.grayLight};
+  border-bottom: 1px solid ${props => props.theme.colors.grayBlueLight};
   box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.15);
   transition: box-shadow 300ms;
 
@@ -35,13 +35,13 @@ const Content = styled(components.Canvas)`
   padding: 0 ${props => props.theme.sizes.navHorizontalEdge};
   max-width: calc(${props => props.theme.sizes.canvasMaxWidth});
 
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     height: ${props => props.theme.sizes.navHeightMobile};
   }
 `;
 
 const NavLogo = styled(Logo)`
-  border: 1px solid ${props => props.theme.colors.grayLight};
+  border: 1px solid ${props => props.theme.colors.grayBlueLight};
 `;
 
 const Main = styled.div`
@@ -69,11 +69,16 @@ const NavAccountWrapper = styled.div`
     pointer-events: all;
     transition: opacity 200ms;
   }
+  @media ${props => props.theme.medias.small} {
+    opacity: 1;
+    pointer-events: all;
+    transition: opacity 200ms;
+  }
 `;
 const NavAccount = styled(Account)`
   z-index: 100;
   & > div[data-component="pill"] {
-    border: 1px solid ${props => props.theme.colors.grayLight};
+    border: 1px solid ${props => props.theme.colors.grayBlueLight};
   }
 `;
 
@@ -102,9 +107,12 @@ const NavNetworks = styled.div`
       margin-right: 0;
     }
 
-    @media ${props => props.theme.medias.mobile} {
+    @media ${props => props.theme.medias.small} {
       height: calc(${props => props.theme.sizes.navHeightMobile} - 2 * 15px);
       width: calc(${props => props.theme.sizes.navHeightMobile} - 2 * 15px);
+      display: none;
+      opacity: 0;
+      pointer-events: none;
     }
   }
 `;
@@ -125,6 +133,8 @@ const Navigator = styled.div`
   position: relative;
   margin-left: 15px;
   height: 100%;
+
+  display: none;
 `;
 
 const Box = styled.div`
@@ -155,12 +165,12 @@ const Intersection = styled.div`
 `;
 
 const Action = styled.div`
+  display: none;
   margin: 0 0 0 calc(${props => props.theme.sizes.edge} * 1 / 3);
   margin-right: -5px;
 `;
 
 const ActionDropdown = styled.div`
-  display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -189,6 +199,7 @@ const ActionDropdown = styled.div`
 `;
 
 const NavigatorDropdown = styled(Dropdown)`
+  display: none;
   top: calc(${props => props.theme.sizes.navHeight} + 5px);
   left: 0;
   min-width: 160px;
@@ -199,7 +210,7 @@ const NavigatorDropdown = styled(Dropdown)`
       color: ${props => props.theme.colors.dark};
     }
   }
-  @media ${props => props.theme.medias.mobile} {
+  @media ${props => props.theme.medias.small} {
     top: calc(${props => props.theme.sizes.navHeightMobile} + 5px);
   }
 `;

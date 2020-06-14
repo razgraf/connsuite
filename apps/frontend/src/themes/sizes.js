@@ -43,6 +43,7 @@ const sizes = {
   articlePickerElevation: "600",
 
   profileBlob: "400px",
+  profileBlobMobile: "200px",
   profileBusinessDistance: "200px",
 
   articleCoverHeight: "300px",
