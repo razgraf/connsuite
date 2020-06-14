@@ -145,11 +145,19 @@ const LoaderWrapper = styled.div`
     & > div {
       right: -8px;
     }
+    @media ${props => props.theme.medias.small} {
+      width: 20px;
+      right: 1px;
+    }
   }
   &[data-position="left"] {
     order: -1;
     & > div {
       left: -10px;
+    }
+    @media ${props => props.theme.medias.small} {
+      width: 20px;
+      right: -6px;
     }
   }
 `;

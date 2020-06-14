@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../../../components/atoms";
 import { Area } from "../../../components/shared";
-import { logout } from "../../../utils";
+import { logout, scrollTop } from "../../../utils";
 import { components } from "../../../themes";
 import * as Head from "../../../components/specific/Head";
 
@@ -26,7 +26,7 @@ function Dashboard() {
   const auth = useSelector(state => state.auth);
 
   useEffect(() => {
-    if (window) window.scrollTo(0, 0);
+    scrollTop();
   }, []);
 
   return (

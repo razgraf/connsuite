@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useEffect } from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 import { rgba } from "polished";
@@ -13,6 +13,7 @@ import { pages, types } from "../../../../constants";
 import { useNetworkReducer, useNetworkCreateMachine, useExternalNetworks, useHistory } from "../../../../hooks";
 import { Header, Preview, Footer, Steps } from "../../../../components/specific/Network/Manager";
 import * as Head from "../../../../components/specific/Head";
+import { scrollTop } from "../../../../utils";
 
 const Page = styled.div`
   position: relative;
@@ -36,7 +37,7 @@ const Page = styled.div`
   }
 
   &:after {
-    position: absolute;
+    position: fixed;
     z-index: ${props => props.theme.sizes.toastContainerElevation};
     left: 0;
     top: 0;
@@ -61,13 +62,27 @@ const Page = styled.div`
       transition: opacity 1500ms;
     }
   }
+
+  @media ${props => props.theme.medias.medium} {
+    min-height: 100vh;
+    height: auto;
+  }
 `;
 const StyledNav = styled(Nav)`
   position: relative;
   z-index: 200;
+  @media ${props => props.theme.medias.medium} {
+    order: -1;
+  }
 `;
 const Canvas = styled(components.Canvas)`
   z-index: 100;
+  @media ${props => props.theme.medias.medium} {
+    padding: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const Card = styled.div`
@@ -79,6 +94,11 @@ const Card = styled.div`
   overflow: hidden;
   margin-top: 20px;
   margin-bottom: 20px;
+  @media ${props => props.theme.medias.medium} {
+    border-radius: 0;
+    margin: 0;
+    min-height: calc(100vh - ${props => props.theme.sizes.navHeightMobile});
+  }
 `;
 
 const Main = styled.div`
@@ -89,8 +109,15 @@ const Main = styled.div`
   min-height: 440px;
   width: 100%;
   padding: calc(${props => props.theme.sizes.edge} * 2);
-
   overflow: hidden;
+
+  @media ${props => props.theme.medias.medium} {
+    padding: calc(${props => props.theme.sizes.canvasEdgeMobile} * 1);
+    padding-bottom: calc(${props => props.theme.sizes.canvasEdgeMobile} * 1 + ${props => props.theme.sizes.sideBarHeightMobile});
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: flex-start;
+  }
 
   &:after {
     position: absolute;
@@ -114,7 +141,6 @@ const Playground = styled.div`
   flex: 1;
   height: 100%;
   transition: height 0.3s;
-  margin-right: calc(${props => props.theme.sizes.edge} * 6);
 `;
 
 const StepCss = css`
@@ -130,11 +156,21 @@ const StepCss = css`
   opacity: 0;
   transition: opacity 300ms;
   pointer-events: none;
+  /* max-width: calc(100% - ${props => props.theme.sizes.networkManagerPreviewWidth}); */
 
   &[data-active="true"] {
     opacity: 1;
     transition: opacity 300ms 300ms;
     pointer-events: all;
+  }
+
+
+  @media ${props => props.theme.medias.medium} {
+    position: absolute;
+
+  &[data-active="true"] {
+    position: relative;
+  }
   }
 `;
 
@@ -227,6 +263,10 @@ function NetworkManager() {
         : {};
     return {};
   }, [reducer.state, external]);
+
+  useEffect(() => {
+    scrollTop();
+  }, [step]);
 
   return (
     <Page data-leaving={machine.current.value === machine.states.success}>

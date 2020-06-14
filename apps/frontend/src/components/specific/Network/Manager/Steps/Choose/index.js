@@ -24,6 +24,7 @@ const Title = styled.div`
   flex-direction: row;
   align-items: center;
   margin: 0 0 calc(${props => props.theme.sizes.edge} * 2) 0;
+  position: relative;
   & > p {
     font-size: 14pt;
     font-weight: 400;
@@ -31,6 +32,18 @@ const Title = styled.div`
     color: ${props => props.theme.colors.grayBlueNight};
     transition: color 150ms;
     margin: 0;
+  }
+  @media ${props => props.theme.medias.medium} {
+    width: 100%;
+    background-color: ${props => props.theme.colors.grayBlueGhost};
+    padding: 10px;
+    border-radius: 2px;
+    margin-bottom: calc(${props => props.theme.sizes.canvasEdgeMobile} * 1.5);
+
+    & > p {
+      font-size: 12pt;
+      max-width: calc(100% - 100px);
+    }
   }
 `;
 
@@ -55,13 +68,34 @@ const Label = styled.div`
       color: ${props => props.theme.colors.grayBlueNight};
     }
   }
+  @media ${props => props.theme.medias.medium} {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
   grid-gap: 10px;
+  width: 100%;
   min-height: 160px;
+  max-width: 100%;
+  justify-content: flex-start;
+  justify-items: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  & > * {
+    grid-column: span 1;
+  }
+  @media ${props => props.theme.medias.medium} {
+    min-height: 0;
+    padding-bottom: 20px;
+  }
 `;
 
 const Form = styled.form`
@@ -69,6 +103,10 @@ const Form = styled.form`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: calc(${props => props.theme.sizes.edge} * 1.5);
+  @media ${props => props.theme.medias.medium} {
+    grid-template-columns: 1fr;
+    grid-gap: 0;
+  }
 `;
 
 const Section = styled(SectionPartial)`
@@ -99,6 +137,9 @@ const Section = styled(SectionPartial)`
       }
     }
   }
+  @media ${props => props.theme.medias.medium} {
+    margin-bottom: calc(${props => props.theme.sizes.canvasEdgeMobile} * 1);
+  }
 `;
 
 const StyledNetworkMini = styled(NetworkMini)`
@@ -127,6 +168,7 @@ function Choose({ className, isActive, reducer }) {
 
         if (payload.error === null)
           readPreviewFromImage(file).then(preview => {
+            console.log("here");
             if (reducer.state.type.value === types.network.type.internal)
               reducer.dispatch({
                 type: reducer.actions.UPDATE_ICON_PREVIEW,
@@ -209,7 +251,7 @@ function Choose({ className, isActive, reducer }) {
               value: `Just like 'Facebook' or 'Twitter' you can give a name to your website/new network. ${policy.network.title.root}`,
             }}
             id="createNetworkTitle"
-            label="Title"
+            label="Title*"
             onUpdate={e => {
               reducer.dispatch({
                 type: reducer.actions.UPDATE_TITLE,
@@ -226,7 +268,7 @@ function Choose({ className, isActive, reducer }) {
           <InputImage
             help={{ value: `Provide a logo or an icon to make this stand out. ${policy.network.icon.root}` }}
             id="createNetworkIcon"
-            label="Network Icon"
+            label="Network Icon*"
             isEventInterpreted
             onUpdate={onNetworkIconChoose}
             placeholder="Pick an icon"

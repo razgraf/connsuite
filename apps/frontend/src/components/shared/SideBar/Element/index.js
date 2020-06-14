@@ -124,13 +124,19 @@ const Bubble = styled(BubblePartial)`
       & > svg {
         color: ${props => props.theme.colors.secondary};
       }
+      &[data-private="true"] {
+        background: ${props => props.theme.colors.white};
+        & > svg {
+          color: ${props => props.theme.colors.secondary};
+        }
+      }
     }
 
     &:hover,
     &:active,
     &:focus {
-      box-shadow: none;
-      background: ${props => props.theme.colors.grayBlueLight};
+      box-shadow: none !important;
+      background: ${props => props.theme.colors.grayBlueLight} !important;
     }
   }
 `;

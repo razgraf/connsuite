@@ -61,13 +61,13 @@ export default {
     root: "/network",
     create: {
       root: "/network",
-      title: "Create a new Network",
+      title: "Create Network",
     },
     edit: {
       root: "/network/edit",
       route: "/network/edit/[id]",
       builder: id => `/network/edit/${id}`,
-      title: "Edit the Network",
+      title: "Edit Network",
     },
     view: {
       root: "/network",
@@ -79,7 +79,7 @@ export default {
     root: "/article",
     create: {
       root: "/article",
-      title: "Create a new Article",
+      title: "Create Article",
       route: "/article",
     },
     view: {

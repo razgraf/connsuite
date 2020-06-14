@@ -108,3 +108,12 @@ export function blur() {
     console.error(e);
   }
 }
+
+export function scrollTop() {
+  try {
+    window.scrollTo(0, 0);
+    document.getElementsByTagName("body")[0].scrollTop = 0;
+  } catch (e) {
+    console.error(e);
+  }
+}

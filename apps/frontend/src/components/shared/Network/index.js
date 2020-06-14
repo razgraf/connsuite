@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
@@ -348,7 +348,7 @@ const Wrapper = styled(WrapperPartial)`
 
 function Network({ className, isViewOnly, isFocused, isInEditMode, ...network }) {
   const { setOpen: setCoverOpen, setNetwork: setCoverNetwork } = useCover();
-  const { title, username, thumbnail, url, _id, shortId } = network;
+  const { title, username, thumbnail, icon, url, _id, shortId } = network;
 
   const doPick = useCallback(() => {
     if (!isViewOnly) {
@@ -356,6 +356,8 @@ function Network({ className, isViewOnly, isFocused, isInEditMode, ...network })
       setCoverOpen(true);
     }
   }, [setCoverNetwork, setCoverOpen, network, isViewOnly]);
+
+  const picture = useMemo(() => (!_.isNil(icon) && _.get(icon, "url") ? _.get(icon, "url") : _.get(thumbnail, "url")), [icon, thumbnail]);
 
   return (
     <Wrapper className={className} data-viewonly={isViewOnly} data-focused={isFocused} data-editmode={isInEditMode} onClick={doPick}>
@@ -389,7 +391,7 @@ function Network({ className, isViewOnly, isFocused, isInEditMode, ...network })
             <ContentHeaderIndicator />
           </ContentHeader>
           <ContentMain>
-            <ContentImage src={_.get(thumbnail, "url")} data-component="content-image" />
+            <ContentImage src={picture} data-component="content-image" />
           </ContentMain>
           <ContentFooter data-component="content-footer">
             <ContentFooterDetails>Get Details</ContentFooterDetails>

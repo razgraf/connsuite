@@ -47,6 +47,7 @@ const sizes = {
   profileBusinessDistance: "200px",
 
   articleCoverHeight: "300px",
+  networkManagerPreviewWidth: "350px",
 };
 
 export default sizes;

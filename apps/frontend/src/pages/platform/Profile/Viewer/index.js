@@ -9,7 +9,7 @@ import { rgba } from "polished";
 import { components } from "../../../../themes";
 import { modals, pages, types } from "../../../../constants";
 import { useNetworksMachine, useArticlesMachine, useProfileMachine, useCover, useModal } from "../../../../hooks";
-import { parseFullName, getPrimaryUsername } from "../../../../utils";
+import { parseFullName, getPrimaryUsername, scrollTop } from "../../../../utils";
 
 import Nav from "../../../../components/shared/Nav";
 import Footer from "../../../../components/shared/Footer";
@@ -103,6 +103,10 @@ function Profile({ data, identifier, isSelf }) {
     },
     [setArticleRemove, setArticleRemoveModalOpen],
   );
+
+  useEffect(() => {
+    scrollTop();
+  }, []);
 
   useEffect(() => {
     replaceUsername({ username, identifier, router });

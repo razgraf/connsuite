@@ -41,9 +41,18 @@ const Form = styled.form`
   display: grid;
   grid-template-columns: repeat(${props => props.columns || 1}, 1fr);
   grid-gap: calc(${props => props.theme.sizes.edge} * 1.5);
+  @media ${props => props.theme.medias.medium} {
+    grid-template-columns: 1fr;
+    grid-gap: 0;
+  }
 
   textarea {
     min-height: 60px;
+  }
+  @media ${props => props.theme.medias.medium} {
+    textarea {
+      min-height: 120px;
+    }
   }
 `;
 
@@ -53,6 +62,9 @@ const Grid = styled.form`
   grid-template-columns: 1fr 1fr;
   grid-row-gap: calc(${props => props.theme.sizes.edge} * 1);
   grid-column-gap: calc(${props => props.theme.sizes.edge} * 1);
+  @media ${props => props.theme.medias.medium} {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const Field = styled.div`
@@ -74,6 +86,14 @@ const Field = styled.div`
       color: ${props => props.theme.colors.dark};
     }
   }
+
+  @media ${props => props.theme.medias.medium} {
+    & > p,
+    & > p > span {
+      display: block;
+      padding: 0;
+    }
+  }
 `;
 
 const Divider = styled.div`
@@ -82,6 +102,9 @@ const Divider = styled.div`
   flex-shrink: 0;
   margin-bottom: calc(${props => props.theme.sizes.edge} * 2);
   background-color: ${props => props.theme.colors.grayBlueLight};
+  @media ${props => props.theme.medias.medium} {
+    margin-bottom: calc(${props => props.theme.sizes.canvasEdgeMobile} * 1);
+  }
 `;
 
 const Section = styled(SectionPartial)`
@@ -94,6 +117,9 @@ const Section = styled(SectionPartial)`
 
   &[data-active="false"] {
     display: none;
+  }
+  @media ${props => props.theme.medias.medium} {
+    margin-bottom: calc(${props => props.theme.sizes.canvasEdgeMobile} * 1);
   }
 `;
 

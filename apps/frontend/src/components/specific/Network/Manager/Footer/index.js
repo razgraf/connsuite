@@ -15,6 +15,18 @@ const Wrapper = styled.div`
   padding: calc(${props => props.theme.sizes.edge} * 2);
   margin-top: 0;
   border-top: 1px solid ${props => props.theme.colors.grayAccent};
+
+  @media ${props => props.theme.medias.medium} {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: ${props => props.theme.sizes.sideBarHeightMobile};
+    padding: ${props => props.theme.sizes.canvasEdgeMobile};
+    z-index: 300;
+    box-shadow: 0px -3px 8px -5px rgba(0, 0, 0, 0.15);
+    background-color: ${props => props.theme.colors.white};
+  }
 `;
 
 const StyledButton = styled(Button)`
