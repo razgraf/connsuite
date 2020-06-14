@@ -34,6 +34,10 @@ const All = styled.div`
     max-width: calc(100% - 150px);
     border: 1px solid ${props => props.theme.colors.orange};
     background: linear-gradient(45deg, ${props => rgba(props.theme.colors.orange, 0.1)}, ${props => rgba(props.theme.colors.orange, 0.25)});
+
+    @media ${props => props.theme.medias.medium} {
+      margin-right: 0;
+    }
   }
 
   & > p {
@@ -41,6 +45,12 @@ const All = styled.div`
     font-weight: 700;
     font-size: 28pt;
     color: ${props => props.theme.colors.orange};
+
+    @media ${props => props.theme.medias.medium} {
+      font-size: 14pt;
+      text-align: center;
+      margin: 0 auto 0 auto;
+    }
   }
 `;
 

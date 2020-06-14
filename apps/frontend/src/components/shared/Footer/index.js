@@ -30,7 +30,7 @@ const Canvas = styled(components.Canvas)`
 
   @media ${props => props.theme.medias.small} {
     padding-top: calc(${props => props.theme.sizes.edge} * 1);
-    padding-bottom: calc(${props => props.theme.sizes.sideBarHeightMobile} + ${props => props.theme.sizes.edge} * 1);
+    padding-bottom: calc(${props => props.theme.sizes.edge} * 1);
   }
 `;
 
@@ -179,11 +179,11 @@ const Expand = styled.div`
   }
 `;
 
-function Footer({ reference }) {
+function Footer({ className, reference }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Wrapper ref={reference}>
+    <Wrapper className={className} ref={reference}>
       <Canvas>
         <Header>
           <LogoWrapper>
@@ -233,11 +233,13 @@ function Footer({ reference }) {
 }
 
 Footer.propTypes = {
+  className: PropTypes.string,
   reference: PropTypes.oneOfType([PropTypes.func, PropTypes.shape]),
 };
 
 Footer.defaultProps = {
   reference: null,
+  className: null,
 };
 
 export default Footer;

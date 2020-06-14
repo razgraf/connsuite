@@ -34,6 +34,15 @@ const ChartWrapper = styled.div`
       font-weight: 500;
     }
   }
+
+  @media ${props => props.theme.medias.medium} {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 10px;
+    grid-gap: 10px;
+  }
+  @media ${props => props.theme.medias.small} {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 function Articles() {

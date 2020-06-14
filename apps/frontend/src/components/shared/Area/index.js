@@ -80,6 +80,14 @@ const StyledSideBar = styled(SideBar)`
   }
 `;
 
+const AreaFooter = styled(Footer)`
+  @media ${props => props.theme.medias.small} {
+    & > div {
+      padding-bottom: calc(${props => props.theme.sizes.sideBarHeightMobile} + ${props => props.theme.sizes.edge} * 1) !important;
+    }
+  }
+`;
+
 function Area({ className, children }) {
   return (
     <Wrapper>
@@ -88,7 +96,7 @@ function Area({ className, children }) {
         <StyledSideBar />
         <Content>{children}</Content>
       </Canvas>
-      <Footer />
+      <AreaFooter />
     </Wrapper>
   );
 }

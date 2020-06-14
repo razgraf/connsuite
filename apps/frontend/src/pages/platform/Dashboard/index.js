@@ -2,9 +2,8 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../../../components/atoms";
-import { Area, Modal } from "../../../components/shared";
+import { Area } from "../../../components/shared";
 import { logout } from "../../../utils";
-import { useModal } from "../../../hooks";
 import { components } from "../../../themes";
 import * as Head from "../../../components/specific/Head";
 
@@ -17,12 +16,14 @@ const Section = styled(components.Section)`
   padding: 0 ${props => props.theme.sizes.sectionEdge};
   overflow-x: hidden;
   margin-bottom: ${props => props.theme.sizes.edge};
+  @media ${props => props.theme.medias.medium} {
+    padding: 0 calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+  }
 `;
 
 function Dashboard() {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
-  const modal = useModal("test");
 
   useEffect(() => {
     if (window) window.scrollTo(0, 0);
