@@ -47,6 +47,9 @@ export class User {
   @prop({ required: true, enum: UserTier, default: UserTier.Bronze })
   tier?: UserTier;
 
+  @prop({})
+  calendly?: string;
+
   readonly createdAt?: mongoose.Schema.Types.Date | string;
   readonly updatedAt?: mongoose.Schema.Types.Date | string;
 }
@@ -60,6 +63,7 @@ export function toUserDTO(
   result.description = user.description;
   result.email = user.email;
   result.tagline = user.tagline;
+  result.calendly = user.calendly;
   result.tier = user.tier;
 
   result.name = {

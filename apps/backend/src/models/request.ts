@@ -113,5 +113,6 @@ export type UserUpdate = {
   lastName: string;
   description: string;
   tagline: string;
+  calendly?: string;
   picture?: Express.Multer.File;
 };

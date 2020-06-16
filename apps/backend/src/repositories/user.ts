@@ -45,6 +45,7 @@ export default class UserRepository extends BaseRepository<User> {
       },
       description: payload.description,
       tagline: payload.tagline,
+      calendly: _.get(payload, "calendly"),
     });
 
     if (!_.isNil(payload.picture)) {
@@ -272,6 +273,11 @@ export default class UserRepository extends BaseRepository<User> {
       if (!_.get(payload, "picture") || !payload.picture) throw new ParamsError.Missing("Missing Picture");
       const pictureGuard = guards.isUserPictureAcceptable(payload.picture, true, { vendor: "multer" });
       if (pictureGuard !== true) throw new ParamsError.Invalid(pictureGuard as string);
+    }
+
+    if (_.get(payload, "calendly")) {
+      const calendlyGuard = guards.isUserCalendlyAcceptable(_.toString(_.get(payload, "calendly")), true);
+      if (calendlyGuard !== true) throw new ParamsError.Invalid(("Calendly: " + calendlyGuard) as string);
     }
   }
 
