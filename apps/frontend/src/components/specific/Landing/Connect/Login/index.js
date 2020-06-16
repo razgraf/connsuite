@@ -23,6 +23,10 @@ const Wrapper = styled.div`
   background-color: ${props => props.theme.colors.white};
   padding: calc(${props => props.theme.sizes.edge} * 2) calc(${props => props.theme.sizes.edge} * 2)
     calc(${props => props.theme.sizes.edge} * 2);
+
+  @media ${props => props.theme.medias.small} {
+    padding: ${props => props.theme.sizes.edge};
+  }
 `;
 
 const Fields = styled.div`
@@ -67,6 +71,10 @@ const Alternative = styled.div`
     margin: 0 0 ${props => props.theme.sizes.edge} 0;
     font-weight: 600;
     font-size: 10pt;
+  }
+  @media ${props => props.theme.medias.small} {
+    padding-top: calc(${props => props.theme.sizes.edge} * 0);
+    padding-bottom: calc(${props => props.theme.sizes.edge} * 2);
   }
 `;
 

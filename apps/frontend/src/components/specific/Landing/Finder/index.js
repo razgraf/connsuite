@@ -19,7 +19,7 @@ function Finder() {
   return (
     <Wrapper id="finder">
       <Canvas>
-        <Title value="Let's fix the business card together" />
+        <Title value="Find skilled people and business partners" />
       </Canvas>
     </Wrapper>
   );

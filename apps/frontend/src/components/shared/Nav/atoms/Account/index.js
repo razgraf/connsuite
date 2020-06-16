@@ -291,7 +291,7 @@ function Account({ className }) {
           />
         ))}
 
-        {[pages.profile.edit, pages.dashboard, pages.about].map(item => (
+        {[pages.profile.edit, pages.dashboard].map(item => (
           <DropdownItem {...item} key={item.title} isActive={router.pathname === item.route} route={item.route} />
         ))}
         <DropdownItemWrapper onClick={() => logout({ auth, dispatch })}>

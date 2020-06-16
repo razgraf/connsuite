@@ -94,10 +94,10 @@ function NavPresentation({ className }) {
           <Logo alt="" src={AssetLogo} />
         </LogoWrapper>
         <Actions>
-          <ActionItem type={t => t.routerDecorator}>
+          {/* <ActionItem type={t => t.routerDecorator}>
             <ActionItemContent>About</ActionItemContent>
             <ActionItemLine />
-          </ActionItem>
+          </ActionItem> */}
           <ActionButton
             to={`${pages.landing.root}#connect`}
             appearance={t => t.outline}

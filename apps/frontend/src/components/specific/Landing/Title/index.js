@@ -16,6 +16,9 @@ const Content = styled.div`
   font-family: ${props => props.theme.fonts.primary};
   font-weight: 600;
   font-size: ${props => props.theme.sizes.sectionTitle};
+  @media ${props => props.theme.medias.small} {
+    text-align: center;
+  }
 `;
 
 const Wrapper = styled(WrapperPartial)`

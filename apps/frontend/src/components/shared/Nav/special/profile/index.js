@@ -269,7 +269,6 @@ function NavProfile({ className, title, networks, isMissing }) {
                     },
                   ]}
                   onItemClick={() => {
-                    // item TODO
                     setIsDown(false);
                   }}
                 />

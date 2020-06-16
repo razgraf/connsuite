@@ -25,7 +25,6 @@ const tools = {
     class: Delimiter,
     inlineToolbar: true,
   },
-  //   image: Image, // TODO - Add server support for images
   inlineCode: {
     class: InlineCode,
     inlineToolbar: true,

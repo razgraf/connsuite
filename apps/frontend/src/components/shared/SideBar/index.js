@@ -45,9 +45,7 @@ function SideBar({ className, reference }) {
   return (
     <Wrapper className={className} ref={reference}>
       <Content>
-        {[pages.dashboard, pages.portfolio, pages.analytics].map((
-          page, // TODO add pages.business when possible
-        ) => (
+        {[pages.dashboard, pages.portfolio, pages.analytics].map(page => (
           <Element {...page} key={page.title} isActive={router.pathname === page.root} href={page.route} />
         ))}
         <Divider />

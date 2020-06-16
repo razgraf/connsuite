@@ -12,7 +12,7 @@ const states = {
 const events = {
   request: "request",
   reset: "reset",
-  end: "end", // TODO
+  end: "end",
 };
 
 /** Only the named actions coming from the prop chain */

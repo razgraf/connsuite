@@ -20,6 +20,9 @@ const Underlay = styled.div`
   overflow: hidden;
   width: 100%;
   height: 250px;
+  @media ${props => props.theme.medias.small} {
+    height: 100px;
+  }
 `;
 
 const Wave1 = styled.img.attrs(() => ({
@@ -54,6 +57,10 @@ const Canvas = styled(components.Canvas)`
   padding-bottom: calc(150px + ${props => props.theme.sizes.navHeight});
   @media ${props => props.theme.medias.small} {
     padding-bottom: calc(150px + ${props => props.theme.sizes.navHeightMobile});
+    flex-direction: column;
+    min-height: 600px;
+    height: auto;
+    padding-bottom: 150px;
   }
 `;
 
@@ -72,6 +79,9 @@ const Right = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-items: center;
+  @media ${props => props.theme.medias.small} {
+    display: none;
+  }
 `;
 
 const Title = styled.h1`
@@ -84,6 +94,13 @@ const Title = styled.h1`
   max-width: 500px;
   margin-top: 0;
   margin-bottom: calc(2 * ${props => props.theme.sizes.edge});
+
+  @media ${props => props.theme.medias.medium} {
+    font-size: 36pt;
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+  }
 `;
 
 const Subtitle = styled.h2`
@@ -92,6 +109,11 @@ const Subtitle = styled.h2`
   font-family: ${props => props.theme.fonts.primary};
   font-weight: 300;
   margin: 0;
+  @media ${props => props.theme.medias.small} {
+    font-size: 12pt;
+    width: 100%;
+    text-align: center;
+  }
 `;
 
 const Actions = styled.div`
@@ -101,6 +123,17 @@ const Actions = styled.div`
   width: 100%;
   max-width: 400px;
   margin-top: calc(3 * ${props => props.theme.sizes.edge});
+  @media ${props => props.theme.medias.small} {
+    grid-template-columns: 1fr;
+    max-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    & > * {
+      padding-top: 17px;
+      padding-bottom: 17px;
+    }
+  }
 `;
 
 function Header() {

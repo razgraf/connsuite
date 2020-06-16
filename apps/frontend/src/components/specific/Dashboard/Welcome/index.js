@@ -1,12 +1,12 @@
-import _ from "lodash";
 import React, { useMemo } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import IconAdd from "@material-ui/icons/Add";
 import { Button } from "../../../atoms";
 import { getPrimaryUsername } from "../../../../utils";
 import { pages } from "../../../../constants";
+import { useHistory } from "../../../../hooks";
 import AssetArticle from "../../../../assets/illustrations/tutorial_article.gif";
 import AssetBusiness from "../../../../assets/illustrations/tutorial_business_pocket.gif";
 import AssetNetworks from "../../../../assets/illustrations/tutorial_network.gif";
@@ -79,7 +79,7 @@ const Title = styled.p`
   font-family: ${props => props.theme.fonts.primary};
   font-size: 13pt;
   font-weight: 400;
-  margin: 0 0 15px 0;
+  margin: 0 0 30px 0;
   width: 100%;
 `;
 
@@ -88,11 +88,11 @@ const Description = styled.p`
   color: ${props => props.theme.colors.grayBlueDark};
   font-size: ${props => props.theme.sizes.text};
   font-weight: 400;
-  margin: 0 0 15px 0;
+  margin: 0 0 30px 0;
   width: 100%;
 `;
 
-const Actions = styled.p`
+const Actions = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -109,6 +109,8 @@ const ButtonIconWrapper = styled.div`
 function Welcome() {
   const auth = useSelector(state => state.auth);
   const username = useMemo(() => getPrimaryUsername(auth.user), [auth]);
+  const history = useHistory();
+  const router = useRouter();
 
   return (
     <Wrapper>
@@ -120,7 +122,7 @@ function Welcome() {
             </Illustration>
             <Title>Link networks</Title>
             <Description>
-              <p>Connect all your existing networks to your ConnSuite profile. Get insights about your most visited accounts.</p>
+              Connect all your existing networks to your ConnSuite profile. Get insights about your most visited accounts.
             </Description>
             <Actions>
               <Button
@@ -134,6 +136,7 @@ function Welcome() {
                 title="Add Networks"
                 to={pages.network.create.root}
                 type={t => t.router}
+                onClick={() => history.push()}
               />
             </Actions>
           </Inner>
@@ -143,12 +146,10 @@ function Welcome() {
             <Illustration>
               <img src={AssetArticle} alt="Articles" />
             </Illustration>
-            <Title>Gather articles</Title>
+            <Title>Post articles</Title>
             <Description>
-              <p>
-                Add articles from various sources or write some from scratch. Showcase your portfolio, your work or share interesting stuff
-                that shows who you are.
-              </p>
+              Add articles from various sources or write some from scratch. Showcase your portfolio, your work or share interesting stuff
+              that shows who you are.
             </Description>
             <Actions>
               <Button
@@ -162,6 +163,7 @@ function Welcome() {
                 title="Add Articles"
                 to={pages.article.create.root}
                 type={t => t.router}
+                onClick={() => history.push()}
               />
             </Actions>
           </Inner>
@@ -173,26 +175,21 @@ function Welcome() {
             </Illustration>
             <Title>Improve your business card</Title>
             <Description>
-              <p>
-                Your connsuite profile can become your ultimate online business card. Share it with your audience, event attendees or future
-                business partners.
-              </p>
+              Your connsuite profile can become your ultimate online business card. Share it with your audience, event attendees or future
+              business partners.
             </Description>
             <Actions>
-              <Link href={pages.profile.route} as={pages.profile.builder(username)}>
-                <Button
-                  appearance={t => t.outline}
-                  accent={t => t.grayBlueMedium}
-                  childrenLeft={
-                    <ButtonIconWrapper>
-                      <IconAdd style={{ fontSize: "11pt" }} />
-                    </ButtonIconWrapper>
-                  }
-                  title="View your profile"
-                  to={pages.article.create.root}
-                  type={t => t.button}
-                />
-              </Link>
+              <Button
+                appearance={t => t.outline}
+                accent={t => t.grayBlueMedium}
+                title="View your profile"
+                to={pages.article.create.root}
+                type={t => t.button}
+                onClick={() => {
+                  history.push();
+                  router.push(pages.profile.view.route, pages.profile.view.builder(username));
+                }}
+              />
             </Actions>
           </Inner>
         </Item>
