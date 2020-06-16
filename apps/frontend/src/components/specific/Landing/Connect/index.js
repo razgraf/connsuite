@@ -1,4 +1,3 @@
-import _ from "lodash";
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { rgba } from "polished";

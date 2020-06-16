@@ -55,7 +55,7 @@ const Canvas = styled(components.Canvas)`
   height: 650px;
   width: 100%;
   padding-bottom: calc(150px + ${props => props.theme.sizes.navHeight});
-  @media ${props => props.theme.medias.small} {
+  @media ${props => props.theme.medias.medium} {
     padding-bottom: calc(150px + ${props => props.theme.sizes.navHeightMobile});
     flex-direction: column;
     min-height: 600px;
@@ -77,10 +77,34 @@ const Right = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-items: center;
-  @media ${props => props.theme.medias.small} {
+  align-items: flex-end;
+  justify-content: flex-start;
+  position: relative;
+  padding-top: 60px;
+  @media ${props => props.theme.medias.medium} {
     display: none;
+  }
+`;
+
+const Transparent = styled.div`
+  width: 90%;
+  max-width: 480px;
+  height: 280px;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  &:nth-child(2) {
+    transform: rotate(5deg);
+    transform-origin: bottom right;
+    position: absolute;
+    z-index: 2;
+  }
+  &:nth-child(3) {
+    transform: rotate(10deg);
+    transform-origin: bottom right;
+    position: absolute;
+    z-index: 3;
   }
 `;
 
@@ -109,7 +133,7 @@ const Subtitle = styled.h2`
   font-family: ${props => props.theme.fonts.primary};
   font-weight: 300;
   margin: 0;
-  @media ${props => props.theme.medias.small} {
+  @media ${props => props.theme.medias.medium} {
     font-size: 12pt;
     width: 100%;
     text-align: center;
@@ -123,7 +147,7 @@ const Actions = styled.div`
   width: 100%;
   max-width: 400px;
   margin-top: calc(3 * ${props => props.theme.sizes.edge});
-  @media ${props => props.theme.medias.small} {
+  @media ${props => props.theme.medias.medium} {
     grid-template-columns: 1fr;
     max-width: 200px;
     margin-left: auto;
@@ -169,7 +193,11 @@ function Header() {
             />
           </Actions>
         </Left>
-        <Right />
+        <Right>
+          <Transparent />
+          <Transparent />
+          <Transparent />
+        </Right>
       </Canvas>
     </Wrapper>
   );
