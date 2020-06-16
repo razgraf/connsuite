@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useMemo } from "react";
+import React, { useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
@@ -8,8 +8,8 @@ import IconShare from "@material-ui/icons/ShareRounded";
 import IconDelete from "@material-ui/icons/DeleteOutline";
 import IconVisit from "@material-ui/icons/InsertLinkRounded";
 import { rgba } from "polished";
-import { pages, types } from "../../../constants";
-import { useHistory } from "../../../hooks";
+import { pages, types, modals, root } from "../../../constants";
+import { useHistory, useModal } from "../../../hooks";
 import { ellipsis, getFriendlyTitle } from "../../../utils";
 import { Button } from "../../atoms";
 
@@ -348,6 +348,8 @@ function Action({ Icon, callback, title, type, url, route }) {
 }
 
 function Article({ className, _id, shortId, thumbnail, categories, title, type, onRemoveClick, isSelf }) {
+  const { setOpen: setShareOpen } = useModal(modals.share);
+
   const categoryField = useMemo(() => {
     if (!categories || !categories.length) return "";
     let field = categories
@@ -358,6 +360,15 @@ function Article({ className, _id, shortId, thumbnail, categories, title, type, 
     if (categories.length > 3) field += "...";
     return field;
   }, [categories]);
+
+  const onShareClick = useCallback(
+    () =>
+      setShareOpen(true, {
+        url: `${root}${pages.article.view.builder(shortId, getFriendlyTitle(title))}`,
+        explainer: "Share this article link with your audience! Track your impact within the analytics page.",
+      }),
+    [shortId, title, setShareOpen],
+  );
 
   return (
     <Wrapper className={className}>
@@ -373,7 +384,7 @@ function Article({ className, _id, shortId, thumbnail, categories, title, type, 
               {isSelf && (
                 <Action Icon={IconEdit} title="Edit" type="link" url={pages.article.edit.builder(_id)} route={pages.article.edit.route} />
               )}
-              <Action Icon={IconShare} title="Share" type="button" callback={() => console.log(`Share ${_id}`)} />
+              <Action Icon={IconShare} title="Share" type="button" callback={onShareClick} />
               {isSelf && <Action Icon={IconDelete} title="Delete" type="button" callback={() => onRemoveClick({ _id, title })} />}
             </OverlayHeaderActions>
           </OverlayHeader>

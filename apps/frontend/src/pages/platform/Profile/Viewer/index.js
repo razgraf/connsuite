@@ -14,7 +14,7 @@ import { parseFullName, getPrimaryUsername, scrollTop } from "../../../../utils"
 import Nav from "../../../../components/shared/Nav";
 import Footer from "../../../../components/shared/Footer";
 import Cover from "../../../../components/shared/Cover";
-import { ModalNetworkRemove, ModalArticleRemove } from "../../../../components/specific/Modals";
+import { ModalNetworkRemove, ModalArticleRemove, ModalShare } from "../../../../components/specific/Modals";
 import { Articles, Business, Header, Networks } from "../../../../components/specific/Profile/Viewer";
 import Missing from "../Missing";
 import * as Head from "../../../../components/specific/Head";
@@ -191,6 +191,7 @@ function Profile({ data, identifier, isSelf }) {
           <ModalArticleRemove article={articleRemove} onSuccess={() => setArticleRemove(null)} />
         </>
       )}
+      <ModalShare />
       <Footer />
     </Page>
   );

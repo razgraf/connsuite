@@ -101,9 +101,9 @@ async function listSkillsAndCategories({ auth, identifier }, handle = true) {
  * @param {File} [p0.article.cover]
  * @param {boolean} [handle] - Handle response inside (OK vs Not OK)
  */
-async function edit({ auth, profile }, handle = true) {
+async function edit({ auth, profile: person }, handle = true) {
   const body = new FormData();
-  Object.keys(profile).forEach(key => body.append(key, profile[key]));
+  Object.keys(person).forEach(key => body.append(key, person[key]));
 
   const endpoint = new URL(API.userEdit("bear__"));
 

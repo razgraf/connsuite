@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useMemo, useCallback, useEffect } from "react";
+import React, { useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rgba } from "polished";
@@ -198,10 +198,6 @@ function ProfileManager() {
   const machine = useProfileEditMachine({ identifier: username, reducer });
   const modalLeave = useModal(modals.profileLeave);
 
-  useEffect(() => {
-    console.log(machine);
-  }, [machine]); /* componentDidMount */ // eslint-disable-line react-hooks/exhaustive-deps
-
   const person = useMemo(() => _.get(machine, "current.context.data"), [machine]);
 
   const onCancel = useCallback(() => {
@@ -215,6 +211,7 @@ function ProfileManager() {
       description: reducer.state.description.value,
       tagline: reducer.state.tagline.value,
       picture: reducer.state.picture.value,
+      calendly: reducer.state.calendly.value,
     };
 
     machine.send(machine.events.forward, {

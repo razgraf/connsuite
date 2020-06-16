@@ -37,18 +37,22 @@ export function useModal(id) {
   let modal = list.find(item => item.id === id);
 
   if (_.isNil(modal)) {
-    modal = { id, isOpen: false };
+    modal = { id, isOpen: false, data: null };
     dispatch({
       type: redux.MODAL_REGISTER,
       payload: modal,
     });
   }
 
-  const { isOpen } = modal;
+  const { isOpen, data: modalData } = modal;
   const setOpen = useCallback(
-    (state = true) => {
-      if (state) dispatch({ type: redux.MODAL_OPEN, payload: { id } });
-      else dispatch({ type: redux.MODAL_CLOSE, payload: { id } });
+    (state = true, data = null) => {
+      if (state) {
+        dispatch({ type: redux.MODAL_SET_DATA, payload: { id, data } });
+        dispatch({ type: redux.MODAL_OPEN, payload: { id } });
+      } else {
+        dispatch({ type: redux.MODAL_CLOSE, payload: { id } });
+      }
     },
     [dispatch, id],
   );
@@ -56,6 +60,7 @@ export function useModal(id) {
   return {
     isOpen,
     setOpen,
+    data: modalData,
   };
 }
 

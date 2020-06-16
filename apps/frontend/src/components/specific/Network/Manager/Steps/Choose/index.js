@@ -168,7 +168,6 @@ function Choose({ className, isActive, reducer }) {
 
         if (payload.error === null)
           readPreviewFromImage(file).then(preview => {
-            console.log("here");
             if (reducer.state.type.value === types.network.type.internal)
               reducer.dispatch({
                 type: reducer.actions.UPDATE_ICON_PREVIEW,

@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { combineReducers } from "redux";
-import { PURGE, REHYDRATE } from "redux-persist";
+import { PURGE } from "redux-persist";
 import { redux } from "../../constants";
 
 const initialHistory = [];
@@ -18,8 +18,6 @@ const history = (state = initialHistory, { type, payload } = {}) => {
     case redux.HISTORY_CLEAR: {
       return [];
     }
-    // case REHYDRATE:
-    //   return initialHistory;
     case PURGE:
       return initialHistory;
     default:
@@ -97,9 +95,13 @@ const modal = (state = initialModal, { type, payload } = {}) => {
         list: state.list.map(item => (item.id === _.get(payload, "id") ? { ...item, isOpen: false } : item)),
       };
     }
+    case redux.MODAL_SET_DATA: {
+      return {
+        ...state,
+        list: state.list.map(item => (item.id === _.get(payload, "id") ? { ...item, data: _.get(payload, "data") } : item)),
+      };
+    }
 
-    // case REHYDRATE:
-    //   return initialModal;
     case PURGE:
       return initialModal;
     default:

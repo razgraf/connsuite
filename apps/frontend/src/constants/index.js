@@ -105,6 +105,7 @@ export const modals = {
   articleRemove: "modalArticleRemove",
   articleLeave: "modalArticleLeave",
   profileLeave: "modalProfileLeave",
+  share: "modalShare",
 };
 
 const constants = {

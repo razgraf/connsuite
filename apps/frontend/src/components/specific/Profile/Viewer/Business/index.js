@@ -1,12 +1,12 @@
 import _ from "lodash";
-import React from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import IconContact from "@material-ui/icons/WhatshotRounded";
-
+import IconCalendly from "@material-ui/icons/EventAvailableRounded";
 import { components } from "../../../../../themes";
-import { useProfileIntersection } from "../../../../../hooks";
-import { types } from "../../../../../constants";
+import { useProfileIntersection, useModal } from "../../../../../hooks";
+import { types, modals, root } from "../../../../../constants";
 
 import SectionHeader from "../SectionHeader";
 import { Button, Spinner } from "../../../../atoms";
@@ -96,7 +96,7 @@ const Card = styled.div`
 
 const CardActions = styled(Card)`
   & > * {
-    margin-bottom: ${props => props.theme.sizes.edge};
+    margin-bottom: 10px;
     &:last-child {
       margin-bottom: 0;
     }
@@ -168,7 +168,7 @@ const CardActionsTitle = styled.p`
   font-weight: 600;
   font-family: ${props => props.theme.fonts.primary};
   color: ${props => props.theme.colors.dark};
-  margin: 0 0 30px 0;
+  margin: 0 0 15px 0;
 `;
 
 const ButtonIconWrapper = styled.div`
@@ -180,7 +180,20 @@ const ButtonIconWrapper = styled.div`
 `;
 
 function Business({ className, person, onIntersect, onGetInTouchClick }) {
+  const { setOpen: setShareOpen } = useModal(modals.share);
   const { ref, isObserved } = useProfileIntersection(payload => onIntersect(types.profile.section.business, payload));
+
+  const onShareClick = useCallback(
+    () =>
+      setShareOpen(true, {
+        url: `${root}/${_.get(person, "username")}`,
+        explainer: `You can share this profile using this unique custom url: ${root}${_.get(
+          person,
+          "username",
+        )}. 🔥😲👍 Click below to copy it to your clipboard.`,
+      }),
+    [person, setShareOpen],
+  );
 
   return (
     <Wrapper className={className} ref={ref}>
@@ -257,9 +270,24 @@ function Business({ className, person, onIntersect, onGetInTouchClick }) {
                 accent={t => t.grayBlueNormal}
                 title="Share business card"
                 type={t => t.button}
-                onClick={() => console.log("share")}
+                onClick={onShareClick}
                 isFullWidth
               />
+              {_.get(person, "profile.user.calendly") && (
+                <Button
+                  appearance={t => t.solid}
+                  accent={t => t.dark}
+                  childrenLeft={
+                    <ButtonIconWrapper>
+                      <IconCalendly style={{ fontSize: "14pt" }} />
+                    </ButtonIconWrapper>
+                  }
+                  title="Book a Meeting"
+                  type={t => t.link}
+                  to={_.get(person, "profile.user.calendly")}
+                  isFullWidth
+                />
+              )}
             </CardActions>
           </Right>
         </Content>

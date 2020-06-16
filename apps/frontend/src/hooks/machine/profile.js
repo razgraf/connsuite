@@ -7,8 +7,7 @@ import { useToasts } from "react-toast-notifications";
 
 import { useDataGetMachine } from "./atoms";
 import { profileEditX } from "../../machines";
-import { redirectTo } from "../../utils";
-import { redux, pages, sagas } from "../../constants";
+import { pages, sagas } from "../../constants";
 import { UserRequest } from "../../requests";
 
 export function useProfileMachine({ onSuccess = () => {} } = {}) {
@@ -39,6 +38,7 @@ function useProfileEditActions({ auth, dispatch, toast, router, reducer }) {
         picture: {
           preview: _.get(user, "picture.url"),
         },
+        calendly: _.get(user, "calendly"),
       };
       reducer.dispatch({
         type: reducer.actions.BIND,

@@ -9,7 +9,7 @@ import { useSelfNetworks, useSelfArticles, useCover, useModal } from "../../../h
 import Network, { NetworkAdd } from "../../../components/shared/Network";
 import Article, { ArticleAdd } from "../../../components/shared/Article";
 import Cover from "../../../components/shared/Cover";
-import { ModalNetworkRemove, ModalArticleRemove } from "../../../components/specific/Modals";
+import { ModalNetworkRemove, ModalArticleRemove, ModalShare } from "../../../components/specific/Modals";
 import * as Head from "../../../components/specific/Head";
 
 const Page = styled.div``;
@@ -242,6 +242,7 @@ function Portfolio() {
       <Cover />
       <ModalNetworkRemove network={networkCover} onSuccess={() => setOpenCover(false)} />
       <ModalArticleRemove article={articleRemove} onSuccess={() => setArticleRemove(null)} />
+      <ModalShare />
     </Page>
   );
 }

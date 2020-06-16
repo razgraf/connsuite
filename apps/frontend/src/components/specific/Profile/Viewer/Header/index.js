@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { rgba } from "polished";
 import { useRouter } from "next/router";
 import IconContact from "@material-ui/icons/WhatshotRounded";
+import IconCalendly from "@material-ui/icons/EventAvailableRounded";
 import ProfilePictureFallback from "../../../../../assets/images/profile_fallback.jpg";
 import Skill from "./Skill";
 import { parseFullName, getPrimaryUsername, parseSkilledDescription } from "../../../../../utils";
@@ -204,7 +205,7 @@ const RightContent = styled.div`
   &[data-ready="true"] {
     opacity: 1;
     transform: translateX(0);
-    transition: transform 300ms, opacity 300ms;
+    transition: transform 300ms, opacity 150ms;
   }
 
   @media ${props => props.theme.medias.medium} {
@@ -314,20 +315,45 @@ const Actions = styled.div`
   }
 `;
 
-const ButtonGetInTouch = styled(Button)`
-  @media ${props => props.theme.medias.medium} {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-  }
-`;
-
 const ButtonIconWrapper = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
   margin-right: 6px;
   margin-left: -4px;
+`;
+
+const ButtonGetInTouch = styled(Button)`
+  @media ${props => props.theme.medias.medium} {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    ${ButtonIconWrapper} {
+      margin: 0;
+      padding: 3px;
+      width: auto;
+    }
+    *[data-component="title"] {
+      display: none;
+    }
+  }
+`;
+
+const ButtonCalendly = styled(Button)`
+  @media ${props => props.theme.medias.medium} {
+    position: absolute;
+    right: 64px;
+    bottom: 0;
+    ${ButtonIconWrapper} {
+      margin: 0;
+      padding: 3px;
+      width: auto;
+    }
+    *[data-component="title"] {
+      display: none;
+    }
+  }
 `;
 
 function Header({ className, controller, profile, description, isLoading, onGetInTouchClick }) {
@@ -398,10 +424,25 @@ function Header({ className, controller, profile, description, isLoading, onGetI
                 </ButtonIconWrapper>
               }
               title="Get in touch"
-              titleShort="Contact"
+              titleShort=""
               type={t => t.button}
               onClick={onGetInTouchClick}
             />
+            {_.get(profile, "user.calendly") && (
+              <ButtonCalendly
+                appearance={t => t.solid}
+                accent={t => t.dark}
+                childrenLeft={
+                  <ButtonIconWrapper>
+                    <IconCalendly style={{ fontSize: "14pt" }} />
+                  </ButtonIconWrapper>
+                }
+                title="Book a meeting"
+                titleShort=""
+                type={t => t.link}
+                to={_.get(profile, "user.calendly")}
+              />
+            )}
           </Actions>
         </RightContent>
       </Right>

@@ -35,12 +35,18 @@ function isPictureAcceptable(__, event) {
   return isPictureOptionallyAcceptable(__, event);
 }
 
+function isCalendlyOptionallyAcceptable(__, event) {
+  if (_.get(event, "payload.profile.calendly")) return official.isUserCalendlyAcceptable(_.get(event, "payload.profile.calendly"), false);
+  return true;
+}
+
 function isProfileAcceptable(context, event) {
   return (
     isFistNameAcceptable(context, event) &&
     isLastNameAcceptable(context, event) &&
     isDescriptionAcceptable(context, event) &&
     isTaglineAcceptable(context, event) &&
+    isCalendlyOptionallyAcceptable(context, event) &&
     isPictureAcceptable(context, event)
   );
 }

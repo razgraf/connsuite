@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { Button } from "../../../components/atoms";
 import { Area } from "../../../components/shared";
-import { logout, scrollTop } from "../../../utils";
+import { scrollTop } from "../../../utils";
 import { components } from "../../../themes";
+import { Welcome } from "../../../components/specific/Dashboard";
 import * as Head from "../../../components/specific/Head";
 
 const Page = styled.div``;
@@ -22,9 +21,6 @@ const Section = styled(components.Section)`
 `;
 
 function Dashboard() {
-  const dispatch = useDispatch();
-  const auth = useSelector(state => state.auth);
-
   useEffect(() => {
     scrollTop();
   }, []);
@@ -39,13 +35,7 @@ function Dashboard() {
               <p>Dashboard</p>
             </SectionTitle>
           </SectionHeader>
-          <Button
-            type={t => t.button}
-            accent={t => t.red}
-            appearance={t => t.solid}
-            title="Logout"
-            onClick={() => logout({ auth, dispatch })}
-          />
+          <Welcome />
         </Section>
       </Area>
     </Page>

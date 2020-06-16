@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React from "react";
+import React, { useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
@@ -12,7 +12,7 @@ import IconClose from "@material-ui/icons/CloseRounded";
 import { rgba } from "polished";
 import Backdrop from "../Backdrop";
 import { getFriendlyTitle } from "../../../utils";
-import { pages, modals } from "../../../constants";
+import { pages, modals, root } from "../../../constants";
 import { useCover, useHistory, useModal } from "../../../hooks";
 
 const WrapperPartial = styled.div`
@@ -369,7 +369,22 @@ const Wrapper = styled(WrapperPartial)`
 function Cover({ isSelf }) {
   const { isOpen, network, setOpen } = useCover();
   const { setOpen: setModalRemoveOpen } = useModal(modals.networkRemove);
+  const { setOpen: setShareOpen } = useModal(modals.share);
   const history = useHistory();
+
+  const url = useMemo(
+    () => pages.network.view.builder(_.get(network, "shortId") || _.get(network, "_id"), getFriendlyTitle(_.get(network, "title"))),
+    [network],
+  );
+
+  const onShareClick = useCallback(
+    () =>
+      setShareOpen(true, {
+        url: `${root}${url}`,
+        explainer: `Share the ${_.get(network, "title")} link with your audience! Track your impact within the analytics page.`,
+      }),
+    [url, network, setShareOpen],
+  );
 
   return (
     <Wrapper data-visible={isOpen}>
@@ -412,10 +427,7 @@ function Cover({ isSelf }) {
                   <CardRightAction
                     title="Visit Network"
                     data-url={_.get(network, "url") || "#"}
-                    href={pages.network.view.builder(
-                      _.get(network, "shortId") || _.get(network, "_id"),
-                      getFriendlyTitle(_.get(network, "title")),
-                    )}
+                    href={url}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -434,12 +446,12 @@ function Cover({ isSelf }) {
               <SectionHeader>
                 <SectionTitle>Actions</SectionTitle>
               </SectionHeader>
-              <Action as="div">
+              <Action as="div" onClick={onShareClick}>
                 <ActionIcon>
                   <IconShare style={{ fontSize: "12pt" }} />
                 </ActionIcon>
                 <ActionTitle>
-                  Share: <span>connsuite.com/razgraf/facebook</span>
+                  Share Custom Link to <span>{_.get(network, "title")}</span>
                 </ActionTitle>
               </Action>
               {isSelf && (

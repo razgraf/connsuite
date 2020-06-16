@@ -9,7 +9,7 @@ import IconPhoto from "@material-ui/icons/InsertPhotoRounded";
 import IconDelete from "@material-ui/icons/DeleteOutlineRounded";
 
 import { components } from "../../../../../themes";
-import { InputArea, InputImage, InputText, Warning } from "../../../../atoms";
+import { InputArea, InputImage, InputText, Warning, Emoji } from "../../../../atoms";
 import { readPreviewFromImage, parseSkilledDescription, blur } from "../../../../../utils";
 
 const Wrapper = styled(components.Section)`
@@ -280,6 +280,20 @@ const Skill = styled.span`
   color: ${props => props.theme.colors.orange};
 `;
 
+const SectionDivider = styled.p`
+  margin: calc(${props => props.theme.sizes.edge} * 1) 0 calc(${props => props.theme.sizes.edge} * 2) 0;
+  padding-top: calc(${props => props.theme.sizes.edge} * 1);
+  border-top: 1px solid ${props => props.theme.colors.grayBlueLight};
+
+  color: ${props => props.theme.colors.grayBlueBlack};
+  text-align: left;
+  font-family: ${props => props.theme.fonts.primary};
+  font-size: 13pt;
+  font-weight: 400;
+
+  grid-column: span 2;
+`;
+
 function Header({ className, reducer, person }) {
   const inputRef = useRef();
   const skills = useMemo(() => _.toArray(_.get(person, "skills")), [person]);
@@ -459,6 +473,28 @@ function Header({ className, reducer, person }) {
                   ))}
                 </DescriptionInterpreted>
               </Preview>
+            </Single>
+            <SectionDivider>
+              Integrations <Emoji symbol="🔗" />
+            </SectionDivider>
+            <Single>
+              <InputText
+                help={{ value: policy.user.calendly.root }}
+                id="managerCalendly"
+                label="Calendly Link"
+                onUpdate={e => {
+                  reducer.dispatch({
+                    type: reducer.actions.UPDATE_CALENDLY,
+                    payload: {
+                      value: e.target.value,
+                      error: guards.interpret(guards.isUserCalendlyAcceptable, e.target.value),
+                    },
+                  });
+                }}
+                placeholder="https://calendly.com/username"
+                value={reducer.state.calendly.value}
+                warning={reducer.state.calendly.error}
+              />
             </Single>
           </Form>
         </Right>
