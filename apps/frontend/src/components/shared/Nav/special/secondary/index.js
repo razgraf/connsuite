@@ -26,6 +26,9 @@ const Content = styled(components.Canvas)`
   height: ${props => props.theme.sizes.navHeight};
   padding: 0 ${props => props.theme.sizes.navHorizontalEdge};
   max-width: calc(${props => props.theme.sizes.canvasMaxWidth});
+  @media ${props => props.theme.medias.small} {
+    height: ${props => props.theme.sizes.navHeightMobile};
+  }
 `;
 
 const NavLogo = styled(Logo)``;
@@ -36,6 +39,9 @@ const Main = styled.div`
   height: 100%;
   flex: 1;
   padding: 0 calc(${props => props.theme.sizes.edge} * 1);
+  @media ${props => props.theme.medias.small} {
+    padding: 0 3px;
+  }
 `;
 
 const AccountWrapper = styled.div`
@@ -54,6 +60,9 @@ const IconWrapper = styled.div`
   & > * {
     color: ${props => props.theme.colors.white};
   }
+  @media ${props => props.theme.medias.small} {
+    display: none;
+  }
 `;
 
 const Title = styled.p`
@@ -63,6 +72,11 @@ const Title = styled.p`
   color: ${props => props.theme.colors.white};
   text-align: left;
   font-weight: 400;
+
+  @media ${props => props.theme.medias.small} {
+    padding-left: 10px;
+    padding-right: 5px;
+  }
 `;
 
 const Wrapper = styled(WrapperPartial)`

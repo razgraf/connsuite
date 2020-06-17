@@ -10,13 +10,13 @@ const states = {
   apply: "apply",
   success: "success",
   failure: "failure",
+  forbidden: "forbidden",
 };
 
 const events = {
   initialize: "initialize",
   forward: "forward",
   reset: "reset",
-  forbidden: "forbidden",
 };
 
 /** Only the named actions coming from the prop chain */
@@ -67,7 +67,7 @@ const machine = Machine(
           },
           onError: {
             actions: assign({
-              error: (context, event) => _.toString(_.get(event, "data.message")),
+              error: "We cannot find this network in our system.", // (context, event) =>  _.toString(_.get(event, "data.message")),
             }),
             target: states.forbidden,
           },

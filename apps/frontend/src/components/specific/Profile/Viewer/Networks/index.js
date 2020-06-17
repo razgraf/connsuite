@@ -18,6 +18,10 @@ const Wrapper = styled.div`
     calc(${props => props.theme.sizes.edge} * 3);
   background: ${props => props.theme.colors.white};
   transition: border 200ms;
+  @media ${props => props.theme.medias.medium} {
+    padding-left: calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+    padding-right: calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+  }
 `;
 
 const Content = styled.div`
@@ -38,11 +42,15 @@ const Grid = styled.div`
     grid-column: span 1;
     flex-grow: 0;
   }
-  @media all and (max-width: ${props => props.theme.medias.medium}) {
+
+  @media ${props => props.theme.medias.medium} {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  @media all and (max-width: ${props => props.theme.medias.small}) {
+
+  @media ${props => props.theme.medias.small} {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-column-gap: ${props => props.theme.sizes.sectionEdgeMobile};
+    grid-row-gap: calc(${props => props.theme.sizes.edge} * 1);
   }
 `;
 

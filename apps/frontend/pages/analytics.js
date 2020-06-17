@@ -1,8 +1,10 @@
 import Analytics from "../src/pages/platform/Analytics";
-import { validateAuth } from "../src/utils";
+import { validateAuth, updateAuth } from "../src/utils";
 
 Analytics.getInitialProps = async context => {
   const { elite } = await validateAuth(context, "analytics");
+  updateAuth(context);
+
   return {
     elite,
   };

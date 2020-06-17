@@ -14,7 +14,11 @@ export default class AuthController extends ManagerController {
       body.agent = getUserAgent(req);
       const { user, token } = await AuthRepository.getInstance().google(body);
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Authenthicated and Authorized", user: toUserDTO(user, { usernames: true }), token });
+      res.json({
+        message: "Authenthicated and Authorized",
+        user: toUserDTO(user, { usernames: true, images: true }),
+        token,
+      });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });
@@ -27,7 +31,11 @@ export default class AuthController extends ManagerController {
       body.agent = getUserAgent(req);
       const { user, token } = await AuthRepository.getInstance().login(body);
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Authenthicated and Authorized", user: toUserDTO(user, { usernames: true }), token });
+      res.json({
+        message: "Authenthicated and Authorized",
+        user: toUserDTO(user, { usernames: true, images: true }),
+        token,
+      });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });
@@ -42,7 +50,7 @@ export default class AuthController extends ManagerController {
       res.status(HTTP_CODE.OK);
       res.json({
         message: "Created, Authenthicated and Authorized",
-        user: toUserDTO(user, { usernames: true }),
+        user: toUserDTO(user, { usernames: true, images: true }),
         token,
       });
     } catch (e) {
@@ -79,7 +87,7 @@ export default class AuthController extends ManagerController {
         : undefined;
 
       res.status(HTTP_CODE.OK);
-      res.json({ message: "Validated", user: toUserDTO(user, { usernames: true }), elite });
+      res.json({ message: "Validated", user: toUserDTO(user, { usernames: true, images: true }), elite });
     } catch (e) {
       res.status(e.code || HTTP_CODE.BAD_REQUEST);
       res.json({ message: e.message });

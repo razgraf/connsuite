@@ -14,6 +14,7 @@ import { Header, Info, Specific } from "../../../../components/specific/Article/
 import { ModalArticleLeave } from "../../../../components/specific/Modals";
 import { getValueOfInputEditorSync } from "../../../../components/atoms/Input/uncontrolled";
 import { blur } from "../../../../utils";
+import * as Head from "../../../../components/specific/Head";
 
 const Page = styled.div`
   position: relative;
@@ -138,6 +139,16 @@ const Actions = styled.div`
       margin-right: 0;
     }
   }
+  @media ${props => props.theme.medias.medium} {
+    flex-direction: column;
+    & > * {
+      margin-bottom: ${props => props.theme.sizes.edge};
+      margin-right: 0;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 `;
 
 const StyledButton = styled(Button)`
@@ -167,6 +178,37 @@ const ButtonIconWrapper = styled.div`
     position: absolute;
     color: ${props => props.theme.colors.white};
   }
+  @media ${props => props.theme.medias.medium} {
+    width: 20px;
+    & > * {
+      left: -3px;
+    }
+  }
+`;
+
+const StyledWarning = styled(Warning)`
+  & > p {
+    font-size: 11pt;
+  }
+`;
+
+const Explainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: ${props => props.theme.colors.white};
+  opacity: 0;
+  pointer-events: none;
+  &[data-active="true"] {
+    opacity: 1;
+    pointer-events: all;
+  }
 `;
 
 function ArticleManager({ query }) {
@@ -195,23 +237,28 @@ function ArticleManager({ query }) {
   }, [auth, machine, reducer, articleId, contentInstance]);
 
   const onCancel = useCallback(() => {
-    modalLeave.setOpen(true);
-  }, [modalLeave]);
+    if ([machine.states.forbidden].includes(machine.current.value)) history.back();
+    else modalLeave.setOpen(true);
+  }, [modalLeave, machine, history]);
 
   return (
     <Page data-leaving={machine.current.value === machine.states.success}>
+      <Head.ArticleEdit title={_.get(reducer, "state.title.value") || "Article"} />
       <Playground>
         <StyledNav
           isLight
           appearance={types.nav.appearance.secondary}
           accent={types.nav.accent.white}
-          title={pages.article.create.title}
+          title={pages.article.edit.title}
           onBackClick={onCancel}
         />
         <Canvas>
           <Loader data-active={machine.current.value === machine.states.retrieve}>
             <Spinner color={c => c.secondary} size={50} thickness={2} />
           </Loader>
+          <Explainer data-active={machine.current.value === machine.states.forbidden}>
+            <StyledWarning isCentered value={machine.current.context.error} />
+          </Explainer>
           <Header reducer={reducer} />
           <Info reducer={reducer} />
           <Specific reducer={reducer} setContentInstance={setContentInstance} />
@@ -229,6 +276,7 @@ function ArticleManager({ query }) {
             }
             onClick={onPublish}
             isLoading={[machine.states.apply].includes(machine.current.value)}
+            isDisabled={[machine.states.forbidden].includes(machine.current.value)}
             isDisabledSoft={[machine.states.apply, machine.states.retrieve].includes(machine.current.value)}
             type={t => t.button}
             appearance={t => t.solid}
@@ -237,7 +285,7 @@ function ArticleManager({ query }) {
         </ButtonBox>
 
         <Button
-          isDisabled={machine.current.value === machine.states.apply}
+          isDisabled={[machine.states.apply, machine.states.forbidden].includes(machine.current.value)}
           type={t => t.button}
           appearance={t => t.outline}
           accent={t => t.cancel}

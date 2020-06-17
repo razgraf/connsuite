@@ -2,6 +2,7 @@
 import _ from "lodash";
 import validator from "validator";
 import { limits, WITH_POLICY } from "./atoms";
+import { PROTECTED_USERNAMES } from "./atoms/limits";
 
 export const policy = {
   password: {
@@ -17,6 +18,8 @@ export const policy = {
   username: {
     root: `Usernames must contain between ${limits.MIN_USERNAME_LENGTH} and ${limits.MAX_USERNAME_LENGTH} characters and must be unique.`,
     1: `Please use between ${limits.MIN_USERNAME_LENGTH} and ${limits.MAX_USERNAME_LENGTH} characters. Make it unique.`,
+    2: `Please use only letters, digits, ., - or _.`,
+    3: "Some usernames are protected or already in use. Please try another one. Make it unique.",
   },
   email: {
     root:
@@ -38,8 +41,17 @@ export const policy = {
     3: "Please add a file with a valid name.",
   },
   description: {
-    root: `Descriptions can be empty or must contain between ${limits.MIN_USER_DESCRIPTION_LENGTH} and ${limits.MAX_USER_DESCRIPTION_LENGTH} characters.`,
+    root: `Descriptions must contain between ${limits.MIN_USER_DESCRIPTION_LENGTH} and ${limits.MAX_USER_DESCRIPTION_LENGTH} characters.`,
     1: `Please use between ${limits.MIN_USER_DESCRIPTION_LENGTH} and ${limits.MAX_USER_DESCRIPTION_LENGTH} characters.`,
+  },
+  tagline: {
+    root: `Taglines must contain between ${limits.MIN_USER_TAGLINE_LENGTH} and ${limits.MAX_USER_TAGLINE_LENGTH} characters.`,
+    1: `Please use between ${limits.MIN_USER_TAGLINE_LENGTH} and ${limits.MAX_USER_TAGLINE_LENGTH} characters.`,
+  },
+  calendly: {
+    root: "Calendly URLs must contain http:// or https:// and be valid",
+    1: "Please add http:// or https:// before your calendly url.",
+    2: "Please add a valid calendly url.",
   },
 };
 
@@ -99,12 +111,18 @@ function isUsernameAcceptable(
     _.isEmpty(value) ||
     (!_.isString(value) && !_.isNumber(value))
   )
-    return false;
-  return value.length >= min && value.length <= max
-    ? true
-    : withPolicy
-    ? policy.username[1]
-    : false;
+    return withPolicy ? policy.username[1] : false;
+
+  if (!(value.length >= min && value.length <= max))
+    return withPolicy ? policy.username[1] : false;
+
+  if (!value.match(limits.FORMAT_USERNAME))
+    return withPolicy ? policy.username[2] : false;
+
+  if (PROTECTED_USERNAMES.includes(value))
+    return withPolicy ? policy.username[3] : false;
+
+  return true;
 }
 
 function isUserDescriptionAcceptable(
@@ -121,6 +139,23 @@ function isUserDescriptionAcceptable(
     ? true
     : withPolicy
     ? policy.description[1]
+    : false;
+}
+
+function isUserTaglineAcceptable(
+  value: string,
+  withPolicy = WITH_POLICY
+): string | boolean {
+  const [min, max] = [
+    limits.MIN_USER_TAGLINE_LENGTH,
+    limits.MAX_USER_TAGLINE_LENGTH,
+  ];
+  if (_.isNil(value) || _.isEmpty(value) || !_.isString(value))
+    return withPolicy ? policy.tagline.root : false;
+  return value.length >= min && value.length <= max
+    ? true
+    : withPolicy
+    ? policy.tagline[1]
     : false;
 }
 
@@ -170,6 +205,25 @@ function isUserPictureAcceptable(
   }
 }
 
+function isUserCalendlyAcceptable(
+  value: string,
+  withPolicy = WITH_POLICY
+): string | boolean {
+  if (_.isNil(value) || _.isEmpty(value) || !_.isString(value))
+    return withPolicy ? policy.calendly[2] : false;
+  if (!(value.startsWith("https://") || value.startsWith("http://")))
+    return withPolicy ? policy.calendly[1] : false;
+
+  if (value.toLowerCase().indexOf("calendly") < 0)
+    return withPolicy ? policy.calendly[2] : false;
+
+  return validator.isURL(value, { require_protocol: true })
+    ? true
+    : withPolicy
+    ? policy.calendly[2]
+    : false;
+}
+
 export default {
   isEmailAcceptable,
   isNameAcceptable,
@@ -177,4 +231,6 @@ export default {
   isUsernameAcceptable,
   isUserDescriptionAcceptable,
   isUserPictureAcceptable,
+  isUserTaglineAcceptable,
+  isUserCalendlyAcceptable,
 };

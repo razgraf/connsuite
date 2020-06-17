@@ -1,44 +1,43 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { Button } from "../../../components/atoms";
-import { Area, Modal } from "../../../components/shared";
-import { logout } from "../../../utils";
-import { useModal } from "../../../hooks";
+import { Area } from "../../../components/shared";
+import { scrollTop } from "../../../utils";
+import { components } from "../../../themes";
+import { Welcome } from "../../../components/specific/Dashboard";
+import * as Head from "../../../components/specific/Head";
 
 const Page = styled.div``;
 
-function Dashboard() {
-  const dispatch = useDispatch();
-  const auth = useSelector(state => state.auth);
-  const modal = useModal("test");
+const SectionHeader = styled(components.SectionHeader)``;
+const SectionTitle = styled(components.SectionTitle)``;
 
+const Section = styled(components.Section)`
+  padding: 0 ${props => props.theme.sizes.sectionEdge};
+  overflow-x: hidden;
+  margin-bottom: ${props => props.theme.sizes.edge};
+  @media ${props => props.theme.medias.medium} {
+    padding: 0 calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+  }
+`;
+
+function Dashboard() {
   useEffect(() => {
-    if (window) window.scrollTo(0, 0);
+    scrollTop();
   }, []);
 
   return (
     <Page>
+      <Head.Dashboard />
       <Area>
-        <p>Dashboard</p>
-        <Button
-          type={t => t.button}
-          accent={t => t.red}
-          appearance={t => t.solid}
-          title="Logout"
-          onClick={() => logout({ auth, dispatch })}
-        />
-        <Button
-          type={t => t.button}
-          accent={t => t.secondary}
-          appearance={t => t.outline}
-          title="Modal"
-          onClick={() => modal.setOpen(true)}
-        />
+        <Section>
+          <SectionHeader>
+            <SectionTitle>
+              <p>Dashboard</p>
+            </SectionTitle>
+          </SectionHeader>
+          <Welcome />
+        </Section>
       </Area>
-      <Modal title="Test" id="test">
-        <p>Salut</p>
-      </Modal>
     </Page>
   );
 }

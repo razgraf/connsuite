@@ -9,13 +9,16 @@ import IconPhoto from "@material-ui/icons/InsertPhotoRounded";
 import IconDelete from "@material-ui/icons/DeleteOutlineRounded";
 
 import { components } from "../../../../../themes";
-import { InputArea, InputImage, InputText, Warning } from "../../../../atoms";
+import { InputArea, InputImage, InputText, Warning, Emoji } from "../../../../atoms";
 import { readPreviewFromImage, parseSkilledDescription, blur } from "../../../../../utils";
 
 const Wrapper = styled(components.Section)`
   width: 100%;
   padding: 0 ${props => props.theme.sizes.sectionEdge};
   overflow: hidden;
+  @media ${props => props.theme.medias.medium} {
+    padding: 0;
+  }
 `;
 
 const SectionHeader = styled(components.SectionHeader)``;
@@ -31,6 +34,9 @@ const Content = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
+  @media ${props => props.theme.medias.medium} {
+    flex-direction: column;
+  }
 `;
 
 const Left = styled.div`
@@ -38,12 +44,24 @@ const Left = styled.div`
   flex-direction: column;
   flex-shrink: 0;
   padding-right: calc(${props => props.theme.sizes.edge} * 2);
+  @media ${props => props.theme.medias.medium} {
+    flex: none;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-right: 0;
+    padding-bottom: calc(${props => props.theme.sizes.sectionEdge} * 1);
+  }
 `;
 
 const Right = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  @media ${props => props.theme.medias.medium} {
+    flex: none;
+    width: 100%;
+  }
 `;
 
 const CoverWrapperPartial = styled.div`
@@ -57,6 +75,10 @@ const CoverWrapperPartial = styled.div`
   width: 300px;
   border: 1px solid ${props => props.theme.colors.grayBlueLight};
   background-color: ${props => props.theme.colors.background};
+  @media ${props => props.theme.medias.medium} {
+    height: 200px;
+    width: 200px;
+  }
 `;
 
 const CoverContainer = styled.div`
@@ -181,9 +203,16 @@ const Form = styled.div`
   display: grid;
   grid-template-columns: repeat(${props => props.columns || 1}, 1fr);
   grid-column-gap: calc(${props => props.theme.sizes.edge} * 1.5);
+  @media ${props => props.theme.medias.medium} {
+    grid-template-columns: 1fr 1fr !important;
+    grid-gap: 0;
+    & > * {
+      grid-column: span 2 !important;
+    }
+  }
 `;
 
-const Description = styled.div`
+const Single = styled.div`
   position: relative;
   grid-column: span 2;
   & > * {
@@ -219,6 +248,9 @@ const Preview = styled.div`
   top: 0;
   width: 100%;
   pointer-events: none;
+  @media ${props => props.theme.medias.medium} {
+    display: none;
+  }
 `;
 
 const PreviewButton = styled.div`
@@ -246,6 +278,20 @@ const Skill = styled.span`
   position: relative;
   font-weight: 500;
   color: ${props => props.theme.colors.orange};
+`;
+
+const SectionDivider = styled.p`
+  margin: calc(${props => props.theme.sizes.edge} * 1) 0 calc(${props => props.theme.sizes.edge} * 2) 0;
+  padding-top: calc(${props => props.theme.sizes.edge} * 1);
+  border-top: 1px solid ${props => props.theme.colors.grayBlueLight};
+
+  color: ${props => props.theme.colors.grayBlueBlack};
+  text-align: left;
+  font-family: ${props => props.theme.fonts.primary};
+  font-size: 13pt;
+  font-weight: 400;
+
+  grid-column: span 2;
 `;
 
 function Header({ className, reducer, person }) {
@@ -373,7 +419,26 @@ function Header({ className, reducer, person }) {
               value={reducer.state.lastName.value}
               warning={reducer.state.lastName.error}
             />
-            <Description>
+            <Single>
+              <InputText
+                help={{ value: policy.user.tagline.root }}
+                id="managerTagline"
+                label="Tagline"
+                onUpdate={e => {
+                  reducer.dispatch({
+                    type: reducer.actions.UPDATE_TAGLINE,
+                    payload: {
+                      value: e.target.value,
+                      error: guards.interpret(guards.isUserTaglineAcceptable, e.target.value),
+                    },
+                  });
+                }}
+                placeholder="Hello!"
+                value={reducer.state.tagline.value}
+                warning={reducer.state.tagline.error}
+              />
+            </Single>
+            <Single>
               <InputArea
                 help={{
                   value: `Your personal description. Include some skills and a few *legendary* words about yourself. ${policy.user.description.root}`,
@@ -392,7 +457,7 @@ function Header({ className, reducer, person }) {
                     },
                   });
                 }}
-                placeholder="e.g. My story in 500 chars..."
+                placeholder="e.g. My story in 500 chars... Welcome to my online business card!"
                 value={reducer.state.description.value}
                 warning={reducer.state.description.error}
               />
@@ -408,7 +473,29 @@ function Header({ className, reducer, person }) {
                   ))}
                 </DescriptionInterpreted>
               </Preview>
-            </Description>
+            </Single>
+            <SectionDivider>
+              Integrations <Emoji symbol="🔗" />
+            </SectionDivider>
+            <Single>
+              <InputText
+                help={{ value: policy.user.calendly.root }}
+                id="managerCalendly"
+                label="Calendly Link"
+                onUpdate={e => {
+                  reducer.dispatch({
+                    type: reducer.actions.UPDATE_CALENDLY,
+                    payload: {
+                      value: e.target.value,
+                      error: guards.interpret(guards.isUserCalendlyAcceptable, e.target.value),
+                    },
+                  });
+                }}
+                placeholder="https://calendly.com/username"
+                value={reducer.state.calendly.value}
+                warning={reducer.state.calendly.error}
+              />
+            </Single>
           </Form>
         </Right>
       </Content>

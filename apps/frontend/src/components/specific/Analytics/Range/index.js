@@ -8,7 +8,7 @@ const Timeline = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   width: 100%;
   padding: calc(${props => props.theme.sizes.edge} * 1);
   margin-bottom: calc(${props => props.theme.sizes.edge} * 0);
@@ -18,9 +18,12 @@ const Timeline = styled.div`
 
   & > * {
     margin-right: 8px;
-    &:last-child {
+    &:first-child {
       margin-right: 0;
     }
+  }
+  @media ${props => props.theme.medias.medium} {
+    flex-wrap: wrap;
   }
 `;
 
@@ -28,6 +31,7 @@ const TimelineTitle = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   & > p {
     font-size: 11pt;
     font-weight: 500;
@@ -35,12 +39,19 @@ const TimelineTitle = styled.div`
     margin: 0 6px 0 0;
   }
   margin: 0 10px 0 0;
+  @media ${props => props.theme.medias.medium} {
+    margin-right: calc(100% - 140px) !important;
+    flex: auto;
+  }
 `;
 
 const TimelineItem = styled.div`
   padding: 8px 12px;
   border-radius: 2px;
   background: rgba(255, 255, 255, 0.1);
+  @media ${props => props.theme.medias.medium} {
+    margin-top: 10px;
+  }
 
   & > p {
     color: rgba(255, 255, 255, 0.6);

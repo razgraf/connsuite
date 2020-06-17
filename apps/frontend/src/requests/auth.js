@@ -1,6 +1,6 @@
 import _ from "lodash";
 import fetch from "cross-fetch";
-import { API, status } from "../constants";
+import { API, status, types } from "../constants";
 import { buildHeaders } from "../utils/atoms";
 
 /**
@@ -80,6 +80,14 @@ async function isAuthorized(auth, tier = null) {
   }
 }
 
+async function getStatus({ auth }) {
+  try {
+    return (await isAuthorized(auth, types.tier.access.analytics)) || null;
+  } catch (e) {
+    return null;
+  }
+}
+
 function isShallowAuthorized(auth) {
   try {
     const token = _.get(auth, "token.value");
@@ -134,6 +142,7 @@ async function logout(auth) {
 export default {
   isAuthorized,
   isShallowAuthorized,
+  getStatus,
 
   google,
   login,

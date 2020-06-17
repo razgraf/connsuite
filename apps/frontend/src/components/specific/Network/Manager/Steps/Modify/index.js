@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import guards, { policy } from "@connsuite/guards";
 import { types } from "../../../../../../constants";
 import { InputArea, InputImage, InputText } from "../../../../../atoms";
@@ -42,8 +42,17 @@ const Form = styled.form`
   grid-column-gap: calc(${props => props.theme.sizes.edge} * 1.5);
   grid-row-gap: 0;
 
-  & > *:last-child {
-    grid-column: span 2 !important;
+  ${props =>
+    props.columns === 2 &&
+    css`
+      & > *:last-child {
+        grid-column: span 2;
+      }
+    `}
+
+  & > * {
+    width: 100%;
+    grid-column: span 1;
   }
 `;
 

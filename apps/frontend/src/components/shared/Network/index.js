@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
@@ -35,6 +35,10 @@ const Content = styled.div`
   border: 1px solid ${props => props.theme.colors.grayLight};
   border-radius: ${props => props.theme.sizes.networkEdge};
   box-shadow: 0 0 15px 0 ${props => rgba(props.theme.colors.dark, 0.05)};
+
+  @media ${props => props.theme.medias.small} {
+    border-radius: 10px;
+  }
 `;
 
 const ContentHeader = styled.div`
@@ -78,7 +82,7 @@ const ContentImage = styled.img`
     visibility: hidden;
   }
 
-  @media all and (max-width: ${props => props.theme.medias.medium}) {
+  @media ${props => props.theme.medias.small} {
     height: 80%;
     width: 80%;
   }
@@ -99,7 +103,7 @@ const ContentFooterDetails = styled.p`
   font-size: 9pt;
   font-weight: 600;
   margin: 0;
-  @media all and (max-width: ${props => props.theme.medias.medium}) {
+  @media ${props => props.theme.medias.small} {
     font-size: 9pt;
   }
 `;
@@ -190,6 +194,9 @@ const Info = styled.div`
   padding-top: calc(${props => props.theme.sizes.networkEdge} * 3 / 4);
   & > * {
     max-width: 170px;
+  }
+  @media ${props => props.theme.medias.small} {
+    padding-top: calc(${props => props.theme.sizes.networkEdgeMobile} * 3 / 4);
   }
 `;
 
@@ -341,7 +348,7 @@ const Wrapper = styled(WrapperPartial)`
 
 function Network({ className, isViewOnly, isFocused, isInEditMode, ...network }) {
   const { setOpen: setCoverOpen, setNetwork: setCoverNetwork } = useCover();
-  const { title, username, thumbnail, url, _id, shortId } = network;
+  const { title, username, thumbnail, icon, url, _id, shortId } = network;
 
   const doPick = useCallback(() => {
     if (!isViewOnly) {
@@ -349,6 +356,8 @@ function Network({ className, isViewOnly, isFocused, isInEditMode, ...network })
       setCoverOpen(true);
     }
   }, [setCoverNetwork, setCoverOpen, network, isViewOnly]);
+
+  const picture = useMemo(() => (!_.isNil(icon) && _.get(icon, "url") ? _.get(icon, "url") : _.get(thumbnail, "url")), [icon, thumbnail]);
 
   return (
     <Wrapper className={className} data-viewonly={isViewOnly} data-focused={isFocused} data-editmode={isInEditMode} onClick={doPick}>
@@ -382,7 +391,7 @@ function Network({ className, isViewOnly, isFocused, isInEditMode, ...network })
             <ContentHeaderIndicator />
           </ContentHeader>
           <ContentMain>
-            <ContentImage src={_.get(thumbnail, "url")} data-component="content-image" />
+            <ContentImage src={picture} data-component="content-image" />
           </ContentMain>
           <ContentFooter data-component="content-footer">
             <ContentFooterDetails>Get Details</ContentFooterDetails>

@@ -23,6 +23,10 @@ const Wrapper = styled.div`
   background-color: ${props => props.theme.colors.white};
   padding: calc(${props => props.theme.sizes.edge} * 2) calc(${props => props.theme.sizes.edge} * 2)
     calc(${props => props.theme.sizes.edge} * 2);
+
+  @media ${props => props.theme.medias.small} {
+    padding: ${props => props.theme.sizes.edge};
+  }
 `;
 
 const Fields = styled.div`
@@ -30,6 +34,9 @@ const Fields = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-column-gap: calc(${props => props.theme.sizes.edge} * 2);
   width: 100%;
+  @media ${props => props.theme.medias.small} {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const Actions = styled.div`
@@ -46,6 +53,15 @@ const Actions = styled.div`
     color: ${props => props.theme.colors.grayBlueDark};
     font-weight: 600;
     font-size: 9pt;
+  }
+  @media ${props => props.theme.medias.small} {
+    flex-direction: column;
+    & > * {
+      margin-bottom: 20px !important;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 `;
 
@@ -197,6 +213,7 @@ function Register({ className }) {
           appearance={t => t.outline}
           accent={t => t.secondary}
           isDisabledSoft={!isFormValid}
+          isLoading={[machine.states.connect].includes(machine.current.value)}
           isDisabled={![machine.states.idle, machine.states.failure].includes(machine.current.value)}
           onClick={() => {
             if (!isFormValid) return;

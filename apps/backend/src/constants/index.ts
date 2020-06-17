@@ -7,7 +7,8 @@ import { UserTier } from "../models/atoms";
 export const defaults = {
   agent: "Unknown",
   username: "rockstar",
-  description: "ConnSuite Rockstar",
+  description: "Welcome to my online business card!",
+  tagline: "Hello!",
 
   tier: {
     analytics: UserTier.Bronze,

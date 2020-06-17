@@ -1,12 +1,12 @@
 import _ from "lodash";
-import React from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import IconContact from "@material-ui/icons/WhatshotRounded";
-
+import IconCalendly from "@material-ui/icons/EventAvailableRounded";
 import { components } from "../../../../../themes";
-import { useProfileIntersection } from "../../../../../hooks";
-import { types } from "../../../../../constants";
+import { useProfileIntersection, useModal } from "../../../../../hooks";
+import { types, modals, root } from "../../../../../constants";
 
 import SectionHeader from "../SectionHeader";
 import { Button, Spinner } from "../../../../atoms";
@@ -27,6 +27,9 @@ const Canvas = styled(components.Canvas)`
   position: relative;
   z-index: 200;
   padding: 0 calc(${props => props.theme.sizes.edge} * 2);
+  @media ${props => props.theme.medias.medium} {
+    padding: 0 calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+  }
 `;
 
 const Underlay = styled.div`
@@ -45,10 +48,17 @@ const Content = styled.div`
   justify-content: flex-start;
   width: 100%;
   padding-bottom: 60px;
+  @media ${props => props.theme.medias.medium} {
+    padding: 0;
+    flex-direction: column;
+  }
 `;
 
 const Left = styled.div`
   width: 460px;
+  @media ${props => props.theme.medias.medium} {
+    width: 100%;
+  }
 `;
 
 const Right = styled.div`
@@ -57,6 +67,17 @@ const Right = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: calc(${props => props.theme.sizes.edge} * 3);
   padding-left: calc(${props => props.theme.sizes.edge} * 3);
+  @media ${props => props.theme.medias.medium} {
+    width: 100%;
+    margin-top: calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+    grid-gap: calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+    padding-bottom: calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+    padding-left: 0;
+  }
+
+  @media ${props => props.theme.medias.small} {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const Card = styled.div`
@@ -75,7 +96,7 @@ const Card = styled.div`
 
 const CardActions = styled(Card)`
   & > * {
-    margin-bottom: ${props => props.theme.sizes.edge};
+    margin-bottom: 10px;
     &:last-child {
       margin-bottom: 0;
     }
@@ -147,7 +168,7 @@ const CardActionsTitle = styled.p`
   font-weight: 600;
   font-family: ${props => props.theme.fonts.primary};
   color: ${props => props.theme.colors.dark};
-  margin: 0 0 30px 0;
+  margin: 0 0 15px 0;
 `;
 
 const ButtonIconWrapper = styled.div`
@@ -158,8 +179,21 @@ const ButtonIconWrapper = styled.div`
   margin-left: -4px;
 `;
 
-function Business({ className, person, onIntersect }) {
+function Business({ className, person, onIntersect, onGetInTouchClick }) {
+  const { setOpen: setShareOpen } = useModal(modals.share);
   const { ref, isObserved } = useProfileIntersection(payload => onIntersect(types.profile.section.business, payload));
+
+  const onShareClick = useCallback(
+    () =>
+      setShareOpen(true, {
+        url: `${root}/${_.get(person, "username")}`,
+        explainer: `You can share this profile using this unique custom url: ${root}${_.get(
+          person,
+          "username",
+        )}. 🔥😲👍 Click below to copy it to your clipboard.`,
+      }),
+    [person, setShareOpen],
+  );
 
   return (
     <Wrapper className={className} ref={ref}>
@@ -228,17 +262,32 @@ function Business({ className, person, onIntersect }) {
                 }
                 title="Get in touch"
                 type={t => t.button}
-                onClick={() => console.log("click")}
+                onClick={onGetInTouchClick}
                 isFullWidth
               />
               <Button
                 appearance={t => t.solid}
                 accent={t => t.grayBlueNormal}
-                title="Request business card"
+                title="Share business card"
                 type={t => t.button}
-                onClick={() => console.log("click")}
+                onClick={onShareClick}
                 isFullWidth
               />
+              {_.get(person, "profile.user.calendly") && (
+                <Button
+                  appearance={t => t.solid}
+                  accent={t => t.dark}
+                  childrenLeft={
+                    <ButtonIconWrapper>
+                      <IconCalendly style={{ fontSize: "14pt" }} />
+                    </ButtonIconWrapper>
+                  }
+                  title="Book a Meeting"
+                  type={t => t.link}
+                  to={_.get(person, "profile.user.calendly")}
+                  isFullWidth
+                />
+              )}
             </CardActions>
           </Right>
         </Content>
@@ -262,6 +311,7 @@ Business.propTypes = {
     isLoadingProfile: PropTypes.bool,
   }),
   onIntersect: PropTypes.func,
+  onGetInTouchClick: PropTypes.func,
 };
 
 Business.defaultProps = {
@@ -278,6 +328,7 @@ Business.defaultProps = {
     isLoadingNetworks: true,
     isLoadingProfile: true,
   },
+  onGetInTouchClick: () => {},
 };
 
 export default Business;

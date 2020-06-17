@@ -20,13 +20,11 @@ const tools = {
   },
   code: {
     class: Code,
-    inlineToolbar: true,
   },
   delimiter: {
     class: Delimiter,
     inlineToolbar: true,
   },
-  //   image: Image, // TODO - Add server support for images
   inlineCode: {
     class: InlineCode,
     inlineToolbar: true,
@@ -45,7 +43,6 @@ const tools = {
   },
   simpleImage: {
     class: SimpleImage,
-    inlineToolbar: true,
   },
   table: {
     class: Table,
@@ -53,7 +50,7 @@ const tools = {
   },
   header: {
     class: Header,
-    inlineToolbar: true,
+    inlineToolbar: false,
   },
 };
 

@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
@@ -122,9 +122,17 @@ const Wrapper = styled(WrapperPartial)`
   }
 `;
 function NetworkMini({ className, isViewOnly, isFocused, onClick, ...network }) {
+  const icon = _.get(network, "icon");
+  const thumbnail = _.get(network, "icon");
+
+  const picture = useMemo(() => (!_.isNil(thumbnail) && _.get(thumbnail, "url") ? _.get(thumbnail, "url") : _.get(icon, "url")), [
+    icon,
+    thumbnail,
+  ]);
+
   return (
     <Wrapper className={className} data-focused={isFocused} data-viewonly={isViewOnly} onClick={isViewOnly ? null : onClick}>
-      <Icon src={_.get(network, "thumbnail.url")} alt="" />
+      <Icon src={picture} alt="" />
       <Overlay />
     </Wrapper>
   );

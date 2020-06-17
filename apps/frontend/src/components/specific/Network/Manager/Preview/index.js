@@ -22,13 +22,23 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 350px;
+  width: ${props => props.theme.sizes.networkManagerPreviewWidth};
   border: 1px solid ${props => props.theme.colors.grayAccent};
   border-right: none;
   padding: calc(${props => props.theme.sizes.edge} * 2);
   padding-top: calc(${props => props.theme.sizes.edge} * 1.5);
   padding-right: 0;
+  margin-left: calc(${props => props.theme.sizes.edge} * 6);
   border-radius: calc(${props => props.theme.sizes.edge} * 2) 0 0 calc(${props => props.theme.sizes.edge} * 2);
+
+  @media ${props => props.theme.medias.medium} {
+    margin: 0;
+    border-right: 1px solid ${props => props.theme.colors.grayAccent};
+    border-radius: 2px;
+    padding: calc(${props => props.theme.sizes.edge});
+    padding-bottom: 50px;
+    width: 100%;
+  }
 `;
 
 const HeaderPartial = styled.div`
@@ -36,7 +46,7 @@ const HeaderPartial = styled.div`
   align-items: center;
   width: 100%;
   margin-bottom: calc(${props => props.theme.sizes.edge} * 2);
-  padding-bottom: calc(${props => props.theme.sizes.edge} * 1.5);
+  padding-bottom: calc(${props => props.theme.sizes.edge} * 1);
   border-bottom: 1px solid ${props => props.theme.colors.grayAccent};
 `;
 
@@ -122,6 +132,14 @@ const Content = styled.div`
   align-items: center;
   flex: 1;
   width: 100%;
+  @media ${props => props.theme.medias.medium} {
+    max-height: 260px;
+    max-width: 260px;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 15px;
+    position: relative;
+  }
 `;
 
 const ContentMain = styled.div`
@@ -147,6 +165,12 @@ const ContentSide = styled.div`
   z-index: 100;
   height: 100%;
   width: 100px;
+
+  @media ${props => props.theme.medias.medium} {
+    position: absolute;
+    right: -40px;
+    transform: rotate(30deg);
+  }
 `;
 
 const ContentSideNetwork = styled(NetworkMini)`

@@ -39,11 +39,18 @@ const Form = styled.form`
   display: grid;
   grid-template-columns: repeat(${props => props.columns || 1}, 1fr);
   grid-gap: calc(${props => props.theme.sizes.edge} * 1.5);
+  @media ${props => props.theme.medias.medium} {
+    grid-template-columns: 1fr;
+    grid-gap: 0;
+  }
 `;
 
 const Section = styled(SectionPartial)`
   opacity: 1;
   margin-bottom: calc(${props => props.theme.sizes.edge} * 2);
+  @media ${props => props.theme.medias.medium} {
+    margin-bottom: calc(${props => props.theme.sizes.canvasEdgeMobile} * 1);
+  }
 
   &:last-of-type {
     margin-bottom: 0;
@@ -111,7 +118,7 @@ function Credential({ className, isActive, reducer, network }) {
               value: `You know how every social network asks for a username? What would yours be for this new custom network? ${policy.network.username.root}`,
             }}
             id="createNetworkUsernameExternal"
-            label="Username"
+            label="Username*"
             onUpdate={e => {
               reducer.dispatch({
                 type: reducer.actions.UPDATE_USERNAME,

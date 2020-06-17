@@ -1,10 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-
 import Nav from "../../../components/shared/Nav";
-import { Header, Value, Finder, Connect } from "../../../components/specific/Landing";
+import { Header, Value, Connect } from "../../../components/specific/Landing";
 import { types } from "../../../constants";
-import { useAuth } from "../../../hooks";
 
 const Page = styled.div`
   width: 100%;
@@ -33,7 +31,7 @@ const Main = styled.div`
   width: 100%;
 `;
 function Landing() {
-  useAuth("public");
+  // useAuth("public"); ???
 
   return (
     <Page>
@@ -46,7 +44,6 @@ function Landing() {
       </Top>
       <Main>
         <Value />
-        <Finder />
         <Connect />
       </Main>
     </Page>

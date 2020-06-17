@@ -4,6 +4,7 @@ import { validateAuth } from "../src/utils";
 
 Landing.getInitialProps = async context => {
   await validateAuth(context, "public");
+
   return {};
 };
 

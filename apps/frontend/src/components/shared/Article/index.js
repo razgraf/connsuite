@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useMemo } from "react";
+import React, { useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
@@ -8,8 +8,8 @@ import IconShare from "@material-ui/icons/ShareRounded";
 import IconDelete from "@material-ui/icons/DeleteOutline";
 import IconVisit from "@material-ui/icons/InsertLinkRounded";
 import { rgba } from "polished";
-import { pages, types } from "../../../constants";
-import { useHistory } from "../../../hooks";
+import { pages, types, modals, root } from "../../../constants";
+import { useHistory, useModal } from "../../../hooks";
 import { ellipsis, getFriendlyTitle } from "../../../utils";
 import { Button } from "../../atoms";
 
@@ -22,6 +22,9 @@ const Card = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
+  @media ${props => props.theme.medias.medium} {
+    border-radius: 2px;
+  }
 `;
 
 const Content = styled.div`
@@ -30,6 +33,9 @@ const Content = styled.div`
   z-index: 100;
   position: relative;
   overflow: hidden;
+  @media ${props => props.theme.medias.medium} {
+    border-radius: 2px;
+  }
 `;
 
 const ContentImage = styled.img`
@@ -64,6 +70,9 @@ const OverlayHeader = styled.div`
   width: 100%;
   flex: 1;
   padding: ${props => props.theme.sizes.edge};
+  @media ${props => props.theme.medias.medium} {
+    padding: 10px;
+  }
 `;
 
 const OverlayHeaderLocation = styled.div`
@@ -130,6 +139,17 @@ const OverlayFooter = styled.div`
   transform: translateY(100%);
   transition: transform 200ms;
   will-change: transform;
+  @media ${props => props.theme.medias.medium} {
+    transform: translateY(0);
+    transition: transform 200ms;
+    will-change: transform;
+    flex-direction: row;
+    align-items: center;
+    width: calc(100% - 2 * 10px);
+    margin: 10px;
+    padding: 10px;
+    border-radius: 2px;
+  }
 `;
 
 const OverlayFooterTitle = styled.p`
@@ -143,18 +163,32 @@ const OverlayFooterTitle = styled.p`
   max-width: calc(100% - 80px);
   text-align: left;
   color: ${props => props.theme.colors.dark};
+  @media ${props => props.theme.medias.medium} {
+    flex: 1;
+    max-width: calc(100% - 120px);
+    margin-right: auto;
+    margin-bottom: 0;
+    font-size: 11pt;
+  }
+  ${props => props.theme.extensions.ellipsis};
 `;
 
 const OverlayFooterBottom = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  @media ${props => props.theme.medias.medium} {
+    width: auto;
+  }
 `;
 
 const OverlayFooterInfo = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+  @media ${props => props.theme.medias.medium} {
+    display: none;
+  }
 `;
 
 const OverlayFooterInfoItem = styled.p`
@@ -166,7 +200,6 @@ const OverlayFooterInfoItem = styled.p`
   }
 `;
 
-const OverlayFooterAnchor = styled.a``;
 const OverlayFooterButton = styled(Button)``;
 
 const Shape = styled.div`
@@ -229,6 +262,9 @@ const Wrapper = styled(WrapperPartial)`
   &:not([data-style="add"]) {
     ${Card} {
       box-shadow: 0 0 15px 0 ${props => rgba(props.theme.colors.dark, 0.1)};
+      @media ${props => props.theme.medias.medium} {
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+      }
     }
   }
   &[data-style="add"] {
@@ -240,6 +276,9 @@ const Wrapper = styled(WrapperPartial)`
     ${Card} {
       flex: 1;
       padding: 20px;
+      @media ${props => props.theme.medias.medium} {
+        padding: 0px 0px 20px 0px;
+      }
     }
     ${Content} {
       display: flex;
@@ -301,7 +340,7 @@ function Action({ Icon, callback, title, type, url, route }) {
     );
   return (
     <Link href={route} as={url}>
-      <OverlayHeaderAction title={title} onClick={() => history.push()}>
+      <OverlayHeaderAction as="a" title={title} onClick={() => history.push()}>
         <Icon style={{ fontSize: "13pt" }} />
       </OverlayHeaderAction>
     </Link>
@@ -309,7 +348,7 @@ function Action({ Icon, callback, title, type, url, route }) {
 }
 
 function Article({ className, _id, shortId, thumbnail, categories, title, type, onRemoveClick, isSelf }) {
-  const history = useHistory();
+  const { setOpen: setShareOpen } = useModal(modals.share);
 
   const categoryField = useMemo(() => {
     if (!categories || !categories.length) return "";
@@ -321,6 +360,15 @@ function Article({ className, _id, shortId, thumbnail, categories, title, type, 
     if (categories.length > 3) field += "...";
     return field;
   }, [categories]);
+
+  const onShareClick = useCallback(
+    () =>
+      setShareOpen(true, {
+        url: `${root}${pages.article.view.builder(shortId, getFriendlyTitle(title))}`,
+        explainer: "Share this article link with your audience! Track your impact within the analytics page.",
+      }),
+    [shortId, title, setShareOpen],
+  );
 
   return (
     <Wrapper className={className}>
@@ -336,7 +384,7 @@ function Article({ className, _id, shortId, thumbnail, categories, title, type, 
               {isSelf && (
                 <Action Icon={IconEdit} title="Edit" type="link" url={pages.article.edit.builder(_id)} route={pages.article.edit.route} />
               )}
-              <Action Icon={IconShare} title="Share" type="button" callback={() => console.log(`Share ${_id}`)} />
+              <Action Icon={IconShare} title="Share" type="button" callback={onShareClick} />
               {isSelf && <Action Icon={IconDelete} title="Delete" type="button" callback={() => onRemoveClick({ _id, title })} />}
             </OverlayHeaderActions>
           </OverlayHeader>
@@ -346,28 +394,15 @@ function Article({ className, _id, shortId, thumbnail, categories, title, type, 
               <OverlayFooterInfo>
                 <OverlayFooterInfoItem data-purpose="category">{categoryField}</OverlayFooterInfoItem>
               </OverlayFooterInfo>
-              {type === types.article.type.external ? (
-                <OverlayFooterButton
-                  type={t => t.link}
-                  appearance={t => t.solid}
-                  accent={t => t.secondary}
-                  isMini
-                  title="Visit Article"
-                  to={pages.article.view.builder(shortId, getFriendlyTitle(title))}
-                />
-              ) : (
-                <Link href={pages.article.view.route} as={pages.article.view.builder(shortId, getFriendlyTitle(title))}>
-                  <OverlayFooterAnchor onClick={() => history.push()}>
-                    <OverlayFooterButton
-                      type={t => t.button}
-                      appearance={t => t.solid}
-                      accent={t => t.secondary}
-                      isMini
-                      title="Read Article"
-                    />
-                  </OverlayFooterAnchor>
-                </Link>
-              )}
+
+              <OverlayFooterButton
+                type={t => t.link}
+                appearance={t => t.solid}
+                accent={t => t.secondary}
+                isMini
+                title={type === types.article.type.external ? "Visit Article" : "Read Article"}
+                to={pages.article.view.builder(shortId, getFriendlyTitle(title))}
+              />
             </OverlayFooterBottom>
           </OverlayFooter>
         </Overlay>

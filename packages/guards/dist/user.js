@@ -8,6 +8,7 @@ exports.policy = void 0;
 const lodash_1 = __importDefault(require("lodash"));
 const validator_1 = __importDefault(require("validator"));
 const atoms_1 = require("./atoms");
+const limits_1 = require("./atoms/limits");
 exports.policy = {
     password: {
         root: `Passwords must contain at least ${atoms_1.limits.MIN_PASSWORD_LENGTH} charaters of which at least one uppercase letter, one lowercase letter, one digit and one special character (#?!@$%^&*-).`,
@@ -22,6 +23,8 @@ exports.policy = {
     username: {
         root: `Usernames must contain between ${atoms_1.limits.MIN_USERNAME_LENGTH} and ${atoms_1.limits.MAX_USERNAME_LENGTH} characters and must be unique.`,
         1: `Please use between ${atoms_1.limits.MIN_USERNAME_LENGTH} and ${atoms_1.limits.MAX_USERNAME_LENGTH} characters. Make it unique.`,
+        2: `Please use only letters, digits, ., - or _.`,
+        3: "Some usernames are protected or already in use. Please try another one. Make it unique.",
     },
     email: {
         root: "Emails must have a valid format. You will use it to gain access to your ConnSuite account.",
@@ -34,8 +37,17 @@ exports.policy = {
         3: "Please add a file with a valid name.",
     },
     description: {
-        root: `Descriptions can be empty or must contain between ${atoms_1.limits.MIN_USER_DESCRIPTION_LENGTH} and ${atoms_1.limits.MAX_USER_DESCRIPTION_LENGTH} characters.`,
+        root: `Descriptions must contain between ${atoms_1.limits.MIN_USER_DESCRIPTION_LENGTH} and ${atoms_1.limits.MAX_USER_DESCRIPTION_LENGTH} characters.`,
         1: `Please use between ${atoms_1.limits.MIN_USER_DESCRIPTION_LENGTH} and ${atoms_1.limits.MAX_USER_DESCRIPTION_LENGTH} characters.`,
+    },
+    tagline: {
+        root: `Taglines must contain between ${atoms_1.limits.MIN_USER_TAGLINE_LENGTH} and ${atoms_1.limits.MAX_USER_TAGLINE_LENGTH} characters.`,
+        1: `Please use between ${atoms_1.limits.MIN_USER_TAGLINE_LENGTH} and ${atoms_1.limits.MAX_USER_TAGLINE_LENGTH} characters.`,
+    },
+    calendly: {
+        root: "Calendly URLs must contain http:// or https:// and be valid",
+        1: "Please add http:// or https:// before your calendly url.",
+        2: "Please add a valid calendly url.",
     },
 };
 function isPasswordAcceptable(value, withPolicy = atoms_1.WITH_POLICY) {
@@ -78,12 +90,14 @@ function isUsernameAcceptable(value, withPolicy = atoms_1.WITH_POLICY) {
     if (lodash_1.default.isNil(value) ||
         lodash_1.default.isEmpty(value) ||
         (!lodash_1.default.isString(value) && !lodash_1.default.isNumber(value)))
-        return false;
-    return value.length >= min && value.length <= max
-        ? true
-        : withPolicy
-            ? exports.policy.username[1]
-            : false;
+        return withPolicy ? exports.policy.username[1] : false;
+    if (!(value.length >= min && value.length <= max))
+        return withPolicy ? exports.policy.username[1] : false;
+    if (!value.match(atoms_1.limits.FORMAT_USERNAME))
+        return withPolicy ? exports.policy.username[2] : false;
+    if (limits_1.PROTECTED_USERNAMES.includes(value))
+        return withPolicy ? exports.policy.username[3] : false;
+    return true;
 }
 function isUserDescriptionAcceptable(value, withPolicy = atoms_1.WITH_POLICY) {
     const [min, max] = [
@@ -96,6 +110,19 @@ function isUserDescriptionAcceptable(value, withPolicy = atoms_1.WITH_POLICY) {
         ? true
         : withPolicy
             ? exports.policy.description[1]
+            : false;
+}
+function isUserTaglineAcceptable(value, withPolicy = atoms_1.WITH_POLICY) {
+    const [min, max] = [
+        atoms_1.limits.MIN_USER_TAGLINE_LENGTH,
+        atoms_1.limits.MAX_USER_TAGLINE_LENGTH,
+    ];
+    if (lodash_1.default.isNil(value) || lodash_1.default.isEmpty(value) || !lodash_1.default.isString(value))
+        return withPolicy ? exports.policy.tagline.root : false;
+    return value.length >= min && value.length <= max
+        ? true
+        : withPolicy
+            ? exports.policy.tagline[1]
             : false;
 }
 function isUserPictureAcceptable(value, withPolicy = atoms_1.WITH_POLICY, options) {
@@ -128,6 +155,19 @@ function isUserPictureAcceptable(value, withPolicy = atoms_1.WITH_POLICY, option
         return true;
     }
 }
+function isUserCalendlyAcceptable(value, withPolicy = atoms_1.WITH_POLICY) {
+    if (lodash_1.default.isNil(value) || lodash_1.default.isEmpty(value) || !lodash_1.default.isString(value))
+        return withPolicy ? exports.policy.calendly[2] : false;
+    if (!(value.startsWith("https://") || value.startsWith("http://")))
+        return withPolicy ? exports.policy.calendly[1] : false;
+    if (value.toLowerCase().indexOf("calendly") < 0)
+        return withPolicy ? exports.policy.calendly[2] : false;
+    return validator_1.default.isURL(value, { require_protocol: true })
+        ? true
+        : withPolicy
+            ? exports.policy.calendly[2]
+            : false;
+}
 exports.default = {
     isEmailAcceptable,
     isNameAcceptable,
@@ -135,4 +175,6 @@ exports.default = {
     isUsernameAcceptable,
     isUserDescriptionAcceptable,
     isUserPictureAcceptable,
+    isUserTaglineAcceptable,
+    isUserCalendlyAcceptable,
 };

@@ -1,4 +1,3 @@
-import _ from "lodash";
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { rgba } from "polished";
@@ -43,6 +42,9 @@ const Card = styled.div`
   border-radius: 10px;
   overflow: hidden;
   background-color: ${props => props.theme.colors.white};
+  @media ${props => props.theme.medias.small} {
+    height: auto;
+  }
 `;
 
 const CardOverlay = styled.div`
@@ -167,6 +169,16 @@ const StyledFaceCss = css`
       transform: translateY(0);
       transition: opacity 200ms, transform 200ms;
     `}
+
+  @media ${props => props.theme.medias.small} {
+    transition: opacity 0ms, transform 0ms;
+    ${props =>
+      props.isActive &&
+      css`
+        position: relative;
+        transition: opacity 200ms, transform 200ms;
+      `}
+  }  
 `;
 
 const StyledLogin = styled(Login)`

@@ -54,6 +54,8 @@ declare const policy: {
         username: {
             root: string;
             1: string;
+            2: string;
+            3: string;
         };
         email: {
             root: string;
@@ -68,6 +70,15 @@ declare const policy: {
         description: {
             root: string;
             1: string;
+        };
+        tagline: {
+            root: string;
+            1: string;
+        };
+        calendly: {
+            root: string;
+            1: string;
+            2: string;
         };
     };
     network: {
@@ -122,15 +133,17 @@ declare const guards: {
     isPasswordAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
     isUsernameAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
     isUserDescriptionAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
-    isUserPictureAcceptable: (value: Express.Multer.File | {
+    isUserPictureAcceptable: (value: {
         [key: string]: string | number;
         name: string;
         type: string;
         size: string | number;
-    }, withPolicy: boolean | undefined, options: {
+    } | Express.Multer.File, withPolicy: boolean | undefined, options: {
         [key: string]: string;
         vendor: string;
     }) => string | boolean;
+    isUserTaglineAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
+    isUserCalendlyAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
     isArticleTitleAcceptable: (value: string, withPolicy?: boolean) => string | boolean;
     isArticleCoverAcceptable: (value: Express.Multer.File | {
         [key: string]: string | number;

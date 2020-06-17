@@ -31,6 +31,7 @@ export default class UserRepository extends BaseRepository<User> {
     if (!_.get(payload, "firstName")) throw new ParamsError.Missing("Missing first name");
     if (!_.get(payload, "lastName")) throw new ParamsError.Missing("Missing last name");
     if (!_.get(payload, "description")) throw new ParamsError.Missing("Missing Description");
+    if (!_.get(payload, "tagline")) throw new ParamsError.Missing("Missing Tagline");
 
     const holder: User | null = await this.getById(_.get(payload, "userId"), { populate: true });
     if (!holder) throw new AuthError.UserNotFound("Unknown user or access not granted.");
@@ -43,6 +44,8 @@ export default class UserRepository extends BaseRepository<User> {
         last: payload.lastName,
       },
       description: payload.description,
+      tagline: payload.tagline,
+      calendly: _.get(payload, "calendly"),
     });
 
     if (!_.isNil(payload.picture)) {
@@ -179,6 +182,7 @@ export default class UserRepository extends BaseRepository<User> {
       name,
       email: payload.email,
       description: defaults.description,
+      tagline: defaults.tagline,
       googleId: payload.googleId,
     });
 
@@ -211,6 +215,7 @@ export default class UserRepository extends BaseRepository<User> {
       name,
       email: payload.email,
       description: defaults.description,
+      tagline: defaults.tagline,
       password,
     });
 
@@ -254,6 +259,10 @@ export default class UserRepository extends BaseRepository<User> {
     const descriptionGuard = guards.isUserDescriptionAcceptable(_.get(payload, "description"), true);
     if (descriptionGuard !== true) throw new ParamsError.Invalid(("Description: " + descriptionGuard) as string);
 
+    if (!_.get(payload, "tagline")) throw new ParamsError.Missing("Missing Tagline");
+    const taglineGuard = guards.isUserDescriptionAcceptable(_.get(payload, "tagline"), true);
+    if (taglineGuard !== true) throw new ParamsError.Invalid(("Tagline: " + taglineGuard) as string);
+
     /** If there is no picture historically-available (e.g. fresh user), don't update until the user uploads one */
     if (
       !_.get(historic, "picture") ||
@@ -264,6 +273,11 @@ export default class UserRepository extends BaseRepository<User> {
       if (!_.get(payload, "picture") || !payload.picture) throw new ParamsError.Missing("Missing Picture");
       const pictureGuard = guards.isUserPictureAcceptable(payload.picture, true, { vendor: "multer" });
       if (pictureGuard !== true) throw new ParamsError.Invalid(pictureGuard as string);
+    }
+
+    if (_.get(payload, "calendly")) {
+      const calendlyGuard = guards.isUserCalendlyAcceptable(_.toString(_.get(payload, "calendly")), true);
+      if (calendlyGuard !== true) throw new ParamsError.Invalid(("Calendly: " + calendlyGuard) as string);
     }
   }
 

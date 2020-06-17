@@ -9,15 +9,15 @@ import { rgba } from "polished";
 import { components } from "../../../../themes";
 import { modals, pages, types } from "../../../../constants";
 import { useNetworksMachine, useArticlesMachine, useProfileMachine, useCover, useModal } from "../../../../hooks";
-import { parseFullName, getPrimaryUsername } from "../../../../utils";
+import { parseFullName, getPrimaryUsername, scrollTop } from "../../../../utils";
 
 import Nav from "../../../../components/shared/Nav";
 import Footer from "../../../../components/shared/Footer";
 import Cover from "../../../../components/shared/Cover";
-import { ModalNetworkRemove, ModalArticleRemove } from "../../../../components/specific/Modals";
+import { ModalNetworkRemove, ModalArticleRemove, ModalShare } from "../../../../components/specific/Modals";
 import { Articles, Business, Header, Networks } from "../../../../components/specific/Profile/Viewer";
-
 import Missing from "../Missing";
+import * as Head from "../../../../components/specific/Head";
 
 const Page = styled.div`
   position: relative;
@@ -31,6 +31,9 @@ const Main = styled.div`
   justify-content: flex-start;
   width: 100%;
   padding-top: ${props => props.theme.sizes.navHeight};
+  @media ${props => props.theme.medias.small} {
+    padding-top: ${props => props.theme.sizes.navHeightMobile};
+  }
 `;
 
 const Canvas = styled(components.Canvas)`
@@ -84,13 +87,14 @@ function Profile({ data, identifier, isSelf }) {
   const machineArticles = useArticlesMachine();
   const machineProfile = useProfileMachine();
   const username = useMemo(() => getPrimaryUsername(data), [data]);
+  const name = useMemo(() => parseFullName({ user: data }), [data]);
 
   const active = useState(null);
   const controller = useMemo(() => ({ get: () => active[0], set: value => active[1](value) }), [active]);
 
   const [articleRemove, setArticleRemove] = useState(null);
   const { setOpen: setArticleRemoveModalOpen } = useModal(modals.articleRemove);
-  const { network: networkCover, setOpen: setOpenCover } = useCover();
+  const { network: networkCover, setOpen: setOpenCover, setNetwork: setCoverNetwork } = useCover();
 
   const onArticleRemoveClick = useCallback(
     article => {
@@ -99,6 +103,10 @@ function Profile({ data, identifier, isSelf }) {
     },
     [setArticleRemove, setArticleRemoveModalOpen],
   );
+
+  useEffect(() => {
+    scrollTop();
+  }, []);
 
   useEffect(() => {
     replaceUsername({ username, identifier, router });
@@ -128,6 +136,7 @@ function Profile({ data, identifier, isSelf }) {
       data,
       isSelf,
       username,
+      description: _.get(data, "description"),
       profile: _.get(machineProfile, "current.context.data"),
       skills: _.get(machineProfile, "current.context.data.skills"),
       categories: _.get(machineProfile, "current.context.data.categories"),
@@ -139,22 +148,41 @@ function Profile({ data, identifier, isSelf }) {
     };
   }, [data, isSelf, username, machineProfile, machineNetworks, machineArticles]);
 
+  const onGetInTouchClick = useCallback(() => {
+    const networks = _.toArray(_.get(person, "networks"));
+    if (!networks.length) return;
+
+    const network = networks[0];
+
+    setCoverNetwork(network);
+    setOpenCover(true);
+  }, [setCoverNetwork, setOpenCover, person]);
+
   if (_.isNil(data)) return <Missing />;
 
   return (
     <Page>
-      <Nav
-        appearance={types.nav.appearance.profile}
-        title={`${parseFullName({ user: data }) || "ConnSuite"}'s`}
-        networks={person.networks}
+      <Head.ProfileViewer
+        username={username}
+        first={_.get(person, "data.name.first")}
+        last={_.get(person, "data.name.last")}
+        name={name}
+        descripton={_.get(person, "data.description")}
       />
+      <Nav appearance={types.nav.appearance.profile} title={`${parseFullName({ user: data }) || "ConnSuite"}`} networks={person.networks} />
       <Main>
         <Canvas>
-          <Header isLoading={person.isLoadingProfile} controller={controller} profile={person.profile} />
+          <Header
+            isLoading={person.isLoadingProfile}
+            controller={controller}
+            profile={person.profile}
+            description={person.description}
+            onGetInTouchClick={onGetInTouchClick}
+          />
           <Networks isLoading={person.isLoadingNetworks} networks={person.networks} />
           <Articles person={person} controller={controller} onArticleRemoveClick={onArticleRemoveClick} />
         </Canvas>
-        <Business person={person} />
+        <Business person={person} onGetInTouchClick={onGetInTouchClick} />
       </Main>
       <Cover isSelf={person.isSelf} />
       {isSelf && (
@@ -163,6 +191,7 @@ function Profile({ data, identifier, isSelf }) {
           <ModalArticleRemove article={articleRemove} onSuccess={() => setArticleRemove(null)} />
         </>
       )}
+      <ModalShare />
       <Footer />
     </Page>
   );

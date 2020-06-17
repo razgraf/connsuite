@@ -10,7 +10,7 @@ import { Image, toImageDTO } from "./image";
 export class Network {
   readonly _id?: mongoose.Schema.Types.ObjectId | string;
 
-  @prop({ default: `${shortid.generate()}_` })
+  @prop({ default: () => `${shortid.generate()}_` })
   shortId?: string;
 
   @prop({ required: true, enum: NetworkType, default: NetworkType.Internal })

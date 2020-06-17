@@ -84,8 +84,8 @@ const portfolio = (state = initialPortfolio, { type, payload }) => {
     case redux.ARTICLES_PUSH_LIST: {
       return { ...state, articles: { ...state.articles, list: [...state.articles.list, ...payload.list] } };
     }
-    case REHYDRATE:
-      return initialPortfolio;
+    // case REHYDRATE:
+    //   return initialPortfolio;
     case PURGE:
       return initialPortfolio;
     default:

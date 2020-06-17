@@ -78,6 +78,14 @@ export function ellipsis(value, max = null) {
   }
 }
 
+export function capitalize(source) {
+  try {
+    return source.charAt(0).toUpperCase() + source.slice(1);
+  } catch (e) {
+    return "";
+  }
+}
+
 export async function readPreviewFromImage(file) {
   return new Promise((resolve, reject) => {
     try {
@@ -96,6 +104,15 @@ export function blur() {
   try {
     const list = document.getElementsByTagName("input");
     Array.prototype.forEach.call(list, item => item.blur());
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export function scrollTop() {
+  try {
+    window.scrollTo(0, 0);
+    document.getElementsByTagName("body")[0].scrollTop = 0;
   } catch (e) {
     console.error(e);
   }

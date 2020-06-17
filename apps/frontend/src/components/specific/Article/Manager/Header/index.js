@@ -21,6 +21,9 @@ const Wrapper = styled.div`
   padding: calc(${props => props.theme.sizes.edge} * 2);
   background: ${props => props.theme.colors.white};
   transition: border 200ms;
+  @media ${props => props.theme.medias.small} {
+    padding: calc(${props => props.theme.sizes.canvasEdgeMobile});
+  }
 `;
 
 const CoverWrapperPartial = styled.div`
@@ -30,10 +33,14 @@ const CoverWrapperPartial = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: 300px;
+  height: ${props => props.theme.sizes.articleCoverHeight};
   width: 100%;
   border: 1px solid ${props => props.theme.colors.grayBlueLight};
   background-color: ${props => props.theme.colors.background};
+  @media ${props => props.theme.medias.small} {
+    height: 60vw;
+    min-height: ${props => props.theme.sizes.articleCoverHeight};
+  }
 `;
 
 const CoverContainer = styled.div`
@@ -157,6 +164,9 @@ const ThumbnailWrapper = styled.div`
   background-color: ${props => props.theme.colors.background};
   background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23e4e8f0' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
   transition: border 200ms;
+  @media ${props => props.theme.medias.small} {
+    display: none;
+  }
 `;
 
 const Thumbnail = styled.img`

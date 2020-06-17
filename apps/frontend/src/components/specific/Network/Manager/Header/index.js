@@ -10,6 +10,10 @@ const Wrapper = styled.div`
   padding: calc(${props => props.theme.sizes.edge} * 2);
   margin-bottom: 0;
   border-bottom: 1px solid ${props => props.theme.colors.grayAccent};
+
+  @media ${props => props.theme.medias.medium} {
+    padding: calc(${props => props.theme.sizes.canvasEdgeMobile} * 2) calc(${props => props.theme.sizes.canvasEdgeMobile} * 1);
+  }
 `;
 
 const StepWrapperPartial = styled.div`
@@ -48,6 +52,11 @@ const Divider = styled.div`
   margin: 0 calc(${props => props.theme.sizes.edge} * 2);
   width: 50px;
   height: 1px;
+
+  @media ${props => props.theme.medias.medium} {
+    margin: 0 10px;
+    width: 10px;
+  }
 `;
 
 const StepWrapper = styled(StepWrapperPartial)`
@@ -63,6 +72,16 @@ const StepWrapper = styled(StepWrapperPartial)`
     & + ${Divider} {
       background-color: ${props => props.theme.colors.secondary};
       transition: background-color 200ms;
+    }
+  }
+  @media ${props => props.theme.medias.medium} {
+    &[data-active="false"] {
+      ${StepTitle} {
+        display: none;
+      }
+      ${StepIcon} {
+        margin: 0;
+      }
     }
   }
 `;

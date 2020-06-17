@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { GoogleLogin } from "react-google-login";
 import { google } from "../../../../vendors";
 import { Button } from "../../../atoms";
 
 function ButtonGoogle({ isDisabled, onClick, onFailure, onSuccess }) {
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <GoogleLogin
       clientId={google.configuration.clientId}
@@ -17,14 +18,18 @@ function ButtonGoogle({ isDisabled, onClick, onFailure, onSuccess }) {
           onClick={e => {
             onClick(e);
             onGoogleClick(e);
+            setIsLoading(true);
           }}
+          isLoading={isLoading}
           isDisabled={isGoogleDisabled || isDisabled}
         />
       )}
       onSuccess={payload => {
+        setIsLoading(false);
         onSuccess(payload);
       }}
       onFailure={(error, details) => {
+        setIsLoading(false);
         onFailure({
           error,
           details,

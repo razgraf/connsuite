@@ -1,12 +1,10 @@
-import IconDashboard from "@material-ui/icons/HomeRounded";
-import IconPortfolio from "@material-ui/icons/FolderSpecialRounded";
-import IconBusiness from "@material-ui/icons/BusinessRounded";
-import IconAnalytics from "@material-ui/icons/MultilineChartRounded";
-import IconProfile from "@material-ui/icons/PersonRounded";
-
+import meta from "./meta";
+import pages from "./pages";
 import status from "./httpcodes";
+import types from "./types";
+import { redux, sagas } from "./store";
 
-export { status };
+export { status, types, pages, redux, sagas, meta };
 
 export const host = {
   development: `http://localhost:${process.env.PORT || 3001}`,
@@ -16,224 +14,7 @@ export const host = {
 
 export const root = host[process.env.NODE_ENV || "development"];
 
-export const pages = {
-  landing: {
-    Icon: null,
-    root: "/",
-    route: "/",
-    title: "Landing",
-  },
-  profile: {
-    root: "/",
-    view: {
-      Icon: IconProfile,
-      root: "/",
-      route: "/[id]",
-      builder: id => `/${id}`,
-      title: "Your Profile",
-    },
-    edit: {
-      root: "/edit",
-      route: "/edit",
-      title: "Edit Profile",
-    },
-  },
-  dashboard: {
-    Icon: IconDashboard,
-    root: "/dashboard",
-    route: "/dashboard",
-    title: "Dashboard",
-  },
-  portfolio: {
-    Icon: IconPortfolio,
-    root: "/portfolio",
-    route: "/portfolio",
-    title: "Portfolio",
-  },
-  business: {
-    Icon: IconBusiness,
-    root: "/business",
-    route: "/business",
-    title: "Business Book",
-  },
-  analytics: {
-    Icon: IconAnalytics,
-    root: "/analytics",
-    route: "/analytics",
-    title: "Analytics",
-    isPrivate: true,
-  },
-  about: {
-    Icon: null,
-    root: "/about",
-    route: "/about",
-    title: "About",
-  },
-  network: {
-    root: "/network",
-    create: {
-      root: "/network",
-      title: "Create a new Network",
-    },
-    edit: {
-      root: "/network/edit",
-      route: "/network/edit/[id]",
-      builder: id => `/network/edit/${id}`,
-      title: "Edit the Network",
-    },
-    view: {
-      root: "/network",
-      route: "/network/[id]/[[...slug]]",
-      builder: (id, extra) => `/network/${id}${extra ? `/${extra}` : ""}`,
-    },
-  },
-  article: {
-    root: "/article",
-    create: {
-      root: "/article",
-      title: "Create a new Article",
-    },
-    view: {
-      root: "/article",
-      route: "/article/[id]/[[...slug]]",
-      builder: (id, extra) => `/article/${id}${extra ? `/${extra}` : ""}`,
-    },
-    edit: {
-      root: "/article/edit",
-      route: "/article/edit/[id]",
-      builder: id => `/article/edit/${id}`,
-    },
-  },
-};
-
-export const subpages = {};
-
 export const vendors = {};
-
-export const redux = {
-  SET: "store_SET",
-  CHECK: "store_CHECK",
-
-  AUTH_USER_SET: "store_AUTH_USER_SET",
-  AUTH_TOKEN_SET: "store_AUTH_TOKEN_SET",
-
-  COVER_OPEN: "store_COVER_OPEN",
-  COVER_CLOSE: "store_COVER_CLOSE",
-  COVER_TOGGLE: "store_COVER_TOGGLE",
-  COVER_NETWORK_CLEAR: "store_COVER_NETWORK_CLEAR",
-  COVER_NETWORK_SET: "store_COVER_NETWORK_SET",
-
-  HISTORY_PUSH: "store_HISTORY_PUSH",
-  HISTORY_POP: "store_HISTORY_POP",
-  HISTORY_CLEAR: "store_HISTORY_CLEAR",
-
-  NETWORKS_SET: "store_NETWORKS_SET",
-  NETWORKS_SET_IS_LOADING: "store_NETWORKS_SET_IS_LOADING",
-  NETWORKS_SET_IS_FETCHED: "store_NETWORKS_SET_IS_FETCHED",
-  NETWORKS_SET_LIST: "store_NETWORKS_SET_LIST",
-  NETWORKS_CLEAR_LIST: "store_NETWORKS_CLEAR_LIST",
-  NETWORKS_PUSH_LIST: "store_NETWORKS_PUSH_LIST",
-
-  ARTICLES_SET: "store_ARTICLES_SET",
-  ARTICLES_SET_IS_LOADING: "store_ARTICLES_SET_IS_LOADING",
-  ARTICLES_SET_IS_FETCHED: "store_ARTICLES_SET_IS_FETCHED",
-  ARTICLES_SET_LIST: "store_ARTICLES_SET_LIST",
-  ARTICLES_CLEAR_LIST: "store_ARTICLES_CLEAR_LIST",
-  ARTICLES_PUSH_LIST: "store_ARTICLES_PUSH_LIST",
-
-  RESOURCE_EXTERNAL_NETWORKS_SET: "store_RESOURCE_EXTERNAL_NETWORKS_SET",
-  RESOURCE_EXTERNAL_NETWORKS_SET_IS_LOADING: "store_RESOURCE_EXTERNAL_NETWORKS_SET_IS_LOADING",
-  RESOURCE_EXTERNAL_NETWORKS_SET_IS_FETCHED: "store_RESOURCE_EXTERNAL_NETWORKS_SET_IS_FETCHED",
-  RESOURCE_EXTERNAL_NETWORKS_SET_LIST: "store_RESOURCE_EXTERNAL_NETWORKS_SET_LIST",
-
-  RESOURCE_DEFAULT_SKILLS_SET: "store_RESOURCE_DEFAULT_SKILLS_SET",
-  RESOURCE_DEFAULT_SKILLS_SET_IS_LOADING: "store_RESOURCE_DEFAULT_SKILLS_SET_IS_LOADING",
-  RESOURCE_DEFAULT_SKILLS_SET_IS_FETCHED: "store_RESOURCE_DEFAULT_SKILLS_SET_IS_FETCHED",
-  RESOURCE_DEFAULT_SKILLS_SET_LIST: "store_RESOURCE_DEFAULT_SKILLS_SET_LIST",
-
-  RESOURCE_DEFAULT_CATEGORIES_SET: "store_RESOURCE_DEFAULT_CATEGORIES_SET",
-  RESOURCE_DEFAULT_CATEGORIES_SET_IS_LOADING: "store_RESOURCE_DEFAULT_CATEGORIES_SET_IS_LOADING",
-  RESOURCE_DEFAULT_CATEGORIES_SET_IS_FETCHED: "store_RESOURCE_DEFAULT_CATEGORIES_SET_IS_FETCHED",
-  RESOURCE_DEFAULT_CATEGORIES_SET_LIST: "store_RESOURCE_DEFAULT_CATEGORIES_SET_LIST",
-
-  MODAL_RESET: "store_MODAL_RESET",
-  MODAL_OPEN: "store_MODAL_OPEN",
-  MODAL_CLOSE: "store_MODAL_CLOSE",
-  MODAL_REGISTER: "store_MODAL_REGISTER",
-  MODAL_UNREGISTER: "store_MODAL_UNREGISTER",
-};
-
-export const sagas = {
-  NETWORKS_LIST: "saga_NETWORKS_LIST",
-  ARTICLES_LIST: "saga_ARTICLES_LIST",
-};
-
-export const types = {
-  nav: {
-    appearance: {
-      platform: "platform",
-      presentation: "presentation",
-      profile: "profile",
-      secondary: "secondary",
-    },
-    accent: {
-      transparent: "transparent",
-      white: "white",
-      dark: "dark",
-    },
-  },
-  network: {
-    manager: {
-      create: "create",
-      edit: "edit",
-    },
-    type: {
-      external: "external",
-      internal: "internal",
-    },
-  },
-  article: {
-    type: {
-      external: "external",
-      internal: "internal",
-    },
-  },
-  placeholder: {
-    type: {
-      networks: "networks",
-      articles: "articles",
-      networksBusinessCard: "networksBusinessCard",
-    },
-  },
-  profile: {
-    section: {
-      header: "header",
-      networks: "networks",
-      articles: "articles",
-      business: "business",
-    },
-  },
-  visit: {
-    type: {
-      default: "default",
-      network: "network",
-      article: "article",
-      profile: "profile",
-      business: "businesscard",
-    },
-  },
-  tier: {
-    levels: {
-      bronze: 5,
-      silver: 10,
-      gold: 15,
-      platinum: 20,
-    },
-    access: {
-      analytics: 5,
-    },
-  },
-};
 
 export const API = {
   root: "http://localhost:3002",
@@ -323,6 +104,8 @@ export const modals = {
   networkRemove: "modalNetworkRemove",
   articleRemove: "modalArticleRemove",
   articleLeave: "modalArticleLeave",
+  profileLeave: "modalProfileLeave",
+  share: "modalShare",
 };
 
 const constants = {
@@ -330,9 +113,9 @@ const constants = {
   modals,
   redux,
   pages,
-  subpages,
   links,
   types,
+  meta,
   sagas,
   status,
   vendors,

@@ -2,14 +2,14 @@ import _ from "lodash";
 import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import IconArrowDown from "@material-ui/icons/KeyboardArrowDownRounded";
 import ProfilePictureFallback from "../../../../../assets/images/profile_fallback.jpg";
 import { pages } from "../../../../../constants";
 import { useOnClickOutside, useHistory, useShallowAuth } from "../../../../../hooks";
-import { getPrimaryUsername, parseFullName } from "../../../../../utils";
+import { getPrimaryUsername, parseFullName, logout } from "../../../../../utils";
 import Button from "../../../../atoms/Button";
 
 const Wrapper = styled.div`
@@ -18,6 +18,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   height: calc(${props => props.theme.sizes.navHeight} - ${props => props.theme.sizes.navVerticalEdge} * 2);
+  @media ${props => props.theme.medias.small} {
+    height: calc(${props => props.theme.sizes.navHeightMobile} - ${props => props.theme.sizes.navVerticalEdge} * 2);
+  }
 `;
 
 const WrapperUnauthorized = styled(Wrapper)`
@@ -37,6 +40,12 @@ const Content = styled.div`
   background: #ffffff;
   border-radius: 100px;
   border: 1px solid transparent;
+
+  @media ${props => props.theme.medias.small} {
+    background: transparent;
+    min-width: auto;
+    padding: 0;
+  }
 `;
 
 const ImageWrapper = styled.div`
@@ -45,6 +54,14 @@ const ImageWrapper = styled.div`
   border-radius: 50%;
   overflow: hidden;
   border: 1px solid ${props => props.theme.colors.grayLight};
+  pointer-events: none;
+
+  @media ${props => props.theme.medias.small} {
+    border: none;
+    pointer-events: all;
+    height: calc(${props => props.theme.sizes.navHeightMobile} - 2 * ${props => props.theme.sizes.navVerticalEdge});
+    width: calc(${props => props.theme.sizes.navHeightMobile} - 2 * ${props => props.theme.sizes.navVerticalEdge});
+  }
 `;
 
 const Image = styled.img`
@@ -66,6 +83,10 @@ const Main = styled.div`
   height: 100%;
   flex: 1;
   padding: 0 calc(${props => props.theme.sizes.edge} * 2 / 3);
+
+  @media ${props => props.theme.medias.small} {
+    display: none;
+  }
 `;
 
 const Label = styled.p`
@@ -87,6 +108,22 @@ const Name = styled.p`
 
 const Action = styled.div`
   margin: 0 calc(${props => props.theme.sizes.edge} * 1 / 3) 0 0;
+
+  @media ${props => props.theme.medias.small} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    position: absolute;
+    z-index: 100;
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    /* border: 1px solid ${props => props.theme.colors.grayBlueLight}; */
+    background-color: ${props => props.theme.colors.white};
+    right: -2px;
+    bottom: -2px;
+  }
 `;
 
 const ActionDropdown = styled.div`
@@ -112,9 +149,17 @@ const ActionDropdown = styled.div`
     transition: transform 200ms;
   }
 
-  & > * {
+  & > svg {
     color: ${props => props.theme.colors.grayBlueBlack};
     user-select: none;
+    font-size: 11pt;
+  }
+
+  @media ${props => props.theme.medias.small} {
+    background: transparent;
+    & > svg {
+      color: ${props => props.theme.colors.grayBlueDark};
+    }
   }
 `;
 
@@ -143,6 +188,12 @@ const Dropdown = styled.div`
     opacity: 1;
     transform: translateY(0);
     transition: opacity 100ms, transform 100ms;
+  }
+
+  @media ${props => props.theme.medias.small} {
+    width: 200px;
+    right: 0;
+    top: calc((${props => props.theme.sizes.navHeightMobile} - ${props => props.theme.sizes.navVerticalEdge} * 1) + 5px);
   }
 `;
 
@@ -187,6 +238,7 @@ function DropdownItem({ route, as, title, isActive }) {
 function Account({ className }) {
   const router = useRouter();
   const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
 
   const [isDown, setIsDown] = useState(false);
   const [ref] = useOnClickOutside(() => setIsDown(false));
@@ -214,7 +266,7 @@ function Account({ className }) {
   return (
     <Wrapper ref={ref} className={className}>
       <Content data-component="pill">
-        <ImageWrapper>
+        <ImageWrapper onClick={() => setIsDown(!isDown)}>
           <Image src={picture} alt="" />
         </ImageWrapper>
         <Main>
@@ -223,7 +275,7 @@ function Account({ className }) {
         </Main>
         <Action>
           <ActionDropdown data-active={isDown} onClick={() => setIsDown(!isDown)}>
-            <IconArrowDown style={{ fontSize: "11pt" }} />
+            <IconArrowDown />
           </ActionDropdown>
         </Action>
       </Content>
@@ -239,9 +291,12 @@ function Account({ className }) {
           />
         ))}
 
-        {[pages.profile.edit, pages.dashboard, pages.about].map(item => (
+        {[pages.profile.edit, pages.dashboard].map(item => (
           <DropdownItem {...item} key={item.title} isActive={router.pathname === item.route} route={item.route} />
         ))}
+        <DropdownItemWrapper onClick={() => logout({ auth, dispatch })}>
+          <DropdownItemTitle>Log Out</DropdownItemTitle>
+        </DropdownItemWrapper>
       </Dropdown>
     </Wrapper>
   );

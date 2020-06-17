@@ -14,6 +14,9 @@ const Content = styled(components.Canvas)`
   display: flex;
   align-items: center;
   height: ${props => props.theme.sizes.navHeight};
+  @media ${props => props.theme.medias.small} {
+    height: ${props => props.theme.sizes.navHeightMobile};
+  }
 `;
 
 const LogoWrapper = styled.div`
@@ -91,10 +94,10 @@ function NavPresentation({ className }) {
           <Logo alt="" src={AssetLogo} />
         </LogoWrapper>
         <Actions>
-          <ActionItem type={t => t.routerDecorator}>
+          {/* <ActionItem type={t => t.routerDecorator}>
             <ActionItemContent>About</ActionItemContent>
             <ActionItemLine />
-          </ActionItem>
+          </ActionItem> */}
           <ActionButton
             to={`${pages.landing.root}#connect`}
             appearance={t => t.outline}

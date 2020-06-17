@@ -10,6 +10,9 @@ const WrapperPartial = styled.div`
   justify-content: flex-start;
   width: 100%;
   padding: calc(${props => props.theme.sizes.edge} * 2) 0;
+  @media ${props => props.theme.medias.medium} {
+    padding: calc(${props => props.theme.sizes.sectionEdgeMobile} * 2) 0;
+  }
 `;
 
 const TitleWrapper = styled.div`

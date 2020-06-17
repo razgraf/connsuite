@@ -44,6 +44,8 @@ export default class AuthRepository extends ManagerRepository {
     };
 
     if (!(await UserRepository.getInstance().isAlreadyRegistered(googleData, Vendor.GOOGLE))) {
+      if (await UserRepository.getInstance().isAlreadyRegistered(googleData, Vendor.CLASSIC))
+        throw new AuthError.Failed("This email is already used by an account with classic password registration.");
       user = (await UserRepository.getInstance().createFromGoogle(googleData)) as User;
     } else user = (await UserRepository.getInstance().getByGoogleId(googleData.googleId, { populate: true })) as User;
 

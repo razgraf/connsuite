@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { rgba } from "polished";
 
 const Canvas = styled.div`
-  padding: 0 ${props => props.theme.sizes.edge};
+  padding: 0 ${props => props.theme.sizes.canvasEdge};
   margin: 0 auto;
   max-width: ${props => props.theme.sizes.canvasMaxWidth};
   width: 100%;
@@ -87,6 +87,9 @@ const SectionHeader = styled.div`
   display: flex;
   align-items: center;
   padding: calc(${props => props.theme.sizes.edge} * 2) 0;
+  @media ${props => props.theme.medias.small} {
+    padding: calc(${props => props.theme.sizes.edge} * 1) 0;
+  }
 `;
 
 const SectionTitle = styled.div`
@@ -101,6 +104,11 @@ const SectionTitle = styled.div`
     font-family: ${props => props.theme.fonts.primary};
     font-size: 13pt;
     font-weight: 400;
+  }
+  @media ${props => props.theme.medias.small} {
+    & > p {
+      font-size: 14pt;
+    }
   }
 `;
 

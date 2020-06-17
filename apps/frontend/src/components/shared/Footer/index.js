@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
 
 import { rgba } from "polished";
-
+import IconArrow from "@material-ui/icons/SubjectRounded";
 import LogoAsset from "../../../assets/logo/logo_horiz_white.png";
 import { links, footer } from "../../../constants";
 import { components } from "../../../themes";
@@ -16,24 +16,43 @@ const Wrapper = styled.div`
   position: relative;
   z-index: calc(${props => props.theme.sizes.areaElevation} + 10);
   min-height: ${props => props.theme.sizes.footerMinHeight};
+
+  @media ${props => props.theme.medias.small} {
+    z-index: calc(${props => props.theme.sizes.areaElevation} - 10);
+    min-height: 0;
+  }
 `;
 const Canvas = styled(components.Canvas)`
   display: flex;
   flex-direction: column;
   padding-top: calc(${props => props.theme.sizes.edge} * 4);
   padding-bottom: calc(${props => props.theme.sizes.edge} * 3);
+
+  @media ${props => props.theme.medias.small} {
+    padding-top: calc(${props => props.theme.sizes.edge} * 1);
+    padding-bottom: calc(${props => props.theme.sizes.edge} * 1);
+  }
 `;
 
 const Header = styled.div`
   width: 100%;
   margin-bottom: calc(${props => props.theme.sizes.edge} * 3);
+  @media ${props => props.theme.medias.small} {
+    margin-bottom: 0;
+  }
 `;
 
-const LogoWrapper = styled.div``;
+const LogoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
 
 const Logo = styled.img`
   height: 30px;
   object-fit: contain;
+  object-position: left;
+  margin-right: auto;
 `;
 
 const Content = styled.div`
@@ -41,6 +60,20 @@ const Content = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
+
+  @media ${props => props.theme.medias.small} {
+    flex-direction: column;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: calc(${props => props.theme.sizes.edge} * 2);
+    padding-top: calc(${props => props.theme.sizes.edge} * 2);
+    display: flex;
+
+    &[data-expanded="false"] {
+      align-items: center;
+      justify-content: center;
+      display: none;
+    }
+  }
 `;
 
 const Grid = styled.div`
@@ -48,6 +81,11 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: calc(${props => props.theme.sizes.edge} * 2);
+  @media ${props => props.theme.medias.small} {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: calc(${props => props.theme.sizes.edge} * 1);
+    width: 100%;
+  }
 `;
 
 const Column = styled.div`
@@ -80,6 +118,10 @@ const Item = styled.a`
 const Shill = styled.div`
   width: 250px;
   padding-left: calc(${props => props.theme.sizes.edge} * 2);
+  @media ${props => props.theme.medias.small} {
+    padding: 0;
+    width: 100%;
+  }
 `;
 
 const ShillBox = styled.div`
@@ -101,16 +143,57 @@ const ShillText = styled.p`
   margin: 0 0 calc(${props => props.theme.sizes.edge} * 1.5) 0;
 `;
 
-function Footer({ reference }) {
+const Expand = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: rotate(0deg);
+  transition: background-color 150ms, transform 150ms;
+  cursor: pointer;
+  display: none;
+  pointer-events: none;
+
+  & > svg {
+    font-size: 16pt;
+    color: ${props => props.theme.colors.white};
+  }
+  &[data-expanded="true"] {
+    transform: rotate(180deg);
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: background-color 150ms, transform 150ms;
+  }
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: background-color 150ms, transform 150ms;
+  }
+
+  @media ${props => props.theme.medias.small} {
+    display: flex;
+    pointer-events: all;
+  }
+`;
+
+function Footer({ className, reference }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
-    <Wrapper ref={reference}>
+    <Wrapper className={className} ref={reference}>
       <Canvas>
         <Header>
           <LogoWrapper>
             <Logo src={LogoAsset} alt="ConnSuite" />
+            <Expand data-expanded={isExpanded} onClick={() => setIsExpanded(!isExpanded)}>
+              <IconArrow />
+            </Expand>
           </LogoWrapper>
         </Header>
-        <Content>
+        <Content data-expanded={isExpanded}>
           <Grid>
             {footer.map(column => (
               <Column key={`col-${column[0].title}`}>
@@ -150,11 +233,13 @@ function Footer({ reference }) {
 }
 
 Footer.propTypes = {
+  className: PropTypes.string,
   reference: PropTypes.oneOfType([PropTypes.func, PropTypes.shape]),
 };
 
 Footer.defaultProps = {
   reference: null,
+  className: null,
 };
 
 export default Footer;

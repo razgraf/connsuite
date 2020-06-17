@@ -1,8 +1,12 @@
 const sizes = {
   edge: "15px",
+  canvasEdge: "15px",
+  canvasEdgeMobile: "10px",
   canvasMaxWidth: "1200px",
 
   navHeight: "80px",
+  navHeightMobile: "70px",
+
   navVerticalEdge: "10px",
   navHorizontalEdge: "10px",
   navElevation: "500",
@@ -13,12 +17,15 @@ const sizes = {
   areaContentElevation: "100",
 
   sideBarWidth: "80px",
+  sideBarHeightMobile: "70px",
   sideBarElevation: "200",
   sideBarHorizontalEdge: "10px",
 
   sectionEdge: "22.5px",
+  sectionEdgeMobile: "10px",
 
   networkEdge: "20px",
+  networkEdgeMobile: "15px",
   networkIconMaxSize: "90px",
 
   buttonTitle: "10pt",
@@ -36,7 +43,11 @@ const sizes = {
   articlePickerElevation: "600",
 
   profileBlob: "400px",
+  profileBlobMobile: "200px",
   profileBusinessDistance: "200px",
+
+  articleCoverHeight: "300px",
+  networkManagerPreviewWidth: "350px",
 };
 
 export default sizes;

@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React from "react";
+import React, { useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
@@ -7,10 +7,12 @@ import IconArrow from "@material-ui/icons/ArrowForwardRounded";
 import IconShare from "@material-ui/icons/ShareRounded";
 import IconEdit from "@material-ui/icons/EditRounded";
 import IconDelete from "@material-ui/icons/RemoveCircleOutlineRounded";
+import IconClose from "@material-ui/icons/CloseRounded";
+
 import { rgba } from "polished";
 import Backdrop from "../Backdrop";
 import { getFriendlyTitle } from "../../../utils";
-import { pages, modals } from "../../../constants";
+import { pages, modals, root } from "../../../constants";
 import { useCover, useHistory, useModal } from "../../../hooks";
 
 const WrapperPartial = styled.div`
@@ -24,6 +26,9 @@ const WrapperPartial = styled.div`
   top: 0;
   pointer-events: none;
   overflow: hidden;
+  @media ${props => props.theme.medias.small} {
+    z-index: calc(${props => props.theme.sizes.navElevation} + 10);
+  }
 `;
 
 const CoverBackdrop = styled(Backdrop)`
@@ -40,6 +45,10 @@ const Container = styled.div`
   width: 100vw;
   z-index: 200;
   padding-left: calc(${props => props.theme.sizes.edge} * 2);
+
+  @media ${props => props.theme.medias.medium} {
+    padding-left: calc(${props => props.theme.sizes.edge} * 1);
+  }
 `;
 
 const Slide = styled.div`
@@ -63,10 +72,42 @@ const Content = styled.div`
   width: 100%;
   max-width: calc(${props => props.theme.sizes.canvasMaxWidth} * 1 / 2);
   padding-top: calc(${props => props.theme.sizes.navHeight});
+
+  @media ${props => props.theme.medias.small} {
+    padding-top: 0;
+  }
 `;
 
 const Header = styled.div`
   display: none;
+  @media ${props => props.theme.medias.small} {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: calc(${props => props.theme.sizes.sectionEdgeMobile} * 2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  & > p {
+    font-weight: 600;
+    color: ${props => props.theme.colors.white};
+    margin: 0 0 0 15px;
+  }
+`;
+
+const CloseArrow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  width: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: rotate(180deg);
+  & > svg {
+    font-size: 16pt;
+    color: ${props => props.theme.colors.white};
+  }
 `;
 
 const Section = styled.section`
@@ -76,6 +117,9 @@ const Section = styled.section`
   justify-content: flex-start;
   width: 100%;
   padding: 0 calc(${props => props.theme.sizes.edge} * 2);
+  @media ${props => props.theme.medias.small} {
+    padding: 0 calc(${props => props.theme.sizes.sectionEdgeMobile} * 2);
+  }
 `;
 
 const SectionHeader = styled.div`
@@ -84,6 +128,9 @@ const SectionHeader = styled.div`
   align-items: center;
   justify-content: flex-start;
   padding: calc(${props => props.theme.sizes.edge} * 2) 0;
+  @media ${props => props.theme.medias.small} {
+    padding-top: calc(${props => props.theme.sizes.sectionEdgeMobile} * 2) 0;
+  }
 `;
 
 const SectionTitle = styled.p`
@@ -114,6 +161,9 @@ const Card = styled.div`
   border-radius: calc(${props => props.theme.sizes.edge} * 1);
   background: ${props => props.theme.colors.white};
   box-shadow: 0 12px 30px -15px r ${props => rgba(props.theme.colors.dark, 0.3)};
+  @media ${props => props.theme.medias.medium} {
+    height: 160px;
+  }
 `;
 
 const CardLeft = styled.div`
@@ -122,6 +172,9 @@ const CardLeft = styled.div`
   justify-content: center;
   height: 100%;
   padding: 0 calc(${props => props.theme.sizes.edge} * 2.5);
+  @media ${props => props.theme.medias.medium} {
+    padding: 0 calc(${props => props.theme.sizes.edge} * 1.5);
+  }
 `;
 
 const CardLeftImage = styled.img`
@@ -138,6 +191,10 @@ const CardLeftImage = styled.img`
     opacity: 0;
     transition: opacity 150ms;
   }
+  @media ${props => props.theme.medias.medium} {
+    max-width: 70px;
+    max-height: 70px;
+  }
 `;
 
 const CardMain = styled.div`
@@ -151,6 +208,10 @@ const CardMain = styled.div`
   padding-top: ${props => props.theme.sizes.edge};
   padding-bottom: ${props => props.theme.sizes.edge};
   padding-left: calc(${props => props.theme.sizes.edge} * 2);
+
+  @media ${props => props.theme.medias.medium} {
+    padding-left: calc(${props => props.theme.sizes.edge} * 1.5);
+  }
 `;
 
 const CardMainTitle = styled.p`
@@ -163,6 +224,9 @@ const CardMainTitle = styled.p`
   color: ${props => props.theme.colors.dark};
   white-space: nowrap;
   overflow: hidden;
+  @media ${props => props.theme.medias.medium} {
+    font-size: 14pt;
+  }
 `;
 
 const CardMainUsername = styled.p`
@@ -187,6 +251,9 @@ const CardRight = styled.div`
   align-items: center;
   height: 100%;
   padding: 0 calc(${props => props.theme.sizes.edge} * 2);
+  @media ${props => props.theme.medias.medium} {
+    padding: 0 calc(${props => props.theme.sizes.edge} * 1);
+  }
 `;
 
 const CardRightAction = styled.a`
@@ -302,7 +369,22 @@ const Wrapper = styled(WrapperPartial)`
 function Cover({ isSelf }) {
   const { isOpen, network, setOpen } = useCover();
   const { setOpen: setModalRemoveOpen } = useModal(modals.networkRemove);
-  const { push } = useHistory();
+  const { setOpen: setShareOpen } = useModal(modals.share);
+  const history = useHistory();
+
+  const url = useMemo(
+    () => pages.network.view.builder(_.get(network, "shortId") || _.get(network, "_id"), getFriendlyTitle(_.get(network, "title"))),
+    [network],
+  );
+
+  const onShareClick = useCallback(
+    () =>
+      setShareOpen(true, {
+        url: `${root}${url}`,
+        explainer: `Share the ${_.get(network, "title")} link with your audience! Track your impact within the analytics page.`,
+      }),
+    [url, network, setShareOpen],
+  );
 
   return (
     <Wrapper data-visible={isOpen}>
@@ -310,7 +392,12 @@ function Cover({ isSelf }) {
       <Container>
         <Slide>
           <Content>
-            <Header />
+            <Header onClick={() => setOpen(false)}>
+              <CloseArrow>
+                <IconClose />
+              </CloseArrow>
+              <p>Close cover</p>
+            </Header>
             <Section>
               <SectionHeader>
                 <SectionTitle>Network Details</SectionTitle>
@@ -326,7 +413,13 @@ function Cover({ isSelf }) {
                 <CardRight>
                   {isSelf && (
                     <Link href={pages.analytics.root}>
-                      <CardRightAction data-purpose="analytics" title={pages.analytics.title} onClick={push}>
+                      <CardRightAction
+                        data-purpose="analytics"
+                        title={pages.analytics.title}
+                        onClick={() => {
+                          history.push();
+                        }}
+                      >
                         <pages.analytics.Icon style={{ fontSize: "16pt" }} />
                       </CardRightAction>
                     </Link>
@@ -334,10 +427,7 @@ function Cover({ isSelf }) {
                   <CardRightAction
                     title="Visit Network"
                     data-url={_.get(network, "url") || "#"}
-                    href={pages.network.view.builder(
-                      _.get(network, "shortId") || _.get(network, "_id"),
-                      getFriendlyTitle(_.get(network, "title")),
-                    )}
+                    href={url}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -356,18 +446,18 @@ function Cover({ isSelf }) {
               <SectionHeader>
                 <SectionTitle>Actions</SectionTitle>
               </SectionHeader>
-              <Action as="div">
+              <Action as="div" onClick={onShareClick}>
                 <ActionIcon>
                   <IconShare style={{ fontSize: "12pt" }} />
                 </ActionIcon>
                 <ActionTitle>
-                  Share: <span>connsuite.com/razgraf/facebook</span>
+                  Share Custom Link to <span>{_.get(network, "title")}</span>
                 </ActionTitle>
               </Action>
               {isSelf && (
                 <>
                   <Link href={pages.network.edit.route} as={pages.network.edit.builder(_.get(network, "_id"))}>
-                    <Action onClick={push}>
+                    <Action onClick={() => history.push()}>
                       <ActionIcon>
                         <IconEdit style={{ fontSize: "12pt" }} />
                       </ActionIcon>

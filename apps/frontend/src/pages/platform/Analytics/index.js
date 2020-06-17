@@ -9,6 +9,7 @@ import { Articles, Networks, Profile, Unauthorized } from "../../../components/s
 import { Area } from "../../../components/shared";
 import { Button } from "../../../components/atoms";
 import { pages } from "../../../constants";
+import * as Head from "../../../components/specific/Head";
 
 const Page = styled.div``;
 
@@ -17,6 +18,10 @@ const Authorized = styled(components.Section)`
   width: 100%;
   padding: 0 ${props => props.theme.sizes.sectionEdge};
   overflow-x: hidden;
+  @media ${props => props.theme.medias.medium} {
+    padding: 0 calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+    margin-bottom: 0;
+  }
 `;
 
 const SectionHeader = styled(components.SectionHeader)``;
@@ -44,6 +49,7 @@ const ButtonIconWrapper = styled.div`
 function Analytics({ elite }) {
   return (
     <Page>
+      <Head.Analytics />
       <Area>
         {!elite ? (
           <Unauthorized />
@@ -64,7 +70,8 @@ function Analytics({ elite }) {
                     </ButtonIconWrapper>
                   }
                   isMini
-                  title="View Protfolio"
+                  title="View Portfolio"
+                  titleShort="Portfolio"
                   to={pages.portfolio.route}
                   type={t => t.router}
                 />

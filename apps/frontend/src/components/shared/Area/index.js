@@ -38,6 +38,11 @@ const Content = styled.div`
   width: 100%;
   padding-top: ${props => props.theme.sizes.navHeight};
   padding-left: ${props => props.theme.sizes.sideBarWidth};
+
+  @media ${props => props.theme.medias.small} {
+    padding-top: ${props => props.theme.sizes.navHeightMobile};
+    padding-left: 0;
+  }
 `;
 
 const StyledSideBar = styled(SideBar)`
@@ -49,12 +54,37 @@ const StyledSideBar = styled(SideBar)`
   z-index: ${props => props.theme.sizes.sideBarElevation};
   height: 100%;
   width: ${props => props.theme.sizes.sideBarWidth};
+  border-right: 1px solid ${props => lighten(0.04, props.theme.colors.grayBlueLight)};
 
   & > div {
     position: sticky;
     left: auto;
     top: 0;
     width: ${props => props.theme.sizes.sideBarWidth};
+  }
+
+  @media ${props => props.theme.medias.small} {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: ${props => props.theme.sizes.sideBarHeightMobile};
+    border-top: 1px solid ${props => lighten(0.04, props.theme.colors.grayBlueLight)};
+    border-right: none;
+    & > div {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+  }
+`;
+
+const AreaFooter = styled(Footer)`
+  @media ${props => props.theme.medias.small} {
+    & > div {
+      padding-bottom: calc(${props => props.theme.sizes.sideBarHeightMobile} + ${props => props.theme.sizes.edge} * 1) !important;
+    }
   }
 `;
 
@@ -66,7 +96,7 @@ function Area({ className, children }) {
         <StyledSideBar />
         <Content>{children}</Content>
       </Canvas>
-      <Footer />
+      <AreaFooter />
     </Wrapper>
   );
 }

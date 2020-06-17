@@ -1,18 +1,21 @@
 import _ from "lodash";
-import React, { useMemo, useCallback, useEffect } from "react";
+import React, { useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rgba } from "polished";
 import { useSelector } from "react-redux";
 import IconArticlePublish from "@material-ui/icons/FaceRounded";
 import { components } from "../../../../themes";
-import { pages, types } from "../../../../constants";
-import { useProfileReducer, useProfileEditMachine } from "../../../../hooks";
+import { modals, pages, types } from "../../../../constants";
+import { useProfileReducer, useProfileEditMachine, useHistory, useModal } from "../../../../hooks";
 import { blur, getPrimaryUsername } from "../../../../utils";
 
 import { Button, Spinner, Warning } from "../../../../components/atoms";
 import Nav from "../../../../components/shared/Nav";
 import { Header } from "../../../../components/specific/Profile/Manager";
+import { ModalProfileLeave } from "../../../../components/specific/Modals/Profile";
+
+import * as Head from "../../../../components/specific/Head";
 
 const Page = styled.div`
   position: relative;
@@ -69,6 +72,10 @@ const Canvas = styled(components.Canvas)`
   border-top: none;
   margin-bottom: calc(calc(${props => props.theme.sizes.edge}) * 2.5);
   padding-bottom: calc(calc(${props => props.theme.sizes.edge}) * 2.5);
+  @media ${props => props.theme.medias.medium} {
+    padding-left: calc(${props => props.theme.sizes.canvasEdgeMobile});
+    padding-right: calc(${props => props.theme.sizes.canvasEdgeMobile});
+  }
 
   & > * {
     z-index: 10;
@@ -108,6 +115,16 @@ const Actions = styled.div`
       margin-right: 0;
     }
   }
+  @media ${props => props.theme.medias.medium} {
+    flex-direction: column;
+    & > * {
+      margin-bottom: ${props => props.theme.sizes.edge};
+      margin-right: 0;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 `;
 
 const StyledButton = styled(Button)`
@@ -136,6 +153,12 @@ const ButtonIconWrapper = styled.div`
     left: -10px;
     position: absolute;
     color: ${props => props.theme.colors.white};
+  }
+  @media ${props => props.theme.medias.medium} {
+    width: 20px;
+    & > * {
+      left: -3px;
+    }
   }
 `;
 
@@ -170,25 +193,25 @@ const Loader = styled.div`
 function ProfileManager() {
   const auth = useSelector(state => state.auth);
   const reducer = useProfileReducer();
+  const history = useHistory();
   const username = useMemo(() => getPrimaryUsername(_.get(auth, "user")), [auth]);
   const machine = useProfileEditMachine({ identifier: username, reducer });
-
-  useEffect(() => {
-    console.log(machine);
-  }, [machine]); /* componentDidMount */ // eslint-disable-line react-hooks/exhaustive-deps
+  const modalLeave = useModal(modals.profileLeave);
 
   const person = useMemo(() => _.get(machine, "current.context.data"), [machine]);
 
   const onCancel = useCallback(() => {
-    console.log("Ask for cancel");
-  }, []);
+    modalLeave.setOpen(true);
+  }, [modalLeave]);
 
   const onPublish = useCallback(() => {
     const profile = {
       firstName: reducer.state.firstName.value,
       lastName: reducer.state.lastName.value,
       description: reducer.state.description.value,
+      tagline: reducer.state.tagline.value,
       picture: reducer.state.picture.value,
+      calendly: reducer.state.calendly.value,
     };
 
     machine.send(machine.events.forward, {
@@ -199,6 +222,7 @@ function ProfileManager() {
 
   return (
     <Page data-leaving={machine.current.value === machine.states.success}>
+      <Head.ProfileEdit />
       <Playground>
         <StyledNav
           isLight
@@ -244,6 +268,7 @@ function ProfileManager() {
           onClick={onCancel}
         />
       </Actions>
+      <ModalProfileLeave onSuccess={() => history.back()} />
     </Page>
   );
 }

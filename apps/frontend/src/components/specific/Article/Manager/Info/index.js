@@ -9,6 +9,9 @@ const Wrapper = styled.div`
   width: 100%;
   padding: calc(${props => props.theme.sizes.edge} * 2);
   background: ${props => props.theme.colors.white};
+  @media ${props => props.theme.medias.small} {
+    padding: calc(${props => props.theme.sizes.canvasEdgeMobile});
+  }
 `;
 
 const Form = styled.form`
@@ -18,6 +21,11 @@ const Form = styled.form`
   & > * {
     grid-column: span 1;
     &:first-child {
+      grid-column: span 2;
+    }
+  }
+  @media ${props => props.theme.medias.small} {
+    & > * {
       grid-column: span 2;
     }
   }

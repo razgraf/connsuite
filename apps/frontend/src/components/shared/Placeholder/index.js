@@ -32,10 +32,10 @@ const NetworksGrid = styled.div`
     grid-column: span 1;
     flex-grow: 0;
   }
-  @media all and (max-width: ${props => props.theme.medias.medium}) {
+  @media ${props => props.theme.medias.medium} {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  @media all and (max-width: ${props => props.theme.medias.small}) {
+  @media ${props => props.theme.medias.small} {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 `;

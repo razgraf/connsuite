@@ -5,6 +5,8 @@ export const initial = {
   firstName: { ...StateInputText },
   lastName: { ...StateInputText },
   description: { ...StateInputText },
+  tagline: { ...StateInputText },
+  calendly: { ...StateInputText },
 };
 
 export const actions = {
@@ -18,6 +20,9 @@ export const actions = {
   UPDATE_LAST_NAME: "UPDATE_LAST_NAME",
 
   UPDATE_DESCRIPTION: "UPDATE_DESCRIPTION",
+  UPDATE_TAGLINE: "UPDATE_TAGLINE",
+
+  UPDATE_CALENDLY: "UPDATE_CALENDLY",
 };
 
 export function reducer(state, { type, payload }) {
@@ -44,6 +49,14 @@ export function reducer(state, { type, payload }) {
           ...state.description,
           value: payload.description,
         },
+        tagline: {
+          ...state.tagline,
+          value: payload.tagline,
+        },
+        calendly: {
+          ...state.calendly,
+          value: payload.calendly,
+        },
       };
     case actions.UPDATE_PICTURE:
       return {
@@ -69,6 +82,16 @@ export function reducer(state, { type, payload }) {
       return {
         ...state,
         description: payload,
+      };
+    case actions.UPDATE_TAGLINE:
+      return {
+        ...state,
+        tagline: payload,
+      };
+    case actions.UPDATE_CALENDLY:
+      return {
+        ...state,
+        calendly: payload,
       };
     default:
       throw new Error("Unknown Action");

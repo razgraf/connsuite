@@ -57,8 +57,8 @@ const wrapperCss = css`
       width: 100%;
     `};
 
-  @media all and (max-width: ${props => props.theme.medias.medium}){
-    padding: 15px 10px;
+  @media ${props => props.theme.medias.small} {
+    padding: 12px 15px;
     ${props =>
       props.isMini &&
       css`
@@ -145,11 +145,19 @@ const LoaderWrapper = styled.div`
     & > div {
       right: -8px;
     }
+    @media ${props => props.theme.medias.small} {
+      width: 20px;
+      right: 1px;
+    }
   }
   &[data-position="left"] {
     order: -1;
     & > div {
       left: -10px;
+    }
+    @media ${props => props.theme.medias.small} {
+      width: 20px;
+      right: -6px;
     }
   }
 `;

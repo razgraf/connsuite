@@ -73,9 +73,11 @@ export default class ArticleRepository extends BaseRepository<Article> {
   public async list(filters: { [key: string]: unknown }, options?: BaseOptions): Promise<Article[]> {
     if (options && options.populate)
       return (
-        ArticleModel.find(filters, this._projectByOptions(options)).populate(this._populateByOptions(options)) || []
+        ArticleModel.find(filters, this._projectByOptions(options), this._formatByOptions(options)).populate(
+          this._populateByOptions(options),
+        ) || []
       );
-    return ArticleModel.find(filters, this._projectByOptions(options || {})) || [];
+    return ArticleModel.find(filters, this._projectByOptions(options || {}), this._formatByOptions(options)) || [];
   }
 
   /**
@@ -173,6 +175,22 @@ export default class ArticleRepository extends BaseRepository<Article> {
     return projection;
   }
 
+  private _formatByOptions(options?: BaseOptions): { sort: object; limit?: number; offset?: number } {
+    const format: { sort: object; limit?: number; offset?: number } = { sort: { createdAt: -1 } };
+    if (_.isNil(options)) return format;
+    if (!_.isNil(options.limit)) {
+      const limit = _.attempt(() => _.toNumber(options.limit));
+      if (!_.isError(limit)) format.limit = limit;
+    }
+
+    if (!_.isNil(options.offset)) {
+      const offset = _.attempt(() => _.toNumber(options.offset));
+      if (!_.isError(offset)) format.offset = offset;
+    }
+
+    return format;
+  }
+
   private async _generateImages(source: Express.Multer.File, article: Article): Promise<void> {
     const specimen: Image = {
       parent: ImageParent.Article,
@@ -249,8 +267,8 @@ export default class ArticleRepository extends BaseRepository<Article> {
   }
 
   private _generateSummary(content: string): string {
-    if (content) return "ConnSuite Article - X";
-    return "ConnSuite Article - O"; // TODO
+    if (content) return "ConnSuite Article";
+    return "ConnSuite Article"; // TODO
   }
 
   private async _removeImages(article: Article): Promise<void> {

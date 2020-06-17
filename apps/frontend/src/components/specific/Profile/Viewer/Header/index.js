@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { rgba } from "polished";
 import { useRouter } from "next/router";
 import IconContact from "@material-ui/icons/WhatshotRounded";
+import IconCalendly from "@material-ui/icons/EventAvailableRounded";
 import ProfilePictureFallback from "../../../../../assets/images/profile_fallback.jpg";
 import Skill from "./Skill";
 import { parseFullName, getPrimaryUsername, parseSkilledDescription } from "../../../../../utils";
@@ -22,12 +23,38 @@ const Wrapper = styled.div`
   padding: calc(${props => props.theme.sizes.edge} * 3) calc(${props => props.theme.sizes.edge} * 2);
   background: ${props => props.theme.colors.white};
   transition: border 200ms;
+  @media ${props => props.theme.medias.medium} {
+    padding-top: calc(${props => props.theme.sizes.sectionEdgeMobile} * 2);
+    padding-left: calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+    padding-right: calc(${props => props.theme.sizes.sectionEdgeMobile} * 1);
+    padding-bottom: 0;
+  }
+  @media ${props => props.theme.medias.medium} {
+    flex-direction: column;
+    &:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 120px;
+      width: 100%;
+      content: "";
+      background-color: ${props => props.theme.colors.grayBlueGhost};
+      z-index: -1;
+    }
+  }
 `;
 
 const Left = styled.div`
   position: relative;
   width: ${props => props.theme.sizes.profileBlob};
   height: ${props => props.theme.sizes.profileBlob};
+  @media ${props => props.theme.medias.medium} {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    margin-top: calc(${props => props.theme.sizes.sectionEdgeMobile} * 2);
+    margin-bottom: calc(${props => props.theme.sizes.sectionEdgeMobile} * 2);
+  }
 `;
 
 const LeftFloater = styled.div`
@@ -38,6 +65,13 @@ const LeftFloater = styled.div`
   justify-content: center;
   height: 100%;
   width: 100%;
+  @media ${props => props.theme.medias.medium} {
+    position: relative;
+    left: auto;
+    right: auto;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
 `;
 
 const LeftUnderlay = styled.div`
@@ -102,6 +136,9 @@ const LeftUnderlayShape = styled.div`
       transition: transform 1000ms;
     }
   }
+  @media ${props => props.theme.medias.medium} {
+    display: none;
+  }
 `;
 
 const LeftContent = styled.div`
@@ -111,6 +148,9 @@ const LeftContent = styled.div`
   align-items: flex-start;
   justify-content: center;
   width: 100%;
+  @media ${props => props.theme.medias.medium} {
+    justify-content: flex-start;
+  }
 `;
 
 const LeftImageWrapper = styled.div`
@@ -119,6 +159,14 @@ const LeftImageWrapper = styled.div`
   border-radius: 30px;
   overflow: hidden;
   box-shadow: 0 5px 40px -6px ${props => rgba(props.theme.colors.dark, 0.2)};
+
+  @media ${props => props.theme.medias.medium} {
+    height: calc(${props => props.theme.sizes.profileBlobMobile} - 80px);
+    width: calc(${props => props.theme.sizes.profileBlobMobile} - 80px);
+    border-radius: 6px;
+    background-color: ${props => props.theme.colors.white};
+    box-shadow: 0 5px 30px -6px ${props => rgba(props.theme.colors.dark, 0.15)};
+  }
 `;
 
 const LeftImage = styled.img`
@@ -142,6 +190,10 @@ const Right = styled.div`
   flex: 1;
   padding-left: calc(${props => props.theme.sizes.edge} * 3);
   padding-top: calc(${props => props.theme.sizes.edge} * 2);
+  @media ${props => props.theme.medias.medium} {
+    padding: 0;
+    margin-right: auto;
+  }
 `;
 
 const RightContent = styled.div`
@@ -153,7 +205,15 @@ const RightContent = styled.div`
   &[data-ready="true"] {
     opacity: 1;
     transform: translateX(0);
-    transition: transform 300ms, opacity 300ms;
+    transition: transform 300ms, opacity 150ms;
+  }
+
+  @media ${props => props.theme.medias.medium} {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0;
   }
 `;
 
@@ -166,20 +226,37 @@ const Title = styled.p`
   font-family: ${props => props.theme.fonts.primary};
   color: ${props => props.theme.colors.dark};
   font-weight: 700;
+  @media ${props => props.theme.medias.medium} {
+    text-align: left;
+    max-width: 100%;
+    font-size: 24pt;
+    margin: 0 0 15px 0;
+    order: 0;
+  }
 `;
 
 const Identification = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  @media ${props => props.theme.medias.medium} {
+    flex-direction: column;
+    align-items: flex-start;
+    order: 1;
+  }
 `;
 
 const Name = styled.p`
   font-family: ${props => props.theme.fonts.primary};
   color: ${props => props.theme.colors.dark};
-  font-size: 15pt;
+  font-size: 18pt;
   font-weight: 600;
   margin: 0 5px 0 0;
+  @media ${props => props.theme.medias.medium} {
+    margin: 0 0 8px 0;
+    font-size: 12pt;
+    font-weight: 400;
+  }
 `;
 const Username = styled.p`
   font-family: ${props => props.theme.fonts.primary};
@@ -187,6 +264,10 @@ const Username = styled.p`
   font-size: 15pt;
   font-weight: 600;
   margin: 0;
+  @media ${props => props.theme.medias.medium} {
+    font-size: 12pt;
+    font-weight: 400;
+  }
 `;
 
 const Divider = styled.div`
@@ -194,6 +275,10 @@ const Divider = styled.div`
   height: 1px;
   background-color: ${props => props.theme.colors.grayBlueLight};
   margin: calc(${props => props.theme.sizes.edge} * 2) 0;
+  @media ${props => props.theme.medias.medium} {
+    margin: calc(${props => props.theme.sizes.sectionEdgeMobile} * 1.5) 0;
+    order: 4;
+  }
 `;
 
 const Description = styled.p`
@@ -201,6 +286,11 @@ const Description = styled.p`
   line-height: 1.7;
   font-family: ${props => props.theme.fonts.primary};
   font-size: 11pt;
+  @media ${props => props.theme.medias.medium} {
+    text-align: left;
+    margin: 0;
+    order: 5;
+  }
 `;
 
 const Actions = styled.div`
@@ -214,6 +304,15 @@ const Actions = styled.div`
       margin-right: 0;
     }
   }
+  @media ${props => props.theme.medias.medium} {
+    width: 100%;
+    position: relative;
+    text-align: left;
+    margin: 0;
+    order: 3;
+    justify-content: flex-end;
+    max-width: 600px;
+  }
 `;
 
 const ButtonIconWrapper = styled.div`
@@ -224,9 +323,42 @@ const ButtonIconWrapper = styled.div`
   margin-left: -4px;
 `;
 
-function Header({ className, controller, profile, isLoading }) {
+const ButtonGetInTouch = styled(Button)`
+  @media ${props => props.theme.medias.medium} {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    ${ButtonIconWrapper} {
+      margin: 0;
+      padding: 3px;
+      width: auto;
+    }
+    *[data-component="title"] {
+      display: none;
+    }
+  }
+`;
+
+const ButtonCalendly = styled(Button)`
+  @media ${props => props.theme.medias.medium} {
+    position: absolute;
+    right: 64px;
+    bottom: 0;
+    ${ButtonIconWrapper} {
+      margin: 0;
+      padding: 3px;
+      width: auto;
+    }
+    *[data-component="title"] {
+      display: none;
+    }
+  }
+`;
+
+function Header({ className, controller, profile, description, isLoading, onGetInTouchClick }) {
   const skills = useMemo(() => _.toArray(_.get(profile, "skills")), [profile]);
-  const description = useMemo(() => _.toString(_.get(profile, "user.description")), [profile]);
+  const tagline = useMemo(() => _.toString(_.get(profile, "user.tagline")), [profile]);
   const name = useMemo(() => parseFullName(profile), [profile]);
   const username = useMemo(() => getPrimaryUsername(_.get(profile, "user")), [profile]);
   const parts = useMemo(() => parseSkilledDescription(description, skills), [description, skills]);
@@ -249,7 +381,7 @@ function Header({ className, controller, profile, isLoading }) {
     [controller, router],
   );
 
-  const picture = useMemo(() => _.get(profile, "user.picture.url") || ProfilePictureFallback, [profile]);
+  const picture = useMemo(() => (isLoading ? null : _.get(profile, "user.picture.url") || ProfilePictureFallback), [profile, isLoading]);
 
   return (
     <Wrapper className={className} ref={ref}>
@@ -269,7 +401,7 @@ function Header({ className, controller, profile, isLoading }) {
       </Left>
       <Right>
         <RightContent data-ready={!isLoading}>
-          <Title>Designer & Developer</Title>
+          <Title>{tagline}</Title>
           <Identification>
             <Name>{name}</Name>
             <Username>{`@${username}`}</Username>
@@ -283,7 +415,7 @@ function Header({ className, controller, profile, isLoading }) {
             ))}
           </Description>
           <Actions>
-            <Button
+            <ButtonGetInTouch
               appearance={t => t.solid}
               accent={t => t.secondary}
               childrenLeft={
@@ -292,9 +424,25 @@ function Header({ className, controller, profile, isLoading }) {
                 </ButtonIconWrapper>
               }
               title="Get in touch"
+              titleShort=""
               type={t => t.button}
-              onClick={() => console.log("click")}
+              onClick={onGetInTouchClick}
             />
+            {_.get(profile, "user.calendly") && (
+              <ButtonCalendly
+                appearance={t => t.solid}
+                accent={t => t.dark}
+                childrenLeft={
+                  <ButtonIconWrapper>
+                    <IconCalendly style={{ fontSize: "14pt" }} />
+                  </ButtonIconWrapper>
+                }
+                title="Book a meeting"
+                titleShort=""
+                type={t => t.link}
+                to={_.get(profile, "user.calendly")}
+              />
+            )}
           </Actions>
         </RightContent>
       </Right>
@@ -320,12 +468,16 @@ Header.propTypes = {
     }),
   }),
   isLoading: PropTypes.bool,
+  onGetInTouchClick: PropTypes.func,
+  description: PropTypes.string,
 };
 
 Header.defaultProps = {
   className: null,
   profile: {},
   isLoading: true,
+  onGetInTouchClick: () => {},
+  description: "",
 };
 
 export default Header;

@@ -36,6 +36,9 @@ const Left = styled.div`
   width: 35%;
   max-width: 260px;
   background: ${props => props.theme.gradients.primary};
+  @media ${props => props.theme.medias.medium} {
+    width: 30%;
+  }
 `;
 
 const LeftImageWrapper = styled.div`
@@ -43,6 +46,11 @@ const LeftImageWrapper = styled.div`
   height: 100px;
   width: 100px;
   border-radius: 50%;
+
+  @media ${props => props.theme.medias.medium} {
+    height: 70px;
+    width: 70px;
+  }
 `;
 
 const LeftImage = styled.img`
@@ -66,6 +74,12 @@ const LeftLogoWrapper = styled.div`
   width: 36px;
   border-radius: 18px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  @media ${props => props.theme.medias.medium} {
+    right: -5px;
+    bottom: -5px;
+    height: 30px;
+    width: 30px;
+  }
 `;
 
 const LeftLogo = styled.img`
@@ -88,6 +102,9 @@ const Right = styled.div`
   height: 100%;
   padding: calc(${props => props.theme.sizes.edge} * 1.5);
   background-color: ${props => props.theme.colors.white};
+  @media ${props => props.theme.medias.medium} {
+    padding: 20px 15px;
+  }
 `;
 
 const Top = styled.div`
@@ -147,19 +164,29 @@ const Action = styled.div`
   & > * {
     color: ${props => props.theme.colors.grayBlueDark};
   }
+
+  display: none;
 `;
 
 const NetworkGrid = styled.div`
   display: grid;
   width: 100%;
   grid-template-columns: repeat(5, 1fr);
-  grid-gap: 8px;
+  grid-gap: 4px;
+  @media ${props => props.theme.medias.medium} {
+    flex: 1;
+  }
 `;
 
 const StyledNetworkMini = styled(NetworkMini)`
-  padding: 6px;
+  padding: 8px;
   & > img {
     border-radius: 2px;
+    max-width: 30px;
+    max-height: 30px;
+  }
+  @media ${props => props.theme.medias.medium} {
+    /* padding: 4px; */
   }
 `;
 
@@ -198,7 +225,7 @@ function BusinessCard({ className, data, networks, username }) {
             </Action>
           </Top>
           <NetworkGrid>
-            {networks.map(network => (
+            {networks.slice(0, 10).map(network => (
               <StyledNetworkMini {...network} key={network._id} onClick={() => onNetworkClick(network)} />
             ))}
             <Placeholder type={t => t.networksBusinessCard} isActive={_.isNil(networks) || _.isEmpty(networks)} />
