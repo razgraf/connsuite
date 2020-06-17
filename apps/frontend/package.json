@@ -28,6 +28,7 @@
     "cross-fetch": "^3.0.4",
     "dayjs": "^1.8.25",
     "dotenv-load": "^2.0.0",
+    "express": "^4.17.1",
     "file-loader": "^6.0.0",
     "isomorphic-unfetch": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
@@ -84,8 +85,8 @@
   "scripts": {
     "build": "next build",
     "dev": " NODE_ENV=development next dev -p 3001",
-    "start": "NODE_ENV=production next start -p 3001",
-    "stage": "NODE_ENV=staging next start -p 3001",
+    "start": "NODE_ENV=production next start",
+    "stage": "NODE_ENV=staging next start",
     "lint:css": "stylelint './src/**/*.js'"
   }
 }

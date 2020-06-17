@@ -1,7 +1,7 @@
 export const host: { [key: string]: string } = {
   development: `http://localhost:${process.env.PORT || 3005}`,
-  staging: "https://www.staging.event.connsuite.com",
-  production: "https://www.event.connsuite.com",
+  staging: "https://www.staging.analytics.connsuite.com",
+  production: "https://www.analytics.connsuite.com",
 };
 
 export const backend: { [key: string]: string } = {

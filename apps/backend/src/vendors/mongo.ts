@@ -1,8 +1,13 @@
 import mongoose from "mongoose";
 
+const connection =
+  process.env.NODE_ENV === "production"
+    ? process.env.CONN_BACK_MONGO_PRODUCTION
+    : process.env.CONN_BACK_MONGO_DEVELOPMENT;
+
 function config(): void {
   mongoose.set("useFindAndModify", false);
-  mongoose.connect(process.env.CONN_BACK_MONGO || "", { useNewUrlParser: true, useUnifiedTopology: true }, () =>
+  mongoose.connect(connection || "", { useNewUrlParser: true, useUnifiedTopology: true }, () =>
     console.log("Connected to Mongo DB."),
   );
 }

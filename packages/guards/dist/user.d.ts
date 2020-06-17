@@ -13,6 +13,8 @@ export declare const policy: {
     username: {
         root: string;
         1: string;
+        2: string;
+        3: string;
     };
     email: {
         root: string;
@@ -28,12 +30,22 @@ export declare const policy: {
         root: string;
         1: string;
     };
+    tagline: {
+        root: string;
+        1: string;
+    };
+    calendly: {
+        root: string;
+        1: string;
+        2: string;
+    };
 };
 declare function isPasswordAcceptable(value: string, withPolicy?: boolean): string | boolean;
 declare function isNameAcceptable(value: string, withPolicy?: boolean): string | boolean;
 declare function isEmailAcceptable(value: string, withPolicy?: boolean): string | boolean;
 declare function isUsernameAcceptable(value: string, withPolicy?: boolean): string | boolean;
 declare function isUserDescriptionAcceptable(value: string, withPolicy?: boolean): string | boolean;
+declare function isUserTaglineAcceptable(value: string, withPolicy?: boolean): string | boolean;
 declare function isUserPictureAcceptable(value: {
     name: string;
     type: string;
@@ -43,6 +55,7 @@ declare function isUserPictureAcceptable(value: {
     vendor: string;
     [key: string]: string;
 }): string | boolean;
+declare function isUserCalendlyAcceptable(value: string, withPolicy?: boolean): string | boolean;
 declare const _default: {
     isEmailAcceptable: typeof isEmailAcceptable;
     isNameAcceptable: typeof isNameAcceptable;
@@ -50,5 +63,7 @@ declare const _default: {
     isUsernameAcceptable: typeof isUsernameAcceptable;
     isUserDescriptionAcceptable: typeof isUserDescriptionAcceptable;
     isUserPictureAcceptable: typeof isUserPictureAcceptable;
+    isUserTaglineAcceptable: typeof isUserTaglineAcceptable;
+    isUserCalendlyAcceptable: typeof isUserCalendlyAcceptable;
 };
 export default _default;
