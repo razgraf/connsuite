@@ -4,7 +4,7 @@ exports.configs = exports.tree = exports.root = exports.host = void 0;
 exports.host = {
     development: `http://localhost:${process.env.PORT || 3002}`,
     staging: "https://www.staging.api.connsuite.com",
-    production: "https://www.api.connsuite.com",
+    production: "https://connsuite-backend.herokuapp.com",
 };
 exports.root = exports.host[process.env.NODE_ENV || "development"];
 exports.tree = {

@@ -59,7 +59,7 @@
   "license": "ISC",
   "main": "src/app.js",
   "scripts": {
-    "build": "tsc -p .",
+    "build": "echo `tsc -p .`",
     "dev": "PORT=3002 NODE_ENV=development nodemon src/app.ts",
     "stage": "NODE_ENV=staging node dist/app.js",
     "start": "NODE_ENV=production PORT=3002 node dist/app.js",
