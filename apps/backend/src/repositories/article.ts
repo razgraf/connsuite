@@ -1,5 +1,5 @@
 import _ from "lodash";
-import guards from "@connsuite/guards";
+import guards from "@razgraf/connsuite-guards";
 import { ObjectId } from "mongodb";
 import { isDocument } from "@typegoose/typegoose";
 import BaseRepository, { BaseOptions } from "./base";

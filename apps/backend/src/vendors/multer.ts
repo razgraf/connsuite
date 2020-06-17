@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { limits } from "@connsuite/guards";
+import { limits } from "@razgraf/connsuite-guards";
 import multer from "multer";
 import { Request } from "express";
 

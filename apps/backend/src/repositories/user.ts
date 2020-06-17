@@ -1,7 +1,7 @@
 import _ from "lodash";
 import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
-import guards from "@connsuite/guards";
+import guards from "@razgraf/connsuite-guards";
 import { isDocument } from "@typegoose/typegoose";
 import BaseRepository, { BaseOptions } from "./base";
 import UsernameRepository from "./username";

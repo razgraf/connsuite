@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { ObjectId } from "mongodb";
-import guards, { policy } from "@connsuite/guards";
+import guards, { policy } from "@razgraf/connsuite-guards";
 import UsernameRepository from "./username";
 import UserRepository from "./user";
 import UsersafeRepository from "./usersafe";

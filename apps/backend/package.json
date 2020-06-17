@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Razvan Gabriel Apostu",
   "dependencies": {
-    "@connsuite/guards": "1.0.0",
+    "@razgraf/connsuite-guards": "1.0.0",
     "@typegoose/typegoose": "^6.4.0",
     "@types/shortid": "^0.0.29",
     "bcrypt": "^4.0.1",
@@ -62,8 +62,11 @@
     "build": "tsc -p .",
     "dev": "PORT=3002 NODE_ENV=development nodemon src/app.ts",
     "stage": "NODE_ENV=staging node dist/app.js",
-    "start": "NODE_ENV=production node dist/app.js",
+    "start": "NODE_ENV=production PORT=3002 node dist/app.js",
     "u-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "u-lint": "eslint . --ext .ts"
+  },
+  "engines": {
+    "node": "10.x"
   }
 }
