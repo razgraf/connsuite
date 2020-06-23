@@ -2,7 +2,7 @@ import _ from "lodash";
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
-import guards, { policy } from "@connsuite/guards";
+import guards, { policy } from "@razgraf/connsuite-guards";
 import { types } from "../../../../../../constants";
 import { InputArea, InputImage, InputText } from "../../../../../atoms";
 import { readPreviewFromImage } from "../../../../../../utils";

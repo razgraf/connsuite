@@ -95,7 +95,7 @@ function Author({ className, user }) {
         appearance={a => a.outline}
         accent={a => a.secondary}
         onClick={() => {
-          history.push();
+          history.push(pages.profile.view.builder(username));
           router.push(pages.profile.view.route, pages.profile.view.builder(username));
         }}
       />

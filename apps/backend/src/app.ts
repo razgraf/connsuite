@@ -27,7 +27,7 @@ app.use((error: SyntaxError, req: Request, res: Response, next: NextFunction) =>
 routers.forEach(({ root, router }) => app.use(root, router));
 
 app.get("/", (req: express.Request, res: express.Response) => {
-  res.send("Hi.");
+  res.send(`Welcome to the ConnSuite API. Running on port ${process.env.PORT} with db status: ${mongo.status()}.`);
 });
 
 app.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`));

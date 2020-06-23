@@ -72,12 +72,18 @@ export function useHistory() {
 
   return {
     history,
-    back: (options = { fallback: null }) => {
-      const { fallback } = options;
-      const route = history.length > 0 ? _.get(history, `[${history.length - 1}]route`) : fallback;
-      router.push(route || pages.dashboard.root).then(() => dispatch({ type: redux.HISTORY_POP }));
+    back: (options = { fallback: null, fallbackAs: null }) => {
+      const { fallback, fallbackAs } = options;
+      const route = history.length > 0 ? _.get(history, `[${history.length - 1}].route`) : fallback;
+      const routeAs = history.length > 0 ? _.get(history, `[${history.length - 1}].as`) : fallbackAs;
+
+      router.push(route || pages.dashboard.root, routeAs || undefined).then(() => dispatch({ type: redux.HISTORY_POP }));
     },
-    push: () => dispatch({ type: redux.HISTORY_PUSH, payload: { route: router.pathname } }),
+    push: (r = null, a = null) =>
+      dispatch({
+        type: redux.HISTORY_PUSH,
+        payload: { route: r && _.isString(r) ? r : _.get(router, "pathname"), as: a && _.isString(a) ? a : _.get(router, "asPath") },
+      }),
     pop: () => dispatch({ type: redux.HISTORY_POP }),
     clear: () => dispatch({ type: redux.HISTORY_CLEAR }),
   };

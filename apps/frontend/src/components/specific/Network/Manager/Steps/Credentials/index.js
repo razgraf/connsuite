@@ -2,7 +2,7 @@ import _ from "lodash";
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import guards, { policy } from "@connsuite/guards";
+import guards, { policy } from "@razgraf/connsuite-guards";
 import { types } from "../../../../../../constants";
 import { InputText, Emoji } from "../../../../../atoms";
 

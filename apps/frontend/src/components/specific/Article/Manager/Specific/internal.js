@@ -2,7 +2,7 @@ import _ from "lodash";
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import guards from "@connsuite/guards";
+import guards from "@razgraf/connsuite-guards";
 import IconArticleInternal from "@material-ui/icons/DescriptionRounded";
 import { InputEditor } from "../../../../atoms";
 

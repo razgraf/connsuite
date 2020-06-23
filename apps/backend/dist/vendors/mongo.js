@@ -11,7 +11,9 @@ function config() {
     mongoose_1.default.set("useFindAndModify", false);
     mongoose_1.default.connect(connection || "", { useNewUrlParser: true, useUnifiedTopology: true }, () => console.log("Connected to Mongo DB."));
 }
+const status = () => mongoose_1.default.connection.readyState;
 const mongo = {
     config,
+    status,
 };
 exports.default = mongo;

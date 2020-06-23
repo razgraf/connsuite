@@ -209,6 +209,10 @@ const CategoryPill = styled(Pill)`
   }
 `;
 
+function unique(source) {
+  return source.filter((item, index) => source.findIndex(i => i.title === item.title) === index);
+}
+
 function Navigator({ className, categories, skills, controller }) {
   const [isDown, setIsDown] = useState(false);
   const [isCategoryDown, setIsCategoryDown] = useState(false);
@@ -253,7 +257,7 @@ function Navigator({ className, categories, skills, controller }) {
         </CategoryPill>
         <CategoryDropdown
           isActive={isCategoryDown}
-          items={categories.sort((a, b) => a.title < b.title)}
+          items={unique(categories.sort((a, b) => a.title < b.title))}
           onItemClick={category => {
             controller.set({ ...category, isCategory: true });
             setIsDown(false);
@@ -273,7 +277,7 @@ function Navigator({ className, categories, skills, controller }) {
         </SkillPill>
         <SkillDropdown
           isActive={isDown}
-          items={skills.sort((a, b) => a.title < b.title)}
+          items={unique(skills.sort((a, b) => a.title < b.title))}
           onItemClick={item => {
             controller.set({ ...item, isSkill: true });
             setIsDown(false);

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Nav from "../../../components/shared/Nav";
 import { Header, Value, Connect } from "../../../components/specific/Landing";
 import { types } from "../../../constants";
+import * as Head from "../../../components/specific/Head";
 
 const Page = styled.div`
   width: 100%;
@@ -31,10 +32,9 @@ const Main = styled.div`
   width: 100%;
 `;
 function Landing() {
-  // useAuth("public"); ???
-
   return (
     <Page>
+      <Head.Landing />
       <Top>
         <TopContent>
           <Nav appearance={types.nav.appearance.presentation} />

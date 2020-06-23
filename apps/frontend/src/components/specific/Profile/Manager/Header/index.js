@@ -3,7 +3,7 @@ import React, { Fragment, useMemo, useCallback, useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rgba } from "polished";
-import guards, { policy } from "@connsuite/guards";
+import guards, { policy } from "@razgraf/connsuite-guards";
 import IconPhotoAdd from "@material-ui/icons/AddPhotoAlternateRounded";
 import IconPhoto from "@material-ui/icons/InsertPhotoRounded";
 import IconDelete from "@material-ui/icons/DeleteOutlineRounded";
@@ -91,7 +91,6 @@ const CoverContainer = styled.div`
 const Cover = styled.img`
   width: 100%;
   height: 100%;
-  transform: scale(1.1);
   object-fit: cover;
   user-select: none;
 

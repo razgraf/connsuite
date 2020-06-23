@@ -5,7 +5,6 @@ import styled from "styled-components";
 import IconArrowDown from "@material-ui/icons/KeyboardArrowDownRounded";
 
 import { components } from "../../../../../themes";
-import { pages } from "../../../../../constants";
 import { useHistory, useIntersection, useCover, useOnClickOutside } from "../../../../../hooks";
 import { Account, Logo } from "../../atoms";
 import { Dropdown } from "../../../../atoms";
@@ -216,10 +215,9 @@ const NavigatorDropdown = styled(Dropdown)`
 `;
 
 function NavProfile({ className, title, networks, isMissing }) {
-  const { history, pop } = useHistory();
+  const history = useHistory();
   const { setOpen: setCoverOpen, setNetwork: setCoverNetwork } = useCover();
-  const parentRoute = useMemo(() => (history.length ? _.get(history[history.length - 1], "route") : pages.dashboard.root), [history]);
-  const onLogoClick = useCallback(() => pop(), [pop]);
+  const onLogoClick = useCallback(() => history.back(), [history]);
 
   const [ref, entry] = useIntersection({
     threshold: 0,
@@ -244,7 +242,7 @@ function NavProfile({ className, title, networks, isMissing }) {
     <>
       <Wrapper className={className} data-top={entry.intersectionRatio === 1}>
         <Content>
-          <NavLogo href={parentRoute} onClick={onLogoClick} />
+          <NavLogo onClick={onLogoClick} />
           <Main>
             <Title>{title}</Title>
             {!isMissing && (

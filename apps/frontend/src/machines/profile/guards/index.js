@@ -1,5 +1,5 @@
 import _ from "lodash";
-import official from "@connsuite/guards";
+import official from "@razgraf/connsuite-guards";
 
 /**
  * ATOMS

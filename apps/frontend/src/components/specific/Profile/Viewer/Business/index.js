@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useCallback } from "react";
+import React, { useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import IconContact from "@material-ui/icons/WhatshotRounded";
@@ -179,6 +179,10 @@ const ButtonIconWrapper = styled.div`
   margin-left: -4px;
 `;
 
+function unique(source) {
+  return source.filter((item, index) => source.findIndex(i => i.title === item.title) === index);
+}
+
 function Business({ className, person, onIntersect, onGetInTouchClick }) {
   const { setOpen: setShareOpen } = useModal(modals.share);
   const { ref, isObserved } = useProfileIntersection(payload => onIntersect(types.profile.section.business, payload));
@@ -194,6 +198,9 @@ function Business({ className, person, onIntersect, onGetInTouchClick }) {
       }),
     [person, setShareOpen],
   );
+
+  const skillCount = useMemo(() => unique(_.toArray(_.get(person, "skills"))).length, [person]);
+  const categoryCount = useMemo(() => unique(_.toArray(_.get(person, "categories"))).length, [person]);
 
   return (
     <Wrapper className={className} ref={ref}>
@@ -230,7 +237,7 @@ function Business({ className, person, onIntersect, onGetInTouchClick }) {
                   <Spinner color={c => c.secondary} />
                 ) : (
                   <>
-                    <CardStatsItemTitle>{_.toArray(_.get(person, "skills")).length}</CardStatsItemTitle>
+                    <CardStatsItemTitle>{skillCount}</CardStatsItemTitle>
                     <CardStatsItemSubtitle>Showcased Skills</CardStatsItemSubtitle>
                   </>
                 )}
@@ -240,7 +247,7 @@ function Business({ className, person, onIntersect, onGetInTouchClick }) {
                   <Spinner color={c => c.secondary} />
                 ) : (
                   <>
-                    <CardStatsItemTitle>{_.toArray(_.get(person, "categories")).length}</CardStatsItemTitle>
+                    <CardStatsItemTitle>{categoryCount}</CardStatsItemTitle>
                     <CardStatsItemSubtitle>Categories</CardStatsItemSubtitle>
                   </>
                 )}

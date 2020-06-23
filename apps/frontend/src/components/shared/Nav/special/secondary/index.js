@@ -1,12 +1,12 @@
 import _ from "lodash";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rgba } from "polished";
 import IconArrow from "@material-ui/icons/KeyboardArrowRight";
 
 import { components } from "../../../../../themes";
-import { pages, types } from "../../../../../constants";
+import { types } from "../../../../../constants";
 import { useHistory } from "../../../../../hooks";
 import { Account, Logo } from "../../atoms";
 
@@ -104,21 +104,17 @@ const Wrapper = styled(WrapperPartial)`
 `;
 
 function NavSecondary({ className, accent, hasAccount, title, onBackClick }) {
-  const { history, pop } = useHistory();
-  const parentRoute = useMemo(
-    () => (!_.isNil(onBackClick) ? null : history.length ? _.get(history[history.length - 1], "route") : pages.dashboard.root),
-    [history, onBackClick],
-  );
+  const history = useHistory();
 
   const onLogoClick = useCallback(() => {
     if (!_.isNil(onBackClick) && _.isFunction(onBackClick)) onBackClick();
-    else pop();
-  }, [onBackClick, pop]);
+    else history.back();
+  }, [onBackClick, history]);
 
   return (
     <Wrapper className={className} data-accent={accent}>
       <Content>
-        <NavLogo href={parentRoute} onClick={onLogoClick} />
+        <NavLogo onClick={onLogoClick} />
         <Main>
           <IconWrapper>
             <IconArrow style={{ fontSize: "16pt" }} />

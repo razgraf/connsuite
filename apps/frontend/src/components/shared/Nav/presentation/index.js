@@ -19,7 +19,7 @@ const Content = styled(components.Canvas)`
   }
 `;
 
-const LogoWrapper = styled.div`
+const LogoWrapper = styled.a`
   height: 40px;
   width: auto;
   margin-right: auto;
@@ -90,7 +90,7 @@ function NavPresentation({ className }) {
   return (
     <Wrapper className={className}>
       <Content>
-        <LogoWrapper>
+        <LogoWrapper href="/">
           <Logo alt="" src={AssetLogo} />
         </LogoWrapper>
         <Actions>

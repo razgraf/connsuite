@@ -4,7 +4,6 @@
   "license": "ISC",
   "version": "1.0.0",
   "dependencies": {
-    "@connsuite/guards": "1.0.0",
     "@editorjs/checklist": "^1.1.0",
     "@editorjs/code": "^2.4.1",
     "@editorjs/delimiter": "^1.1.0",
@@ -20,6 +19,7 @@
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
     "@nivo/line": "^0.62.0",
+    "@razgraf/connsuite-guards": "^1.0.0",
     "@xstate/react": "^0.8.1",
     "chart.js": "^2.9.3",
     "cookies": "^0.8.0",

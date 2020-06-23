@@ -16,9 +16,21 @@ export const root = host[process.env.NODE_ENV || "development"];
 
 export const vendors = {};
 
+const hostAPI = {
+  development: "http://localhost:3002",
+  staging: "https://www.staging.api.connsuite.com",
+  production: "https://www.api.connsuite.com",
+};
+
+const hostAnalytics = {
+  development: "http://localhost:3005",
+  staging: "https://www.staging.analytics.connsuite.com",
+  production: "https://www.analytics.connsuite.com",
+};
+
 export const API = {
-  root: "http://localhost:3002",
-  analytics: "http://localhost:3005",
+  root: hostAPI[process.env.NODE_ENV || "development"],
+  analytics: hostAnalytics[process.env.NODE_ENV || "development"],
   authGoogle: () => `${API.root}/auth/google`,
   authStatus: () => `${API.root}/auth/status`,
   authRegister: () => `${API.root}/auth/classic/register`,

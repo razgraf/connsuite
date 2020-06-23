@@ -54,7 +54,7 @@ function interpret(network: Network, result: { [key: string]: any } = {}): void 
     const supported: Network = external[network.externalId];
 
     result.title = supported.title;
-    result.url = supported.url;
+    result.url = supported.url + "/" + network.username;
 
     result.icon = toImageDTO(supported.icon as Image);
     result.thumbnail = toImageDTO(supported.thumbnail as Image);

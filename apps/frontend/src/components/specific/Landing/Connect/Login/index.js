@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
-import guards, { policy } from "@connsuite/guards";
+import guards, { policy } from "@razgraf/connsuite-guards";
 import { useDispatch } from "react-redux";
 import { blur } from "../../../../../utils";
 import { useLoginReducer, useConnectMachine } from "../../../../../hooks";

@@ -3,7 +3,7 @@ import React, { useCallback, useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rgba } from "polished";
-import guards from "@connsuite/guards";
+import guards from "@razgraf/connsuite-guards";
 import IconPhotoAdd from "@material-ui/icons/AddPhotoAlternateRounded";
 import IconPhoto from "@material-ui/icons/InsertPhotoRounded";
 import IconHelp from "@material-ui/icons/HelpRounded";

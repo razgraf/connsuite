@@ -30,7 +30,24 @@ function Common() {
       <meta name="twitter:image:alt" key="twitter:image:alt" content={meta.general.alt} />
       <meta name="twitter:site" key="twitter:site" content={meta.general.site} />
       <meta name="twitter:creator”" key="twitter:creator”" content={meta.general.creator} />
+
+      <link rel="apple-touch-icon" sizes="180x180" href="/meta/favicon/apple-touch-icon.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/meta/favicon/favicon-32x32.png" />
+      <link rel="icon" type="image/png" sizes="16x16" href="/meta/favicon/favicon-16x16.png" />
+      <link rel="manifest" href="/meta/favicon/site.webmanifest" />
+      <link rel="shortcut icon" href="/meta/favicon/favicon.ico" />
+      <meta name="msapplication-TileColor" content="#da532c" />
+      <meta name="msapplication-config" content="/meta/favicon/browserconfig.xml" />
+      <meta name="theme-color" content="#ffffff" />
     </>
+  );
+}
+
+export function Landing() {
+  return (
+    <Head>
+      <Common />
+    </Head>
   );
 }
 

@@ -2,7 +2,7 @@ import _ from "lodash";
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import guards, { policy } from "@connsuite/guards";
+import guards, { policy } from "@razgraf/connsuite-guards";
 import { types } from "../../../../../../constants";
 import { NetworkMini } from "../../../../../shared/Network";
 import { useExternalNetworks } from "../../../../../../hooks";

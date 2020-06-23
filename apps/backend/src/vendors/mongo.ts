@@ -12,8 +12,11 @@ function config(): void {
   );
 }
 
+const status = (): any => mongoose.connection.readyState;
+
 const mongo = {
   config,
+  status,
 };
 
 export default mongo;

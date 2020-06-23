@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rgba } from "polished";
 import Link from "next/link";
+import { useHistory } from "../../../../hooks";
 
 const Wrapper = styled.div`
   position: relative;
@@ -142,9 +143,10 @@ const Bubble = styled(BubblePartial)`
 `;
 
 function Element({ Icon, title, href, isActive, isPrivate, as }) {
+  const history = useHistory();
   return (
     <Link href={href} as={as} passHref>
-      <Wrapper>
+      <Wrapper onClick={() => history.push()}>
         <Bubble data-private={isPrivate} data-active={isActive}>
           <Icon />
         </Bubble>

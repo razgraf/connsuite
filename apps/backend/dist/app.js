@@ -25,6 +25,6 @@ app.use((error, req, res, next) => {
 });
 routers_1.default.forEach(({ root, router }) => app.use(root, router));
 app.get("/", (req, res) => {
-    res.send("Hi.");
+    res.send(`Welcome to the ConnSuite API. Running on port ${process.env.PORT} with db status: ${vendors_1.mongo.status()}.`);
 });
 app.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`));

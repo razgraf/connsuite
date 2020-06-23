@@ -28,6 +28,11 @@ const Card = styled(components.Canvas)`
   border: 1px solid ${props => props.theme.colors.grayBlueLight};
   box-shadow: 0px 15px 48px -15px rgba(0, 0, 0, 0.12);
   padding: calc(${props => props.theme.sizes.edge} * 4);
+  @media ${props => props.theme.medias.medium} {
+    & > div {
+      padding: calc(${props => props.theme.sizes.edge} * 1);
+    }
+  }
 `;
 
 const Title = styled.p`

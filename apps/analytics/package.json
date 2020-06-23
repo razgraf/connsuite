@@ -4,7 +4,6 @@
   "version": "1.0.0",
   "author": "Razvan Gabriel Apostu",
   "dependencies": {
-    "@connsuite/guards": "1.0.0",
     "@typegoose/typegoose": "^6.4.0",
     "@types/node-fetch": "^2.5.7",
     "bcrypt": "^4.0.1",
