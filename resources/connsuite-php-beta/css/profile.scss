@@ -1,0 +1,540 @@
+@import "../base/config";
+.background{
+  width: 100%;
+  display: none;
+}
+body{
+  min-height:100vh;min-width: 300px; display: block; height: 100%;
+  background: #f3f8fa;
+
+}
+#userHeaderContainer{
+  width: 100%;
+  min-height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('../image/profile_background.jpg') no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.backgroundOverlay{
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: $colorPrimary;
+  $opacity : 0.94;
+  background: rgba(4, 190, 254, 0.90); /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(15deg, rgba(68, 129, 235, $opacity), rgba(4, 190, 254, $opacity)); /* For Safari 5.1 to 6.0 */
+  background: -moz-linear-gradient(15deg, rgba(68, 129, 235, $opacity), rgba(4, 190, 254, $opacity));
+  background: -o-linear-gradient(15deg, rgba(68, 129, 235, $opacity), rgba(4, 190, 254, $opacity));
+}
+
+.userHeaderInnerContainer{
+  z-index: 10;
+  display: flex; flex-direction: column; position: relative; align-items: center; justify-content: center; padding: 40px;
+}
+
+
+
+#profilePicture{
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #ffffff;
+}
+
+#profileName{
+  font-family: $fontSecondary;
+  font-size: 20pt;
+  color: #fff;
+  padding-top: 20px;
+  margin-bottom: 3px;
+  text-align: center;
+}
+
+#profileTagline{
+  font-family: $fontSecondary;
+  font-size: 11pt;
+  color: #ffffff;
+  padding-top: 0;
+  text-align: center;
+  width: 90%;
+  max-width: 800px;
+  margin: 5px 0 0 0;
+}
+
+#profileDescription{
+  font-family: $fontPrimary;
+  font-size: 11pt;
+  color: #222222;
+}
+
+
+
+
+.profileRequestButton {
+  height: 46px;
+  border-radius: 23px;
+  background: transparent;
+  border: 1px solid #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  min-width: 160px;
+  padding: 0 20px;
+  cursor: pointer;
+  @extend .transition03;
+}
+
+.profileRequestButton:hover, #profileRequestButton:active {
+  background: #ffffff;
+  color: $colorPrimary;
+  @extend .transition03;
+}
+
+.profileRequestButtonUnavailable{
+  height: 46px;
+  border-radius: 23px;
+  background: transparent;
+  border: 1px solid #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  min-width: 160px;
+  padding: 0 20px;
+  opacity: 0.4;
+}
+.profileRequestButtonUnavailable:hover, .profileRequestButtonUnavailable:active{
+  border: 1px solid #ffffff;
+  color: #ffffff; }
+
+#connItemsParent, #articleParent{
+  margin-right:-15px;
+  margin-left:-15px;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+/**
+----------------------------------------
+ */
+#mainContentContainer{
+  background: #ffffff;
+  display: flex;
+  padding: 10px 60px 40px 60px;
+  flex-direction: column;
+  position: relative;
+}
+.sectionHeading{
+  font-size: 15pt;
+  color: #04befe;
+  padding-top: 20px;
+  margin-bottom: 10px; /* This is for the text to align with the bootstrap components */
+}
+
+#loadMoreContainer{
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-top: 20px;
+ }
+#loadMoreNetworksButton{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #aaaaaa;
+  cursor: pointer;
+  line-height: 1;
+  font-size: 11pt;
+}
+
+#loadMoreArticlesContainer{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+#loadMoreArticlesButton{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #aaaaaa;
+  cursor: pointer;
+  line-height: 1;
+  font-size: 11pt;
+}
+#descriptionContainer,#headingAccounts,#headingStory{
+  padding-left: 15px;
+}
+
+@media all and (max-width : 992px ){
+  #mainContentContainer{
+    padding: 10px 0;
+  }
+  #connItemsParent, #articleParent{
+    margin: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  #descriptionContainer{
+    width: 100%;
+    padding-left: 20px;
+  }
+  #headingAccounts{
+    padding-left: 20px;
+  }
+
+  #headingStory{
+    padding-left: 20px;
+  }
+}
+
+/**
+------------------
+RIGHT
+ */
+
+
+#rightDetailPageCover{
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.85);
+  z-index: 998;
+  top: 0;
+  left: 0;
+
+  -webkit-animation: fadeinDetailCover 0.2s;
+  -o-animation: fadeinDetailCover 0.2s;
+  animation: fadeinDetailCover 0.2s;
+
+  /*display: flex; !* TODO ONLY FOR TEST & STYLING *!*/
+}
+
+
+
+
+#rightDetailContainer{
+  height: 100%; float: right;
+  width: 50%;
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  z-index: 999;top:0; right: 0;
+  background: rgba(4, 190, 254, 1); /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(35deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1)); /* For Safari 5.1 to 6.0 */
+  background: -moz-linear-gradient(35deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+  background: -o-linear-gradient(35deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+  box-shadow: -3px 0 6px 0 rgba(0,0,0,.08);
+
+  animation-duration: 0.3s;
+  -webkit-animation-duration: 0.3s;
+  -moz-animation-duration: 0.3s;
+  -o-animation-duration: 0.3s;
+
+  overflow-y: auto;
+
+
+
+
+  /*display: flex; !* TODO ONLY FOR TEST & STYLING *!*/
+
+
+}
+
+@media all and (max-width: 970px){
+  #rightDetailContainer{
+    width: 94%;
+  }
+}
+
+
+
+
+
+.rightDetailHeading{
+  font-size: 13pt;
+  color: #fff;
+  padding-bottom: 5px;
+}
+#rightDetailInnerContainer{
+  width: 100%;
+  height: 100%;
+  padding: 20px 20px 20px 20px;
+  min-height: 500px;
+
+
+}
+#rightDetailSectionDetailsContainer{
+  display:flex; flex-direction: column; justify-content: center; width: 100%;
+}
+#rightDetailSectionDetailsHeaderContainer{
+  display:flex; flex-direction: row; align-items: center; width: 100%;
+}
+
+.rightDetailCloseButton{
+  font-size: 11pt;
+  color: #fff;
+  padding: 7px 20px 7px 0;
+  display: none;
+  text-align: right;
+  float: left;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+
+
+
+
+
+/* Account Card */
+#rightDetailAccountCardContainer{
+  width: 100%;
+  background: #ffffff;
+  min-height: 200px;
+  margin-top:20px;
+  border-radius: $borderRadiusDesktop;
+  padding: 20px 20px 20px 40px;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 0 30px 0 rgba(0,0,0,.06);
+  align-items: center;
+}
+
+@media all and (max-width: 992px){
+  #rightDetailAccountCardContainer{
+    padding: 20px 20px 20px 20px;
+    border-radius: $borderRadiusMobile;
+    min-height: 140px;
+  }
+}
+
+#rightDetailAccountCardCredentialsContainer{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  margin-left: 10px;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+#rightDetailAccountCardCredentialsNetwork{
+  font-size: 17pt;
+  margin: 0;
+  color: #222;
+  font-weight: 300;
+  font-family: 'Quicksand_Book','Source Sans Pro',sans-serif;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+}
+
+#rightDetailAccountCardCredentialsUsername{
+  font-size: 13pt;
+  color: #888;
+  margin: 0;
+
+  word-break: break-all;
+
+}
+#visitAccountButton{
+  display: flex;
+  height: 50px;
+  width: 50px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+  background: #ffffff;
+  box-shadow: 0 0 15px 0 rgba(0,0,0,.06);
+  cursor: pointer;
+}
+
+#visitAccountButton:hover{
+  box-shadow: 0 0 20px 1px rgba(0,0,0,.1);
+}
+
+
+#rightDetailSectionInfoContainer{
+  display:flex; margin-top: 20px; flex-direction: column; justify-content: center; width: 100%;
+}
+
+
+#rightDetailInfo{
+  font-size: 9pt;
+  color: #fff;
+  font-weight: 400;
+  white-space: pre-line;
+}
+
+
+
+#rightDetailSectionLabelsContainer{
+  display:flex; margin-top: 20px; flex-direction: column; justify-content: center; width: 100%;
+}
+
+#rightDetailSectionActionContainer{
+  display:flex; margin-top: 5px; flex-direction: column; justify-content: center; width: 100%;
+  margin-bottom: 40px;
+}
+
+.rightDetailActionContainer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  max-width: 180px;
+}
+.rightDetailActionIcon{
+  color:#fff; font-size:15pt;opacity: 0.5;
+}
+.rightDetailActionText{
+  color: #fff; font-size: 9pt; font-weight: 400; margin-left: 10px; opacity: 0.5;
+}
+.rightDetailActionContainer:hover i, .rightDetailActionContainer:hover  span {
+  color: #ffffff; opacity: 1;
+}
+
+/*
+Share Modal
+ */
+
+body .a2a_default_style a{
+  padding: 2px;
+}
+#articleParentHolder{
+  margin-top: 10px; margin-left: 15px;
+}
+
+
+
+
+
+/* TOGGLE */
+
+#rightDetailToggleOuterContainer{
+  flex: 1; display: flex;justify-content: flex-end;
+  @extend .transition03;
+
+}
+#rightDetailToggleBoxContainer{
+  padding: 8px 20px 5px;
+  border: 1px solid #ffffff;display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 10px;
+  @extend .transition03;
+}
+#publicToggleTitle{
+  color: #fff; font-size: 11pt; margin-bottom: 3px;
+  @extend .transition03;
+}
+
+#rightDetailToggleBoxContainer:hover{
+  background: #ffffff;
+  @extend .transition03;
+}
+#rightDetailToggleBoxContainer:hover #publicToggleTitle{
+  color: $colorPrimary;
+  @extend .transition03;
+}
+
+
+body #publicToggle.c_materialDesignToggleCheckbox:checked ~ label:after {
+  left: 20px;
+  background: #ffffff;
+}
+
+body #publicToggle.c_materialDesignToggleCheckbox:checked ~ label {
+  background: #04befe;
+}
+
+
+
+
+#rightDetailClickContainer{
+  height: 25px;
+  width: 25px;
+  background: rgba(0,0,0,0.9);
+  border-radius: 50%;
+  position: absolute;
+  bottom:-3px;
+  right: -8px;
+}
+#rightDetailClickContainer{
+
+  color: #ffffff;
+  font-size: 0.7em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#rightDetailAccountIcon{
+  border-radius: 5px;
+}
+@media all and (max-width: 992px){
+  #rightDetailInnerContainer{
+    padding: 15px;
+  }
+  #rightDetailClickContainer{
+    bottom:-8px;
+    right: -8px;
+    height: 22px;
+    width: 22px;
+  }
+}
+
+
+
+@media all and (max-width: 970px){
+
+  #rightDetailSectionDetailsHeaderContainer{
+    display: block;
+  }
+  #rightDetailToggleOuterContainer{
+    justify-content: flex-end;
+  }
+
+  #rightDetailHeadingFirst{
+    display: none;
+  }
+  .rightDetailCloseButton{
+    display: flex;
+  }
+
+  #rightDetailAccountCardCredentialsContainer div{
+    //max-width: 120px;
+  }
+  #rightDetailAccountCardCredentialsNetwork{
+    font-size: 13pt;
+  }
+  #rightDetailAccountCardCredentialsUsername{
+    font-size: 9pt;
+  }
+
+  #articleParentHolder{
+    margin-left: 20px;
+  }
+
+
+
+}

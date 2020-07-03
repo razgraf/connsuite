@@ -1,0 +1,922 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="cb3b4056-3579-4756-8cba-da18e5d7f283" name="Default" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_TABLE_DETAILS" value="true" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="untitled" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/image/connsuite_icon.png">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/image/connsuite_type_white.png">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/p/dashboard.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2910">
+              <caret line="194" selection-start-line="194" selection-end-line="194" selection-end-column="53" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/system/conn_item.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="775">
+              <caret line="122" column="17" selection-start-line="122" selection-start-column="17" selection-end-line="122" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/welcome.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="43">
+              <caret line="126" column="76" selection-start-line="126" selection-start-column="60" selection-end-line="126" selection-end-column="103" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/image/connsuite_type_white_3x.png">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/image/connsuite_icon_rounded.png">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/image/connsuite_icon_inverted_rounded.png">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/image/connsuite_icon_inverted.png">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/util.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4800">
+              <caret line="320" column="14" selection-start-line="320" selection-start-column="14" selection-end-line="320" selection-end-column="14" />
+              <folding>
+                <marker date="1518896035387" expanded="true" signature="3888:3937" ph="..." />
+                <marker date="1518896035387" expanded="true" signature="4398:4412" ph="..." />
+                <marker date="1518896035387" expanded="true" signature="10249:10273" ph="..." />
+                <marker date="1518896035387" expanded="true" signature="10366:10373" ph="×" />
+                <marker date="1518896035387" expanded="true" signature="11826:11844" ph="..." />
+                <marker date="1518896035387" expanded="true" signature="15136:15390" ph="..." />
+                <marker date="1518896035387" expanded="true" signature="15422:15505" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="tsconfig.json" />
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>customImage</find>
+      <find>background</find>
+      <find>.background</find>
+      <find>headline</find>
+      <find>flexBusiness</find>
+      <find>seriousLink</find>
+      <find>introSectionTitle</find>
+      <find>previewScreenRight</find>
+      <find>selfbusinessCard</find>
+      <find>profileRequestButton</find>
+      <find>customConnCardSection</find>
+      <find>previewInfoContainer</find>
+      <find>connItemOuterContainer</find>
+      <find>p3</find>
+      <find>screen</find>
+      <find>p4Text</find>
+      <find>previewPart</find>
+      <find>vack</find>
+      <find>searchItemBottomLastContainer</find>
+      <find>business</find>
+      <find>searchContainer2</find>
+      <find>card</find>
+      <find>#card</find>
+      <find>linkedIn</find>
+      <find>toolbarSearchResultsContainer</find>
+      <find>searchInput</find>
+      <find>email</find>
+      <find>username</find>
+      <find>publicToggle</find>
+      <find>toggle</find>
+    </findStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/css/system/conn_news.scss" />
+        <option value="$PROJECT_DIR$/core/tutorial/add-premium.php" />
+        <option value="$PROJECT_DIR$/js/p/article/add.js" />
+        <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/core/p/business/custom/do-delete.php" />
+        <option value="$PROJECT_DIR$/core/p/business/custom/do-edit.php" />
+        <option value="$PROJECT_DIR$/core/p/business/custom/do-add.php" />
+        <option value="$PROJECT_DIR$/p/search.php" />
+        <option value="$PROJECT_DIR$/css/p/dashboard.scss" />
+        <option value="$PROJECT_DIR$/js/model/notification.js" />
+        <option value="$PROJECT_DIR$/core/p/notification/retrieve.php" />
+        <option value="$PROJECT_DIR$/js/system/toolbar.js" />
+        <option value="$PROJECT_DIR$/js/p/notifications.js" />
+        <option value="$PROJECT_DIR$/badge/get-user.php" />
+        <option value="$PROJECT_DIR$/core/tutorial/step-up.php" />
+        <option value="$PROJECT_DIR$/js/p/dashboard.js" />
+        <option value="$PROJECT_DIR$/js/intro.js" />
+        <option value="$PROJECT_DIR$/image/landingNetworks/shapeRight.svg" />
+        <option value="$PROJECT_DIR$/intro/terms.php" />
+        <option value="$PROJECT_DIR$/core/p/profile/edit-user.php" />
+        <option value="$PROJECT_DIR$/intro/index.php" />
+        <option value="$PROJECT_DIR$/css/p/notifications.scss" />
+        <option value="$PROJECT_DIR$/image/ic_search_blue_48px.svg" />
+        <option value="$PROJECT_DIR$/js/welcome.js" />
+        <option value="$PROJECT_DIR$/css/welcome2.scss" />
+        <option value="$PROJECT_DIR$/welcome2.php" />
+        <option value="$PROJECT_DIR$/css/welcome.scss" />
+        <option value="$PROJECT_DIR$/js/util.js" />
+        <option value="$PROJECT_DIR$/p/dashboard.php" />
+        <option value="$PROJECT_DIR$/session/check.php" />
+        <option value="$PROJECT_DIR$/js/model/conn_step.js" />
+        <option value="$PROJECT_DIR$/css/p/business/book.scss" />
+        <option value="$PROJECT_DIR$/js/p/business/book.js" />
+        <option value="$PROJECT_DIR$/p/business/book.php" />
+        <option value="$PROJECT_DIR$/base/config.php" />
+        <option value="$PROJECT_DIR$/libs/connsuite-constant.php" />
+        <option value="$PROJECT_DIR$/base/config.js" />
+        <option value="$PROJECT_DIR$/session/facebook.php" />
+        <option value="$PROJECT_DIR$/js/welcomeNew.js" />
+        <option value="$PROJECT_DIR$/base/user.php" />
+        <option value="$PROJECT_DIR$/session/linked-in.php" />
+        <option value="$PROJECT_DIR$/core/p/profile/retrieve-article-list.php" />
+        <option value="$PROJECT_DIR$/js/profile.js" />
+        <option value="$PROJECT_DIR$/p/profile/edit.php" />
+        <option value="$PROJECT_DIR$/js/p/profile/edit.js" />
+        <option value="$PROJECT_DIR$/core/remove-account.php" />
+        <option value="$PROJECT_DIR$/core/p/profile/upload-picture.php" />
+        <option value="$PROJECT_DIR$/css/util.scss" />
+        <option value="$PROJECT_DIR$/css/welcomeNew.scss" />
+        <option value="$PROJECT_DIR$/welcome.php" />
+        <option value="$PROJECT_DIR$/css/system/toolbar.scss" />
+      </list>
+    </option>
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <annotation-enable>false</annotation-enable>
+    <other-services-enabled>true</other-services-enabled>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="MAMP PHP 5.6" />
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="connsuite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="connsuite" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Applications/MAMP/htdocs/connsuite/welcome2.php&#10;stepID&#9;null&#9;null&#10;profileModal&#9;null&#9;null&#10;extractSession2&#9;null&#9;null&#10;Notification.js&#9;FILE&#9;file:///Applications/MAMP/htdocs/connsuite/js/model/notification.js&#10;public&#9;null&#9;null&#10;$borderRadiusMobile&#9;null&#9;null&#10;CORE_DO_RETRIEVE_BUSINESS_REQUEST_STATUS&#9;null&#9;null" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="javascript.nodejs.core.library.configured.version" value="10.16.0" />
+    <property name="jsx.switch.disabled" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="nodejs_interpreter_path" value="node" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="watcher.settings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/core" />
+      <recent name="$PROJECT_DIR$/session" />
+      <recent name="$PROJECT_DIR$/image" />
+      <recent name="$PROJECT_DIR$/image/landing" />
+      <recent name="$PROJECT_DIR$/image/landingNetworks" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/image/landing" />
+      <recent name="$PROJECT_DIR$/image/landingNetworks" />
+      <recent name="$PROJECT_DIR$/css" />
+      <recent name="$PROJECT_DIR$/image/tutorial" />
+      <recent name="$PROJECT_DIR$/image/marketing" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="js.build_tools.gulp">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cb3b4056-3579-4756-8cba-da18e5d7f283" name="Default" comment="" />
+      <created>1502447499436</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1502447499436</updated>
+      <workItem from="1502447501419" duration="682000" />
+      <workItem from="1502448318342" duration="34530000" />
+      <workItem from="1502620922909" duration="26911000" />
+      <workItem from="1502712266204" duration="72766000" />
+      <workItem from="1503057012452" duration="50292000" />
+      <workItem from="1503226663606" duration="6324000" />
+      <workItem from="1503317871371" duration="60689000" />
+      <workItem from="1503567347757" duration="2837000" />
+      <workItem from="1503571930578" duration="27517000" />
+      <workItem from="1503656092483" duration="66588000" />
+      <workItem from="1504019107571" duration="4329000" />
+      <workItem from="1504025584726" duration="152000" />
+      <workItem from="1504025754628" duration="42358000" />
+      <workItem from="1504287052206" duration="13986000" />
+      <workItem from="1504611331799" duration="18433000" />
+      <workItem from="1504865490414" duration="1208000" />
+      <workItem from="1504869599752" duration="134000" />
+      <workItem from="1504872944139" duration="6486000" />
+      <workItem from="1505077544549" duration="7536000" />
+      <workItem from="1505129930423" duration="4026000" />
+      <workItem from="1505139889757" duration="31476000" />
+      <workItem from="1505319587857" duration="7193000" />
+      <workItem from="1505496345593" duration="19000" />
+      <workItem from="1505558866503" duration="9214000" />
+      <workItem from="1505992492661" duration="30000" />
+      <workItem from="1506003215635" duration="26000" />
+      <workItem from="1506004158243" duration="237000" />
+      <workItem from="1506083393922" duration="1119000" />
+      <workItem from="1506166057590" duration="225000" />
+      <workItem from="1506173050009" duration="2600000" />
+      <workItem from="1506195737281" duration="18000" />
+      <workItem from="1506260186700" duration="2331000" />
+      <workItem from="1506266159759" duration="1104000" />
+      <workItem from="1506331964180" duration="615000" />
+      <workItem from="1506419568236" duration="3638000" />
+      <workItem from="1506541278478" duration="643000" />
+      <workItem from="1506600625336" duration="1127000" />
+      <workItem from="1506605203640" duration="3437000" />
+      <workItem from="1506615401871" duration="674000" />
+      <workItem from="1507560871423" duration="19058000" />
+      <workItem from="1507610791168" duration="3640000" />
+      <workItem from="1507733969685" duration="2219000" />
+      <workItem from="1507820333237" duration="45562000" />
+      <workItem from="1508161513469" duration="840000" />
+      <workItem from="1508173005614" duration="14413000" />
+      <workItem from="1508321690021" duration="19924000" />
+      <workItem from="1508442694732" duration="327000" />
+      <workItem from="1508443110375" duration="1128000" />
+      <workItem from="1508491776197" duration="632000" />
+      <workItem from="1508512025036" duration="1185000" />
+      <workItem from="1508589587726" duration="984000" />
+      <workItem from="1508626944321" duration="69000" />
+      <workItem from="1508780062860" duration="27000" />
+      <workItem from="1508787536942" duration="43000" />
+      <workItem from="1508833755688" duration="6473000" />
+      <workItem from="1508933681389" duration="831000" />
+      <workItem from="1508957671475" duration="47000" />
+      <workItem from="1508961907595" duration="641000" />
+      <workItem from="1509278857939" duration="27000" />
+      <workItem from="1509278916865" duration="2053000" />
+      <workItem from="1509361617024" duration="23000" />
+      <workItem from="1509361682710" duration="14000" />
+      <workItem from="1509460444772" duration="88000" />
+      <workItem from="1510059247281" duration="58348000" />
+      <workItem from="1510428996911" duration="4054000" />
+      <workItem from="1510486231845" duration="3572000" />
+      <workItem from="1510589615397" duration="22174000" />
+      <workItem from="1510657472644" duration="9000" />
+      <workItem from="1510668763309" duration="381000" />
+      <workItem from="1510689029349" duration="5869000" />
+      <workItem from="1510956303530" duration="308000" />
+      <workItem from="1511101393809" duration="1747000" />
+      <workItem from="1511186430341" duration="402000" />
+      <workItem from="1511217176941" duration="162000" />
+      <workItem from="1511612513820" duration="6394000" />
+      <workItem from="1512045547361" duration="63356000" />
+      <workItem from="1512297799847" duration="22567000" />
+      <workItem from="1512472920597" duration="1551000" />
+      <workItem from="1512501303428" duration="1063000" />
+      <workItem from="1512568811247" duration="2059000" />
+      <workItem from="1512989660596" duration="870000" />
+      <workItem from="1513079597713" duration="13449000" />
+      <workItem from="1513202872656" duration="1472000" />
+      <workItem from="1513268692673" duration="2321000" />
+      <workItem from="1513444151638" duration="1685000" />
+      <workItem from="1513446511759" duration="795000" />
+      <workItem from="1513453001705" duration="1302000" />
+      <workItem from="1513462499918" duration="1282000" />
+      <workItem from="1513537112772" duration="2823000" />
+      <workItem from="1513788158097" duration="3093000" />
+      <workItem from="1513955532216" duration="35012000" />
+      <workItem from="1514290335620" duration="22212000" />
+      <workItem from="1514454625565" duration="23701000" />
+      <workItem from="1514576163299" duration="2144000" />
+      <workItem from="1514724478202" duration="94000" />
+      <workItem from="1514725728953" duration="14485000" />
+      <workItem from="1514937349826" duration="3393000" />
+      <workItem from="1515064632903" duration="4441000" />
+      <workItem from="1515148635322" duration="4856000" />
+      <workItem from="1515174113900" duration="379000" />
+      <workItem from="1515185035084" duration="5604000" />
+      <workItem from="1515235989560" duration="2171000" />
+      <workItem from="1515244970399" duration="248000" />
+      <workItem from="1515285813284" duration="622000" />
+      <workItem from="1515414175787" duration="6617000" />
+      <workItem from="1515590165792" duration="174000" />
+      <workItem from="1515593123230" duration="1028000" />
+      <workItem from="1515934187216" duration="180000" />
+      <workItem from="1517750248896" duration="8000" />
+      <workItem from="1518016797238" duration="13825000" />
+      <workItem from="1518106716054" duration="53797000" />
+      <workItem from="1518446202930" duration="2500000" />
+      <workItem from="1518696693345" duration="18366000" />
+      <workItem from="1518782100950" duration="5894000" />
+      <workItem from="1518869857950" duration="25490000" />
+      <workItem from="1518902909890" duration="4988000" />
+      <workItem from="1518910512186" duration="343000" />
+      <workItem from="1519141033867" duration="10767000" />
+      <workItem from="1520444629476" duration="132000" />
+      <workItem from="1520608808670" duration="134000" />
+      <workItem from="1521144220397" duration="336000" />
+      <workItem from="1521146925509" duration="33000" />
+      <workItem from="1521149341708" duration="15000" />
+      <workItem from="1521238934886" duration="36000" />
+      <workItem from="1521740468017" duration="26000" />
+      <workItem from="1522059734847" duration="15000" />
+      <workItem from="1522348758201" duration="29000" />
+      <workItem from="1522419218500" duration="1000" />
+      <workItem from="1522586263699" duration="65000" />
+      <workItem from="1523057773846" duration="622000" />
+      <workItem from="1523191829022" duration="688000" />
+      <workItem from="1523456620841" duration="120000" />
+      <workItem from="1524308424558" duration="58000" />
+      <workItem from="1526477571072" duration="527000" />
+      <workItem from="1526652480165" duration="1922000" />
+      <workItem from="1527431208268" duration="1028000" />
+      <workItem from="1528563397464" duration="99000" />
+      <workItem from="1528563539446" duration="165000" />
+      <workItem from="1529488112781" duration="24000" />
+      <workItem from="1529683286112" duration="636000" />
+      <workItem from="1529754011840" duration="333000" />
+      <workItem from="1529787695683" duration="1362000" />
+      <workItem from="1529844182360" duration="3503000" />
+      <workItem from="1529857415552" duration="1004000" />
+      <workItem from="1529933964516" duration="608000" />
+      <workItem from="1533744899249" duration="20242000" />
+      <workItem from="1534515203000" duration="17664000" />
+      <workItem from="1534937151880" duration="8633000" />
+      <workItem from="1535115658309" duration="5749000" />
+      <workItem from="1535292978173" duration="2778000" />
+      <workItem from="1535896643176" duration="10000" />
+      <workItem from="1536679338378" duration="318000" />
+      <workItem from="1562151583334" duration="174000" />
+      <workItem from="1562259100487" duration="2869000" />
+      <workItem from="1585671373312" duration="476000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="1192639000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24749643" />
+      <window_info id="Structure" order="1" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32891566" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.020481927" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32891566" />
+      <window_info anchor="bottom" id="PHP-CGI Server" order="7" weight="0.32891566" />
+      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32891566" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.16746987" />
+      <window_info anchor="bottom" id="Command Line Tools Console" order="11" weight="0.32891566" />
+      <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="13" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/core/system/add-log.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/p/article/add.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="12" selection-start-line="12" selection-end-line="15" selection-end-column="98" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/intro/send-message.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-30">
+          <caret line="16" column="35" lean-forward="true" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/connsuite-core.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/intro.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="241" column="16" lean-forward="true" selection-start-line="241" selection-start-column="16" selection-end-line="241" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/remove-account.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/p/profile/edit.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3300">
+          <caret line="220" column="9" selection-start-line="220" selection-start-column="9" selection-end-line="220" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/p/profile/edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="14" column="3" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/p/profile/edit.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1275">
+          <caret line="85" selection-start-line="85" selection-end-line="87" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/p/network/edit.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="7" selection-start-line="30" selection-start-column="7" selection-end-line="30" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/p/network/edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="49" column="24" selection-start-line="49" selection-start-column="24" selection-end-line="49" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/profile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6210">
+          <caret line="414" column="2" selection-start-line="414" selection-start-column="2" selection-end-line="417" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image/backshape-17.svg">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/p/network/add.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7590">
+          <caret line="506" selection-start-line="506" selection-end-line="506" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/util.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="34" column="11" selection-start-line="34" selection-end-line="34" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="795">
+          <caret line="53" column="36" selection-start-line="53" selection-start-column="36" selection-end-line="53" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/sass/lib/sass.jar!/org/jetbrains/plugins/sass/stdlib/sass_functions.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="55" column="10" selection-start-line="55" selection-start-column="10" selection-end-line="55" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/p/profile/upload-picture.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1365">
+          <caret line="96" selection-start-line="87" selection-start-column="7" selection-end-line="96" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/user/profile/1-5.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/user/profile/4-1.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/user/profile/12-1.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/user/profile/15-1.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/user/profile/22-1.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/user/profile/8-3.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/user/profile/4-2.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3975">
+          <caret line="265" column="22" selection-start-line="265" selection-start-column="22" selection-end-line="265" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/welcomeNew.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2985">
+          <caret line="246" column="55" selection-start-line="246" selection-start-column="55" selection-end-line="246" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/model/conn_user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="38" column="35" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/session/register.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="675">
+          <caret line="51" selection-start-line="51" selection-end-line="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/user.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/system/sidebar_left.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="66" selection-start-line="15" selection-start-column="66" selection-end-line="15" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/welcomeNew.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2445">
+          <caret line="203" column="459" selection-start-line="203" selection-start-column="459" selection-end-line="203" selection-end-column="459" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/support/custom-ui/material_design_toggle.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="42" column="29" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/p/dashboard.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3825">
+          <caret line="260" selection-start-line="260" selection-end-line="260" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/system/toolbar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3750">
+          <caret line="250" column="33" selection-start-line="250" selection-start-column="33" selection-end-line="250" selection-end-column="33" />
+          <folding>
+            <marker date="1518360668580" expanded="true" signature="410:443" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="499:531" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="593:642" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="830:843" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="914:950" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="979:1013" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="1041:1060" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="1193:1201" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="1367:1381" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="1522:1548" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="1636:1697" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="1818:1831" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="2038:2056" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="2192:2208" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="2233:2241" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="2488:2570" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="2598:2694" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="2744:2794" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="2919:3006" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="3066:3074" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="5662:5695" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="5751:5783" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="5843:5892" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="6080:6093" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="6179:6187" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="6232:6291" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="6403:6416" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="6768:6786" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="6923:6939" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="6964:6972" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="7219:7301" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="7329:7425" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="7475:7525" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="7650:7737" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="7797:7805" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="10057:10101" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="10174:10233" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="10263:10285" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="10313:10396" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="11450:11458" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="11630:11727" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="11849:11863" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="11927:11973" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="12002:12036" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="12064:12091" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="12168:12176" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="12325:12339" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="12479:12505" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="12651:12696" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="12789:12806" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="12928:12945" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="13065:13082" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="13194:13211" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="13316:13333" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="13436:13453" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="13572:13589" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="13930:13973" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="14046:14105" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="14135:14192" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="14220:14298" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="14442:14450" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="14495:14511" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="14595:14675" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="14896:14933" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="15078:15107" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="15109:15117" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="15230:15327" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="15449:15463" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="15527:15573" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="15602:15636" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="15664:15691" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="15768:15776" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="15925:15939" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="16081:16107" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="16253:16298" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="16394:16411" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="16529:16546" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="16669:16686" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="16747:16792" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="16885:16902" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="17022:17039" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="17151:17168" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="17273:17290" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="17393:17410" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="17529:17546" ph="..." />
+            <marker date="1518360668580" expanded="true" signature="22366:22402" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/system/toolbar.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4560">
+          <caret line="304" column="24" selection-start-line="304" selection-start-column="24" selection-end-line="304" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/system/sidebar_left.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8340">
+          <caret line="560" column="29" selection-start-line="560" selection-start-column="29" selection-end-line="560" selection-end-column="29" />
+          <folding>
+            <element signature="e#20379#20523#0#PHP" />
+            <element signature="e#20524#20908#0#PHP" />
+            <element signature="e#20910#22393#0#PHP" />
+            <element signature="e#22395#24759#0#PHP" />
+            <marker date="1519159762835" expanded="true" signature="21050:21153" ph="SELECT FROM article... " />
+            <marker date="1519159762835" expanded="true" signature="21050:21161" ph="SELECT FROM article... " />
+            <marker date="1519159762835" expanded="true" signature="21050:21174" ph="SELECT FROM article... " />
+            <marker date="1519159762835" expanded="true" signature="21050:21182" ph="SELECT userI... article" />
+            <marker date="1519159762835" expanded="true" signature="22592:22681" ph="SELECT u.nam... user" />
+            <marker date="1519159762835" expanded="true" signature="22906:23041" ph="SELECT u.nam... user_alias" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/p/dashboard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4995">
+          <caret line="333" column="20" selection-start-line="333" selection-start-column="14" selection-end-line="333" selection-end-column="20" />
+          <folding>
+            <marker date="1518363261270" expanded="true" signature="13034:13059" ph="..." />
+            <marker date="1518363261270" expanded="true" signature="13095:13182" ph="..." />
+            <marker date="1518363261270" expanded="true" signature="13218:13276" ph="..." />
+            <marker date="1518363261270" expanded="true" signature="13451:13467" ph="..." />
+            <marker date="1518363261270" expanded="true" signature="13469:13477" ph="..." />
+            <marker date="1518363261270" expanded="true" signature="16473:16555" ph="..." />
+            <marker date="1518363261270" expanded="true" signature="16747:16764" ph="..." />
+            <marker date="1518363261270" expanded="true" signature="17251:17333" ph="..." />
+            <marker date="1518363261270" expanded="true" signature="17531:17548" ph="..." />
+            <marker date="1518363261270" expanded="true" signature="17897:17954" ph="..." />
+            <marker date="1518363261270" expanded="true" signature="18079:18139" ph="..." />
+            <marker date="1518363261270" expanded="true" signature="18176:18305" ph="..." />
+            <marker date="1518363261270" expanded="true" signature="19625:19633" ph="..." />
+            <marker date="1518363261270" expanded="true" signature="19942:20000" ph="..." />
+            <marker date="1518363261270" expanded="true" signature="24111:24129" ph="..." />
+            <marker date="1518363261270" expanded="true" signature="24282:24296" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/p/dashboard/do-visible-change.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
+          <folding>
+            <marker date="1515193126980" expanded="true" signature="854:918" ph="UPDATE netwo... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/config.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="67" selection-start-line="24" selection-start-column="56" selection-end-line="24" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image/connsuite_icon.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image/connsuite_type_white.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/p/dashboard.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2910">
+          <caret line="194" selection-start-line="194" selection-end-line="194" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image/connsuite_type_white_3x.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image/connsuite_icon_rounded.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image/connsuite_icon_inverted_rounded.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image/connsuite_icon_inverted.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4800">
+          <caret line="320" column="14" selection-start-line="320" selection-start-column="14" selection-end-line="320" selection-end-column="14" />
+          <folding>
+            <marker date="1518896035387" expanded="true" signature="3888:3937" ph="..." />
+            <marker date="1518896035387" expanded="true" signature="4398:4412" ph="..." />
+            <marker date="1518896035387" expanded="true" signature="10249:10273" ph="..." />
+            <marker date="1518896035387" expanded="true" signature="10366:10373" ph="×" />
+            <marker date="1518896035387" expanded="true" signature="11826:11844" ph="..." />
+            <marker date="1518896035387" expanded="true" signature="15136:15390" ph="..." />
+            <marker date="1518896035387" expanded="true" signature="15422:15505" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/system/conn_item.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="775">
+          <caret line="122" column="17" selection-start-line="122" selection-start-column="17" selection-end-line="122" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/welcome.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="43">
+          <caret line="126" column="76" selection-start-line="126" selection-start-column="60" selection-end-line="126" selection-end-column="103" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

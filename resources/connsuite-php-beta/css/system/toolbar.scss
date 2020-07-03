@@ -1,0 +1,593 @@
+@import '../../base/config';
+
+
+#toolbar{
+    height: $toolbarHeight;
+    width: 100%;
+    display: flex;
+    position: fixed;
+    justify-content: center; /*center-horizontal*/
+    /*padding-top: 5px;*/
+    /*padding-bottom: 5px;*/
+    z-index: 1000;
+    background: rgba(4, 190, 254, 1); /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1)); /* For Safari 5.1 to 6.0 */
+    background: -moz-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+    background: -o-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+    box-shadow: 0 1px 6px 0 rgba(0,0,0,.15);
+}
+
+#toolbarBeneath{
+    height: $toolbarHeight;
+    width: 100%;
+    display: flex;
+    justify-content: center; /*center-horizontal*/
+    /*padding-top: 5px;*/
+    /*padding-bottom: 5px;*/
+    //background: rgba(4, 190, 254, 1); /* For browsers that do not support gradients */
+    //background: -webkit-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1)); /* For Safari 5.1 to 6.0 */
+    //background: -moz-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+    //background: -o-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+    /*box-shadow: 0 0 4px 0 rgba(0,0,0,.08), 0 2px 4px 0 rgba(0,0,0,.12);*/
+}
+
+.toolbarSizer
+{
+    height: $toolbarHeight;
+    width: 100%;
+}
+
+#toolbarLogo{
+    height: 58px;
+    width: 58px;
+}
+
+
+/*
+ 2. Search
+ */
+
+.searchContainer{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 5px 0;
+    align-items: center;
+    margin: 0 auto;
+    /*box-shadow: 0 0 10px -5px #000000 ;*/
+}
+.searchInput{
+    color: #ffffff;
+    font-size: 13pt;
+    text-decoration: none;
+    width: 100%;
+    border-radius: 15px;
+    height: 30px;
+    padding: 2px 20px 2px 5px;
+    background: transparent;
+    outline: none;
+    border: none;
+    min-width: 320px;
+}
+.searchInput::-webkit-input-placeholder { color: #fff;font-weight: 300; opacity: 0.4; }
+.searchInput::-moz-placeholder {color: #fff;font-weight: 300;opacity: 0.4; }
+.searchInput:-ms-input-placeholder { color: #fff;font-weight: 300;opacity: 0.4; }
+.searchInput:active, .searchInput:focus{  text-shadow: 1px 1px 1px rgba(0,0,0,0.08);  }
+
+.searchButton{
+    background: rgba(255, 255, 255, 0.1);
+    height: 32px;
+    width: 32px;
+    border-radius: 16px;
+    cursor: pointer;
+    padding: 3px 5px;
+    margin-bottom: 3px;
+}
+.searchButton:hover{
+    background: rgba(255, 255, 255, 0.3);
+
+}
+
+
+/**
+3. Account
+ */
+
+#accountOuterContainer{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-self: center;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#accountContainer{
+    min-width: 180px;
+    height: 58px;
+    background: #ffffff;
+    border-radius: 29px;
+    box-shadow: 0 0 155px 0 rgba(0,0,0,.1);
+    display: flex;
+    padding: 5px 10px 5px 8px;
+    flex-direction: row;
+    align-items: center;
+}
+
+#accountContainer:hover{
+    box-shadow: 0 0 15px rgba(0,0,0,.25);
+}
+#accountUserPictureContainer{
+  height: 45px;
+  width: 45px;
+  //border: 1px solid rgba(4, 190, 254, 0.85);
+  border-radius: 22px;
+
+}
+#accountUserPicture{
+    height: 44px;
+    width: 44px;
+    display: inline-block;
+    object-fit: cover;
+    border-radius: 50%;
+    position: relative;
+    border: 1px solid #eeeeee;
+
+}
+#accountUserName{
+    font-family:"Source Sans Pro", sans-serif;
+    font-size: 12pt;
+    line-height: 1.3;
+    color: #222222;
+    overflow: hidden;
+    white-space: nowrap;
+
+}
+
+
+
+
+
+/* Dropdown Button */
+#accountArrow{
+    padding-left: 10px;
+    color: #dddddd;
+    margin-top: 3px;
+    border: none;
+    cursor: pointer;
+  @extend .transition01;
+}
+
+#accountArrow:hover{
+ // color: $colorPrimary;
+  cursor: pointer;
+  @extend .transition01;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropDownContainer {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropDownContent{
+    display: none;
+    position: absolute;
+    top: 55px;
+    font-size: 10pt;
+    background-color: #f9f9f9;
+    min-width: 180px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0;
+
+}
+
+/* Links inside the dropdown */
+.dropDownContent a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  @extend .transition01;
+}
+
+/* Change color of dropdown links on hover */
+.dropDownContent a:hover {background-color: #f1f1f1; @extend .transition01;}
+
+/* Show the dropdown menu on hover */
+//.dropDownContainer:hover .dropDownContent {
+//    display: block;
+//}
+
+@media all and (min-width: 992px){
+  .dropDownContent {
+    top: 65px;//55px;
+    width: 90%;
+    margin-right: 4%;
+    font-size: 10pt;
+    background-color: #ffffff;
+    min-width: 200px;
+    border: 1px solid #eeeeee;
+    box-shadow: $shadowSpecialElement;
+    text-align: center;
+    z-index: 1;
+    border-radius: 5px;
+    color: #aaaaaa;
+  }
+  .dropDownContent a {
+    color: #888888;
+    padding: 15px 10px;
+    text-decoration: none;
+    font-family: $fontPrimary;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #f9f9f9;
+  }
+  .dropDownContent a:first-child {
+    border-radius: 5px 5px 0 0;
+  }
+  .dropDownContent a:last-child {
+    border-radius: 0 0 5px 5px;
+    border-bottom: none;
+  }
+
+  .dropDownContent a:hover {background-color: #fafafa; color: #000;}
+}
+
+.secondaryToolbarTitle{
+    font-size: 15pt;
+    text-decoration: none;
+    padding: 0 10px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $fontSecondary;
+    height: 100%;
+}
+
+.secondaryToolbarTitleContainer{
+    display: flex;
+    height: 100%;
+    align-items: center;
+    color: #ffffff;
+
+}
+@media all and (max-width: 992px){
+  .secondaryToolbarTitle{
+    font-size: 11pt;
+  }
+}
+.secondaryToolbarBackButton{
+    height: 100%;padding: 0 10px; display: flex; align-items: center; color: #fff;
+}
+
+/**
+------------------------------
+Mobile Toolbar
+ */
+
+
+
+/**
+Left SIDE BAR
+ */
+
+
+@media all and (max-width: 991px){
+    #toolbar{
+        height: $toolbarHeightMobile;
+    }
+    #toolbarBeneath{
+        height: $toolbarHeightMobile;
+    }
+    .toolbarSizer{
+        height: $toolbarHeightMobile;
+    }
+}
+
+.mobileIconElementContainer{
+    height: 100%;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+
+.mobileIconElement{
+    height: 34px;
+    width: 34px;
+    background: #ffffff;
+    background: rgba(255,255,255,0.8);
+    border-radius: 17px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.08);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mobileIconElement:hover, .mobileIconElement:active{
+    background: #ffffff;
+}
+.mobileIconElement:hover, .mobileIconElementChosen:hover {
+    box-shadow: 1px 0 20px 0 rgba(0,0,0,.1)
+}
+
+.mobileIconElementIcon{
+    font-size: 13pt;
+    color: $colorPrimary;
+}
+
+.mobileIconElementChosen{
+    border: 1px solid #ffffff;
+    height: 34px;
+    width: 34px;
+    border-radius: 17px;
+    cursor: pointer;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #04befe; /* For browsers that do not support gradients */
+
+    /*background: -webkit-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1)); !* For Safari 5.1 to 6.0 *!*/
+    /*background: -moz-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));*/
+    /*background: -o-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));*/
+
+}
+
+.mobileIconElementChosen .mobileIconElementIcon{
+    color: #ffffff;
+    background: transparent;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+}
+
+.mobileIconElementTitle{
+    font-size: 7pt;
+    margin-top: 3px;
+    text-align: center;
+    color: #fff;
+}
+
+/**
+Hamburger Menu
+ */
+#desktopToolbar, #mobileToolbar{
+  height: 100%;
+}
+
+@media (min-width: 992px){
+    #mobileToolbar{
+    display: none;
+     }
+    #desktopToolbar{
+        display: flex;
+    }
+}
+@media (max-width: 991px){
+    #mobileToolbar{
+        display: block;
+    }
+    #desktopToolbar{
+        display: none;
+    }
+}
+
+
+@media (max-width: 991px) {
+    .navbar-header {
+        float: none;
+    }
+    .navbar-left,.navbar-right {
+        float: none !important;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .navbar-fixed-top {
+        top: 0;
+        border-width: 0 0 1px;
+    }
+    .navbar-nav {
+        float: none!important;
+        margin-top: 7.5px;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .collapse.in{
+        display:block !important;
+    }
+}
+
+
+
+.mobileMenuOption{
+    font-size: 13pt;
+    display: flex;
+    align-items: center;
+    padding: 15px 15px;
+    margin: 0;
+    color: #aaaaaa;
+}
+
+.mobileMenuOptionIcon{
+    font-size: 13pt;
+    margin-right: 10px;
+    color: #aaaaaa;
+}
+
+
+
+
+.searchContainerMobile{
+    height: auto;
+    display: flex;
+    padding: 5px 10px;
+    align-self: center;
+    border-radius: 3px;
+    background: rgba(4, 190, 254, 1); /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1)); /* For Safari 5.1 to 6.0 */
+    background: -moz-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+    background: -o-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+    width: 100%;
+}
+
+.searchInputMobile{
+    color: #ffffff;
+    font-size: 18px;
+    text-decoration: none;
+    width: 100%;
+    border-radius: 15px;
+    height: 30px;
+    background: transparent;
+    outline: none;
+    border: none;
+}
+.searchInputMobile::-webkit-input-placeholder { color: #fff;font-weight: 300; opacity: 0.4; }
+.searchInputMobile::-moz-placeholder {color: #fff;font-weight: 300;opacity: 0.4;}
+.searchInputMobile:-ms-input-placeholder { color: #fff;font-weight: 300;opacity: 0.4; }
+.searchInputMobile:active, .searchInput:focus{
+    text-shadow: 1px 1px 1px rgba(0,0,0,.1);
+}
+
+
+.toolbarNotificationsContainer {
+  display: flex;
+  height: 100%;
+  flex: 1;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 30px;
+  cursor: pointer;
+}
+
+.toolbarNotificationsBubble{
+  height: 36px;
+  width: 36px;
+  background:#ffffff;// #ffffff
+  border-radius: 50%;
+  color:#ffffff;// $colorPrimary;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toolbarNotificationsBubble:hover{
+  box-shadow: 0 0 15px rgba(0,0,0,0.25);
+}
+
+
+.toolbarNotificationsBadge{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -10px;
+  right: -10px;
+  height: 26px;
+  width: 26px;
+  background: #ffffff;
+  border-radius: 50%;
+  border: 1px solid #F44336;
+  color:#F44336;
+  display: none;
+}
+.toolbarNotificationsBadge span{
+  font-size: 9pt;
+  font-weight: 400;
+}
+
+
+.toolbarSearchResultsContainer{
+  min-height: 50px; background: #fff; width: 110%; position: absolute; top:40px; z-index: 5000;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: $shadowHover;
+  padding: 10px;
+  max-height: 250px;
+  overflow-y: auto;
+  display: none;
+
+}
+.toolbarSearchResult{
+  width: 100%;
+  height: 40px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.toolbarSearchResult:hover, .toolbarSearchResult:active{
+  background: #f5f5f5;
+}
+.toolbarSearchResultPicture{
+  width: 30px;
+  height: 30px;
+  margin-right: 20px;
+  border-radius: 15px;
+  object-fit: cover;
+  border: 1px solid #f5f5f5;
+}
+.toolbarSearchResultTextContainer{
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: #000000;
+  font-size: 11pt;
+}
+
+
+#connectSpecialToolbarButton,#connectSpecialToolbarButtonMobile{
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  flex-direction: column;
+  cursor: pointer;
+  border-radius: 25px;
+  border: 1px solid #ffffff;
+  @extend .transition05;
+}
+#connectSpecialToolbarButton span, #connectSpecialToolbarButtonMobile span{
+  padding: 0 20px;
+  border-radius: 18px;
+  font-family: $fontSecondaryBold;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 9pt;
+  @extend .transition05;
+}
+#connectSpecialToolbarButton:hover, #connectSpecialToolbarButtonMobile:hover{
+  @extend .transition05;
+  background: #ffffff;
+}
+
+#connectSpecialToolbarButton:hover span, #connectSpecialToolbarButtonMobile:hover span {
+  @extend .transition05;
+  color: $colorPrimary;
+
+}
+#connectSpecialToolbarButtonMobile{margin-right: 0; height: 46px; border-radius: 23px;}
+

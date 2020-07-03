@@ -1,0 +1,1594 @@
+@import "util";
+
+$toolbarHeight : 80px;
+$sidebarWidth : 80px;
+
+$Z-header : 30;
+$Z-menu : 40;
+$Z-cover : 20;
+
+$networkCoverTransitionTime : 0.4s;
+
+/**
+ * ---------------------------
+ *
+ * PRIMARY STRUCTURE
+ *
+ * ---------------------------
+ */
+
+
+body{
+  section.structure-network-cover{
+    position: absolute;
+    z-index: $Z-cover;
+
+
+    .structure-network-cover-wrapper-container{
+      position: fixed;
+      width: 80%;
+      max-width: calc(100vw / 2 );
+      right: -100%;
+      top:0;
+      bottom: 0;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      @include gradient(25deg);
+      @include transition($networkCoverTransitionTime);
+      .structure-network-cover-wrapper {
+        width: 100%;
+        max-width: $canvasWidth / 2;
+        margin-right: auto;
+        min-height: 100%;
+        padding: $toolbarHeight + 20px 20px 60px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-content: flex-start;
+        overflow-x: hidden;
+        z-index: 6;
+
+        .structure-network-cover-header {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          margin-bottom: 20px;
+          .structure-network-cover-header-title {
+            font-size: 12pt;
+            font-family: $fontSecondary;
+            color: #fff;
+            margin-right: auto;
+            border-bottom: 1px dashed #ffffff;
+            padding-bottom: 3px;
+            margin-top: 3px;
+
+            &:after {
+              font-size: 12pt;
+              content: '✗ Close';
+              color: #ffffff;
+              visibility: hidden;
+              position: absolute;
+              left: 0;
+              margin-top: -3px;
+              font-family: $fontPrimary;
+
+
+            }
+
+          }
+          .structure-network-cover-header-toggle-container {
+
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            border: 1px solid #ffffff;
+            border-radius: 10px;
+
+            p {
+              font-size: $fontSizeText;
+              color: #ffffff;
+              padding-right: 10px;
+              @extend .tooltip-bottom;
+
+            }
+
+            input#structure-network-cover-header-toggle {
+              display: none;
+
+              &:checked ~ label {
+                background: $colorSecondary;
+              }
+              &:checked ~ label:after {
+                left: 20px;
+                background: #fff;
+              }
+
+              &:disabled ~ label {
+                background: #eeeeee;
+                pointer-events: none;
+              }
+              &:disabled ~ label:after {
+                background: #aaaaaa;
+              }
+
+            }
+            label {
+              position: relative;
+              display: block;
+              height: 18px;
+              width: 38px;
+              background: #dddddd;
+              border-radius: 100px;
+              cursor: pointer;
+              transition: all 0.3s ease;
+              border: 1px solid #fff;
+
+              &:after {
+                position: absolute;
+                left: -2px;
+                top: -3px;
+                display: block;
+                width: 24px;
+                height: 24px;
+                border-radius: 100px;
+                background: #fff;
+                box-shadow: 0 1px 3px 3px rgba(0, 0, 0, 0.05);
+                content: '';
+                transition: all 0.3s ease;
+              }
+              &:active {
+                &:after {
+                  transform: scale(1.15, 0.85);
+                }
+              }
+            }
+          }
+
+        }
+
+        .structure-network-cover-card {
+          width: 100%;
+          background: #fff;
+          border-radius: $defaultCardBorderRadius;
+          box-shadow: $defaultCardShadowHover;
+          padding: $defaultCardPadding;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          height: 200px;
+          margin-bottom: 20px;
+
+          .structure-network-cover-card-icon {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 0.35;
+            position: relative;
+            img {
+              height: 100%;
+              width: 100%;
+              max-height: 160px;
+              object-fit: contain;
+            }
+            .structure-network-cover-card-icon-count{
+              position: absolute;
+              bottom: -3px;
+              right: -3px;
+              width: 34px;
+              height: 34px;
+              background: rgba(0,0,0,0.9);
+              border-radius: 50%;
+              box-shadow: $defaultCardShadow;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              @extend .transition02;
+              cursor: pointer;
+              @extend .tooltip-bottom;
+              span{
+                font-size: 9pt;
+                color: #ffffff;
+                font-weight: 400;
+                text-align: center;
+              }
+
+              &:hover, &:active, &:focus{
+                @extend .transition03;
+                transform: scale(1.1);
+
+              }
+            }
+          }
+          .structure-network-cover-card-info {
+            flex: 0.65;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            padding-left: 20px;
+            padding-right: 20px;
+            .structure-network-cover-card-info-wrapper {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              p {
+                font-size: 16pt;
+                color: #222;
+                font-weight: 400;
+                text-align: left;
+                font-family: $fontSecondary;
+              }
+              span {
+                font-size: 14pt;
+                color: #888;
+                margin: 0;
+                text-align: left;
+              }
+
+              label{
+                margin-top: 5px;
+                font-size: 10pt;
+                color: $colorSecondary;
+              }
+
+            }
+
+          }
+
+          .structure-network-cover-card-button {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            a {
+              height: 60px;
+              width: 60px;
+              border-radius: 50%;
+              border: 1px solid #f8f8f8;
+              box-shadow: $defaultCardShadow;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              @extend .transition02;
+              i {
+                font-size: 16pt;
+                color: $colorPrimary;
+                @extend .transition02;
+              }
+              &:hover, &:active, &:focus {
+                box-shadow: $defaultCardShadowHover;
+                @extend .transition02;
+                i {
+                  color: $colorSecondary;
+                  @extend .transition02;
+
+                }
+              }
+            }
+          }
+
+        }
+
+
+
+        .structure-network-cover-section{
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          margin-bottom: 20px;
+          .structure-network-cover-section-title {
+            font-size: 12pt;
+            color: #fff;
+            margin-right: auto;
+            font-family: $fontSecondary;
+            border-bottom: 1px dashed #ffffff;
+            padding-bottom: 3px;
+            margin-top: 3px;
+
+          }
+          .structure-network-cover-section-content{
+            padding-top: 10px;
+          }
+
+
+          &.description{
+            .structure-network-cover-section-content {
+              p {
+                font-size: $fontSizeText - 1;
+                color: #ffffff;
+                width: 100%;
+              }
+            }
+          }
+
+          &.labels{
+            .structure-network-cover-section-content {
+              display: flex;
+              flex-direction: row;
+              flex-wrap: wrap;
+              margin-left: -5px;
+
+            }
+          }
+
+          &.actions{
+            .structure-network-cover-section-content {
+              display: grid;
+              grid-template-columns: 1fr 1fr 1fr;
+              grid-gap: 10px;
+              padding-top: 10px;
+
+
+              .structure-network-cover-action{
+                grid-column: span 1;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                opacity: 0.6;
+                cursor: pointer;
+
+                @extend .transition02;
+                i{
+                  color: #ffffff;
+                  font-size: 14pt;
+                  padding-right: 3px;
+                }
+                span{
+                  color: #ffffff;
+                  font-size: 11pt;
+                }
+
+
+                &:hover, &:active, &:focus{
+                  opacity: 1;
+                  @extend .transition02;
+                }
+              }
+
+            }
+          }
+
+        }
+      }
+
+
+
+    }
+
+    .structure-network-cover-overlay{
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      position: fixed;
+      display: none;
+      opacity: 0.8;
+      z-index: -1;
+    }
+
+  }
+
+  &.cover-visible {
+    overflow-y: hidden;
+    section.structure-network-cover{
+      .structure-network-cover-wrapper-container{
+        right: 0;
+        @include transition($networkCoverTransitionTime);
+      }
+    }
+  }
+}
+
+body.primary{
+
+  header{
+    width: 100%;
+    height: $toolbarHeight;
+    box-shadow: $shadowHover;
+    position: fixed;
+    z-index: $Z-header;
+    @include gradient();
+    .structure-header-content{
+      @extend .defaultContainer;
+      padding: 10px;
+      position: relative;
+      .structure-header-logo{
+        height: $toolbarHeight - 20px;
+        width: $toolbarHeight - 20px;
+        border-radius: 50%;
+        background: #fff;
+        margin-right: 40px;
+
+        img{
+          height: 100%;
+          width: 100%;
+          border-radius: 50%;
+        }
+      }
+      .structure-header-search{
+        display: flex;
+        flex-direction: column;
+        min-width: 360px;
+        height: 100%;
+        padding: 5px 0;
+        .structure-header-search-field{
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          width: 100%;
+          flex: 1;
+          input{
+            padding-right: 20px;
+            color: #ffffff;
+            font-size: 13pt;
+            flex: 1;
+            background: transparent;
+            outline: none;
+            border: none;
+            text-decoration: none;
+
+          }
+          input::-webkit-input-placeholder { color: #fff;font-weight: 300; opacity: 0.4; }
+          input::-moz-placeholder {color: #fff;font-weight: 300;opacity: 0.4; }
+          input:-ms-input-placeholder { color: #fff;font-weight: 300;opacity: 0.4; }
+          input:active, .searchInput:focus{  text-shadow: 1px 1px 1px rgba(0,0,0,0.08);  }
+
+          .structure-header-search-button{
+            background: rgba(255, 255, 255, 0.1);
+            height: 36px;
+            width: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            @extend .transition01;
+
+            i{
+              font-size: 13pt;
+              color: #ffffff;
+            }
+
+            &:hover{
+              background: rgba(255, 255, 255, 0.3);
+              @extend .transition01;
+            }
+          }
+        }
+        .structure-header-search-line{
+          width: 100%;
+          height: 1px;
+          background: rgba(255,255,255,0.8);
+          margin-top: 6px;
+
+      }
+      }
+      .structure-header-buttons{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        flex: 1;
+        padding-right: 20px;
+        .structure-header-button{
+          height: 36px;
+          width: 36px;
+          border-radius: 50%;
+          box-shadow: $defaultCardShadowHover;
+          background: #ffffff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          user-select: none;
+          i:first-of-type{
+            color: #eee;
+            font-size: 16pt;
+          }
+          .badge{
+            span{
+
+            }
+          }
+        }
+      }
+      .structure-header-account{
+        height: $toolbarHeight - 20px;
+        border-radius: ($toolbarHeight - 20px) / 2;
+        background: #ffffff;
+        box-shadow: $defaultCardShadowHover;
+        display: flex;
+        padding: 5px;
+        flex-direction: row;
+        align-items: center;
+        .structure-header-account-picture{
+          height: $toolbarHeight - 20px - 10px;
+          width: $toolbarHeight - 20px - 10px;
+          border-radius: ($toolbarHeight - 20px - 10px) / 2;
+          background: #fff;
+          border: 1px solid #eee;
+          img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+          }
+        }
+        .structure-header-account-name{
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          flex: 1;
+          padding-left: 10px;
+          padding-right: 10px;
+          label{
+            font-size: 9pt;
+            font-weight: 500;
+            color: $colorSecondary;
+            line-height: 1.2;
+          }
+          p{
+            font-size: 12pt;
+            color: #000;
+            line-height: 1.3;
+
+          }
+        }
+
+        .structure-header-account-button{
+          padding: 5px;
+          cursor: pointer;
+          user-select: none;
+          i{
+            font-size: 20pt;
+            color: #ccc;
+            margin-top: 5px;
+            width: 27px;
+            @extend .transition02;
+          }
+          &:hover{
+            i{
+              color: $colorSecondary;
+            }
+          }
+
+        }
+
+      }
+      .structure-header-menu{
+        position: absolute;
+        right: 20px;
+        top: $toolbarHeight - 2px;
+        width: 220px;
+        border-radius: 4px;
+        box-shadow: $shadowSpecialElement;
+        background: #ffffff;
+        display: none;
+        flex-direction: column;
+        border: $defaultCardBorder;
+        .structure-header-menu-item:not(:last-of-type){
+          border-bottom: 1px solid #f5f5f5;
+        }
+        .structure-header-menu-item{
+          width: 100%;
+          padding: 15px 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          @extend .transition01;
+          p{
+            font-size: 10pt;
+            color: #888888;
+            @extend .transition01;
+          }
+
+          &:hover{
+            background: #f5f5f5;
+            @extend .transition01;
+            p{
+              color: #000;
+              @extend .transition01;
+            }
+          }
+        }
+        .structure-header-menu-item:first-of-type{
+          border-radius: 4px 4px 0 0;
+        }
+        .structure-header-menu-item:last-of-type{
+          border-radius: 0 0 4px 4px;
+        }
+      }
+
+      .structure-header-account.active{
+        .structure-header-account-button{
+          i{
+            color: $colorSecondary;
+            transform: scale(1.1);
+
+          }
+        }
+
+        &~.structure-header-menu{
+          display: flex;
+        }
+      }
+
+    }
+    .structure-header-mobile-content{
+      display: none;
+      @extend .defaultContainer;
+      padding: 10px;
+      position: relative;
+      align-items: center;
+      height: 100%;
+
+      .structure-header-mobile-menu-button{
+        height: 46px;
+        width: 46px;
+        border-radius: 50%;
+        background: rgba(255,255,255,1);
+        margin-right: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: $defaultCardShadow;
+        position: relative;
+        color: $colorSecondary;
+
+        span{
+          font-size: 14pt;
+          color: $colorSecondary;
+        }
+        i{
+          font-size: 16pt;
+          width: 22px;
+          color: $colorSecondary;
+
+
+        }
+        &:before{
+          content : '';
+          border-radius: 50%;
+          @extend .transition02;
+        }
+
+        &:hover, &:active, &:focus{
+          &:before{
+            position: absolute;
+            width: 46px;
+            height: 46px;
+            background: rgba(0,0,0,0.2);
+            z-index: 1;
+            @extend .transition02;
+          }
+        }
+      }
+      .structure-header-mobile-account-name{
+        flex : 1;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        label{
+          font-size: 9pt;
+          font-weight: 300;
+          color: #fff;
+          line-height: 1.2;
+          display: flex;
+          align-items: center;
+          padding-right: 20px;
+          i{
+            font-weight: 900;
+            font-size: 10pt;
+          }
+        }
+        p{
+          font-size: 15pt;
+          font-weight: 400;
+          color: #fff;
+          line-height: 1.2;
+          font-family: $fontSecondary;
+        }
+      }
+      .structure-header-mobile-account-picture{
+        height: 46px;
+        width: 46px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: $defaultCardShadow;
+        position: relative;
+        img{
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+        &:before{
+          content : '';
+          border-radius: 50%;
+          @extend .transition02;
+        }
+
+        &:hover, &:active, &:focus{
+          &:before{
+            position: absolute;
+            width: 46px;
+            height: 46px;
+            background: rgba(0,0,0,0.2);
+            z-index: 1;
+            @extend .transition02;
+          }
+        }
+
+      }
+
+      $mobileMenuWidth : 80%;
+      .structure-header-mobile-menu{
+        height: 100vh;
+        width: $mobileMenuWidth;
+        z-index: $Z-menu;
+        background: #ffffff;
+        box-shadow: $shadow;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left:- $mobileMenuWidth;
+        @extend .transition03;
+        .structure-header-mobile-menu-wrapper {
+          height: 100%;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          overflow-y: scroll;
+          padding-left: 15px;
+          padding-right: 15px;
+
+
+
+          .structure-header-mobile-menu-logo {
+            width: 100%;
+            height: $primaryToolbarHeight;
+            display: flex;
+            margin-bottom: 10px;
+            justify-content: center;
+            flex-direction: row;
+            align-items: center;
+            img {
+              flex: 1;
+              max-width: 140px;
+              height: 100%;
+              object-fit: contain;
+            }
+
+            &:before{
+              position: absolute;
+              left: 0;
+              content: '\2715';
+              height: 42px;
+              width: 42px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-radius: 50%;
+              color: #000;
+              background: #f5f5f5;
+              border: 1px solid #eeeeee;
+              margin-right: 0;
+              margin-left: 10px;
+
+              &:active &:focus, &:hover{
+                background: #ffffff;
+              }
+            }
+          }
+          .structure-header-mobile-menu-item.primary {
+            @extend .transition03;
+            width: 100%;
+            height: 60px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 9px;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid #eeeeee;
+            border-radius: 8px;
+            text-decoration: none !important;
+            i {
+              width: 50px;
+              font-size: 18pt;
+              color: $colorSecondary;
+              line-height: 0;
+            }
+            span {
+              padding: 0;
+              font-size: 10pt;
+              font-family: $fontPrimary;
+              font-weight: 300;
+              color: $colorSecondary;
+            }
+
+            &.active{
+              @include gradient;
+              box-shadow: $shadowSecondary;
+              border: none;
+              i,span{
+                color: #fff !important;
+              }
+            }
+
+            &:hover, &:active, &:focus{
+              background: #fafafa;
+              border-color: $colorSecondary;
+            }
+
+          }
+          .structure-header-mobile-menu-divider{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            height: 1px ;
+            width: 100%;
+            background: #eee;
+
+          }
+          .structure-header-mobile-menu-item.secondary {
+            padding: 10px;
+            span {
+              padding: 0;
+              font-size: 10pt;
+              font-family: $fontPrimary;
+              font-weight: 500;
+              color: #aaaaaa;
+            }
+            &:hover, &:active, &:focus{
+              span{
+                color: $colorSecondary;
+              }
+            }
+          }
+        }
+      }
+
+    }
+
+    .structure-header-overlay{
+      height: 100vh;
+      width: 100vw;
+      background : #000;
+      opacity: 0.8;
+      z-index:  ($Z-menu + $Z-header) / 2;
+      position: fixed;
+      top:0;
+      bottom: 0;
+      overflow-y: hidden;
+      display: none;
+    }
+
+  }
+
+
+  main{
+    @extend .defaultContainer;
+    padding: 0;
+    min-height: 100vh;
+    height: 100%;
+
+
+    .structure-side{
+      width: $sidebarWidth;
+      height: 100%;
+      min-height: 100vh;
+      background: #ffffff;
+      box-shadow: 1px 0 5px 1px rgba(0,0,0,.04);
+      z-index: 1;
+      position: fixed;
+      bottom: 0;
+      top: $toolbarHeight;
+
+      .structure-side-wrapper {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        position: fixed;
+        width: $sidebarWidth;
+
+        .structure-side-item {
+          position: relative;
+          margin-top: 20px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          cursor: pointer;
+
+          .structure-side-item-container {
+            width: $sidebarWidth - 20px;
+            height: $sidebarWidth - 20px;
+            border-radius: 50%;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 3px 0 rgba(90, 92, 107, 0.12);
+
+            @extend .transition02;
+
+            i {
+              font-size: 16pt;
+              color: $colorPrimary;
+              @extend .transition02;
+            }
+
+            &:hover {
+              @extend .transition02;
+              box-shadow: $defaultCardShadowHover;
+              i {
+                color: $colorSecondary;
+                @extend .transition02;
+              }
+            }
+
+          }
+          &.active {
+            .structure-side-item-container {
+              @include gradient();
+
+              i {
+                color: #ffffff;
+              }
+
+              &:hover {
+                i {
+                  color: #ffffff;
+                }
+              }
+            }
+
+          }
+
+          span {
+            display: none;
+            color: #ffffff;
+            font-size: 10pt;
+            position: absolute;
+            left: $sidebarWidth + 5;
+            border-radius: 4px;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.90);
+            box-shadow: $shadow;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+
+          &:hover {
+            span {
+              display: flex;
+            }
+          }
+
+        }
+
+      }
+
+
+
+    }
+    .structure-main{
+      height: 100%;
+      min-height: 100vh;
+      flex: 1;
+      background: #ffffff;
+      z-index: 0;
+      padding: 30px + $toolbarHeight 30px 30px 30px + $sidebarWidth;
+      display: flex;
+      flex-direction: column;
+
+      section{
+        padding-bottom: 20px;
+
+      }
+
+    }
+  }
+
+
+
+}
+
+
+
+
+@media all and(max-width: $col-lg){
+
+
+  body{
+    section.structure-network-cover{
+      .structure-network-cover-wrapper-container{
+        max-width: 100%;
+        width: 94%;
+        .structure-network-cover-wrapper{
+          padding: $toolbarHeight + 15px 15px 15px 15px;
+          .structure-network-cover-header{
+            .structure-network-cover-header-title{
+              visibility: hidden;
+              position: absolute;
+              &:after{
+                visibility: visible;
+              }
+            }
+            .structure-network-cover-header-toggle-container{
+              margin-left: auto;
+              padding: 5px 12px 5px 8px;
+              border-radius: 6px;
+              p{
+                padding-right: 8px;
+
+              }
+
+            }
+          }
+
+
+
+          .structure-network-cover-card {
+            border-radius: $defaultCardBorderRadiusMini;
+            padding: $defaultCardPaddingMini;
+            height: 200px;
+            margin-bottom: 10px;
+
+            .structure-network-cover-card-icon {
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex: 0.35;
+              position: relative;
+              img {
+                height: 100%;
+                width: 100%;
+                max-height: 160px;
+                object-fit: contain;
+              }
+              .structure-network-cover-card-icon-count{
+                position: absolute;
+                bottom: -3px;
+                right: -3px;
+                width: 34px;
+                height: 34px;
+                background: rgba(0,0,0,0.9);
+                border-radius: 50%;
+                box-shadow: $defaultCardShadow;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+            }
+            .structure-network-cover-card-info {
+              flex: 0.65;
+              padding-left: 10px;
+              padding-right: 10px;
+              .structure-network-cover-card-info-wrapper {
+                p {
+                  font-size: 12pt;
+                }
+                span {
+                  font-size: 10pt;
+                }
+
+              }
+
+            }
+
+            .structure-network-cover-card-button {
+              a {
+                height: 46px;
+                width: 46px;
+              }
+            }
+
+          }
+
+          .structure-network-cover-section{
+
+            margin-bottom: 10px;
+            .structure-network-cover-section-content{
+              padding-top: 10px;
+            }
+
+
+
+            &.labels{
+              .structure-network-cover-section-content {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                margin-left: -5px;
+
+              }
+            }
+
+            &.actions{
+              .structure-network-cover-section-content {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-gap: 10px;
+                padding-top: 10px;
+
+
+                .structure-network-cover-action{
+                  grid-column: span 1;
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  opacity: 0.6;
+                  cursor: pointer;
+
+                }
+
+              }
+            }
+
+          }
+
+        }
+      }
+
+
+    }
+
+  }
+
+  body.primary {
+    header {
+      .structure-header-content {
+        display: none;
+      }
+      .structure-header-mobile-content {
+        display: flex;
+
+      }
+
+    }
+
+
+
+    main{
+      .structure-main{
+        padding: 15px + $toolbarHeight 15px 15px 15px;
+        section{
+
+        }
+
+      }
+      .structure-side{
+        display: none;
+      }
+    }
+
+    &.menu-visible {
+      overflow-y: hidden;
+      header {
+        .structure-header-mobile-content {
+          .structure-header-mobile-menu {
+            left: 0 !important;
+          }
+        }
+      }
+    }
+  }
+
+}
+
+/**  Special styling for edge cases */
+
+@media all and (max-width: $canvasWidth){
+  body{
+    section.structure-network-cover{
+      .structure-network-cover-wrapper-container {
+        .structure-network-cover-wrapper {
+          width: 100%;
+          max-width: 100% !important;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+/**
+ * ---------------------------
+ *
+ * SECONDARY STRUCTURE
+ *
+ * ---------------------------
+ */
+
+
+body.secondary{
+
+  &.manager {
+    @include gradient();
+  }
+
+  header{
+    width: 100%;
+    height: $toolbarHeight;
+    box-shadow: $shadowHover;
+    position: fixed;
+    z-index: $Z-header;
+    @include gradient();
+    .structure-header-content{
+      @extend .defaultContainer;
+      padding: 10px;
+      position: relative;
+      .structure-header-logo{
+        height: $toolbarHeight - 20px;
+        width: $toolbarHeight - 20px;
+        border-radius: 50%;
+        background: #fff;
+        margin-right: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @extend .transition02;
+
+        i{
+          width: 30px;
+          font-size: 22pt;
+          color:  rgba(4, 190, 254, 1);
+          @include gradient(25deg);
+          background-size: 100%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          @extend .transition02;
+        }
+
+        &:hover{
+          transform: scale(1.03);
+          box-shadow: $shadowHover;
+
+          @extend .transition02;
+          i {
+            background-size: 200%;
+            @extend .transition02;
+          }
+        }
+      }
+
+      .structure-header-title{
+        display: flex;
+        align-items: center;
+        i{
+          font-size: 18pt;
+          width: 24px;
+          margin-right: 20px;
+          color: #ffffff;
+        }
+        p{
+          font-size: 16pt;
+          color: #ffffff;
+          font-family: $fontSecondary;
+          font-weight: 400;
+        }
+      }
+
+
+
+      .structure-header-buttons{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        flex: 1;
+        padding-right: 20px;
+        .structure-header-button{
+          height: 36px;
+          width: 36px;
+          border-radius: 50%;
+          box-shadow: $defaultCardShadowHover;
+          background: #ffffff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          user-select: none;
+          i:first-of-type{
+            color: #eee;
+            font-size: 16pt;
+          }
+          .badge{
+            span{
+
+            }
+          }
+        }
+      }
+      .structure-header-account{
+        height: $toolbarHeight - 20px;
+        border-radius: ($toolbarHeight - 20px) / 2;
+        background: #ffffff;
+        box-shadow: $defaultCardShadowHover;
+        display: flex;
+        padding: 5px;
+        flex-direction: row;
+        align-items: center;
+        .structure-header-account-picture{
+          height: $toolbarHeight - 20px - 10px;
+          width: $toolbarHeight - 20px - 10px;
+          border-radius: ($toolbarHeight - 20px - 10px) / 2;
+          background: #fff;
+          border: 1px solid #eee;
+          img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+          }
+        }
+        .structure-header-account-name{
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          flex: 1;
+          padding-left: 10px;
+          padding-right: 10px;
+          label{
+            font-size: 9pt;
+            font-weight: 500;
+            color: $colorSecondary;
+            line-height: 1.2;
+          }
+          p{
+            font-size: 12pt;
+            color: #000;
+            line-height: 1.3;
+
+          }
+        }
+
+        .structure-header-account-button{
+          padding: 5px;
+          cursor: pointer;
+          user-select: none;
+          i{
+            font-size: 20pt;
+            color: #ccc;
+            margin-top: 5px;
+            width: 27px;
+            @extend .transition02;
+          }
+          &:hover{
+            i{
+              color: $colorSecondary;
+            }
+          }
+
+        }
+
+      }
+      .structure-header-menu{
+        position: absolute;
+        right: 20px;
+        top: $toolbarHeight - 2px;
+        width: 220px;
+        border-radius: 4px;
+        box-shadow: $shadowSpecialElement;
+        background: #ffffff;
+        display: none;
+        flex-direction: column;
+        border: $defaultCardBorder;
+        .structure-header-menu-item:not(:last-of-type){
+          border-bottom: 1px solid #f5f5f5;
+        }
+        .structure-header-menu-item{
+          width: 100%;
+          padding: 15px 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          @extend .transition01;
+          p{
+            font-size: 10pt;
+            color: #888888;
+            @extend .transition01;
+          }
+
+          &:hover{
+            background: #f5f5f5;
+            @extend .transition01;
+            p{
+              color: #000;
+              @extend .transition01;
+            }
+          }
+        }
+        .structure-header-menu-item:first-of-type{
+          border-radius: 4px 4px 0 0;
+        }
+        .structure-header-menu-item:last-of-type{
+          border-radius: 0 0 4px 4px;
+        }
+      }
+
+      .structure-header-account.active{
+        .structure-header-account-button{
+          i{
+            color: $colorSecondary;
+            transform: scale(1.1);
+
+          }
+        }
+
+        &~.structure-header-menu{
+          display: flex;
+        }
+      }
+
+    }
+
+
+    .structure-header-overlay{
+      height: 100vh;
+      width: 100vw;
+      background : #000;
+      opacity: 0.8;
+      z-index:  ($Z-menu + $Z-header) / 2;
+      position: fixed;
+      top:0;
+      bottom: 0;
+      overflow-y: hidden;
+      display: none;
+    }
+
+  }
+  main{
+    @extend .defaultContainer;
+    padding: 0;
+    min-height: 100vh;
+    height: 100%;
+
+
+    .structure-main{
+      height: 100%;
+      min-height: 100vh;
+      flex: 1;
+      background: #ffffff;
+      z-index: 0;
+      padding: 30px + $toolbarHeight 30px 30px 30px;
+      display: flex;
+      flex-direction: column;
+
+      section{
+        padding-bottom: 20px;
+
+      }
+
+    }
+  }
+
+}
+
+
+@media all and(max-width: $col-lg){
+
+
+  body.secondary {
+    header{
+
+      .structure-header-content{
+        padding: 10px;
+        position: relative;
+        .structure-header-logo{
+          height: 46px;
+          width: 46px;
+          border-radius: 50%;
+          background: #fff;
+          margin-right: 15px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-shrink: 0;
+          i{
+            width: auto;
+            font-size: 16pt;
+          }
+
+        }
+
+        .structure-header-title{
+          flex: 1;
+
+          i{
+            display: none;
+          }
+          p{
+            font-size: 15pt;
+          }
+        }
+
+
+
+        .structure-header-buttons{
+          display: none;
+          .structure-header-button{
+            height: 36px;
+            width: 36px;
+            border-radius: 50%;
+            box-shadow: $defaultCardShadowHover;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            i:first-of-type{
+              color: #eee;
+              font-size: 16pt;
+            }
+            .badge{
+              span{
+
+              }
+            }
+          }
+        }
+
+        .structure-header-account{
+          background: transparent;
+          box-shadow: none;
+          padding: 0;
+          .structure-header-account-picture{
+            height: 46px;
+            width: 46px;
+            border-radius: ($toolbarHeight - 20px - 10px) / 2;
+            background: #fff;
+            border: none;
+            img{
+              height: 100%;
+              width: 100%;
+              object-fit: cover;
+              border-radius: 50%;
+            }
+          }
+          .structure-header-account-name{
+            display: none;
+          }
+
+          .structure-header-account-button{
+            display: none;
+          }
+
+        }
+        .structure-header-menu{
+          display: none;
+        }
+
+        .structure-header-account.active{
+          &~.structure-header-menu{
+            display: none;
+          }
+        }
+
+      }
+      .structure-header-mobile-content{
+        display: none;
+      }
+
+
+    }
+
+
+
+  }
+
+}

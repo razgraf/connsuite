@@ -201,15 +201,12 @@ const ContentSideNetwork = styled(NetworkMini)`
   }
 `;
 
-function Preview({ className, reducer, network, isBarActive }) {
-  const bar = useMemo(
-    () =>
-      ellipsis(
-        `${_.toString(_.get(network, "url")) || "https://www.network.com"}/${_.toString(_.get(reducer.state.username, "value"))}`,
-        40,
-      ),
-    [network, reducer.state.username],
-  );
+function Preview({ className, network, isBarActive }) {
+  const bar = useMemo(() => {
+    const root = _.get(network, "url") || "https://www.network.com";
+    const username = _.get(network, "username") || "";
+    return ellipsis(`${root}/${username}`, 40);
+  }, [network]);
 
   return (
     <Wrapper className={className}>

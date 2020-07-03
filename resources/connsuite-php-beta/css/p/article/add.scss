@@ -1,0 +1,173 @@
+@import "../../../base/config";
+.background{
+  width: 100%;
+  display: none;
+  flex-direction: column;
+}
+body{
+  min-height:100vh;min-width: 300px; display: block; height: 100%;
+  background: #f3f8fa;
+
+}
+.sectionHeading{
+  font-size: 13pt;
+  color: $colorPrimary;
+  padding: 20px 0 5px;
+}
+
+#mainContentContainer {
+  background: #ffffff;
+  display: flex;
+  padding: 20px 60px 40px 60px;
+  flex-direction: column;
+  position: relative;
+  min-height: 90vh; }
+
+
+@media all and (max-width: 970px) {
+  #mainContentContainer {
+    padding: 20px 15px;
+  }
+
+}
+/**
+EDITOR
+ */
+input:focus,
+select:focus,
+textarea:focus,
+div:focus,
+button:focus {
+  outline: none;
+}
+
+
+#editorContainer{
+  width: 100%;
+  //border: 1px solid #eeeeee;
+  box-shadow:  $shadowNormal;
+  padding: 20px; border-radius: 30px;
+}
+.editable{
+  font-size: 13pt;
+  padding : 0 20px;
+}
+
+#customMDE{
+  z-index: 200;
+}
+.rightFormTitle{
+  font-size: 13pt;
+  color: #000;
+  margin-bottom: 15px;
+}
+
+
+.rightFormInput {
+  color: #000000;
+  font-family: $fontSecondaryBold;
+  font-size: 20pt;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  outline: none;
+  border: none; }
+
+.rightFormInput::-webkit-input-placeholder {
+  color: #ddd; }
+
+.rightFormInput::-moz-placeholder {
+  color: #ddd; }
+
+.rightFormInput:-ms-input-placeholder {
+  color: #ddd; }
+
+
+
+
+#C_choosePictureContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 5px;
+  @extend .transition03;
+
+ }
+
+#noPictureContainer{
+  min-height: 350px;display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#noPictureContainer > span {
+  text-align: center; font-size: 30pt; font-weight: 300; color: #ddd;
+  @extend .transition03;
+}
+
+#C_choosePictureContainer:hover{
+  border: 1px solid #bbbbbb;
+  @extend .transition03;
+}
+
+#C_choosePictureContainer:hover #noPictureContainer > span{
+  color: #bbbbbb;
+  @extend .transition03;
+}
+#bottomButtonContainer{
+  width: 100%; display: flex; justify-content: center; align-items: center; margin-top: 40px; margin-bottom: 80px;
+}
+
+#outputContainer, #output{
+  border-radius: 3px;
+}
+.imageAddItemContainer{
+  max-width: 100%; display: flex; flex-direction: row;
+}
+.imageAddItemContainer .buttonTypeFullWhite{
+  margin-left: 20px;
+}
+@media all and (max-width: 970px){
+  #noPictureContainer > span {
+    font-size: 15pt;
+  }
+  #noPictureContainer{
+    min-height: 150px;
+  }
+  #bottomButtonContainer{
+    margin-bottom: 40px;
+  }
+  .rightFormInput{
+    font-size: 16pt;
+  }
+  .imageAddItemContainer{
+    flex-direction: column;
+  }
+  .imageAddItemContainer .buttonTypeFullWhite{
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+
+
+
+.imageContainer{
+  width: 100%;
+  border: 1px solid #ddd;
+  padding: 20px; border-radius: 5px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.CodeMirror-code{
+  font-size: 14pt;
+}
+

@@ -1,0 +1,41 @@
+@VANSOFTWARE
+
+--------------- Sticky Notes Library ---------------
+
+ Project independent
+ Requires database connection
+
+----------------------------------------------------
+
+ Database requirements:
+
+    TABLE : note
+    TABLE : note_link
+
+----------------------------------------------------
+    --
+    -- Table structure for table `note`
+    --
+
+    CREATE TABLE `note` (
+      `ID` int(11) NOT NULL,
+      `title` varchar(200) NOT NULL,
+      `content` varchar(2000) NOT NULL,
+      `instantiated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      `edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+----------------------------------------------------
+    --
+    -- Table structure for table `note_link`
+    --
+
+    CREATE TABLE `note_link` (
+      `ID` int(11) NOT NULL,
+      `type` int(11) NOT NULL DEFAULT '1',
+      `parentID` int(11) NOT NULL,
+      `noteID` int(11) NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+----------------------------------------------------

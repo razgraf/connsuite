@@ -1,0 +1,295 @@
+@import "../../base/config";
+.background{
+  width: 100%;
+  display: none;
+}
+body{
+  min-height:100vh;min-width: 300px; display: block; height: 100%;
+  background: $backgroundColor;
+
+}
+#mainContentContainer{
+  background: #ffffff;
+  display: flex;
+  padding: 30px 60px 40px 60px;
+  flex-direction: column;
+  position: relative;
+  min-height: 90vh;
+}
+
+
+.sectionHeading{
+  font-size: 13pt;
+  color: #04befe;
+  padding: 10px 0; /* This is for the text to align with the bootstrap components */
+}
+
+body .searchItemOuterContainer{
+  min-height: 285px;
+  margin: (0 !important);
+  padding: (5px 5px 15px 5px !important);
+  position: relative;
+
+}
+
+.searchItemPositionContainer{
+  position: relative;
+
+}
+
+.searchItemContainer{
+  width: 100%;
+  border-radius: $borderRadiusDesktop;
+  margin: 10px auto 0;
+  padding: 20px;
+  background: #ffffff;
+  box-shadow: $shadowNormal;
+  border: $borderNormal;
+  position: absolute;
+}
+.searchItemContainer:hover{
+  box-shadow: $shadowSpecialElement;
+}
+
+.searchItemContainer:hover .searchItemPicture{
+  height: 100px;
+  width: 100px;
+  transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  -o-transition: all 0.2s;
+}
+.searchItemPictureContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15px 5px 15px;
+}
+
+.searchItemPicture{
+  height: 94px;
+  width: 94Px;
+  border-radius: 50%;
+  border: 1px solid $colorPrimary;
+  object-fit: cover;
+  transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  -o-transition: all 0.2s;
+}
+
+.searchItemMainContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 5px 10px;
+  min-height: 60px;
+  justify-content: center;
+}
+.searchItemMainName{
+ font-size: 13pt;
+  color: #000000;
+  text-align: center;
+  width: 100%;
+}
+
+.searchItemMainTagline{
+  font-size: 11pt;
+  color: #aaaaaa;
+  text-align: center;
+}
+.searchItemBottomContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.searchItemBottomLastContainer{
+ display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.searchItemBottomLastNetworksContainer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1px;
+}
+.searchItemBottomUsername{
+  font-size: 11pt;
+  color: #000000;
+  font-family: $fontSecondary;
+
+}
+
+.searchItemViewButton{
+  text-transform: none;
+  cursor: pointer;
+  font-size:10pt;padding: 5px 16px; color: $colorPrimary; border: 1px solid $colorPrimary;border-radius: 15px;
+  @extend .transition03;
+}
+.searchItemViewButton:hover{
+  color: white; border: 1px solid $colorPrimary; background: $colorPrimary;
+  @extend .transition03;
+}
+
+
+.searchItemNetworkContainer {
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #eeeeee;
+  padding: 3px;
+  border-radius: 5px;
+  margin-right: 3px;
+  }
+
+.searchItemNetworkImage {
+  width: 20px;
+  margin: 0 auto;
+  border-radius: 3px;
+}
+
+
+@media all and (max-width : 992px ) {
+
+  #mainContentContainer {
+    padding: 20px 0;
+  }
+
+  .searchItemContainer:hover .searchItemPicture{
+    height: 75px;
+    width: 75px;
+  }
+  .searchItemPicture{
+    height: 60px;
+    width: 60Px;
+  }
+  .searchItemMainName{
+    font-size: 11pt;
+  }
+  .searchItemBottomUsername{font-size: 9pt;}
+  .searchItemContainer{padding: 15px 10px 10px;border-radius: $borderRadiusMobile;}
+  .searchItemViewButton{font-size: 8pt;padding: 4px 12px;}
+  .searchItemNetworkContainer{
+
+    height: 25px;
+    width: 25px;
+    padding: 1px;
+  }
+
+  body .searchItemOuterContainer {
+    min-height: 230px;
+  }
+}
+
+
+
+
+#headerSearchCenterContainer{
+  width: 100%;
+  min-height: 160px;
+  @extend .gradient25;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 75px;
+}
+
+#headerSearchCenterBar{
+  height: 64px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: $shadowSpecialElement;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 20px;
+  @extend .transition03;
+}
+#headerSearchCenterBar:hover{
+  box-shadow: 0 0 20px 0 rgba(0,0,0,.3);
+  @extend .transition03;
+}
+
+
+#headerSearchBarInputContainer{
+  display: flex;
+  height: 100%;
+  flex: 1%;
+  flex-direction: column;
+}
+#headerSearchBarInput{
+  background: transparent;
+  width: 100%;
+  font-size: 16pt;
+  font-family: $fontPrimary;
+  font-weight: 300;
+  color: #000;
+  outline: none;
+  flex: 1;
+  border: none;
+  text-decoration: none;
+}
+$colorHint : #aaa; //$colorSecondary;
+#headerSearchBarInput::-webkit-input-placeholder { color: $colorHint;font-weight: 300; font-size: 13pt; }
+#headerSearchBarInput::-moz-placeholder {color: $colorHint;font-weight: 300;font-size: 13pt;}
+#headerSearchBarInput:-ms-input-placeholder { color: $colorHint;font-weight: 300;font-size: 13pt;}
+#headerSearchBarInput:active ~ #headerSearchBarDivider,
+#headerSearchBarInput:focus ~ #headerSearchBarDivider,
+#headerSearchBarInput:hover ~ #headerSearchBarDivider{ background: $colorPrimary; @extend .transition03;}
+#headerSearchBarDivider{
+  width: 100%;
+  margin-bottom: 3px;
+  background: #eee;
+  //@extend .gradient25;
+  height: 1px;
+}
+#headerSearchButtonContainer{
+  margin-left: 30px;
+  height: 36px;
+  width: 36px;
+  border-radius: 18px;
+  background: $colorPrimary;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  @extend .transition03;
+}
+#headerSearchButtonContainer:hover{
+  transform: scale(1.15);
+  background: $colorPrimary;
+  @extend .transition03;
+}
+
+
+
+#headerSearchButtonContainer i {
+  font-size: 14pt;
+  color: #ffffff;
+}
+
+@media all and (max-width: 992px){
+  #headerSearchCenterContainer{
+    padding: 20px 10px;
+    min-height: 100px;
+  }
+
+  #headerSearchCenterBar{
+    padding: 5px 15px;
+  }
+  #headerSearchButtonContainer{margin-left: 5px; height: 30px; width: 30px; border-radius:15px;}
+  #headerSearchButtonContainer i {font-size: 12pt;}
+  #headerSearchBarInput{  font-size: 13pt;  }
+  #headerSearchBarInput::-webkit-input-placeholder { font-size: 11pt; }
+  #headerSearchBarInput::-moz-placeholder {font-size: 11pt;}
+  #headerSearchBarInput:-ms-input-placeholder { font-size: 11pt;}
+}

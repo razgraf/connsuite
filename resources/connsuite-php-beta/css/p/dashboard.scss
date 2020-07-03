@@ -1,0 +1,1013 @@
+@import "../../base/config";
+.background{
+    width: 100%;
+    display: none;
+}
+
+#dashboardContent{
+    width: 100%;
+    flex: 1;
+    z-index: 1;
+    overflow-x: hidden;
+    height: 100%;
+    padding: 10px 10px; /* Padding was eliminated from bootstrap components */
+}
+
+.sectionHeading{
+    font-size: 13pt;
+    color: #04befe;
+    margin-bottom: 10px;
+    padding: 10px 0 0 20px; /* This is for the text to align with the bootstrap components */
+}
+#connAddItemOuterContainer{
+    opacity: 0.4;
+    cursor: pointer;
+  @extend .transition03;
+}
+.connAddItemContainer{
+    width: 98%;
+    padding-bottom: 98%;
+    border-radius: $borderRadiusDesktop;
+    margin: 15px auto 0;
+    /*background: #f3f8fa;*/
+    border: 1px solid $standardGray;
+    position: relative;
+}
+
+.connAddItemMainContainer{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    border-radius: $borderRadiusDesktop;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+}
+
+.connAddItemDetailButton{
+    /*  border: 1px solid #04befe; */
+    background: #ffffff;
+    /*border: 1px solid #04befe;*/
+    /*box-shadow: 0 0 30px 0 rgba(0,0,0,.085);*/
+    height : 38px;
+    width: 96%;
+    max-width: 200px;
+    right: 0;
+    text-decoration: none;
+    border-radius: 19px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $standardGraySpecial;
+    font-size: 11pt;
+}
+
+#connAddItemOuterContainer:hover{
+    -webkit-animation: fadeinAdd 0.2s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadeinAdd 0.2s; /* Firefox < 16 */
+    -o-animation: fadeinAdd 0.2s; /* Opera < 12.1 */
+    animation: fadeinAdd 0.2s;
+    opacity: 1;
+}
+
+.connAddItemIcon{
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+    opacity: 0.8;
+}
+
+
+
+
+
+
+
+
+
+#rightDetailPageCover{
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.85);
+    z-index: 998;
+    top: 0;
+    left: 0;
+
+    -webkit-animation: fadeinDetailCover 0.2s;
+    -o-animation: fadeinDetailCover 0.2s;
+    animation: fadeinDetailCover 0.2s;
+
+    /*display: flex; !* TODO ONLY FOR TEST & STYLING *!*/
+}
+
+
+
+
+#rightDetailContainer{
+    height: 100%; float: right;
+    width: 50%;
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    z-index: 999;top:0; right: 0;
+    background: rgba(4, 190, 254, 1); /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(35deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1)); /* For Safari 5.1 to 6.0 */
+    background: -moz-linear-gradient(35deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+    background: -o-linear-gradient(35deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+    box-shadow: -3px 0 6px 0 rgba(0,0,0,.08);
+
+    animation-duration: 0.3s;
+    -webkit-animation-duration: 0.3s;
+    -moz-animation-duration: 0.3s;
+    -o-animation-duration: 0.3s;
+
+    overflow-y: auto;
+
+
+
+
+    /*display: flex; !* TODO ONLY FOR TEST & STYLING *!*/
+
+
+}
+
+@media all and (max-width: 970px){
+    #rightDetailContainer{
+        width: 94%;
+    }
+    .connAddItemContainer{
+        margin: 0 auto 0;
+    }
+}
+
+
+
+
+
+.rightDetailHeading{
+    font-size: 13pt;
+    color: #fff;
+    padding-bottom: 5px;
+}
+#rightDetailInnerContainer{
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 100%;
+    padding: 20px 20px 20px 20px;
+    min-height: 500px;
+}
+#rightDetailInnerContainer::-webkit-scrollbar { width: 0 !important }
+#rightDetailInnerContainer { -ms-overflow-style: none; overflow: -moz-scrollbars-none; }
+
+
+#rightDetailSectionDetailsContainer{
+    display:flex; flex-direction: column; justify-content: center; width: 100%;
+}
+#rightDetailSectionDetailsHeaderContainer{
+    display:flex; flex-direction: row; align-items: center; width: 100%;
+}
+
+.rightDetailCloseButton{
+    font-size: 11pt;
+    color: #fff;
+    padding: 7px 20px 7px 0;
+    display: none;
+    text-align: right;
+    float: left;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+/* TOGGLE */
+
+#rightDetailToggleOuterContainer{
+    flex: 1; display: flex;justify-content: flex-end;
+
+}
+#rightDetailToggleBoxContainer{
+    padding: 8px 20px 5px;
+    border: 1px solid #ffffff;display: flex;
+    align-items: center;
+    border-radius: 10px;
+}
+#publicToggleTitle{
+    color: #fff; font-size: 11pt; margin-right: 20px; margin-bottom: 3px;
+}
+body #publicToggle.c_materialDesignToggleCheckbox:checked ~ label:after {
+    left: 20px;
+    background: #ffffff;
+}
+
+body #publicToggle.c_materialDesignToggleCheckbox:checked ~ label {
+    background: #04befe;
+}
+
+
+
+
+
+/* Account Card */
+#rightDetailAccountCardContainer{
+    width: 100%;
+    background: #ffffff;
+    min-height: 200px;
+    margin-top:20px;
+    border-radius: $borderRadiusDesktop;
+    padding: 20px 20px 20px 40px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 30px 0 rgba(0,0,0,.06);
+    align-items: center;
+
+}
+
+@media all and(max-width: 992px){
+  #rightDetailAccountCardContainer{
+    padding: 20px 20px 20px 20px;
+    border-radius: $borderRadiusMobile;
+    min-height: 140px;
+  }
+}
+
+#rightDetailAccountCardCredentialsContainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    margin-left: 10px;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+#rightDetailAccountCardCredentialsNetwork{
+    font-size: 17pt;
+    margin: 0;
+    color: #222;
+    font-weight: 300;
+    font-family: 'Quicksand_Book','Source Sans Pro',sans-serif;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+}
+
+#rightDetailAccountCardCredentialsUsername{
+    font-size: 13pt;
+    color: #888;
+    margin: 0;
+
+    word-break: break-all;
+
+}
+#visitAccountButton{
+    display: flex;
+    height: 50px;
+    width: 50px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    background: #ffffff;
+    box-shadow: 0 0 15px 0 rgba(0,0,0,.06);
+    cursor: pointer;
+}
+
+#visitAccountButton:hover{
+    box-shadow: 0 0 20px 1px rgba(0,0,0,.1);
+}
+
+
+#rightDetailSectionInfoContainer{
+    display:flex; margin-top: 20px; flex-direction: column; justify-content: center; width: 100%;
+}
+
+
+#rightDetailInfo{
+    font-size: 9pt;
+    color: #fff;
+    white-space: pre-line;
+    font-weight: 400;
+}
+
+
+
+#rightDetailSectionLabelsContainer{
+    display:flex; margin-top: 20px; flex-direction: column; justify-content: center; width: 100%;
+}
+
+#rightDetailSectionActionContainer{
+    display:flex; margin-top: 5px; flex-direction: column; justify-content: center; width: 100%;
+    margin-bottom: 40px;
+}
+
+.rightDetailActionContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    max-width: 180px;
+}
+.rightDetailActionIcon{
+    color:#fff; font-size:15pt;opacity: 0.5;
+}
+.rightDetailActionText{
+    color: #fff; font-size: 9pt; font-weight: 400; margin-left: 10px; opacity: 0.5;
+}
+.rightDetailActionContainer:hover i, .rightDetailActionContainer:hover  span {
+    color: #ffffff; opacity: 1;
+}
+
+
+#rightDetailClickContainer{
+  height: 25px;
+  width: 25px;
+  background: rgba(0,0,0,0.9);
+  border-radius: 50%;
+  position: absolute;
+  bottom:-3px;
+  right: -8px;
+}
+#rightDetailClickContainer{
+
+  color: #ffffff;
+  font-size: 0.7em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#rightDetailAccountIcon{
+  border-radius: 5px;
+}
+
+@media all and (max-width: 992px){
+  #rightDetailInnerContainer{
+    padding: 15px;
+  }
+  #rightDetailClickContainer{
+    bottom:-8px;
+    right: -8px;
+    height: 22px;
+    width: 22px;
+  }
+}
+
+
+#newsParentOwl{
+  box-shadow:  3px 0 5px -3px rgba(0,0,0,0.05), -3px 0 5px -3px rgba(0,0,0,0.05);
+}
+
+
+.owl-item{
+  top: 7px;
+}
+
+
+/*
+Share Modal
+ */
+
+body .a2a_default_style a{
+    padding: 2px;
+}
+
+#connItemsParent{
+    width: 100%;
+    padding: 0;
+}
+#newsParent{
+  padding: 0 15px;
+  margin-bottom: 20px;
+}
+@media all and (max-width: 992px){
+
+    .owl-carousel{
+      box-shadow: none;
+    }
+    #newsParent{
+      padding: 0 5px;
+      margin-bottom: 15px;
+    }
+    #connItemsParent{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    body #connAddItemOuterContainer{
+        padding: 5px !important;
+    }
+
+    #rightDetailSectionDetailsHeaderContainer{
+        display: block;
+    }
+    #rightDetailToggleOuterContainer{
+        justify-content: flex-end;
+    }
+
+    #rightDetailHeadingFirst{
+        display: none;
+    }
+    .rightDetailCloseButton{
+        display: flex;
+    }
+
+    #rightDetailAccountCardCredentialsContainer div{
+        //max-width: 120px;
+    }
+    #rightDetailAccountCardCredentialsNetwork{
+        font-size: 13pt;
+    }
+    #rightDetailAccountCardCredentialsUsername{
+        font-size: 9pt;
+    }
+
+
+  .connAddItemContainer,.connAddItemMainContainer{border-radius: $borderRadiusMobile}
+
+}
+
+
+
+
+
+
+#reorderNetworksButton{
+    border-radius: 3px;
+    height: 30px;
+    width: 30px;
+    margin-left: 20px;
+    border: 1px solid $colorPrimary;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @extend .transition03;
+}
+
+#reorderNetworksButton i{
+    font-size: 13pt;
+    font-weight: 300;
+    color: $colorPrimary;
+    line-height: 1;
+    @extend .transition03;
+}
+
+#reorderNetworksButton:hover{
+    background: $colorPrimary;
+    @extend .transition03;
+}
+#reorderNetworksButton:hover i{
+    color: #ffffff;
+    @extend .transition03;
+}
+
+
+
+#reorderNetworkList{
+  width: 100%;
+  display: block;
+
+}
+
+
+.reorderNetworkItem{
+  display: inline-block;
+  border: 1px solid #f5f5f5;
+  margin: 2%;
+  width: 21%;
+}
+.reorderNetworkHandle{
+  background: #f5f5f5;
+  display: flex;
+  height: 30px;
+  align-items: center;
+  cursor: move;
+  justify-content: center;
+}
+.reorderNetworkItemInnerContainer{
+  display: flex;
+  padding: 4px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reorderNetworkItemMain{
+  background: #ffffff;
+  box-shadow: 0 0 15px 0 rgba(0,0,0,.025);
+  border: $borderNormal;
+  border-radius: $borderRadiusMobileSmall;
+  height: 100px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reorderNetworkItemMainImage{
+  object-fit: contain;
+  height: 40px;
+  width: 40px;
+}
+
+.reorderNetworkItemTitle{
+  font-family: $fontSecondary;
+  color: #000000;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 1px;
+  font-size: 10pt;
+  @extend .truncate;
+}
+
+.reorderNetworkItemUsername{
+  font-family: $fontSecondary;
+  color: #888888;
+  text-align: center;
+  padding-bottom: 5px;
+  font-size: 8pt;
+  @extend .truncate;
+}
+
+
+@media all and (max-width: 992px){
+
+ .reorderNetworkItemMain{
+   border-radius: 10px;
+ }
+  .reorderNetworkItemUsername,.reorderNetworkItemTitle{
+    max-width: 80px;
+  }
+  .reorderNetworkItem{
+    width: 29.3%
+  }
+  .reorderNetworkItemMain{
+    width: 90px;
+    height: 90px;
+  }
+  .reorderNetworkItemMainImage{
+    height: 40px;
+    width: 40px;
+  }
+}
+
+
+/**
+*--------------------------------------------------
+*---------------------TUTORIAL---------------------
+*--------------------------------------------------
+*/
+
+#tutorialParentOwl{
+   padding: 0 5px;
+}
+
+
+$tutorialMiniCardHeight : 100px;
+$tutorialMiniCardWidth: 280px;
+.tutorialMiniCardContainer{
+  padding: 5px 15px 15px 10px ;
+  user-select: none;
+}
+.tutorialMiniIndex{
+  height: 42px;
+  width: 42px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tutorialMiniCard{
+  width: $tutorialMiniCardWidth;
+  height:$tutorialMiniCardHeight;
+  border-radius: 20px;
+  border: $borderSolidLightGray;
+  background: #ffffff;
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+.tutorialMiniCard > .tutorialMiniIndex{
+  background: #eeeeee;
+  @extend .transition03;
+}
+.tutorialMiniCard > .tutorialMiniIndex:hover{
+  box-shadow: $shadowNormal;
+  transform: scale(1.1);
+  @extend .transition03;
+}
+.tutorialMiniCard > .tutorialMiniIndex span{
+  color: #aaaaaa;
+  font-weight: 500;
+  font-size: 12pt;
+}
+
+.tutorialMiniContent{
+  display: flex;
+  flex-direction: column;
+  padding-left: 15px;
+  height: 100%;
+  flex: 1;
+  justify-content: center;
+}
+.tutorialMiniTitle{
+  font-family: $fontSecondary;
+  font-size: 14pt;
+  margin: 0;
+}
+.tutorialMiniTitle i{
+  font-size: 12pt;
+  padding-left: 5px;
+  color: $colorPurplePrimary;
+}
+.tutorialMiniDescription{
+  font-family: $fontPrimary;
+  font-size: 10pt;
+  margin: 0;
+  color: #888888;
+}
+
+
+
+.tutorialMiniCardActive{
+  width: $tutorialMiniCardWidth;
+  height: $tutorialMiniCardHeight + 10;
+  border-radius: 20px;
+  box-shadow:$shadowPurpleNormal;
+  @extend .gradientPurple;
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  -webkit-animation-name: animationCardShadow;
+  -moz-animation-name: animationCardShadow;
+  -o-animation-name: animationCardShadow;
+  animation-name: animationCardShadow;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  -moz-animation-direction: alternate;
+  -o-animation-direction: alternate;
+  animation-direction: alternate;
+}
+.tutorialMiniCardActive > .tutorialMiniIndex{
+   background: rgba(255,255,255,1);
+  @extend .transition03;
+ }
+.tutorialMiniCardActive > .tutorialMiniIndex:hover{
+  box-shadow: $shadowWhiteNormal;
+  transform: scale(1.1);
+  @extend .transition03;
+}
+.tutorialMiniCardActive > .tutorialMiniIndex i{
+  background: $colorPurplePrimary;
+  background: -webkit-linear-gradient(-25deg, $colorPurplePrimary, $colorPurpleSecondary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tutorialMiniCardNext{
+  border: 1px solid #aaaaaa
+}
+
+
+.tutorialMiniCard .tutorialMiniTitle{
+  color: #aaaaaa;
+}
+.tutorialMiniCardActive .tutorialMiniTitle{
+  color: #ffffff;
+}
+
+.tutorialMiniCardActive .tutorialMiniDescription{
+  color: #ffffff;
+}
+
+
+@keyframes animationCardShadow {
+ from{box-shadow: $shadowPurpleNormal} to{box-shadow: $shadowPurpleHover}
+}
+
+.modalTutorialButtonSpecial{
+  height: 46px;
+  min-width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 10px 10px 20px;
+  color: #ffffff;
+  border-radius: 23pt;
+  @extend .gradient25;
+  margin-left: (20px !important);
+  box-shadow: $shadowGradientNormal;
+  cursor: pointer;
+  background-size:200%;
+  background-position-x: 90%;
+  @extend .transition03;
+}
+.modalTutorialButtonSpecial:hover{
+  background-position-x: 0;
+  @extend .transition03;
+}
+.modalTutorialButtonSpecial span{
+  color: #ffffff;
+  font-size: 13pt;
+  text-align: center;
+}
+.modalTutorialButtonSpecial div{
+  text-align: center;
+  margin-left: 10px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modalTutorialButtonSpecial div i{
+  color: #ffffff;
+  font-size: 14pt;
+}
+
+
+#tutorialModalContent{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px 0 20px 20px;
+
+}
+#tutorialModalTitle{
+  font-size: 16pt;
+  color: #000000;
+  font-family: $fontSecondary;
+
+}
+#tutorialModalDescription{
+  font-size: 12pt;
+  color: #888888;
+  font-family: $fontPrimary;
+}
+
+
+#share-buttons img {
+  width: 35px;
+  padding: 5px;
+  border: 0;
+  box-shadow: 0;
+  display: inline;
+}
+
+
+
+#tutorialModalLastCardContainer{
+  width: 100%;
+  display: none;
+  padding-top: 20px;
+}
+#tutorialModalLastCard{
+  width: 100%;
+  height: 80px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #ffffff;
+}
+
+#tutorialModalLastIconContainer{
+  border-radius: 19px 0 0 19px;
+  width: 100px;
+  height: 100%;
+  @extend .gradient;
+  background-size:200%;
+  background-position-x: 0;
+  animation-name: animationGradient;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#tutorialModalLastIconContainer img{
+  width: 40px; height: 40px;object-fit: contain;
+}
+
+
+@keyframes animationGradient{
+  from {  background-position-x: 100%;}
+  to {  background-position-x: 0;}
+}
+
+#tutorialModalLastCardContent{
+  width: 100%;
+  height: 100%;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+#tutorialModalLastCardContent p{
+  font-size: 12pt;
+  font-family: $fontSecondary;
+  color: #000000;
+  margin: 0;
+}
+
+#visitProfile1{
+  padding-bottom: 20px;
+}
+#closeButtonContainer{
+  position: absolute;right: 30px;
+  z-index: 100000;
+}
+
+#tutorialModal .modal-body{
+  border-radius:20px 20px 0 0; padding-top: 30px;padding-bottom: 10px;
+}
+#closeButtonContainer{
+  right: 30px;
+}
+@media all and (max-width: 992px){
+  body #tutorialModal .modal-dialog .container-fluid.row{
+    margin-left: (0 !important);
+    margin-right: (0  !important);
+    padding-left: (0 !important);
+    padding-right: (0  !important);
+  }
+  #tutorialModalContent{
+    padding: 20px 0 0 0;
+  }
+  #visitProfile1{
+    padding-bottom: 15px;
+    padding-top: 20px;
+  }
+  #tutorialModal .modal-body{
+    padding-top: 20px;padding-bottom: 10px;
+  }
+  #closeButtonContainer{
+    right: 20px;
+  }
+  #tutorialModalLastCardContent{
+    padding: 10px;
+  }
+  #tutorialModalLastCardContent p{
+    font-size: 11pt;
+  }
+}
+
+#tutorialExtraParent{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+#tutorialExtraParent .tutorialMiniIndex{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+#tutorialShareText{
+  color: $colorPrimary;
+}
+#tutorialShareText:hover{
+  color: $colorSecondary;
+}
+
+#tutorialVideoContainer{
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto;
+}
+#tutorialVideoOverlayContainer{
+  width: 100%;
+  border: 2px dashed $colorPrimary;
+  border-radius: 10px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#tutorialVideoWrapperContainer{
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+#tutorialVideoWrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; }
+#tutorialVideoWrapper iframe, #tutorialVideoWrapper object, #tutorialVideoWrapper embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+
+
+.playVideoContainer{
+  display: flex;
+}
+.playVideoButtonOutline,.playVideoButtonOutlinePrimary{
+  height: 20px; width: 20px;display: flex; justify-content: center; align-items: center; border-radius: 50%;
+  color: #aaaaaa;
+}
+.playVideoButtonOutlinePrimary{
+  border: 1px solid #aaaaaa;
+  @extend .transition03;
+}
+
+
+
+.rightFormTitle{
+  font-size: 13pt;
+  color: #000;
+  margin-bottom: 15px;
+}
+#rightFormUserlink{
+  margin-right: 5px;
+  font-size: 9pt;
+}
+.rightFormInput{
+  color: #000000;
+  font-size: 11pt;
+  font-weight: 300;
+  text-decoration: none;
+  display: inline-block;
+  outline: none;
+  border: none;
+}
+//.rightFormInput::-webkit-input-placeholder { color: #888; }
+//.rightFormInput::-moz-placeholder {color: #888; }
+//.rightFormInput:-ms-input-placeholder { color: #888;}
+
+
+
+
+
+
+
+
+
+#localConnNotificationCard{
+  height: 60px;
+  width: 300px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #ffffff;
+  box-shadow: $shadowNormal;
+}
+
+#localConnNotificationIconContainer{
+  border-radius: 29px 0 0 29px;
+  width: 80px;
+  height: 100%;
+  @extend .gradient;
+  background-size:200%;
+  background-position-x: 0;
+  animation-name: localConnNotificationAnimationGradient;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#localConnNotificationIconContainer img{
+  width: 30px; height: 30px;object-fit: contain;
+}
+
+
+@keyframes localConnNotificationAnimationGradient{
+  from {  background-position-x: 100%;}
+  to {  background-position-x: 0;}
+}
+
+#localConnNotificationCardContent{
+  width: 100%;
+  height: 100%;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+#localConnNotificationCardContent p{
+  font-size: 12pt;
+  font-family: $fontSecondary;
+  color: #000000;
+  margin: 0;
+}

@@ -1,0 +1,414 @@
+.gradient {
+  background: #04befe;
+  background: linear-gradient(15deg, #4481eb, #04befe);
+  background: -webkit-linear-gradient(15deg, #4481eb, #04befe);
+  background: -moz-linear-gradient(15deg, #4481eb, #04befe);
+  background: -o-linear-gradient(15deg, #4481eb, #04befe); }
+
+.gradient85 {
+  background: #04befe;
+  background: linear-gradient(15deg, rgba(68, 129, 235, 0.85), rgba(4, 190, 254, 0.85));
+  background: -webkit-linear-gradient(15deg, rgba(68, 129, 235, 0.85), rgba(4, 190, 254, 0.85));
+  background: -moz-linear-gradient(15deg, rgba(68, 129, 235, 0.85), rgba(4, 190, 254, 0.85));
+  background: -o-linear-gradient(15deg, rgba(68, 129, 235, 0.85), rgba(4, 190, 254, 0.85)); }
+
+.gradient25 {
+  background: #04befe;
+  background: linear-gradient(25deg, #4481eb, #04befe);
+  background: -webkit-linear-gradient(25deg, #4481eb, #04befe);
+  background: -moz-linear-gradient(25deg, #4481eb, #04befe);
+  background: -o-linear-gradient(25deg, #4481eb, #04befe); }
+
+.gradientPurple {
+  background: #7F00FF;
+  background: linear-gradient(-25deg, #7F00FF, #E100FF);
+  background: -webkit-linear-gradient(-25deg, #7F00FF, #E100FF);
+  background: -moz-linear-gradient(-25deg, #7F00FF, #E100FF);
+  background: -o-linear-gradient(-25deg, #7F00FF, #E100FF); }
+
+.gradientOrange {
+  background: #f9d423;
+  background: linear-gradient(25deg, #f9d423, #ff4e50);
+  background: -webkit-linear-gradient(25deg, #f9d423, #ff4e50);
+  background: -moz-linear-gradient(25deg, #f9d423, #ff4e50);
+  background: -o-linear-gradient(25deg, #f9d423, #ff4e50); }
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+.transition01 {
+  transition: all 0.1s;
+  -moz-transition: all 0.1s;
+  -webkit-transition: all 0.1s;
+  -o-transition: all 0.1s; }
+
+.transition02 {
+  transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  -o-transition: all 0.2s; }
+
+.transition03 {
+  transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s; }
+
+.transition05 {
+  transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s; }
+
+.disableClick {
+  filter: grayscale(50%);
+  opacity: 0.5;
+  pointer-events: none; }
+
+body {
+  overflow-y: hidden; }
+
+.background {
+  min-height: 100vh;
+  overflow-y: auto;
+  background: #04befe;
+  /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(15deg, #4481eb, #04befe);
+  /* For Safari 5.1 to 6.0 */
+  background: -moz-linear-gradient(15deg, #4481eb, #04befe);
+  background: -o-linear-gradient(15deg, #4481eb, #04befe);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  display: none; }
+
+#backgroundContainer {
+  width: 100%;
+  align-self: center;
+  max-width: 1200px;
+  height: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+#backgroundCard {
+  width: 100%;
+  min-height: 100%;
+  background: #fff;
+  border-radius: 30px;
+  margin: 0 auto;
+  align-items: center;
+  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.08);
+  padding: 10px;
+  overflow-y: auto; }
+
+#backgroundCardHalfDivider {
+  position: absolute;
+  float: right;
+  right: 0;
+  background: #04befe;
+  height: 88%;
+  width: 1px; }
+
+@media all and (max-width: 970px) {
+  #backgroundCardHalfDivider {
+    display: none; } }
+.backgroundCardHalf {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  min-height: 600px; }
+
+.leftTitle {
+  font-family: "Quicksand_Book", "Source Sans Pro", sans-serif;
+  font-size: 15pt;
+  color: #000;
+  text-align: center;
+  line-height: 1.3; }
+
+.leftChoiceHeading {
+  font-size: 11pt;
+  color: #aaaaaa; }
+
+#leftNetworksTable {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 300px; }
+
+#networkChosenPicture {
+  object-fit: contain; }
+
+.leftNetworksTableItemContainer {
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 1px 5px; }
+
+.leftNetworksTableItemImageContainer {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #f5f5f5;
+  border-radius: 5px; }
+
+.leftNetworksTableItemImage {
+  width: 30px;
+  margin: 0 auto; }
+
+.slickArrow {
+  color: #04befe; }
+
+body .slick-slide {
+  user-select: none;
+  user-focus: none; }
+
+body .slick-list, body .slick-slide {
+  outline: none !important; }
+
+body .slick-prev:before, .slick-next:before {
+  content: none !important; }
+
+/**
+Network Card
+ */
+.cardNetworks {
+  background: #FFFFFF;
+  max-width: 300px;
+  width: 300px;
+  height: 300px;
+  padding: 20px;
+  margin-top: 30px;
+  border-radius: 30px;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  text-align: center; }
+
+.cardNetworksProducts {
+  position: relative;
+  overflow: hidden;
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.cardNetworksTitle {
+  margin: 15px 0 6px;
+  color: #000;
+  font-size: 15pt;
+  font-weight: 300;
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease; }
+
+/**
+-------------------
+Right Side
+ */
+#backgroundCardRightInnerContainer {
+  padding-left: 20px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto; }
+
+.rightFormTitle {
+  font-size: 13pt;
+  color: #000;
+  margin-bottom: 15px; }
+
+#rightFormUserlink {
+  margin-right: 5px;
+  font-size: 9pt; }
+
+.rightFormInput {
+  color: #000000;
+  font-size: 11pt;
+  font-weight: 300;
+  text-decoration: none;
+  display: inline-block;
+  outline: none;
+  border: none; }
+
+.rightFormInput::-webkit-input-placeholder {
+  color: #888; }
+
+.rightFormInput::-moz-placeholder {
+  color: #888; }
+
+.rightFormInput:-ms-input-placeholder {
+  color: #888; }
+
+/* TOGGLE */
+#rightDetailToggleOuterContainer {
+  flex: 1;
+  display: flex;
+  height: 100%;
+  justify-content: flex-start;
+  margin-top: 20px; }
+
+#rightDetailToggleBoxContainer {
+  padding: 8px 20px 5px;
+  border: 1px solid #04befe;
+  display: flex;
+  align-items: center;
+  border-radius: 10px; }
+
+#publicToggleTitle {
+  color: #04befe;
+  font-size: 11pt;
+  margin-right: 20px;
+  margin-bottom: 3px; }
+
+body #publicToggle.c_materialDesignToggleCheckbox:checked ~ label:after {
+  left: 20px;
+  background: #ffffff; }
+
+body #publicToggle.c_materialDesignToggleCheckbox:checked ~ label {
+  background: #04befe; }
+
+body .c_materialDesignToggleLabel {
+  border: 1px solid #04befe;
+  background: #f5f5f5; }
+
+body #publicToggle.c_materialDesignToggleCheckbox:checked ~ label:after {
+  background: #fff; }
+
+#rightAddNetworkButtonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 70px;
+  margin-bottom: 20px; }
+
+#cancelButton {
+  margin-right: 20px; }
+
+@media all and (max-width: 992px) {
+  body .background {
+    min-height: 100vh;
+    height: 100%; }
+
+  #rightAddNetworkButtonContainer {
+    margin-top: 30px; }
+
+  #backgroundCardRightInnerContainer {
+    padding-top: 0;
+    padding-left: 0; }
+
+  .backgroundCardHalf {
+    justify-content: flex-start;
+    padding-top: 10px;
+    padding-bottom: 10px; }
+
+  body {
+    overflow-y: auto; }
+
+  #backgroundCard {
+    overflow-y: hidden;
+    margin-top: 20px;
+    margin-bottom: 20px; }
+
+  .backgroundCardHalf {
+    height: auto; }
+
+  body #leftNetworksTable {
+    width: 90%;
+    margin: 0 auto;
+    max-width: 200px; }
+
+  #rightAddNetworkButtonContainer {
+    margin-top: 30px;
+    flex-direction: column;
+    align-items: center; }
+
+  #cancelButton {
+    margin-bottom: 15px;
+    margin-right: 0; } }
+@media all and (max-height: 1730px) and (min-width: 1000px) {
+  body .background {
+    min-height: 100vh;
+    height: 100%; }
+
+  #rightAddNetworkButtonContainer {
+    margin-top: 30px; }
+
+  #backgroundCardRightInnerContainer {
+    padding-top: 0;
+    padding-left: 0; }
+
+  .backgroundCardHalf {
+    justify-content: flex-start;
+    padding-top: 10px; }
+
+  body {
+    overflow-y: auto; }
+
+  #backgroundCard {
+    overflow-y: hidden;
+    margin-top: 20px;
+    margin-bottom: 20px; }
+
+  .backgroundCardHalf {
+    height: auto; }
+
+  body #leftNetworksTable {
+    width: 90%;
+    margin: 0 auto;
+    max-width: 200px; } }
+/**
+-----------------------------
+CUSTOM
+-----------------------------
+ */
+#C_networkNameContainer {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  display: none;
+  max-width: 300px;
+  margin-bottom: 20px; }
+
+#C_choosePictureContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  display: none; }
+
+#chooseThumbnailButton {
+  margin-top: 30px; }
+
+#outputContainer {
+  height: 250px;
+  width: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+#C_additionalFields {
+  display: flex; }
+
+#pictureContainer {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex; }
+
+/*# sourceMappingURL=edit.css.map */

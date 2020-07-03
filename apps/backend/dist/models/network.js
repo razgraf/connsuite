@@ -76,7 +76,7 @@ function interpret(network, result = {}) {
             return;
         const supported = constants_1.networks[network.externalId];
         result.title = supported.title;
-        result.url = supported.url + "/" + network.username;
+        result.url = supported.url + (!lodash_1.default.isNil(network.username) ? "/" + network.username : "");
         result.icon = image_1.toImageDTO(supported.icon);
         result.thumbnail = image_1.toImageDTO(supported.thumbnail);
     }

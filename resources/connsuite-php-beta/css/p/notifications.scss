@@ -1,0 +1,229 @@
+@import "../../base/config";
+.background{
+  width: 100%;
+  display: none;
+}
+body{
+  min-height:100vh;min-width: 300px; display: block; height: 100%;
+  background: $backgroundColor;
+
+}
+#mainContentContainer{
+  background: #ffffff;
+  display: flex;
+  padding: 30px 60px 40px 60px;
+  flex-direction: column;
+  position: relative;
+  min-height: 90vh;
+}
+
+#notificationsContainer{
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  border-radius: 30px;
+  padding: 30px;
+  min-height: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+}
+.notificationsSingleContainer{
+  width:100%;display: flex; flex-direction: column;
+}
+.sectionHeading{
+  font-size: 13pt;
+  color: #04befe;
+  padding: 10px 0; /* This is for the text to align with the bootstrap components */
+}
+/**
+BUSINESS REQUEST
+ */
+.businessRequestUserPictureOuterContainer{
+  height: 100%;
+  padding: 20px 10px;
+  min-width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.businessRequestUserPictureContainer {
+  position: relative;
+  width: 60px;
+  height: 60px; }
+
+.businessRequestUserPicture {
+  border-radius: 50%;
+  position: relative;
+  object-fit: cover;
+  border: 1px solid #eeeeee;
+  width: 60px;
+  height: 60px; }
+
+.businessRequestContentContainer{
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+
+}
+.businessRequestContent{
+font-size: 11pt;
+}
+.businessRequestContentButtonsContainer{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+}
+.smallButtonOutlinePrimary{
+  height: 36px;
+  border-radius: 18px;
+  background: transparent;
+  border:1px solid $colorPrimary;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $colorPrimary;
+  min-width: 120px;
+  padding: 0 15px ;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.smallButtonOutlinePrimary:hover,.smallButtonOutlinePrimary:active{
+  border:1px solid $colorSecondary;
+  color: $colorSecondary;
+
+}
+.smallButtonOutlineSecondary{
+  @extend .smallButtonOutlinePrimary;
+  border : 1px solid $colorSecondary;
+  color : $colorSecondary;
+  margin-right: 10px;
+}
+.smallButtonOutlineSecondary:hover,.smallButtonOutlineSecondary:active{
+  border:1px solid #036990;
+  color: #036990;
+}
+
+.smallButtonOutlineGray {
+  height: 36px;
+  border-radius: 18px;
+  background: transparent;
+  border: 1px solid #dddddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #dddddd;
+  min-width: 120px;
+  padding: 0 15px;
+  margin-right: 0;
+  cursor: pointer; }
+
+.smallButtonOutlineGray:hover, .smallButtonOutlineGray:active {
+  border: 1px solid #aaaaaa;
+  color: #aaaaaa; }
+
+@media all and (max-width : 970px ) {
+  #mainContentContainer {
+    padding: 20px 0;
+  }
+  #notificationsContainer{
+    padding: 10px;
+    border-radius: 20px;
+  }
+  .businessRequestUserPictureOuterContainer,.businessRequestContentContainer{
+    padding: 10px;
+  }
+  .businessRequestUserPictureContainer, .businessRequestUserPicture{
+    height: 40px;
+    width: 40px;
+  }
+  .smallButtonOutlinePrimary,.smallButtonOutlineSecondary, .smallButtonOutlineGray{
+    height: 30px;
+    font-size: 9pt;
+    border-radius: 15px;
+    min-width: 60px;
+    padding: 0 5px;
+  }
+  .smallButtonOutlinePrimary,.smallButtonOutlineSecondary{
+   margin-right: 5px;
+  }
+  .businessRequestUserPictureOuterContainer{
+    min-width: 80px;
+  }
+}
+
+/*
+BUSINESS REQUEST SELF ACCEPTED
+ */
+
+
+.businessRequestSelfAcceptedUserPictureOuterContainer{
+ @extend .businessRequestUserPictureOuterContainer;
+}
+.businessRequestSelfAcceptedUserPictureContainer {
+  @extend .businessRequestUserPictureContainer;
+  }
+
+.businessRequestSelfAcceptedUserPicture {
+  @extend .businessRequestUserPicture;
+}
+
+.businessRequestSelfAcceptedUser2PictureContainer {
+  @extend .businessRequestUserPictureContainer;
+  height: 30px;
+  width: 30px;
+  margin-left: 10px;
+}
+
+.businessRequestSelfAcceptedUser2Picture {
+  @extend .businessRequestUserPicture;
+  height: 30px;
+  width: 30px;
+}
+.businessRequestSelfAcceptedContent{
+  @extend .businessRequestContent;
+}
+.businessRequestSelfAcceptedContentContainer{
+ @extend .businessRequestContentContainer;
+}
+.businessRequestSelfAcceptedContentButtonsContainer{
+@extend .businessRequestContentButtonsContainer;
+}
+
+
+/*
+BUSINESS REQUEST ACCEPTED
+ */
+
+
+.businessRequestAcceptedUserPictureOuterContainer{
+  @extend .businessRequestUserPictureOuterContainer;
+}
+.businessRequestAcceptedUserPictureContainer {
+  @extend .businessRequestUserPictureContainer;
+}
+
+.businessRequestAcceptedUserPicture {
+  @extend .businessRequestUserPicture;
+}
+
+.businessRequestAcceptedUser2PictureContainer {
+  @extend .businessRequestSelfAcceptedUser2PictureContainer;
+}
+
+.businessRequestAcceptedUser2Picture {
+  @extend .businessRequestSelfAcceptedUser2Picture;
+}
+
+.businessRequestAcceptedContentContainer{
+  @extend .businessRequestContentContainer;
+}
+.businessRequestAcceptedContentButtonsContainer{
+  @extend .businessRequestContentButtonsContainer;
+}
+.businessRequestAcceptedContent{
+  @extend .businessRequestContent;
+  color: $colorPrimary;
+}

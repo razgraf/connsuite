@@ -1,0 +1,67 @@
+.c_materialDesignToggleLabel {
+    position: relative;
+    display: block;
+    height: 18px;
+    width: 38px;
+    background: #dddddd;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #fff;
+}
+.c_materialDesignToggleLabel:after {
+    position: absolute;
+    left: -2px;
+    top: -3px;
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-radius: 100px;
+    background: #fff;
+    box-shadow: 0 1px 3px 3px rgba(0,0,0,0.05);
+    content: '';
+    transition: all 0.3s ease;
+}
+.c_materialDesignToggleLabel:active:after {
+    transform: scale(1.15, 0.85);
+}
+.c_materialDesignToggleCheckbox:checked ~ label {
+    background: #6fbeb5;
+}
+.c_materialDesignToggleCheckbox:checked ~ label:after {
+    left: 20px;
+    background: #179588;
+}
+.c_materialDesignToggleCheckbox:disabled ~ label {
+    background: #d5d5d5;
+    pointer-events: none;
+}
+.c_materialDesignToggleCheckbox:disabled ~ label:after {
+    background: #bcbdbc;
+}
+
+.c_materialDesignToggleHidden {
+    display: none;
+}
+
+
+/**
+ENABLED UNCHECKED
+   <div>
+    <input type="checkbox" id="toggle" class="c_materialDesignToggleCheckbox c_materialDesignToggleHidden"/>
+    <label for="toggle" class="c_materialDesignToggleLabel"></label>
+  </div>
+
+ENABLED CHECKED
+  <div>
+    <input type="checkbox" id="toggle" class="c_materialDesignToggleCheckbox c_materialDesignToggleHidden" checked/>
+    <label for="toggle" class="lbl"></label>
+  </div>
+
+DISABLED
+   <div>
+    <input type="checkbox" id="toggle_disabled" class="c_materialDesignToggleCheckbox c_materialDesignToggleHidden" disabled/>
+    <label for="toggle_disabled" class="lbl"></label>
+  </div>
+
+ */

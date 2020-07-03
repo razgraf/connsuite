@@ -1,0 +1,80 @@
+@import "../structure";
+
+body {
+
+
+
+
+
+
+
+  main{
+    .structure-main{
+        section{
+          .sectionTitle:first-of-type{
+            padding-top: 0;
+          }
+          .sectionTitle{
+            .sectionButton{
+              padding-right: 16px !important;
+            }
+          }
+          .networks{
+            grid-template-columns: repeat(4, 1fr) !important;
+            padding: 0;
+          }
+
+        }
+    }
+  }
+
+}
+
+
+
+
+
+@media all and (max-width: $col-lg) {
+  body {
+
+
+    main{
+      .structure-main{
+          section{
+            &.section-networks{
+              .networks{
+                grid-template-columns: repeat(3, 1fr) !important;
+              }
+            }
+          }
+      }
+    }
+
+  }
+}
+
+
+
+
+
+/**
+ *
+ * Special
+ *
+ */
+
+@media all and (max-width: $col-md) {
+  body {
+    main {
+      .structure-main {
+        section {
+          &.section-networks {
+            .networks {
+              grid-template-columns: repeat(2, 1fr) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

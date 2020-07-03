@@ -1,0 +1,2726 @@
+@import "../base/config";
+
+.button{
+  user-select: none;
+  min-height: 46px;
+  padding: 8px 30px;
+  min-width: 160px;
+  border-radius: 23px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  .loader i {  color: #ffffff !important;}
+  i{
+    color: #ffffff;
+    font-size: 14pt;
+    margin-right: 6px;
+    @extend .transition02;
+  }
+  span{
+    color: #ffffff;
+    font-family: $fontPrimary !important;
+    font-size: $fontSizeButtonText;
+    font-weight: 300;
+    text-decoration: none;
+    text-underline: none;
+    @extend .transition02;
+  }
+
+  @extend .transition02;
+}
+
+.button:hover{
+  @extend .transition03;
+  transform: translate(0,-3px);
+  i,span{
+    @extend .transition03;
+  }
+}
+
+
+.buttonPrimary,.buttonSecondary{
+  @extend .button;
+}
+
+
+.buttonPrimary{
+  background: $colorPrimary;
+}
+.buttonPrimary:hover{
+  background: $colorPrimaryLight;
+}
+
+.buttonSecondary{
+  background: $colorSecondary;
+}
+.buttonSecondary:hover{
+  background: $colorSecondaryLight;
+}
+
+.buttonGray{
+  @extend .button;
+  background: #bbbbbb;
+}
+.buttonGray:hover{
+  background: #cccccc;
+}
+
+.buttonOutline{
+  @extend .button;
+  background: transparent;
+  border: 1px solid #000;
+  .loader i {  color: #000 !important;}
+  i{
+    color: #000;
+  }
+  span{
+    color: #000;
+  }
+
+
+}
+.buttonOutline:hover{
+  @extend .transition03;
+  background: rgba(0,0,0,0.04);
+  transform: none;
+}
+
+
+.buttonSecondaryOutline{
+  @extend .buttonOutline;
+  border-color: $colorSecondary;
+  span,i{
+    color: $colorSecondary;
+  }
+}
+.buttonSecondaryOutline:hover{
+  background: $colorSecondary;
+  span,i, .loader i{
+    color: #fff !important;
+  }
+}
+
+.buttonPrimaryOutline{
+  @extend .buttonOutline;
+  border-color: $colorPrimary;
+  span,i{
+    color: $colorPrimary;
+  }
+}
+.buttonPrimaryOutline:hover{
+  background: $colorPrimary;
+  span,i{
+    color: #fff;
+  }
+}
+
+
+
+
+@mixin buttonCustom($background, $text : #fff){
+  background: $background !important;
+  @extend .button;
+  i{
+    color: $text!important;
+  }
+
+  span{
+    color: $text !important;
+  }
+
+}
+@mixin buttonOutlineCustom($border, $text){
+  @extend .buttonOutline;
+  background: transparent;
+  border: 1px solid $border;
+
+  .loader i {  color: $text !important;}
+
+
+  i{
+    color: $text!important;
+  }
+
+  span{
+
+    color: $text !important;
+  }
+
+  &:hover{
+    background: $border;
+    i,span,.loader i{color: #ffffff !important;}
+  }
+
+
+
+}
+
+.buttonMini{
+  user-select: none;
+  min-height: 36px;
+  padding: 2px 20px 2px 20px;
+  min-width: 60px;
+  border-radius: 18px!important;
+  display: flex!important;
+  flex-direction: row!important;
+  justify-content: center!important;
+  align-items: center!important;
+  text-align: center!important;
+  cursor: pointer!important;
+
+  .loader i {  color: #ffffff !important;}
+
+
+  i{
+    color: #ffffff!important;
+    font-size: 11pt!important;
+    margin-right: 4px!important;
+    @extend .transition02;
+  }
+
+  span{
+    color: #ffffff;
+    font-family: $fontPrimary !important;
+    font-size: 9pt;
+    font-weight: 300;
+    text-decoration: none;
+    text-underline: none;
+    @extend .transition02;
+  }
+
+  @extend .transition02;
+}
+.buttonMini:hover{
+  @extend .transition02;
+  i,span,p{
+    @extend .transition02;
+  }
+}
+
+@mixin buttonMiniCustom($background, $text){
+  min-height: 34px;
+  padding: 4px 9px;
+  min-width: 60px;
+  border-radius: 3px!important;
+  display: flex!important;
+  flex-direction: row!important;
+  justify-content: center!important;
+  align-items: center!important;
+  text-align: center!important;
+  cursor: pointer!important;
+  background: $background;
+
+
+  .loader i {  color: $text !important;}
+
+
+  i{
+    color: $text!important;
+    font-size: 14pt!important;
+    margin-right: 6px!important;
+  }
+
+  span{
+    color: $text;
+    font-family: $fontPrimary;
+    font-size: 9pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-underline: none;
+  }
+
+  @extend .transition02;
+
+  :hover{
+    background: lighten($background, 10%);
+    @extend .transition03;
+  }
+}
+
+
+
+.buttonGrayMini{
+  @extend .buttonMini;
+  background: #bbbbbb !important;
+}
+.buttonGrayMini:hover{
+  background: #cccccc!important;
+}
+
+.buttonPrimaryMini{
+  @extend .buttonMini;
+  background: $colorPrimary!important;
+}
+.buttonPrimaryMini:hover{
+  background: $colorPrimaryLight!important;
+}
+
+.buttonSecondaryMini{
+  @extend .buttonMini;
+  background: $colorSecondary!important;
+}
+.buttonSecondaryMini:hover{
+  background: $colorSecondaryLight!important;
+}
+
+.buttonMiniOutline{
+  @extend .buttonMini;
+  background: transparent;
+  border: 1px solid #eeeeee;
+}
+.buttonMiniOutline:hover{
+  background: rgba(0,0,0,0.04);
+}
+
+@mixin buttonMiniOutlineCustom($border, $text){
+  @extend .buttonMiniOutline;
+  background: transparent;
+  border: 1px solid $border;
+
+  .loader i {  color: $text !important;}
+
+
+  i{
+    color: $text!important;
+  }
+
+  span{
+    color: $text !important;
+  }
+
+
+  &:hover{
+    background: $border;
+    i,span,.loader i{color: #ffffff !important;}
+  }
+
+}
+
+.buttonSecondaryMiniOutline{
+  @extend .buttonMiniOutline;
+  border-color: $colorSecondary;
+  span,i{
+    color: $colorSecondary;
+  }
+}
+.buttonSecondaryMiniOutline:hover{
+  border-color: $colorSecondary;
+  background: $colorSecondary;
+  span,i{
+    color: #ffffff;
+  }
+}
+
+.buttonPrimaryMiniOutline{
+  @extend .buttonMiniOutline;
+  border-color: $colorPrimary;
+  span,i{
+    color: $colorPrimary !important;
+  }
+}
+.buttonPrimaryMiniOutline:hover{
+  border-color: $colorPrimary;
+  background: $colorPrimary;
+  span,i{
+    color: #ffffff !important;
+  }
+}
+
+.buttonMiniClear{
+  @extend .buttonMini;
+  background: transparent;
+  border: none;
+}
+.buttonMiniClear:hover{
+  background: transparent;
+}
+
+.buttonSecondaryMiniClear{
+  @extend .buttonMiniClear;
+
+  span,i{
+    color: $colorSecondary;
+  }
+}
+.buttonSecondaryMiniClear:hover{
+  background: #f5f5f5 !important;
+  span,i{
+    color: $colorSecondaryLight;
+  }
+}
+
+.buttonPrimaryMiniClear{
+  @extend .buttonMiniClear;
+  span,i{
+    color: $colorPrimary;
+  }
+}
+.buttonPrimaryMiniClear:hover{
+  background: #f5f5f5 !important;
+  span,i{
+    color: $colorPrimaryLight;
+  }
+}
+
+
+.buttonOutlineWhite{
+  @include buttonOutlineCustom(#fff,#fff);
+}
+.buttonOutlineWhite:hover{
+  background: #fff;
+  border-color: #fff;
+
+  .loader i, i, span {  color: $colorPrimary !important;}
+
+}
+
+.buttonMiniOutlineWhite{
+  @include buttonMiniOutlineCustom(#fff,#fff);
+}
+.buttonMiniOutlineWhite:hover{
+  background: #fff;
+  border-color: #fff;
+
+  .loader i, i, span {  color: $colorPrimary !important;}
+
+}
+
+.buttonOutlineSpecialWhite{
+  @extend .buttonOutlineWhite;
+}
+.buttonOutlineSpecialWhite:hover{
+  box-shadow: $shadowPrimary;
+  transform: scale(1.05);
+}
+
+.buttonSpecialWhite{
+  @include buttonCustom(#fff);
+}
+.buttonSpecialWhite:hover{
+  box-shadow: $shadowPrimary;
+  transform: scale(1.05);
+}
+
+.buttonSpecialGradient{
+  @include buttonCustom(#fff);
+  @include gradient();
+  background-size: 200%;
+}
+.buttonSpecialGradient:hover{
+  background-position-x: 100%;
+}
+
+
+
+@media all and (max-width: $col-lg){
+
+  .button{
+    min-height: 42px;
+    padding: 6px 20px;
+    min-width: 140px;
+
+    i{
+      font-size: 14pt;
+      margin-right: 5px;
+    }
+    span{
+      font-size: 11pt;
+    }
+
+  }
+  .buttonMini{
+    min-height: 34px;
+    padding: 4px 9px;
+    min-width: 80px;
+
+    i{
+      font-size: 12pt!important;
+      margin-right: 3px!important;
+    }
+    span{
+      font-size: 8pt;
+    }
+
+  }
+}
+
+
+
+.dummy{
+  opacity: 0.35!important;
+  user-select:none!important;
+  @extend .disableClick;
+  animation-name: none!important;
+  transition: none!important;
+  animation:none!important;
+  animation-duration: 0s !important;
+  color: #fff;
+}
+
+
+
+input.default{
+  color: #000;
+  font-size: 12pt;
+  font-family: $fontPrimary;
+  font-weight: 300;
+  text-decoration: none;
+  outline: none;
+}
+input.default::-webkit-input-placeholder { color: #ccc; }
+input.default::-moz-placeholder {color: #ccc; }
+input.default:-ms-input-placeholder { color: #ccc;}
+
+
+
+
+
+
+
+
+
+.field{
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  position: relative;
+  margin-bottom: 10px;
+
+
+
+  label{
+    margin-bottom: 5px;
+    color: #000;
+    font-size: 12pt;
+    order: 1;
+    font-weight: 300;
+    font-family: $fontPrimary;
+    @extend .transition02;
+  }
+
+  input, textarea{
+    border-radius: 5px;
+    background: #ffffff;
+    padding: 5px 20px;
+    border: 1px solid #E2E8EA;
+    order: 2;
+    height: 46px;
+    color: #000000;
+    font-size: 12pt;
+    font-family: $fontPrimary;
+    font-weight: 300;
+    text-decoration: none;
+    outline: none;
+
+    &::-webkit-input-placeholder { color: #a2a7a8; }
+    &::-moz-placeholder {color: #a2a7a8; }
+    &:-ms-input-placeholder { color: #a2a7a8;}
+  }
+
+  textarea{
+    resize: none;
+    height: 150px;
+  }
+
+  input:-webkit-autofill, textarea:-webkit-autofill {
+    -webkit-text-fill-color: #000 !important;
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    background-color: transparent !important;
+  }
+  input:active, input:focus,  textarea:active, textarea:focus{
+    border-color: $colorSecondary; // #a2a7a8;
+  }
+  input:active + label, input:focus + label,  textarea:active + label, textarea:focus + label {
+    color:$colorSecondary;// #8a8f90;
+    @extend .transition02;
+  }
+
+
+  input.warn, textarea.warn{
+    border-color: $red;
+    color: $red;
+
+    &~p, &~label{
+      color: $red;
+    }
+
+    &::-webkit-input-placeholder { color: $red; opacity: 0.5; }
+    &::-moz-placeholder {color: $red;opacity: 0.5; }
+    &:-ms-input-placeholder { color: $red;opacity: 0.5;}
+
+  }
+
+
+
+}
+
+
+
+.customLabel{
+  width: 100%;
+  margin-bottom: 15px;
+  color: #a2a7a8;
+  font-size: 9pt;
+  font-weight: 600;
+  font-family: $fontPrimary;
+  text-transform: uppercase;
+}
+
+
+
+/**
+Checkbox, Radio, Input, Select, ImageUpload
+ */
+
+$checkboxSize : 28px;
+.checkbox {
+  position: relative;
+  display: flex;
+  min-height: $checkboxSize;
+  align-items: center;
+  label {
+    cursor: pointer;
+    position: absolute;
+    width: $checkboxSize;
+    height: $checkboxSize;
+    top: 0;
+    left: 0;
+    background: #fff;
+    border: 1px solid #aaaaaa;
+    border-radius: 2px;
+
+  }
+  label:after {
+    opacity: 0;
+    content: '';
+    position: absolute;
+    width: $checkboxSize / 2.5;
+    height: $checkboxSize / 2.5 - 5;
+    background: transparent;
+    top: 8px;
+    left: 7px;
+    border: 2px solid $colorSecondary;
+    border-top: none;
+    border-right: none;
+    transform: rotate(-45deg);
+
+  }
+  label:hover {
+    background: #f9f9f9;
+    border: 1px solid #888888;
+  }
+  label:hover ~ p {
+    color: #777;
+  }
+  input{
+    height: $checkboxSize;
+    width: $checkboxSize;
+    opacity: 0;
+  }
+  input[type=checkbox]:checked + label:after {
+    opacity: 1;
+  }
+  input[type=checkbox]:checked ~ p{
+    color: $colorSecondary;
+  }
+  input[type=checkbox]:checked + label {
+    border-color: $colorSecondary;
+  }
+
+  p{
+    position: relative;
+    font-size: 12pt;
+    font-weight: 300;
+    font-family: $fontPrimary;
+    color: #aaa;
+    margin-left: 7px;
+    margin-right: 2px;
+  }
+}
+
+
+.radio {
+  position: relative;
+  display: flex;
+  min-height: $checkboxSize;
+  align-items: center;
+  label {
+    cursor: pointer;
+    position: absolute;
+    width: $checkboxSize;
+    height: $checkboxSize;
+    top: 0;
+    left: 0;
+    background: #fff;
+    border: 1px solid #aaaaaa;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+  label:after {
+    opacity: 0;
+    content: '';
+    position: relative;
+    width: 14px ;
+    height: 14px ;
+    background: transparent;
+    border-radius: 50%;
+    background: $colorSecondary;
+
+  }
+  label:hover {
+    background: #f9f9f9;
+    border: 1px solid #888888;
+  }
+  label:hover ~ p {
+    color: #777;
+  }
+  input{
+    height: $checkboxSize;
+    width: $checkboxSize;
+    opacity: 0;
+  }
+  input[type=radio]:checked + label:after {
+    opacity: 1;
+  }
+  input[type=radio]:checked ~ p{
+    color: $colorSecondary;
+  }
+
+  p{
+    position: relative;
+    font-size: 12pt;
+    font-weight: 300;
+    font-family: $fontPrimary;
+    color: #888;
+    margin-left: 7px;
+    margin-right: 2px;
+
+  }
+}
+.input{
+  @extend .field;
+  label{display: none;}
+  p{
+    margin-bottom: 8px;
+    color: #000; //#a2a7a8;
+    font-size: 12pt;
+    order: 1;
+    font-weight: 300;
+    font-family: $fontPrimary;
+    @extend .transition02;
+  }
+
+  input:active, input:focus,  textarea:active, textarea:focus{
+    border-color: $colorSecondary;
+     &~p, &+p{
+      color:$colorSecondary !important;
+      @extend .transition02;
+    }
+  }
+
+  input.warn,  textarea.warn{
+    border-color: $red;
+    color: $red;
+
+    &~p, &~label{
+      color: $red;
+    }
+
+
+    &::-webkit-input-placeholder { color: $red; opacity: 0.5; }
+    &::-moz-placeholder {color: $red;opacity: 0.5; }
+    &:-ms-input-placeholder { color: $red;opacity: 0.5;}
+  }
+
+
+  &.force-active{
+    input,textarea{
+      border-color: $colorSecondary;
+      color: $colorSecondary !important;
+      background: #f5f5f5;
+    }
+    p{
+      color: $colorSecondary !important;
+    }
+  }
+
+}
+
+.select{
+  @extend .field;
+  select{
+    border-radius: 5px;
+    background: #ffffff;
+    border: 1px solid #E2E8EA;
+    order: 2;
+    height: 46px;
+    color: #000000;
+    font-size: 12pt;
+    font-family: $fontPrimary;
+    font-weight: 300;
+    text-decoration: none;
+    outline: none;
+    background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+) no-repeat 95% 50%;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    padding: 5px 20px;
+    position: relative;
+  }
+  datalist{
+    select{
+      margin-top: 76px !important;
+      height: auto !important;
+      background: #ffffff !important;
+      max-height: 100px;
+      overflow-y: scroll;
+      border-radius: 6px;
+
+    }
+  }
+  label{
+    display: none;
+  }
+  > p{
+    margin-bottom: 5px;
+    color: #a2a7a8;
+    font-size: 9pt;
+    font-weight: 600;
+    font-family: $fontPrimary;
+    text-transform: uppercase;
+  }
+
+  .input{
+    padding-top: 10px;
+
+    order :2;
+  }
+}
+
+
+
+.group-checkbox, .group-radio{
+  display: flex;
+  flex-direction: column;
+
+  > p{
+    margin-bottom: 5px;
+    color: #a2a7a8;
+    font-size: 9pt;
+    font-weight: 600;
+    font-family: $fontPrimary;
+    text-transform: uppercase;
+  }
+
+  .container{
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-column-gap: 10px !important;
+    grid-row-gap: 10px !important;
+    padding: 5px !important;
+    border: 1px solid #E2E8EA;
+    border-radius: 4px;
+    min-height: 46px !important;
+    align-items: center;
+    .checkbox,.radio{
+      grid-column: span 1;
+    }
+  }
+
+}
+
+
+
+$uploadContainerSize : 250px;
+
+.upload{
+  width: auto;
+  max-width: $uploadContainerSize;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 20px;
+  justify-content: flex-start;
+
+  label,p{
+    margin-bottom: 8px;
+    color: #000;
+    font-size: 13pt;
+    order: 1;
+    font-weight: 300;
+    font-family: $fontPrimary;
+    @extend .transition02;
+  }
+
+  .upload-container{
+    order: 2;
+    width: $uploadContainerSize;
+    height: $uploadContainerSize;
+
+    border-radius: 5px;
+    padding: 20px;
+    border: 1px solid #E2E8EA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex-direction: column;
+
+    div.picture{
+      width: 100%;
+      height: 100%;
+      position: relative;
+      background: darken($backgroundColor,10%);
+      input{
+
+        display: none;
+      }
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .upload-action{
+    width: $uploadContainerSize;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 10px;
+    padding-top: 14px;
+    order: 3;
+    .upload-button{
+      grid-column: span 1;
+      @extend .buttonPrimaryMiniOutline;
+    }
+    .upload-button-remove{
+      grid-column: span 1;
+      @include buttonMiniOutlineCustom($red,$red);
+    }
+  }
+
+
+
+
+  .upload-container.warn{
+    border-color: $red;
+    color: $red;
+
+    ~p, label{
+      color: $red;
+    }
+  }
+  input.warn::-webkit-input-placeholder { color: $red; }
+  input.warn::-moz-placeholder {color: $red; }
+  input.warn:-ms-input-placeholder { color: $red;}
+
+}
+
+
+.cardView{
+  width: 100%;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: $shadowMini;
+  min-height: 20px;
+  margin-bottom: 20px;
+  .content{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media all and (max-width: $col-lg){
+  .cardView{
+    .content{
+      padding: 10px;
+    }
+  }
+}
+
+.containerBorder{
+  min-height: 36px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #eeeeee;
+  min-width: 100px;
+}
+
+.contentLabel{
+  font-size: 10pt;
+  color: #a3a5a6;
+  display: inline-flex;
+  font-weight: 600;
+  font-family: $fontPrimary;
+}
+.contentLabel::after{
+  content : "";
+  padding-left: 1px;
+  padding-right: 5px;
+}
+
+
+.contentContainer{
+  display: flex;
+  align-items: center;
+  margin: 5px 10px 5px 0;
+  i{
+    font-size: 12pt;
+    color: #a3a5a6;
+    margin-right: 5px;
+  }
+  span:not(.contentLabel) {
+    color: #000000;
+    font-weight: 400;
+    font-size: 10pt;
+
+  }
+}
+
+
+body .mobileOnly{
+  display: (none !important);
+}
+
+@media all and (max-width: $col-lg){
+  body .mobileOnly{
+    display: (flex !important);
+  }
+}
+
+
+.customScroll::-webkit-scrollbar-track {
+  border: 1px solid #eeeeee;
+  border-radius: 10px;
+}
+.customScroll::-webkit-scrollbar {
+  width: 10px;
+}
+.customScroll::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #dddddd;
+}
+
+
+
+
+
+.defaultContainer{
+  max-width: $canvasWidth;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+
+@media all and (max-width: $col-lg){
+  .defaultContainer{
+    max-width: $canvasWidth;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 15px;
+  }
+
+}
+
+
+
+
+
+
+/**
+ *
+ * ----------------------------------------------------------
+ *
+ * PROJECT STYLES | CONNSUITE
+ *
+ * ----------------------------------------------------------
+ *
+ *
+ * ----------------------------------------------------------
+ *
+ * NETWORK-CARD
+ *
+ * ----------------------------------------------------------
+ *
+ */
+
+
+$networkCardBorderRadius : $defaultCardBorderRadius + 6;
+$networkCardBorderRadiusMini : $defaultCardBorderRadiusMini;
+$networkCardBorder : $defaultCardBorder;
+$networkCardShadow : $shadow;
+$networkCardShadow-Hover : $defaultCardShadowHover;
+$networkCardPadding : $defaultCardPadding;
+$networkCardPaddingMini : $defaultCardPaddingMini;
+$networkCardNetworkFontSize : 13pt;
+$networkCardUsernameFontSize : 11pt;
+
+
+.networks{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  padding: 20px;
+  width: 100%;
+
+
+  .networkCard {
+    grid-column: span 1;
+
+    .n-card {
+      height: 0;
+      width: 100%;
+      padding-bottom: 100%;
+      position: relative;
+      background: #fff;
+      border-radius: $networkCardBorderRadius;
+      box-shadow: $networkCardShadow;
+      border: $networkCardBorder;
+      @include transition(0.15s);
+      cursor: pointer;
+
+      .n-main {
+        height: 100%;
+        width: 100%;
+        border-radius: $networkCardBorderRadius - 1;
+        padding: $networkCardPadding;
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+
+        .n-top {
+          height: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .n-status{
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ccc;
+          }
+          .n-status.visible{
+            background: $colorPrimary;
+          }
+        }
+        .n-image {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex: 1;
+          width: 100%;
+          padding: 10px;
+          img{
+            height: 100%;
+            width: 100%;
+            max-width: 120px;
+            max-height: 120px;
+            object-fit: contain;
+
+          }
+
+
+        }
+        .n-text {
+          min-height: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center !important;
+          width: 100%;
+          span{
+            color: #aaaaaa;
+            font-size: 10pt;
+            text-align: center;
+          }
+          .loader i {
+            color: #aaaaaa;
+          }
+        }
+
+      }
+
+      .n-action {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: $networkCardBorderRadius - 1;
+        background: rgba(0,0,0,0.8);
+        @include transition(0.15s);
+
+
+        .n-action-content{
+          display: flex;
+          width: 100%;
+          height: 100%;
+          padding: $networkCardPadding;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-end;
+
+
+          .n-action-link{
+            width: 46px;
+            height: 46px;
+            margin-bottom: 15px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            @extend .transition02;
+            i{
+              color: $colorPrimary;
+              font-size: 12pt;
+              @extend .transition02;
+            }
+
+            &:hover{
+              @extend .transition02;
+              box-shadow: $defaultCardShadowHover;
+              i,span{
+                color: $colorSecondary !important;
+                @extend .transition02;
+              }
+            }
+          }
+          .n-action-view{
+            width: 100%;
+            @include buttonCustom(#fff, $colorPrimary);
+            min-width: 0 !important;
+            padding-left: 15px;
+            padding-right: 15px;
+            span{
+              white-space: nowrap;
+              overflow: hidden;
+              @extend .transition02;
+            }
+
+            &:hover{
+              transform: none;
+              @extend .transition02;
+              box-shadow: $defaultCardShadowHover;
+              i,span{
+                color: $colorSecondary !important;
+                @extend .transition02;
+              }
+            }
+          }
+
+        }
+
+
+      }
+
+
+      &:hover{
+        box-shadow: $networkCardShadow-Hover;
+        border-color: #ddd;
+        @include transition(0.2s);
+
+        .n-main .n-image img{
+          filter : blur(3px);
+        }
+
+        .n-action{
+          opacity: 1;
+          @include transition(0.2s);
+        }
+
+      }
+
+
+    }
+    .n-info {
+      padding-top: 20px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .n-title{
+        p {
+          font-size: $networkCardNetworkFontSize;
+          margin: 0;
+          color: #222;
+          font-weight: 400;
+          text-align: center;
+          font-family: $fontSecondary;
+          @extend .truncate;
+
+
+        }
+      }
+      .n-username{
+        p {
+          font-size: $networkCardUsernameFontSize;
+          color: #888;
+          margin: 0;
+          max-width: 250px;
+          text-align: center;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          @extend .truncate;
+        }
+      }
+    }
+
+  }
+
+
+  .networkCard.add{
+    grid-column: span 1;
+
+    .n-card {
+      background: transparent;
+      box-shadow: none;
+
+
+      .n-main {
+        height: 100%;
+        width: 100%;
+        border-radius: $networkCardBorderRadius - 1;
+        padding: $networkCardPadding;
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+
+        img{
+          margin: 0 auto;
+          width: 100px;
+          height: 100px;
+          -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+          opacity: 0.5;
+          @extend .transition02;
+        }
+
+      }
+      &:hover{
+        @extend .transition02;
+        border-color: #aaa;
+        .n-main{
+          img{
+            opacity: 1;
+            @extend .transition02;
+          }
+        }
+        &~.n-info{
+          .n-text{
+            p{
+              color: #aaa;
+              @extend .transition02;
+            }
+
+          }
+        }
+      }
+
+    }
+    .n-info {
+      padding-top: 20px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .n-text{
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        @extend .transition02;
+        p {
+          font-size: $networkCardUsernameFontSize;
+          color: #ccc;
+          margin: 0;
+          max-width: 250px;
+          text-align: center;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          @extend .truncate;
+          @extend .transition02;
+        }
+        .loader i {
+          color: #aaa;
+        }
+
+      }
+    }
+
+
+
+  }
+
+
+}
+
+.networks.mini{
+  grid-gap: 10px;
+  padding: 10px;
+  .networkCard{
+
+    .n-card {
+      border-radius: $networkCardBorderRadiusMini;
+
+      .n-main {
+        border-radius: $networkCardBorderRadiusMini - 1;
+        padding: $networkCardPaddingMini;
+
+        .n-top {
+          height: 0;
+          .n-status{
+            right: 10px;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+          }
+        }
+        .n-image {
+          padding: 10px;
+          img{
+            max-width: 100px;
+            max-height: 100px;
+
+          }
+
+
+        }
+        .n-text {
+          min-height: 14px;
+          span{
+            font-size: $fontSizeMini;
+          }
+        }
+
+      }
+
+      .n-action {
+        border-radius: $networkCardBorderRadiusMini - 1;
+
+        .n-action-content{
+          padding: $networkCardPaddingMini;
+          .n-action-link{
+            width: 36px;
+            height: 36px;
+            margin-bottom: 10px;
+            i{  font-size: 10pt;  }
+          }
+          .n-action-view{
+            width: 100%;
+            @include buttonMiniCustom(#fff, $colorPrimary);
+          }
+
+        }
+
+
+      }
+
+
+    }
+
+    .n-info {
+      padding-top: 8px;
+      .n-title{
+        p{
+          font-size: $fontSizeText;
+        }
+      }
+      .n-username{
+        p {
+          font-size: 8pt;
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: $col-lg){
+
+  .networks{
+    grid-gap: 10px;
+    .networkCard{
+      .n-card {
+
+        .n-main {
+          height: 100%;
+          width: 100%;
+          border-radius: $networkCardBorderRadiusMini - 1;
+          padding: $networkCardPaddingMini;
+          display: flex;
+          flex-direction: column;
+          position: absolute;
+
+          .n-top {
+            height: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .n-status{
+              position: absolute;
+              right: 20px;
+              top: 20px;
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              background: $colorPrimary;
+            }
+          }
+          .n-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            width: 100%;
+            padding: 10px;
+            img{
+              height: 100%;
+              width: 100%;
+              max-width: 120px;
+              max-height: 120px;
+              object-fit: contain;
+
+            }
+
+
+          }
+          .n-text {
+            min-height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            span{
+              color: #aaaaaa;
+              font-size: 10pt;
+              text-align: center;
+            }
+          }
+
+        }
+
+        .n-action {
+          display: none;
+        }
+
+
+        &:hover{
+          box-shadow: $networkCardShadow-Hover;
+          background: #fafafa;
+
+          .n-main .n-image img{
+            filter : none;
+          }
+
+          .n-action{
+            display: none;
+          }
+
+        }
+
+
+      }
+      .n-info {
+        padding-top: 10px;
+        .n-title{
+          p {
+
+
+
+          }
+        }
+        .n-username{
+          p {
+
+          }
+        }
+      }
+    }
+  }
+
+  .networks.mini{
+    grid-gap: 8px;
+    padding: 8px;
+    .networkCard{
+
+      .n-card {
+        border-radius: $networkCardBorderRadiusMini;
+
+        .n-main {
+          border-radius: $networkCardBorderRadiusMini - 1;
+          padding: 5px;
+
+          .n-top {
+            height: 0;
+            .n-status{
+              right: 5px;
+              top: 5px;
+              width: 6px;
+              height: 6px;
+            }
+          }
+          .n-image {
+            padding: 10px;
+            img{
+              max-width: 100px;
+              max-height: 100px;
+
+            }
+
+
+          }
+          .n-text {
+            min-height: 14px;
+            span{
+              font-size: $fontSizeMini;
+            }
+          }
+
+        }
+
+        .n-action {
+          border-radius: $networkCardBorderRadiusMini - 1;
+
+          .n-action-content{
+            padding: $networkCardPaddingMini;
+            .n-action-link{
+              width: 36px;
+              height: 36px;
+              margin-bottom: 10px;
+              i{  font-size: 10pt;  }
+            }
+            .n-action-view{
+              width: 100%;
+            }
+
+          }
+
+
+        }
+
+
+      }
+
+      .n-info {
+        padding-top: 4px;
+        .n-title{
+          p{
+            font-size: $fontSizeMini;
+
+          }
+        }
+        .n-username{
+          p {
+            font-size: 8pt;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+.networks.icons{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+  padding: 0;
+
+
+  .networkCard {
+    grid-column: span 1;
+
+    .n-card {
+      background: transparent;
+      border-radius: 0;
+      box-shadow: none;
+      border: none;
+      .n-main {
+        border-radius: 0;
+        padding: 0;
+        .n-top {
+          height: 0;
+          display: none;
+          .n-status{  }
+        }
+        .n-image {
+          width: 100%;
+          padding: 0;
+          img{
+            height: 100%;
+            width: 100%;
+            max-width: 120px;
+            max-height: 120px;
+            object-fit: contain;
+
+          }
+
+
+        }
+        .n-text {
+          min-height: 0;
+          display: none;
+          span{
+          }
+        }
+
+      }
+      .n-action{
+        display: none;
+      }
+
+      &:hover{
+        box-shadow: none;
+        border-color: transparent;
+
+
+        .n-main .n-image img{
+          filter : none;
+        }
+
+        .n-action{
+          opacity: 0;
+        }
+
+      }
+
+
+    }
+    .n-info {
+      display: none;
+    }
+
+  }
+
+
+}
+
+.networks.icons.selectable{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+  padding: 0;
+
+
+  .networkCard {
+    grid-column: span 1;
+    @extend .transition02;
+
+    .n-card {
+      background: transparent;
+      box-shadow: none;
+      border-radius: 6px;
+      border: 1px solid #eeeeee;
+      @extend .transition02;
+
+      .n-main {
+        border-radius: 0;
+        padding: 5px;
+        .n-top {
+          height: 0;
+          display: none;
+          .n-status{  }
+        }
+        .n-image {
+          width: 100%;
+          padding: 0;
+          img{
+            height: 100%;
+            width: 100%;
+            max-width: 120px;
+            max-height: 120px;
+            object-fit: contain;
+
+          }
+
+
+        }
+        .n-text {
+          min-height: 0;
+          display: none;
+          span{
+          }
+        }
+
+      }
+      .n-action{
+        display: none;
+      }
+
+      &:hover{
+        border-color: #aaa;
+
+        .n-main .n-image img{
+          filter : none;
+        }
+
+        .n-action{
+          opacity: 0;
+        }
+
+      }
+    }
+    .n-info {
+      display: none;
+    }
+
+
+    &.selected{
+      transform: scale(1.25);
+      @extend .transition02;
+      .n-card {
+        box-shadow: $shadowSecondaryMini;
+        border-color: $colorSecondary;
+        @extend .transition02;
+        &:hover {
+          border-color: $colorSecondary;
+        }
+      }
+    }
+
+
+
+  }
+
+
+}
+
+
+
+/**
+ *
+ * ----------------------------------------------------------
+ *
+ * NETWORK-LABEL
+ *
+ * ----------------------------------------------------------
+ *
+ */
+
+.networkLabel{
+  padding: 5px;
+  .nl-card{
+    min-width: 100px;
+    height: 28px;
+    border-radius: 14px;
+    padding: 0 12px;
+    background: $red;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    @extend .transition02;
+    span{
+      font-size: 10pt;
+      color: #ffffff;
+      text-align: center;
+      font-weight: 300;
+      font-family: $fontPrimary;
+    }
+  }
+
+  &.selectable{
+    cursor: pointer;
+    opacity: 0.4;
+    @extend .transition02;
+
+    &.selected{
+      opacity: 1;
+      .nl-card{
+        box-shadow: $shadow;
+        span{
+          font-weight: 500;
+        }
+      }
+
+    }
+  }
+
+
+}
+
+/**
+*
+* ----------------------------------------------------------
+*
+* SELF-CARD (BUSINESS)
+*
+* ----------------------------------------------------------
+*
+*/
+
+
+
+
+
+$selfCardBorderRadius : 30px;
+$selfCardBorderRadiusMini : 20px;
+$selfCardPadding : $defaultCardPadding;
+$selfCardNameFontSize : 16pt;
+$selfCardUsernameFontSize : 11pt;
+$selfCardShadow : $defaultCardShadowHover;
+
+.selfCard{
+
+
+  border-radius: $selfCardBorderRadius;
+  height: 200px;
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  box-shadow: $selfCardShadow;
+
+  .self-left{
+    flex: 0.4;
+    min-width: 120px;
+    height: 100%;
+    border-radius: $selfCardBorderRadius 0 0 $selfCardBorderRadius;
+    @include gradient();
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: $selfCardPadding;
+
+    .self-picture{
+      height: 0;
+      width: 80%;
+      padding-bottom: 80%;
+      background: $backgroundColor;
+      position: relative;
+      border-radius: 50%;
+      img{
+        height: auto;
+        width: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .self-badge{
+        position: absolute;
+        bottom: -4px;
+        right: -4px;
+        background: #ffffff;
+        border-radius: 50%;
+        height: 34px;
+        width: 34px;
+        padding: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+          border-radius: 50%;
+          height: 100%;
+          width: 100%;
+          object-fit: contain;
+        }
+      }
+    }
+
+  }
+
+  .self-right{
+    flex: 0.6;
+    height: 100%;
+    border-radius: 0 $selfCardBorderRadius $selfCardBorderRadius 0;
+    background: #fff;
+    padding: $defaultCardPadding;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+
+    .self-name{
+      p {
+        font-size: $selfCardNameFontSize;
+        margin: 0;
+        color: #222;
+        font-weight: 600;
+        text-align: center;
+        font-family: $fontSecondary;
+        line-height: 1.2;
+      }
+
+    }
+    .self-username{
+      padding-top: 3px;
+      padding-bottom: 15px;
+
+      p {
+        font-size: $selfCardUsernameFontSize;
+        margin: 0;
+        color: $colorPrimary;
+        font-weight: 300;
+        text-align: center;
+        font-family: $fontSecondary;
+      }
+
+    }
+
+    .networks.icons{
+
+    }
+
+
+  }
+
+}
+
+
+
+@media all and (max-width : $col-lg){
+
+
+  .selfCard{
+
+
+    border-radius: $selfCardBorderRadiusMini;
+    height: 160px;
+    width: 100%;
+    min-width: 100px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: $selfCardShadow;
+
+    .self-left{
+      flex: 0.4;
+      min-width: 120px;
+      height: 100%;
+      border-radius: $selfCardBorderRadiusMini 0 0 $selfCardBorderRadiusMini;
+
+      @include gradient();
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      padding: $selfCardPadding;
+
+      .self-picture{
+        height: 0;
+        width: 80%;
+        padding-bottom: 80%;
+        background: $backgroundColor;
+        position: relative;
+        border-radius: 50%;
+        img{
+          height: auto;
+          width: 100%;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+        .self-badge{
+          position: absolute;
+          bottom: -4px;
+          right: -4px;
+          background: #ffffff;
+          border-radius: 50%;
+          height: 34px;
+          width: 34px;
+          padding: 4px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          img{
+            border-radius: 50%;
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+          }
+        }
+      }
+
+    }
+
+    .self-right{
+      flex: 0.6;
+      height: 100%;
+      border-radius: 0 $selfCardBorderRadiusMini $selfCardBorderRadiusMini 0;
+      background: #fff;
+      padding: $defaultCardPadding;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+
+
+      .self-name{
+        p {
+          font-size: $selfCardNameFontSize;
+          margin: 0;
+          color: #222;
+          font-weight: 600;
+          text-align: center;
+          font-family: $fontSecondary;
+          line-height: 1.2;
+        }
+
+      }
+      .self-username{
+        padding-top: 3px;
+        padding-bottom: 15px;
+
+        p {
+          font-size: $selfCardUsernameFontSize;
+          margin: 0;
+          color: $colorPrimary;
+          font-weight: 300;
+          text-align: center;
+          font-family: $fontSecondary;
+        }
+
+      }
+
+      .networks.icons{
+
+      }
+
+
+    }
+
+  }
+
+}
+
+
+
+/**
+*
+* ----------------------------------------------------------
+*
+* OFFLINE-CARD (BUSINESS)
+*
+* ----------------------------------------------------------
+*
+*/
+
+
+
+.onlineCard{
+
+}
+
+
+$offlineCardBorderRadius : 30px;
+$offlineCardBorderRadiusMini : 20px;
+$offlineCardPadding : $defaultCardPadding - 7px;
+$offlineCardNameFontSize : 13pt;
+$offlineCardUsernameFontSize : 11pt;
+$offlineCardBorder : $borderSolidLightGray;
+$offlineCardShadow: $defaultCardShadowHover;
+
+
+$offlineCardHeightMini : 140px;
+
+
+.offlineContainer{
+  width: 100%;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-gap: 20px;
+  padding: 20px;
+
+  .offlineCard{
+    border-radius: $selfCardBorderRadius;
+    min-height: 150px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    box-shadow: $offlineCardShadow;
+    border: $offlineCardBorder;
+    align-items: center;
+
+    .off-left{
+      flex: 0.3;
+      min-width: 80px;
+      height: 100%;
+      min-height: 150px;
+      border-radius: $offlineCardBorderRadius 0 0 $offlineCardBorderRadius;
+      background: #ffffff;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      padding: $offlineCardPadding;
+
+
+      .off-picture{
+        height: 0;
+        width: 80%;
+        padding-bottom: 80%;
+        background: $colorPrimary;
+        position: relative;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        div {
+          height: 100%;
+          width: 100%;
+          position: absolute;
+          top: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          p {
+            font-family: $fontSecondary;
+            font-weight: 300;
+            color: #fff;
+            font-size: 14pt;
+
+
+          }
+        }
+      }
+
+    }
+
+    .off-divider{
+      height: calc(100% - 20px);
+      width: 1px;
+      background: #eee;
+
+    }
+
+    .off-right{
+      flex: 0.7;
+      height: 100%;
+      min-height: 150px;
+      border-radius: 0 $offlineCardBorderRadius $offlineCardBorderRadius 0;
+      background: #fff;
+      padding: $offlineCardPadding 10px $offlineCardPadding $offlineCardPadding;
+
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+
+
+      .off-name{
+        padding-bottom: 3px;
+        @extend .truncate;
+        p {
+          font-size: $offlineCardNameFontSize;
+          margin: 0;
+          color: #222;
+          font-weight: 300;
+          text-align: center;
+          font-family: $fontSecondary;
+        }
+
+      }
+
+
+      .off-fields {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        .off-field {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          i {
+            margin-right: 3px;
+            color: #ccc;
+            font-size: 11pt;
+          }
+          span {
+            font-size: 10pt;
+            color: $colorPrimary;
+            font-family: $fontPrimary;
+            font-weight: 300;
+            width: 99%;
+            @extend .truncate;
+          }
+        }
+      }
+      .off-images{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 20px;
+
+        .off-image{
+          margin-right: 5px;
+          i{
+            color: #ccc; font-size: 14pt;
+          }
+        }
+      }
+
+    }
+
+  }
+
+}
+
+
+@media all and (max-width : $col-lg){
+  .offlineContainer{
+    width: 100%;
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-gap: 10px;
+    padding: 10px;
+
+    .offlineCard{
+      border-radius: $offlineCardBorderRadiusMini;
+      height: $offlineCardHeightMini;
+      min-height: 0;
+      display: flex;
+      flex-direction: row;
+      box-shadow: $offlineCardShadow;
+      border: $offlineCardBorder;
+      align-items: center;
+
+      .off-left{
+        flex: 0.3;
+        height: 100%;
+        min-height: 0;
+        border-radius: $offlineCardBorderRadiusMini 0 0 $offlineCardBorderRadiusMini;
+        background: #ffffff;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: $offlineCardPadding;
+
+
+        .off-picture{
+          height: 0;
+          width: 80%;
+          padding-bottom: 80%;
+          background: $colorPrimary;
+          position: relative;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          div {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            p {
+              font-family: $fontSecondary;
+              font-weight: 300;
+              color: #fff;
+              font-size: 14pt;
+
+
+            }
+          }
+        }
+
+      }
+
+      .off-divider{
+        height: calc(100% - 20px);
+        width: 1px;
+        background: #eee;
+
+      }
+
+      .off-right{
+        flex: 0.7;
+        height: 100%;
+        min-height: 0;
+
+        min-width: 80px;
+        border-radius: 0 $offlineCardBorderRadiusMini $offlineCardBorderRadiusMini 0;
+        background: #fff;
+        padding: $offlineCardPadding 10px $offlineCardPadding $offlineCardPadding;
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+
+        .off-name{
+          padding-bottom: 3px;
+          p {
+            font-size: $offlineCardNameFontSize;
+            margin: 0;
+            color: #222;
+            font-weight: 300;
+            text-align: center;
+            font-family: $fontSecondary;
+          }
+
+        }
+
+
+        .off-fields {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          .off-field {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            i {
+              margin-right: 3px;
+              color: #ccc;
+              font-size: 11pt;
+            }
+            span {
+              font-size: 10pt;
+              color: $colorPrimary;
+              font-family: $fontPrimary;
+              font-weight: 300;
+              width: 99%;
+            }
+          }
+        }
+        .off-images{
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          height: 20px;
+
+          .off-image{
+            margin-right: 5px;
+            i{
+              color: #ccc; font-size: 14pt;
+            }
+          }
+        }
+
+      }
+
+    }
+
+  }
+}
+
+
+
+/**
+*
+* ----------------------------------------------------------
+*
+* SEARCH-CARD
+*
+* ----------------------------------------------------------
+*
+*/
+
+
+$searchCardBorderRadius: $defaultCardBorderRadius;
+$searchCardBorder: $defaultCardBorder;
+$searchCardShadow : $defaultCardShadow;
+$searchCardPadding : $defaultCardPadding;
+
+
+.searchContainer{
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 20px;
+
+  .searchCard{
+    grid-column: span 1;
+    border-radius: $searchCardBorderRadius;
+    border :$searchCardBorder;
+    box-shadow: $searchCardShadow;
+    padding: $searchCardPadding;
+
+    .s-body{
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+
+      .s-image{
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        border: 1px solid $colorPrimary;
+        background: #fff;
+        img{
+          height: 100%;
+          width: 100%;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+
+      .s-name{
+        font-size: 10pt;
+        color: #000000;
+        text-align: center;
+        width: 100%;
+        font-family: $fontPrimary;
+        padding-top: 10px;
+
+      }
+      .s-divider{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        width: 100%;
+        height: 1px;
+        background: #eee;
+      }
+
+      .s-username{
+        font-size: 9pt;
+        margin-bottom: 5px;
+        color: $colorPrimary;
+        font-family: $fontSecondary;
+        font-weight: 300;
+        width: 100%;
+        text-align: left;
+      }
+
+    }
+    .s-footer{
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+
+      .networks{
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-gap: 4px;
+        .networkCard{
+          .n-card{
+            .n-main{
+              padding: 3px;
+              border: $defaultCardBorder;
+              border-radius: 3px;
+            }
+          }
+        }
+      }
+
+    }
+  }
+
+}
+
+
+
+/**
+*
+* ----------------------------------------------------------
+*
+* SCAN-CARD / BUSINESS
+*
+* ----------------------------------------------------------
+*
+*/
+
+$scanCardBorderRadius : $defaultCardBorderRadius;
+$scanCardShadow : $defaultCardShadowHover;
+
+
+.scanCard{
+  border-radius: $scanCardBorderRadius;
+  background: #fff;
+  box-shadow: $scanCardShadow;
+
+  .scan-header{
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: $scanCardBorderRadius - 1 $scanCardBorderRadius - 1 0 0 ;
+
+    @include gradient();
+
+
+
+    .scan-image{
+      width: 100px;
+      height: 100px;
+
+      border-radius: 50%;
+      background: #fff;
+
+      img{
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+
+      }
+
+    }
+
+
+  }
+  .scan-body{
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .scan-content{
+
+    }
+    .scan-code{
+
+    }
+  }
+}
+
+
+
+
+
+
+/**
+*
+* ----------------------------------------------------------
+*
+* OTHER
+*
+* ----------------------------------------------------------
+*
+*/
+
+
+.sectionTitle{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  align-items: center;
+
+  p{
+    color: $colorPrimary;
+    font-size: $fontSizeSectionTitle;
+    font-weight: 300;
+    font-family: $fontPrimary;
+    padding-right: 20px;
+    position: relative;
+    margin-right: auto;
+    @extend .tooltip-right;
+
+  }
+
+
+  .sectionButton{
+    @extend .buttonPrimaryMiniOutline;
+  }
+}
+
+
+@media all and (max-width: $col-lg){
+  .sectionTitle {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    p{
+      font-size: $fontSizeSectionTitle - 2;
+      padding-right: 5px;
+    }
+  }
+}
+
+
+
+
+.network-toggle-container {
+
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  border: 1px solid $colorSecondary;
+  border-radius: 10px;
+  width: 200px;
+
+
+  p {
+    font-size: $fontSizeText;
+    color: #000;
+    padding-right: 10px;
+    @extend .tooltip-bottom;
+
+  }
+
+  input#network-toggle {
+    display: none;
+
+    &:checked ~ label {
+      background: $colorSecondary;
+    }
+    &:checked ~ label:after {
+      left: 20px;
+      background: #fff;
+    }
+
+    &:disabled ~ label {
+      background: #eeeeee;
+      pointer-events: none;
+    }
+    &:disabled ~ label:after {
+      background: #aaaaaa;
+    }
+
+  }
+  label {
+    position: relative;
+    display: block;
+    height: 18px;
+    width: 38px;
+    background: #dddddd;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #fff;
+
+    &:after {
+      position: absolute;
+      left: -2px;
+      top: -3px;
+      display: block;
+      width: 24px;
+      height: 24px;
+      border-radius: 100px;
+      background: #fff;
+      box-shadow: 0 1px 3px 3px rgba(0, 0, 0, 0.05);
+      content: '';
+      transition: all 0.3s ease;
+    }
+    &:active {
+      &:after {
+        transform: scale(1.15, 0.85);
+      }
+    }
+  }
+}
+
+
+
+

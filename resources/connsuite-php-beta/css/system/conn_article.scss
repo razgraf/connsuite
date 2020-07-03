@@ -1,0 +1,289 @@
+@import '../../base/config';
+
+
+#connAddArticleOuterContainer{
+  opacity: 0.4;
+  cursor: pointer;
+  @extend .transition03;
+}
+.connAddArticleContainer{
+  width: 100%;
+  height: $articleContainerHeight;
+  border-radius: $borderRadiusDesktop;
+  margin: 15px auto 0;
+  /*background: #f3f8fa;*/
+  border: 1px solid $standardGray;
+  position: relative;
+}
+
+.connAddArticleMainContainer{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  border-radius: $borderRadiusDesktop;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+
+
+
+.connAddArticleDetailButton{
+  /*  border: 1px solid #04befe; */
+  background: #ffffff;
+  /*border: 1px solid #04befe;*/
+  /*box-shadow: 0 0 30px 0 rgba(0,0,0,.085);*/
+  height : 38px;
+  width: 96%;
+  max-width: 200px;
+  right: 0;
+  text-decoration: none;
+  border-radius: 19px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $standardGraySpecial;
+  font-size: 11pt;
+
+}
+
+#connAddArticleOuterContainer:hover{
+  -webkit-animation: fadeinAdd 0.2s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadeinAdd 0.2s; /* Firefox < 16 */
+  -o-animation: fadeinAdd 0.2s; /* Opera < 12.1 */
+  animation: fadeinAdd 0.2s;
+  opacity: 1;
+}
+
+.connAddArticleIcon{
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+  opacity: 0.8;
+}
+.connArticleCredentialsContainer{
+  width: 100%;
+  padding: 10px 10px 0;
+  display: flex;
+  min-height: 40px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+
+/**
+---------
+ */
+
+
+
+
+.connArticleContainer{
+  width: 100%;
+  border-radius: $borderRadiusDesktop;
+  margin: 15px auto 5px;
+  height: $articleContainerHeight;
+  background: #ffffff;
+  box-shadow: $shadowNormal;
+  border: $borderNormal;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.connArticleHeader{
+  width: 100%;
+  height: $articleHeaderHeight;
+
+}
+
+.connArticleHeaderBackground{
+  @extend .gradient;
+  width: 100%;
+  height: $articleHeaderHeight;
+  border-radius: $borderRadiusDesktop $borderRadiusDesktop 0 0;
+
+  position: absolute;
+  background-repeat:  no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center;
+  background-attachment: local;
+}
+
+.connArticleHeaderOverlay{
+  @extend .gradient;
+  width: 100%;
+  height: $articleHeaderHeight;
+  border-radius: $borderRadiusDesktop $borderRadiusDesktop 0 0;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  opacity: 0.8;
+  position: absolute;
+  z-index: 1;
+}
+
+.connArticleHeaderTitleContainer{
+  width: 100%;
+  height: $articleHeaderHeight;
+  padding: 40px 30px 20px 30px;
+  position: absolute;
+  z-index: 12;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.connArticleHeaderTitle{
+  font-size: 15pt;
+  color: #fff;
+  font-family: $fontSecondary;
+  text-align: center;
+  text-transform: uppercase;
+  width: 55em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.connArticleHeaderRibbonContainer{
+  position: absolute;
+  top: 0;
+  left: 40px;
+
+}
+
+$ribbonWidth : 42px;
+
+
+.connArticleHeaderRibbon {
+  width: $ribbonWidth;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 50px;
+  border: $ribbonWidth/2 solid #ffffff;
+  border-bottom: 10px solid transparent;
+  border-top: none;
+  box-shadow: -2px -2px 10px 0 rgba(0,0,0,.06);
+
+}
+
+.connArticleHeaderRibbon > img {
+  height: 26px;
+  width: 26px;
+  position: absolute;
+  left : 8px;
+  top: 6px;
+}
+
+
+.connArticleContent{
+  padding: 15px 30px 5px;
+  text-align: center;
+  flex: 1;
+
+}
+
+.connArticleContentTitle{
+  font-size: 13pt;
+  font-family: $fontPrimary;
+  color: #000000;
+  margin-bottom: 5px;
+}
+.connArticleContentDate{
+  font-size: 11pt;
+  color: #aaaaaa;
+  margin: 0;
+}
+
+.connArticleFooter{
+  padding: 5px 25px 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.connArticleFooter > div {
+  flex: 1; display: flex; justify-content: flex-end;
+}
+
+
+.connArticleRemoveContainer{
+  position: absolute;
+  top:15px;
+  right: 15px;
+  opacity: 0.5;
+  color: #ffffff;
+  cursor: pointer;
+}
+.connArticleRemoveContainer:hover, .connArticleRemoveContainer:active{
+  opacity: 1;
+}
+
+.connArticleEditContainer{
+  position: absolute;
+  top:15px;
+  right: 45px;
+  opacity: 0.5;
+  color: #ffffff;
+  cursor: pointer;
+}
+.connArticleEditContainer:hover, .connArticleEditContainer:active{
+  opacity: 1;
+}
+
+
+.connArticleMoreButton{
+  text-transform: none;
+  cursor: pointer;
+  font-size:10pt;padding: 5px 10px; color: $standardGray; border: 1px solid $standardGray;border-radius: 15px;
+  @extend .transition03;
+}
+.connArticleMoreButton:hover{
+  color: #ffffff;
+  background: $standardGray;
+  @extend .transition03;
+}
+
+
+
+
+@media all and (max-width: 992px){
+  .connArticleOuterContainer{
+    padding-left: (5px !important);
+    padding-right: (5px !important);
+  }
+  #connAddArticleOuterContainer{
+    padding-left: (5px !important);
+    padding-right: (5px !important);
+  }
+
+
+  .connArticleFooter {
+    padding: 5px 15px 15px;
+    flex-direction: column;
+  }
+
+  .connArticleCredentialsContainer{
+    margin-bottom: 5px;
+  }
+  .connArticleContentDate{
+    padding-bottom: 5px;
+  }
+
+
+
+  .connArticleContainer,.connAddArticleContainer,.connAddArticleMainContainer{  border-radius: $borderRadiusMobile;}
+  .connArticleHeaderBackground,.connArticleHeaderOverlay{  border-radius: $borderRadiusMobile $borderRadiusMobile 0 0;}
+}

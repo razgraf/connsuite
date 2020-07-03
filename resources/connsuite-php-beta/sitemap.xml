@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Created using XmlSitemapGenerator.org - Free HTML, RSS and XML sitemap generator-->
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    <url>
+        <loc>https://www.connsuite.com</loc>
+    </url>
+  <url>
+    <loc>https://www.connsuite.com/index.php</loc>
+  </url>
+    <url>
+        <loc>https://www.connsuite.com/intro/index.php</loc>
+    </url>
+    <url>
+        <loc>https://www.connsuite.com/intro/badge.php</loc>
+    </url>
+    <url>
+        <loc>https://www.connsuite.com/intro/ask.php</loc>
+    </url>
+    <url>
+        <loc>https://www.connsuite.com/p/article/view.php</loc>
+    </url>
+    <url>
+        <loc>https://www.connsuite.com/p/article/add.php</loc>
+    </url>
+    <url>
+        <loc>https://www.connsuite.com/p/article/edit.php</loc>
+    </url>
+    <url>
+        <loc>https://www.connsuite.com/p/business/book.php</loc>
+    </url>
+    <url>
+        <loc>https://www.connsuite.com/p/business/scan.php</loc>
+    </url>
+    <url>
+        <loc>https://www.connsuite.com/p/dashboard.php</loc>
+    </url>
+    <url>
+        <loc>https://www.connsuite.com/p/notifications.php</loc>
+    </url>
+    <url>
+        <loc>https://www.connsuite.com/p/search.php</loc>
+    </url>
+    <url>
+        <loc>https://www.connsuite.com/p/profile/edit.php</loc>
+    </url>
+    <url>
+        <loc>https://www.connsuite.com/p/profile/alias.php</loc>
+    </url>
+    <url>
+        <loc>https://www.connsuite.com/p/profile/password-forgot.php</loc>
+    </url>
+    <url>
+        <loc>https://www.connsuite.com/p/profile/password-change.php</loc>
+    </url>
+</urlset>

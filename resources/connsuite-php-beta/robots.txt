@@ -1,0 +1,6 @@
+User-Agent: *
+Disallow: /core/*
+Disallow: /session/*
+
+
+Sitemap: https://www.connsuite.com/sitemap.xml

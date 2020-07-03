@@ -1,0 +1,238 @@
+.gradient {
+  background: #04befe;
+  background: linear-gradient(15deg, #4481eb, #04befe);
+  background: -webkit-linear-gradient(15deg, #4481eb, #04befe);
+  background: -moz-linear-gradient(15deg, #4481eb, #04befe);
+  background: -o-linear-gradient(15deg, #4481eb, #04befe); }
+
+.gradient85 {
+  background: #04befe;
+  background: linear-gradient(15deg, rgba(68, 129, 235, 0.85), rgba(4, 190, 254, 0.85));
+  background: -webkit-linear-gradient(15deg, rgba(68, 129, 235, 0.85), rgba(4, 190, 254, 0.85));
+  background: -moz-linear-gradient(15deg, rgba(68, 129, 235, 0.85), rgba(4, 190, 254, 0.85));
+  background: -o-linear-gradient(15deg, rgba(68, 129, 235, 0.85), rgba(4, 190, 254, 0.85)); }
+
+.gradient25 {
+  background: #04befe;
+  background: linear-gradient(25deg, #4481eb, #04befe);
+  background: -webkit-linear-gradient(25deg, #4481eb, #04befe);
+  background: -moz-linear-gradient(25deg, #4481eb, #04befe);
+  background: -o-linear-gradient(25deg, #4481eb, #04befe); }
+
+.gradientPurple {
+  background: #7F00FF;
+  background: linear-gradient(-25deg, #7F00FF, #E100FF);
+  background: -webkit-linear-gradient(-25deg, #7F00FF, #E100FF);
+  background: -moz-linear-gradient(-25deg, #7F00FF, #E100FF);
+  background: -o-linear-gradient(-25deg, #7F00FF, #E100FF); }
+
+.gradientOrange {
+  background: #f9d423;
+  background: linear-gradient(25deg, #f9d423, #ff4e50);
+  background: -webkit-linear-gradient(25deg, #f9d423, #ff4e50);
+  background: -moz-linear-gradient(25deg, #f9d423, #ff4e50);
+  background: -o-linear-gradient(25deg, #f9d423, #ff4e50); }
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+.transition01 {
+  transition: all 0.1s;
+  -moz-transition: all 0.1s;
+  -webkit-transition: all 0.1s;
+  -o-transition: all 0.1s; }
+
+.transition02 {
+  transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  -o-transition: all 0.2s; }
+
+.transition03 {
+  transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s; }
+
+.transition05 {
+  transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s; }
+
+.disableClick {
+  filter: grayscale(50%);
+  opacity: 0.5;
+  pointer-events: none; }
+
+.background {
+  width: 100%;
+  display: none; }
+
+body {
+  min-height: 100vh;
+  min-width: 300px;
+  display: block;
+  height: 100%;
+  background: #f3f8fa; }
+
+#mainContentContainer {
+  background: #ffffff;
+  display: flex;
+  padding: 30px 60px 40px 60px;
+  flex-direction: column;
+  position: relative;
+  min-height: 90vh; }
+
+#notificationsContainer {
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  border-radius: 30px;
+  padding: 30px;
+  min-height: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: column; }
+
+.notificationsSingleContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column; }
+
+.sectionHeading {
+  font-size: 13pt;
+  color: #04befe;
+  padding: 10px 0;
+  /* This is for the text to align with the bootstrap components */ }
+
+/**
+BUSINESS REQUEST
+ */
+.businessRequestUserPictureOuterContainer, .businessRequestSelfAcceptedUserPictureOuterContainer, .businessRequestAcceptedUserPictureOuterContainer {
+  height: 100%;
+  padding: 20px 10px;
+  min-width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.businessRequestUserPictureContainer, .businessRequestSelfAcceptedUserPictureContainer, .businessRequestSelfAcceptedUser2PictureContainer, .businessRequestAcceptedUser2PictureContainer, .businessRequestAcceptedUserPictureContainer {
+  position: relative;
+  width: 60px;
+  height: 60px; }
+
+.businessRequestUserPicture, .businessRequestSelfAcceptedUserPicture, .businessRequestSelfAcceptedUser2Picture, .businessRequestAcceptedUser2Picture, .businessRequestAcceptedUserPicture {
+  border-radius: 50%;
+  position: relative;
+  object-fit: cover;
+  border: 1px solid #eeeeee;
+  width: 60px;
+  height: 60px; }
+
+.businessRequestContentContainer, .businessRequestSelfAcceptedContentContainer, .businessRequestAcceptedContentContainer {
+  padding: 20px;
+  display: flex;
+  flex-direction: column; }
+
+.businessRequestContent, .businessRequestSelfAcceptedContent, .businessRequestAcceptedContent {
+  font-size: 11pt; }
+
+.businessRequestContentButtonsContainer, .businessRequestSelfAcceptedContentButtonsContainer, .businessRequestAcceptedContentButtonsContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center; }
+
+.smallButtonOutlinePrimary, .smallButtonOutlineSecondary {
+  height: 36px;
+  border-radius: 18px;
+  background: transparent;
+  border: 1px solid #04befe;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #04befe;
+  min-width: 120px;
+  padding: 0 15px;
+  cursor: pointer;
+  margin-right: 10px; }
+
+.smallButtonOutlinePrimary:hover, .smallButtonOutlineSecondary:hover, .smallButtonOutlinePrimary:active, .smallButtonOutlineSecondary:active {
+  border: 1px solid #03A0DC;
+  color: #03A0DC; }
+
+.smallButtonOutlineSecondary {
+  border: 1px solid #03A0DC;
+  color: #03A0DC;
+  margin-right: 10px; }
+
+.smallButtonOutlineSecondary:hover, .smallButtonOutlineSecondary:active {
+  border: 1px solid #036990;
+  color: #036990; }
+
+.smallButtonOutlineGray {
+  height: 36px;
+  border-radius: 18px;
+  background: transparent;
+  border: 1px solid #dddddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #dddddd;
+  min-width: 120px;
+  padding: 0 15px;
+  margin-right: 0;
+  cursor: pointer; }
+
+.smallButtonOutlineGray:hover, .smallButtonOutlineGray:active {
+  border: 1px solid #aaaaaa;
+  color: #aaaaaa; }
+
+@media all and (max-width: 970px) {
+  #mainContentContainer {
+    padding: 20px 0; }
+
+  #notificationsContainer {
+    padding: 10px;
+    border-radius: 20px; }
+
+  .businessRequestUserPictureOuterContainer, .businessRequestSelfAcceptedUserPictureOuterContainer, .businessRequestAcceptedUserPictureOuterContainer, .businessRequestContentContainer, .businessRequestSelfAcceptedContentContainer, .businessRequestAcceptedContentContainer {
+    padding: 10px; }
+
+  .businessRequestUserPictureContainer, .businessRequestSelfAcceptedUserPictureContainer, .businessRequestSelfAcceptedUser2PictureContainer, .businessRequestAcceptedUser2PictureContainer, .businessRequestAcceptedUserPictureContainer, .businessRequestUserPicture, .businessRequestSelfAcceptedUserPicture, .businessRequestSelfAcceptedUser2Picture, .businessRequestAcceptedUser2Picture, .businessRequestAcceptedUserPicture {
+    height: 40px;
+    width: 40px; }
+
+  .smallButtonOutlinePrimary, .smallButtonOutlineSecondary, .smallButtonOutlineSecondary, .smallButtonOutlineGray {
+    height: 30px;
+    font-size: 9pt;
+    border-radius: 15px;
+    min-width: 60px;
+    padding: 0 5px; }
+
+  .smallButtonOutlinePrimary, .smallButtonOutlineSecondary, .smallButtonOutlineSecondary {
+    margin-right: 5px; }
+
+  .businessRequestUserPictureOuterContainer, .businessRequestSelfAcceptedUserPictureOuterContainer, .businessRequestAcceptedUserPictureOuterContainer {
+    min-width: 80px; } }
+/*
+BUSINESS REQUEST SELF ACCEPTED
+ */
+.businessRequestSelfAcceptedUser2PictureContainer, .businessRequestAcceptedUser2PictureContainer {
+  height: 30px;
+  width: 30px;
+  margin-left: 10px; }
+
+.businessRequestSelfAcceptedUser2Picture, .businessRequestAcceptedUser2Picture {
+  height: 30px;
+  width: 30px; }
+
+/*
+BUSINESS REQUEST ACCEPTED
+ */
+.businessRequestAcceptedContent {
+  color: #04befe; }
+
+/*# sourceMappingURL=notifications.css.map */

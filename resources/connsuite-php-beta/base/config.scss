@@ -1,0 +1,148 @@
+$colorPrimary : #04befe;
+$colorSecondary : #03A0DC;
+
+$standardLightGray : #dfdfdf;
+$standardGray : #c5c5c5;
+$standardGraySpecial : #888888;
+
+$borderNormal : 1px solid #f2f2f2;
+$borderSolidLightGray : 1px solid #eeeeee;
+
+$fontPrimary :   'Source Sans Pro', sans-serif;
+$fontSecondary : 'Quicksand_Book' , 'Source Sans Pro', sans-serif;
+$fontSecondaryBold : 'Quicksand_Bold' , 'Source Sans Pro', sans-serif;
+
+.gradient{
+  background: $colorPrimary; //for browsers that do not support gradient
+  background: linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+  background: -webkit-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+  background: -moz-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+  background: -o-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+}
+$gradient85 : 0.85;
+.gradient85{
+  background: $colorPrimary; //for browsers that do not support gradient
+  background: linear-gradient(15deg, rgba(68, 129, 235, $gradient85), rgba(4, 190, 254, $gradient85));
+  background: -webkit-linear-gradient(15deg, rgba(68, 129, 235, $gradient85), rgba(4, 190, 254, $gradient85));
+  background: -moz-linear-gradient(15deg, rgba(68, 129, 235, $gradient85), rgba(4, 190, 254, $gradient85));
+  background: -o-linear-gradient(15deg, rgba(68, 129, 235, $gradient85), rgba(4, 190, 254, $gradient85));
+}
+
+.gradient25{
+  background: $colorPrimary; //for browsers that do not support gradient
+  background: linear-gradient(25deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+  background: -webkit-linear-gradient(25deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+  background: -moz-linear-gradient(25deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+  background: -o-linear-gradient(25deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+}
+
+
+
+
+
+
+$backgroundColor : #f3f8fa;
+$canvasWidth : 1200px;
+$toolbarHeight : 76px;
+$toolbarHeightMobile : 66px;
+
+$borderRadiusDesktop : 30px;
+$borderRadiusMobile : 20px;
+$borderRadiusMobileSmall : 12px;
+
+
+$shadowNormal : 0 0 15px 0 rgba(0,0,0,.05);
+$shadowHover : 0 0 30px 0 rgba(0,0,0,.085);
+$shadowSpecialElement : 0 0 30px 0 rgba(0,0,0,.085);
+
+
+
+
+$shadowGradientNormal : 0 0 15px 0 rgba(4, 190, 254,.2);
+$shadowGradientHover : 0 0 15px 0 rgba(4, 190, 254,.6);
+
+
+$shadowWhiteNormal : 0 0 20px 0 rgba(255, 255, 255,.3);
+$shadowWhiteHover : 0 0 30px 0 rgba(255, 255, 255,.6);
+$shadowWhiteSpecial : 0 0 35px 0 rgba(255, 255, 255,.8);
+
+
+$textStandardGray : #888888;
+
+$colorPurplePrimary :#7F00FF;//#b721ff;
+$colorPurpleSecondary:#E100FF;//#21d4fd;
+
+.gradientPurple{
+  background: $colorPurplePrimary; //for browsers that do not support gradient
+  background: linear-gradient(-25deg, $colorPurplePrimary, $colorPurpleSecondary);
+  background: -webkit-linear-gradient(-25deg, $colorPurplePrimary, $colorPurpleSecondary);
+  background: -moz-linear-gradient(-25deg, $colorPurplePrimary, $colorPurpleSecondary);
+  background: -o-linear-gradient(-25deg, $colorPurplePrimary, $colorPurpleSecondary);
+}
+
+
+$shadowPurpleNormal : 0 0 15px 0 rgba(183, 33, 255,.2);
+$shadowPurpleHover : 0 0 15px 0 rgba(183, 33, 255,.6);
+
+
+
+$colorOrangePrimary : rgb(249, 212, 35);
+$colorOrangeSecondary : rgb(255, 78, 80);
+
+$shadowOrangeNormal : 0 0 10px 0 rgba(249, 212, 35,.9);
+$shadowOrangeHover : 0 0 10px 0 rgba(255, 78, 80,.6);
+
+$angleOrange : 25deg;
+
+.gradientOrange {
+  background: $colorOrangePrimary; //for browsers that do not support gradient
+  background: linear-gradient($angleOrange, $colorOrangePrimary, $colorOrangeSecondary);
+  background: -webkit-linear-gradient($angleOrange, $colorOrangePrimary, $colorOrangeSecondary);
+  background: -moz-linear-gradient($angleOrange, $colorOrangePrimary, $colorOrangeSecondary);
+  background: -o-linear-gradient($angleOrange, $colorOrangePrimary, $colorOrangeSecondary);
+}
+
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.transition01{
+  transition: all 0.1s;
+  -moz-transition: all 0.1s;
+  -webkit-transition: all 0.1s;
+  -o-transition: all 0.1s;
+}
+.transition02{
+  transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  -o-transition: all 0.2s;
+}
+.transition03{
+  transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+}
+
+.transition05{
+  transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+}
+
+
+$articleHeaderHeight : 130px;
+$articleContainerHeight : 250px;
+
+
+.disableClick{
+  filter: grayscale(50%);
+  opacity: 0.5;
+  pointer-events:none
+}
+

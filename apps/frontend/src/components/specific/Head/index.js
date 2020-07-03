@@ -5,9 +5,9 @@ import Head from "next/head";
 import { meta } from "../../../constants";
 import { capitalize } from "../../../utils/atoms";
 
-function Common() {
+function Common({ children }) {
   return (
-    <>
+    <Head>
       <meta charSet="utf-8" />
       <title>{meta.general.title}</title>
       <meta name="twitter:text:title" content={meta.general.title} />
@@ -39,70 +39,69 @@ function Common() {
       <meta name="msapplication-TileColor" content="#da532c" />
       <meta name="msapplication-config" content="/meta/favicon/browserconfig.xml" />
       <meta name="theme-color" content="#ffffff" />
-    </>
+      {children}
+    </Head>
   );
 }
 
 export function Landing() {
+  const titleLanding = "ConnSuite | The online business card";
   return (
-    <Head>
-      <Common />
-    </Head>
+    <Common>
+      <title>{titleLanding}</title>
+      <meta name="twitter:text:title" key="twitter:text:title" content={titleLanding} />
+      <meta property="og:title" key="og:title" content={titleLanding} />
+    </Common>
   );
 }
 
 export function Dashboard() {
   return (
-    <Head>
-      <Common />
+    <Common>
       <title>{meta.dashboard.title}</title>
       <meta name="twitter:text:title" key="twitter:text:title" content={meta.dashboard.title} />
       <meta property="og:title" key="og:title" content={meta.dashboard.title} />
-    </Head>
+    </Common>
   );
 }
 
 export function Business() {
   return (
-    <Head>
-      <Common />
+    <Common>
       <title>{meta.business.title}</title>
       <meta name="twitter:text:title" key="twitter:text:title" content={meta.business.title} />
       <meta property="og:title" key="og:title" content={meta.business.title} />
-    </Head>
+    </Common>
   );
 }
 
 export function Portfolio() {
   return (
-    <Head>
-      <Common />
+    <Common>
       <title>{meta.portfolio.title}</title>
       <meta name="twitter:text:title" key="twitter:text:title" content={meta.portfolio.title} />
       <meta property="og:title" key="og:title" content={meta.portfolio.title} />
-    </Head>
+    </Common>
   );
 }
 
 export function Analytics() {
   return (
-    <Head>
-      <Common />
+    <Common>
       <title>{meta.analytics.title}</title>
       <meta name="twitter:text:title" key="twitter:text:title" content={meta.analytics.title} />
       <meta property="og:title" key="og:title" content={meta.analytics.title} />
-    </Head>
+    </Common>
   );
 }
 
 export function NetworkCreate() {
   return (
-    <Head>
-      <Common />
+    <Common>
       <title>{meta.network.create.title}</title>
       <meta name="twitter:text:title" key="twitter:text:title" content={meta.network.create.title} />
       <meta property="og:title" key="og:title" content={meta.network.create.title} />
-    </Head>
+    </Common>
   );
 }
 
@@ -110,23 +109,21 @@ export function NetworkEdit({ title: network }) {
   const title = `Edit ${capitalize(network)}`;
 
   return (
-    <Head>
-      <Common />
+    <Common>
       <title>{title}</title>
       <meta name="twitter:text:title" key="twitter:text:title" content={title} />
       <meta property="og:title" key="og:title" content={title} />
-    </Head>
+    </Common>
   );
 }
 
 export function ArticleCreate() {
   return (
-    <Head>
-      <Common />
+    <Common>
       <title>{meta.article.create.title}</title>
       <meta name="twitter:text:title" key="twitter:text:title" content={meta.article.create.title} />
       <meta property="og:title" key="og:title" content={meta.article.create.title} />
-    </Head>
+    </Common>
   );
 }
 
@@ -134,23 +131,21 @@ export function ArticleEdit({ title: article }) {
   const title = `Edit ${capitalize(article)}`;
 
   return (
-    <Head>
-      <Common />
+    <Common>
       <title>{title}</title>
       <meta name="twitter:text:title" key="twitter:text:title" content={title} />
       <meta property="og:title" key="og:title" content={title} />
-    </Head>
+    </Common>
   );
 }
 
 export function ProfileEdit() {
   return (
-    <Head>
-      <Common />
+    <Common>
       <title>{meta.profile.edit.title}</title>
       <meta name="twitter:text:title" key="twitter:text:title" content={meta.profile.edit.title} />
       <meta property="og:title" key="og:title" content={meta.profile.edit.title} />
-    </Head>
+    </Common>
   );
 }
 
@@ -158,8 +153,7 @@ export function ArticleViewer({ name = "", title: article = "", username = "", c
   const title = `${article} by @${username}| ${meta.general.title}`;
 
   return (
-    <Head>
-      <Common />
+    <Common>
       <title>{title}</title>
       <meta name="twitter:text:title" key="twitter:text:title" content={title} />
       <meta property="og:title" key="og:title" content={title} />
@@ -171,7 +165,7 @@ export function ArticleViewer({ name = "", title: article = "", username = "", c
       <meta name="description" key="description" content={description} />
       <meta property="og:description" key="og:description" content={description} />
       <meta name="twitter:description" key="twitter:description" content={description} />
-    </Head>
+    </Common>
   );
 }
 
@@ -179,8 +173,7 @@ export function ProfileViewer({ first = "", last = "", name = "", username = "",
   const title = `${name} @${username}`;
 
   return (
-    <Head>
-      <Common />
+    <Common>
       <title>{title}</title>
       <meta name="twitter:text:title" key="twitter:text:title" content={title} />
       <meta property="og:title" key="og:title" content={title} />
@@ -193,6 +186,6 @@ export function ProfileViewer({ first = "", last = "", name = "", username = "",
       <meta name="description" key="description" content={description} />
       <meta property="og:description" key="og:description" content={description} />
       <meta name="twitter:description" key="twitter:description" content={description} />
-    </Head>
+    </Common>
   );
 }

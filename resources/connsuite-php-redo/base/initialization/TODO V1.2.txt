@@ -1,0 +1,24 @@
+TO DO when using VAN AUTH
+- - - - - - - - - - - - - - - - - - 
+
+
+- create 'user' and 'token' tables with the structure found in base/initialization
+- change DATABASE and INFO in base/foundation/Core.php
+- change URL and INFO in base/config.php and base/config.js
+- don't forget to remove files in base/helper such as the password creator
+- change value of constants in alphabet:
+	1. AUTH_COOKIE_NAME
+	2. AUTH_COOKIE_JWT_KEY
+	3. STORAGE_SESSION_KEY
+	4. STORAGE_SESSION_USER_KEY
+
+- - - - - - - - - - - - - - - - - - 
+
+
+! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
+- - - - - - - - - - - - - - - - - - 
+
+- remove files under base/initialization and base/helper (hasher.php) after the configuration is complete
+
+- - - - - - - - - - - - - - - - - - 
+! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !

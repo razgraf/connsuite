@@ -1,0 +1,981 @@
+@import "../../../base/config";
+.background{
+  width: 100%;
+  display: none;
+  flex-direction: column;
+}
+body{
+  min-height:100vh;min-width: 300px; display: block; height: 100%;
+  background: #f3f8fa;
+
+}
+.background{
+  width: 100%;
+  display: none;
+}
+
+#bookContent{
+  width: 100%;
+  flex: 1;
+  height: 100%;
+  padding: 20px 20px; /* Padding was eliminated from bootstrap components */
+}
+
+.sectionHeading{
+  font-size: 13pt;
+  color: #04befe;
+  margin-bottom: 0;
+  text-decoration: none;
+  text-blink: none;
+  padding: 0; /* This is for the text to align with the bootstrap components */
+}
+
+.sectionHeading:visited, .sectionHeading:visited  p {color:$colorPrimary;}  /* visited link */
+.sectionHeading:hover, .sectionHeading:hover p{color:$colorPrimary;}  /* mouse over link */
+.sectionHeading:active, .sectionHeading:active p {color:$colorPrimary;}
+
+/**
+-----------BC
+ */
+
+$businessCardWidth : 500px;
+$businessCardHeight : 250px;
+
+.businessCard {
+  width: $businessCardWidth;
+  height: $businessCardHeight;
+  background: transparent;
+  border-radius: $borderRadiusDesktop;
+  -webkit-border-radius: $borderRadiusDesktop;
+  -moz-border-radius: $borderRadiusDesktop;
+  box-shadow: $shadowNormal;
+  border: $borderNormal;
+  user-select: none;
+}
+
+.businessCardLeft {
+  width: 40%;
+  height: $businessCardHeight;
+  float: left;
+  border-radius: $borderRadiusDesktop 0 0 $borderRadiusDesktop;
+  overflow: hidden;
+  background: linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+  background: -webkit-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1)); /* For Safari 5.1 to 6.0 */
+  background: -moz-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+  background: -o-linear-gradient(15deg, rgba(68, 129, 235, 1), rgba(4, 190, 254, 1));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.businessCardLeft img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: $borderRadiusDesktop 0 0 $borderRadiusDesktop;
+  -webkit-border-radius: $borderRadiusDesktop 0 0 $borderRadiusDesktop;
+  -moz-border-radius: $borderRadiusDesktop 0 0 $borderRadiusDesktop;
+  position: relative;
+}
+.businessCardRight {
+  width: 60%;
+  float: left;
+  background: #ffffff;
+  height: $businessCardHeight;
+  color: #000;
+  padding: 30px;
+  border-radius: 0 $borderRadiusDesktop $borderRadiusDesktop 0;
+  -webkit-border-radius: 0 $borderRadiusDesktop $borderRadiusDesktop 0;
+  -moz-border-radius: 0 $borderRadiusDesktop $borderRadiusDesktop 0;
+  display: flex;
+  align-items: center;
+
+}
+.businessCardRightName{
+  font-family: 'Quicksand_Book', "Source Sans Pro", sans-serif;
+  font-size: 16pt;
+  color: #000000;
+
+}
+.businessCardRightUsername{
+  font-family: $fontSecondaryBold;
+  line-height: 1.4;
+  font-size: 11pt;
+  margin-top: 5px;
+  color: #000000;
+
+}
+#businessCardRightUsernameHelper{
+  font-family: $fontPrimary;
+  line-height: 1.4;
+  font-size: 9pt;
+  margin-top: 5px;
+  margin-right: 5px;
+  color: #000000;
+}
+.businessCardRightSubtitle{
+  display: block; margin-bottom: 10px;margin-top: 10px; color: #04befe;
+}
+
+.pendingRequestCounterContainer{
+  height: $businessCardHeight;
+  display: flex; justify-content: center; align-items: center;
+  font-size: 13pt;
+  color: #eeeeee;
+  flex-direction: column;
+}
+
+#pendingRequestsNumber{
+  font-size: 100pt;
+  line-height: 1;
+  font-weight: 400;
+}
+
+#pendingRequestsHelper{
+  font-family: $fontSecondaryBold;
+}
+
+#selfBusinessCardPictureContainer{
+  position: relative; width: 100px; height: 100px;
+}
+#selfBusinessCardPicture{
+  border-radius: 50%;
+  width: 100px; height: 100px; position: relative;
+}
+#selfBusinessCardIcon{
+  width: 40px; height: 40px; bottom: -5px; right: -5px;  border-radius: 50%;  position: absolute;
+}
+
+#pendingRequestsOuterContainer{
+  padding: 0;
+  margin: 0;
+
+}
+
+.businessCardContainer{
+  margin-left: 0; margin-right: 0; padding: 0;
+}
+
+@media all and (max-width: 1100px){
+  #pendingRequestsOuterContainer * {
+    display: none
+  }
+}
+
+
+@media all and (max-width: 991px) {
+  .businessCardContainer{
+    padding: 0;
+    margin: 0 auto;
+  }
+  .businessCardRight {
+    padding: 10px;
+    border-radius: 0 $borderRadiusMobile $borderRadiusMobile 0;
+    -webkit-border-radius: 0 $borderRadiusMobile $borderRadiusMobile 0;
+    -moz-border-radius: 0 $borderRadiusMobile $borderRadiusMobile 0;
+  }
+  .businessCard {
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .businessCardLeft{
+    object-fit: cover;
+    border-radius: $borderRadiusMobile 0 0 $borderRadiusMobile;
+    -webkit-border-radius: $borderRadiusMobile 0 0 $borderRadiusMobile;
+    -moz-border-radius: $borderRadiusMobile 0 0 $borderRadiusMobile;
+  }
+  .pendingRequestCounterContainer, .businessCard, .businessCardRight, .businessCardLeft {
+    height: 180px;
+  }
+  #pendingRequestsOuterContainer {
+    display: none
+  }
+
+  #selfBusinessCardIcon {
+    display: none;
+  }
+  #selfBusinessCardPicture, #selfBusinessCardPictureContainer {
+    width: 70px;
+    height: 70px;
+  }
+
+  .businessCardRightName {
+
+    font-size: 13pt;
+    color: #000000;
+
+  }
+  .businessCardRightUsername {
+    line-height: 1.2;
+    font-size: 11pt;
+    margin-top: 3px;
+  }
+}
+
+@media all and (max-width: 450px) {
+  .businessCard {
+    width: 100%;
+  }
+}
+
+#businessCardSelfNetworks{
+  display: table; margin-left: -5px;
+  margin-top: 10px;
+}
+.leftNetworksTableItemContainer {
+  border-radius: 5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.leftNetworksTableItemImageContainer {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 5px; }
+
+.leftNetworksTableItemImage {
+  width: 30px;
+  margin: 0 auto;
+}
+
+
+#leftNetworksTableItemVisitContainer{
+  height: 30px;
+  width: 30px;
+  vertical-align: middle;
+  display: flex;
+  justify-content: center;
+  font-size: 10pt;
+  align-items: center;
+  border: 1px solid $colorPrimary;
+  color: $colorPrimary;
+  border-radius: 3px;
+  @extend .transition03;
+}
+#leftNetworksTableItemVisitContainer:hover{
+  color: white;
+  background: $colorPrimary;
+  @extend .transition03;
+}
+
+@media all and (max-width: 992px){
+  .leftNetworksTableItemImageContainer{
+    height: 30px;
+    width: 30px;
+  }
+  .leftNetworksTableItemImage{
+    width: 25px;
+  }
+}
+
+
+
+/**
+ConnBusinessCard
+ */
+
+
+
+
+
+$connCardHeight : 180px;
+$connCardHeightMobile : 190px;
+
+.connCard {
+  width: 100%;
+  height: $connCardHeight+2;
+  background: transparent;
+  border-radius:$borderRadiusDesktop;
+  -webkit-border-radius: $borderRadiusDesktop;
+  -moz-border-radius: $borderRadiusDesktop;
+  box-shadow: $shadowNormal;
+  border: $borderNormal;
+}
+.connCard:hover, .connCard:active{
+  box-shadow: $shadowHover;
+}
+
+
+.connCardLeft {
+  width: 40%;
+  height: $connCardHeight;
+  float: left;
+  position: relative;
+  border-radius: $borderRadiusDesktop 0 0 $borderRadiusDesktop;
+  overflow: hidden;
+  background: $colorPrimary;
+  background: linear-gradient(15deg, rgb(4, 169, 226), rgba(4, 190, 254, 1));
+  background: -webkit-linear-gradient(15deg, rgb(4, 169, 226), rgba(4, 190, 254, 1));
+  background: -moz-linear-gradient(15deg, rgb(4, 169, 226),rgba(4, 190, 254, 1));
+  background: -o-linear-gradient(15deg, rgb(4, 169, 226), rgba(4, 190, 254, 1));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.connCardRight {
+  width: 60%;
+  float: left;
+  background: #ffffff;
+  height: $connCardHeight;
+  color: #000;
+  padding: 15px 15px 15px 15px;
+  border-radius: 0 $borderRadiusDesktop $borderRadiusDesktop 0;
+  -webkit-border-radius: 0 $borderRadiusDesktop $borderRadiusDesktop 0;
+  -moz-border-radius: 0 $borderRadiusDesktop $borderRadiusDesktop 0;
+  display: flex;
+  align-items: center;
+
+}
+
+.connCardName{
+  font-family: 'Quicksand_Book', "Source Sans Pro", sans-serif;
+  line-height: 1.1;
+  font-size: 11pt;
+  color: #000000;
+
+}
+.connCardUsername{
+  font-family: $fontSecondaryBold;
+  line-height: 1.4;
+  font-size: 9pt;
+  margin-top: 5px;
+  color: #000000;
+
+}
+.connCardUsernameHelper{
+  font-family: $fontPrimary;
+  line-height: 1.2;
+  font-size: 9pt;
+  margin-top: 5px;
+  margin-right: 5px;
+  color: #444444;
+}
+
+.connCardTagline{
+  @extend .connCardUsername;
+  font-family: $fontPrimary;
+  line-height: 1;
+}
+.connCardTaglineHelper{
+  @extend .connCardUsernameHelper;
+  font-family: $fontPrimary;
+}
+
+@media all and (min-width: 992px) and (max-width: 1200px){
+  .connCardTaglineContainer{
+    display: none;
+  }
+}
+
+
+.connCardPictureContainer {
+  position: relative;
+  width: 70px;
+  height: 70px; }
+
+.connCardPicture {
+  border-radius: 50%;
+  position: relative;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.2);
+  width: 70px;
+  height: 70px; }
+
+
+.connCardInfoContainer{
+
+  display: flex;
+  flex-direction: row; align-items: center; justify-content: center;
+  margin-top: 10px;
+  margin-right: 5px;
+  color: $colorPrimary;
+}
+.connCardInfoCount{
+
+  font-size: 13pt;
+  margin-right: 5px;
+}
+
+.connCardContainer{
+  margin-left: 0; margin-right: 0; padding-left:0;    margin-bottom: 15px;
+}
+@media all and (max-width: 992px){
+  .connCard{border-radius: $borderRadiusMobile}
+  .connCardRight{
+    border-radius: 0 $borderRadiusMobile $borderRadiusMobile 0;
+  }
+  .connCardLeft{
+    border-radius: $borderRadiusMobile 0 0 $borderRadiusMobile;
+  }
+  .connCard,.connCardLeft, .connCardRight{
+    height: $connCardHeightMobile;
+  }
+  .connCardRight{
+    padding: 10px;
+  }
+  .connCard, .connCardLeft, .connCardRight{
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .connCardContainer{
+    padding-right: 0;
+  }
+}
+
+@media all and (max-width: 768px) {
+  .connCardContainer {
+    padding: 0;
+  }
+}
+.connCardViewButton{
+  text-transform: none; font-size:10pt;padding: 5px 10px; color: $standardGray; border: 1px solid $standardGray;border-radius: 15px;
+  @extend .transition03; }
+.connCardViewButton:hover{
+  color: #ffffff;
+  background: $standardGray;
+  @extend .transition03; }
+
+.connCardRemoveContainer{
+  position: absolute;
+  top:15px;
+  left: 15px;
+  opacity: 0.5;
+  color: #ffffff;
+  cursor: pointer;
+}
+.connCardRemoveContainer:hover, .connCardRemoveContainer:active{
+  opacity: 1;
+}
+
+
+
+
+
+
+/**
+CUSTOM CARD
+ */
+
+
+.customConnCard {
+  width: 100%;
+  height: $connCardHeight;
+  background: transparent;
+  border-radius: $borderRadiusDesktop;
+  box-shadow: $shadowNormal;
+  border: $borderNormal;
+
+}
+.customConnCard:hover, .customConnCard:active{
+  box-shadow: $shadowHover;
+}
+
+
+.customConnCardLeft {
+  width: 40%;
+  position: relative;
+  height: $connCardHeight - 30;
+  float: left;
+  border-radius: 30px 0 0 30px;
+  overflow: hidden;
+  background: #ffffff;
+  border: none;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-right: 1px solid #eeeeee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+
+.customConnCardRight {
+  width: 60%;
+  float: left;
+  background: #ffffff;
+  height: $connCardHeight - 2 ;
+  color: #000;
+  padding: 20px 15px 15px 15px;
+  border-radius: 0 30px 30px 0;
+  -webkit-border-radius: 0 30px 30px 0;
+  -moz-border-radius: 0 30px 30px 0;
+  display: flex;
+  align-items: center;
+
+}
+.customConnCardName{
+  font-family: 'Quicksand_Book', "Source Sans Pro", sans-serif;
+  line-height: 1.1;
+  font-size: 11pt;
+  color: #444444;
+  width: 100%;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+
+}
+
+
+
+.customConnCardPictureContainer {
+  position: relative;
+  width: 70px;
+  height: 70px;
+
+
+}
+
+.customConnCardPicture {
+  border-radius: 50%;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: $colorPrimary;
+  display: flex;
+  color: #ffffff;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+
+}
+.customConnCardPicture span{
+  font-family: $fontSecondary;
+  font-size: 13pt;
+}
+
+
+
+
+.customConnCardInfoContainer{
+
+  display: flex;
+  flex-direction: row; align-items: center; justify-content: center;
+  margin-top: 10px;
+  margin-right: 5px;
+  color: $colorPrimary;
+}
+.customConnCardInfoCount{
+
+  font-size: 13pt;
+  margin-right: 5px;
+}
+
+.customConnCardContainer{
+  margin-left: 0; margin-right: 0; padding-left:0;    margin-bottom: 15px;
+}
+
+.customConnCardViewButton{ text-transform: none; font-size:10pt;padding: 5px 10px;border: 1px solid $colorPrimary;border-radius: 15px;  @extend .transition03;  }
+.customConnCardViewButton span{ color: $colorPrimary;   @extend .transition03;}
+.customConnCardViewButton:hover{  background: $colorPrimary;  @extend .transition03;  }
+.customConnCardViewButton:hover span{ color: #ffffff;  @extend .transition03;  }
+
+.customConnCardRemoveContainer{
+  position: absolute;
+  top:5px;
+  left: 15px;
+  opacity: 0.5;
+  color: #dddddd;
+  cursor: pointer;
+}
+.customConnCardRemoveContainer:hover, .connCardRemoveContainer:active{
+  opacity: 1;
+}
+
+
+.customConnCardSection{
+  //padding: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.customConnCardSectionIcon{
+  margin-right: 5px;
+  color: #dddddd;
+  font-size: 13pt;
+}
+
+.customConnCardSectionText{
+  font-size: 9pt;
+  color: $colorPrimary;
+  width: 80%;
+
+  @extend .truncate;
+}
+
+@media all and (max-width: 992px){
+  .customConnCardContainer{
+    padding: 0;
+  }
+  .customConnCard{border-radius: $borderRadiusMobile}
+  .customConnCardRight{
+    border-radius: 0 $borderRadiusMobile $borderRadiusMobile 0;
+  }
+  .customConnCardLeft{
+    border-radius: $borderRadiusDesktop 0 0 $borderRadiusDesktop;
+  }
+  .customConnCard,.customConnCardLeft, .customConnCardRight,.customConnAddItemContainer{
+    height: $connCardHeightMobile;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .customConnCardLeft{
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  #bookContent{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .customConnCardRemoveContainer {
+    top: 15px;
+  }
+
+}
+
+
+
+.customConnAddItemContainer{
+  width: 100%;
+  height: $connCardHeight;
+  border-radius: 30px;
+  border: 1px solid $standardGray;
+  position: relative;
+}
+
+.customConnAddItemMainContainer{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 30px;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.customConnAddItemDetailButton{
+  background: #ffffff;
+  height : 38px;
+  width: 100%;
+  right: 0;
+  text-decoration: none;
+  border-radius: 19px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $standardGraySpecial;
+  font-size: 11pt;
+}
+#customConnAddItemOuterContainer{
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+#customConnAddItemOuterContainer:hover{
+  -webkit-animation: fadeinAdd 0.2s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadeinAdd 0.2s; /* Firefox < 16 */
+  -o-animation: fadeinAdd 0.2s; /* Opera < 12.1 */
+  animation: fadeinAdd 0.2s;
+  opacity: 1;
+}
+
+.customConnAddItemIcon{
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+  opacity: 0.8;
+}
+
+
+/**
+------
+Modal
+ */
+
+#addCustomModal .modal-body{
+  padding-top: 20px;
+}
+
+
+#customModalName{
+  font-size: 15pt;
+  font-family: $fontSecondary;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #000000;
+  text-decoration: none;
+  width: 100%;
+  outline: none;
+  border: none;
+}
+
+ #addCustomModalName{
+  //font-family: $fontSecondary;
+  //font-size: 15pt;
+  //border: 1px solid $colorPrimary;
+  //color: $colorPrimary;
+
+  //margin-bottom: 15px;
+  //text-align: center;
+  //color: #000000;
+  //text-decoration: none;
+  //width: 100%;
+  //outline: none;
+  //border: none;
+}
+#addCustomModalName{
+  //margin-bottom: 5px;
+}
+
+.customModalLabel{
+  font-size: 11pt;
+  color: #aaaaaa;
+  margin-bottom: 2px;
+  font-weight: 300;
+}
+.customModalText{
+  font-size: 13pt;
+  color: $colorPrimary;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  width: 100%;
+  outline: none;
+  border: none;
+}
+.customModalText::-webkit-input-placeholder { color: #aaa; font-size: 11pt; }
+.customModalText::-moz-placeholder {color: #aaa; font-size: 11pt; }
+.customModalText:-ms-input-placeholder { color: #aaa; font-size: 11pt;}
+
+.addCustomModalText{
+  @extend .customModalText;
+  margin-bottom: (3px!important);
+  padding: 5px 10px;
+  }
+
+.modalDivider{
+  width: 100%;
+  height: 1px;
+  background: #eeeeee;
+  margin-bottom: 10px;
+}
+
+
+
+
+#addBusinessBookButton{
+  border-radius: 3px;
+  height: 30px;
+  width: 30px;
+  margin-left: 20px;
+  border: 1px solid $colorPrimary;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @extend .transition03;
+}
+
+#addBusinessBookButton span{
+  font-size: 14pt;
+  color: $colorPrimary;
+  line-height: 1;
+  @extend .transition03;
+}
+
+#addBusinessBookButton:hover{
+  background: $colorPrimary;
+  @extend .transition03;
+}
+#addBusinessBookButton:hover span{
+  color: #ffffff;
+  @extend .transition03;
+}
+
+
+
+.addCustomModalPictureContainer{
+  height: 100px;
+  width: 100px;
+  font-size: 13pt;
+  background: #f9f9f9;
+  position: relative;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.addCustomModalTargetPicture{
+  border-radius: 5px;
+  object-fit: cover;
+  height: 100%; width: 100%; position: absolute;
+}
+.addCustomModalPictureButton{
+  height: 100%; width: 100%; position: absolute; display: flex;
+  background: rgba(0,0,0,0.2);
+  flex-direction: column;
+  cursor: pointer;
+  justify-content: center; align-items: center; border-radius: 5px;
+  @extend .transition03;
+}
+.addCustomModalPictureButton:hover i{
+  transform: rotate(10deg);
+  @extend .transition03;
+}
+.addCustomModalPictureButton i{
+  color: #ffffff;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+  @extend .transition03;
+}
+
+.addCustomModalPictureDeleteButton{
+  width: 100px;
+  border-radius: 3px;
+  border: 1px solid #F44336;
+  color: #F44336;
+  font-size: 10pt;
+  text-align: center;
+  padding: 3px;
+  margin-bottom: 10px;
+  cursor: pointer;
+
+  display: none;
+  @extend .transition03;
+}
+.addCustomModalPictureDeleteButton:hover{
+  color: #ffffff;
+  background: #F44336;
+  @extend .transition03;
+
+}
+
+
+
+#picturesShowcaseContainer{
+  width: 100%; display: flex; flex-direction: column;align-items: center;
+}
+
+
+
+#picture1Showcase,#picture2Showcase{
+  width: 100%;
+  max-width: 500px;
+  max-height: 500px;
+  object-fit: contain;
+  margin-top: 10px;
+  display: none;
+}
+
+
+
+
+
+
+
+
+.eventPassOuterContainer{
+
+}
+
+.eventPassContainer{
+  height: $businessCardHeight;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: $borderNormal;
+  box-shadow: $shadowNormal;
+  border-radius: $borderRadiusDesktop;
+  @extend .transition03;
+}
+
+.eventPassContainer:hover{
+ // box-shadow: $shadowHover;
+  @extend .transition03;
+}
+
+
+.eventPassTitle{
+  font-size: 1.2em;
+  line-height: 1.2;
+  color: #222;
+
+  font-weight: 300;
+  text-align: center;
+  font-family: $fontSecondary;
+  margin-bottom: 15px;
+}
+.eventPassContent{
+  font-size: 0.9em;
+  color: $textStandardGray;
+  font-family: $fontPrimary;
+  text-align: center;
+  flex: 1;
+}
+
+.eventPassButton{
+  height: 40px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 30px;
+  cursor: pointer;
+  font-size: 10pt;
+  text-decoration: none;
+  color: #ffffff;
+  background: $colorPrimary;
+  border:1px solid $colorPrimary;
+  box-shadow: 0 0 5px 0 rgba(4, 190, 254, 0.6);
+  @extend .transition03
+}
+.eventPassButton span{
+  text-decoration: none;
+  color: #ffffff;
+}
+.eventPassButton:hover,.eventPassButton:active{
+  box-shadow: 0 0 10px 0 rgba(4, 190, 254, 0.9);
+  @extend .transition03;
+}
+
+
+#pendingRequestsOuterContainer{
+  order: 3;
+}
+@media all and ( max-width: 1200px){ .eventPassContainer{padding: 15px; width: 100%; max-width: 400px;margin: 0 auto;} .eventPassContent{font-size: .9em} .eventPassTitle{font-size: 1.1em;  margin-bottom: 10px;} }
+@media all and ( max-width: 1100px){ .eventPassContent{font-size: .85em} .eventPassTitle{font-size: 1.1em} .pendingRequestsOuterContainer{order: 2;} .businessPassContainer{order: 3;} }
+
+@media all and ( max-width:  991px){
+  .eventPassContainer{
+    width: 100%;
+    height: 180px;
+  }
+
+}
+
+@media all and ( max-width: 767px){
+  .eventPassContainer{
+    margin-top: 15px;
+    height: auto;
+    border-radius: $borderRadiusMobile;
+    padding: 20px;
+  }
+  .eventPassButton{
+    margin-top: 15px;
+  }
+  .businessPassContainer{
+    padding: 0;
+    margin: 0;
+  }
+}

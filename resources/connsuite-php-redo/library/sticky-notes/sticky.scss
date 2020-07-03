@@ -1,0 +1,774 @@
+$noteBackgroundColor : #fffece;
+$noteBorderColor : #fff792;
+$noteAccentColor : #ffc91d;
+
+
+$red : #F44336;
+$colorPrimary : #006bd5;
+$colorSecondary : #7F00FF;
+
+$shadowMini : 0 1px 5px 0 rgba(90, 92, 107,0.05), 0 1px 5px 0 rgba(90, 92, 107,0.05);
+$shadowHover : 0 5px 30px 0 rgba(90, 92, 107,0.15), 0 2px 9px 0 rgba(90, 92, 107,0.1);
+
+$col-lg : 992px;
+
+.transition01{
+  transition: all 0.1s;
+  -moz-transition: all 0.1s;
+  -webkit-transition: all 0.1s;
+  -o-transition: all 0.1s;
+}
+.transition02{
+
+  transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  -o-transition: all 0.2s;
+}
+
+.transition03{
+  transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+}
+
+.transition05{
+  transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+}
+
+
+.disableClick{
+  filter: grayscale(50%);
+  opacity: 0.5;
+  pointer-events:none
+}
+
+.initWithFade{
+  animation-name: fadein;
+  animation-duration: 0.3s;
+}
+
+
+body.stickyShowing{
+  overflow: hidden !important;
+}
+.sticky-library-row-button-load{
+  position: absolute;
+  z-index: 3;
+  right: 10px;
+  height: 40px;
+  width: 40px;
+  background: #f5f5f5;
+  border: 1px solid #aaaaaa;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  i{
+    font-size: 12pt;
+    color: #aaaaaa;
+    line-height: 0;
+  }
+  span{
+    display: none;
+    font-size: 10pt;
+    color: #888888;
+    line-height: 0;
+  }
+  @extend .transition02;
+}
+
+
+.sticky-library-row-button-load:hover{
+  transform: scale(1.05);
+  @extend .transition02;
+}
+
+
+.sticky-library-row{
+  position: relative;
+  width: 100%;
+  height: 300px;
+  max-width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  flex-direction: row;
+  padding: 30px 20px;
+  z-index: 1;
+
+
+
+  .sticky-library-note-card-container {
+    height: 100%;
+    padding: 0 20px 0 0;
+    flex: 0 0 auto;
+    white-space: normal;
+    .sticky-library-note-card {
+      width: 310px;
+      background: $noteBackgroundColor;
+      border: 1px solid $noteBorderColor;
+      border-radius: 6px;
+      height: 100%;
+      @extend .initWithFade;
+      @extend .transition02;
+
+      .sticky-library-note-card-inner {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        padding: 15px;
+        .sticky-library-note-card-header {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 5px;
+          .sticky-library-note-card-header-title {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            p{
+              font-size: 11pt;
+              font-weight: 800;
+              color: #000000;
+              text-align: left;
+            }
+            .sticky-library-note-card-header-index{
+              color: #ffc91d;
+              font-weight: 800;
+              font-size: 11pt;
+              margin-right: 5px;
+            }
+          }
+
+        }
+
+        .sticky-library-note-card-content {
+          flex: 1;
+          width: 100%;
+          overflow: hidden;
+          position: relative;
+          div {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            max-height: 9.6em;
+            span {
+              color: #000000;
+              font-weight: 300;
+              font-size: 10pt;
+              height: 100%;
+              line-height: 1.2em;
+            }
+          }
+        }
+
+        .sticky-library-note-card-content:after{
+          content : '';
+          position: absolute;
+          width: 100%;
+          height: 50px;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: linear-gradient(rgba(0,0,0,0),rgba(#fffece,1) 50%);
+
+        }
+
+        .sticky-library-note-card-footer {
+          margin-top: 10px;
+          display: flex;
+          width: 100%;
+          position: relative;
+          flex-direction: row;
+
+          .sticky-library-note-card-footer-date {
+            color: #aaaaaa;
+            font-weight: 600;
+            font-size: 8pt;
+            padding-right: 50px;
+
+          }
+
+          .sticky-library-note-card-footer-button {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            height: 38px;
+            width: 38px;
+            background: $noteAccentColor;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            @extend .transition03;
+            i {
+              font-size: 12pt;
+              color: #ffffff;
+            }
+          }
+
+          .sticky-library-note-card-footer-button:hover {
+            background: lighten($noteAccentColor,10%);
+            transform: scale(1.05);
+            @extend .transition03;
+          }
+
+        }
+      }
+    }
+
+    .sticky-library-note-card-add {
+      height: 100%;
+      width: 260px;
+      border-radius: 6px;
+      border: 1px dashed #dddddd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      flex-direction: column;
+      @extend .initWithFade;
+      @extend .transition02;
+      p {
+        font-size: 30pt;
+        font-weight: 300;
+        color: #cccccc;
+        @extend .transition02;
+      }
+      span {
+        font-size: 10pt;
+        font-weight: 400;
+        color: #cccccc;
+        @extend .transition02;
+      }
+    }
+    .sticky-library-note-card-add:hover {
+      @extend .transition03;
+      box-shadow: $shadowMini;
+      border-color: #cccccc;
+      p, span {
+        color: #cccccc;
+        @extend .transition03;
+      }
+
+    }
+  }
+}
+
+
+.sticky-library-environment{
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  overflow: hidden;
+  background: rgba(0,0,0,0.8);
+
+
+  .sticky-library-environment-content{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+
+
+
+    .sticky-library-modal{
+      width: 100%;
+      max-width: 800px;
+      height: 100%;
+      max-height: 600px;
+      background: $noteBorderColor;
+      border-radius: 10px;
+      box-shadow: $shadowMini;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+
+      .sticky-library-modal-header{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding-bottom: 20px;
+
+        .sticky-library-modal-header-title-index{
+          color: $noteAccentColor;
+          font-size: 16pt;
+          font-weight: 600;
+          margin-right: 6px;
+        }
+        .sticky-library-modal-header-title{
+          color: #000 !important;
+          font-weight: 600;
+          font-size: 16pt;
+          flex: 1;
+          padding-bottom: 5px;
+          font-family: "Raleway", "Open Sans", sans-serif;
+          border: none;
+          border-bottom: 1px solid transparent;
+          background: transparent;
+          outline:none;
+          @extend .transition03;
+        }
+        .sticky-library-modal-header-title:focus,.sticky-library-modal-header-title:active{
+          border-bottom: 1px solid $noteAccentColor;
+          outline:none;
+          @extend .transition03;
+        }
+
+        .sticky-library-modal-header-title::-webkit-input-placeholder { color: rgba($noteAccentColor,0.5); }
+        .sticky-library-modal-header-title::-moz-placeholder {color: rgba($noteAccentColor,0.5); }
+        .sticky-library-modal-header-title:-ms-input-placeholder { color: rgba($noteAccentColor,0.5);}
+
+
+        .sticky-library-modal-header-close{
+          cursor: pointer;
+          height: 28px;
+          width: 28px;
+          border-radius: 50%;
+          display: flex;
+          justify-content:center;
+          align-items: center;
+          margin: 5px 0 5px 50px;
+          background: transparent !important;
+          border: 1px solid #000;
+          @extend .transition02;
+
+          span{
+            font-weight: 400 !important;
+            color: #000;
+            line-height:0;
+            font-size: 8pt;
+            @extend .transition02;
+          }
+        }
+        .sticky-library-modal-header-close:hover{
+          @extend .transition02;
+          background: #000 !important;
+          span {
+            @extend .transition02;
+            color: #fff;
+          }
+        }
+      }
+      .sticky-library-modal-content{
+        width: 100%;
+        flex: 1;
+        .sticky-library-modal-content-card{
+          box-shadow: $shadowMini;
+          width: 100%;
+          height: 100%;
+          background: $noteBackgroundColor;
+          padding: 20px;
+          border-radius: 4px;
+          display: flex;
+          flex-direction: column;
+          textarea{
+            width: 100%;
+            flex: 1;
+            max-height: 100%;
+            max-width: 100%;
+            resize: none;
+            color: #000000;
+            background: transparent;
+            border: none;
+            font-size: 11pt;
+            font-weight: 300;
+            line-height:1.3;
+            outline: none;
+            white-space: pre-wrap;
+            overflow-y: auto;
+          }
+          textarea:hover, textarea:active, textarea:focus{
+            outline: none;
+          }
+        }
+      }
+      .sticky-library-modal-footer{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        padding-top: 20px;
+
+
+        .sticky-library-modal-footer-info{
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          .sticky-library-modal-info-field{
+            font-size: 8pt;
+            color: rgba(0,0,0,0.5);
+            font-weight: 700;
+            margin-bottom: 3px;
+          }
+        }
+
+        .sticky-library-button-container {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+
+          .sticky-library-button {
+            margin-left: 10px;
+            font-weight: 400;
+            font-size: 12pt;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 4px;
+            padding: 5px 15px;
+            @extend .transition02;
+            span {
+              @extend .transition02;
+            }
+          }
+
+          .sticky-library-button:hover {
+            @extend .transition02;
+            span {
+              @extend .transition02;
+            }
+          }
+
+          .sticky-library-button-save {
+            @extend .sticky-library-button;
+            border: 1px solid $colorSecondary;
+            span {
+              color: $colorSecondary;
+            }
+          }
+
+          .sticky-library-button-save:hover {
+            background: $colorSecondary;
+            span {
+              color: #fff;
+            }
+          }
+
+          .sticky-library-button-remove {
+            @extend .sticky-library-button;
+            border: 1px solid #F44336;
+            span {
+              color: #F44336;
+            }
+          }
+          .sticky-library-button-remove:hover {
+            background: #F44336;
+            span {
+              color: #fff;
+            }
+          }
+
+          .sticky-library-button-close {
+            @extend .sticky-library-button;
+            border: 1px solid #000;
+            span {
+              color: #000;
+            }
+          }
+          .sticky-library-button-close:hover {
+            background: #000;
+            span {
+              color: #fff;
+            }
+          }
+        }
+      }
+
+    }
+  }
+
+}
+
+
+@media all and (max-width: $col-lg){
+
+
+  .sticky-library-row-button-load{
+    position: absolute;
+    z-index: 3;
+    right: 0;
+    top: -50px;
+    height: 40px;
+    width: auto;
+    padding: 0 10px;
+    background: #f5f5f5;
+    border: 1px solid #aaaaaa;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    i{
+      font-size: 12pt;
+      color: #aaaaaa;
+      line-height: 0;
+    }
+    span{
+      content: 'Load more';
+      font-size: 10pt;
+      padding-left: 5px;
+      display: inline-flex;
+    }
+
+  }
+
+
+  .sticky-library-row{
+    height: 300px;
+    max-width: 100%;
+    padding: 10px;
+
+    .sticky-library-note-card-container {
+      padding: 0 10px 0 0;
+      .sticky-library-note-card {
+        width: 200px;
+        background: $noteBackgroundColor;
+        border: 1px solid $noteBorderColor;
+        border-radius: 6px;
+        height: 100%;
+        .sticky-library-note-card-inner {
+          padding: 10px;
+          .sticky-library-note-card-header {
+            .sticky-library-note-card-header-title {
+              p{  }
+              .sticky-library-note-card-header-index{  }
+            }
+
+          }
+
+          .sticky-library-note-card-content {
+            div {
+              display: flex;
+              max-height: 14.4em;
+              span {
+                line-height: 1.6em;
+              }
+            }
+          }
+
+          .sticky-library-note-card-content:after{
+            height: 30px;
+            bottom: -8px !important;
+            background: linear-gradient(rgba(0,0,0,0),rgba(#fffece,1) 50%);
+
+          }
+
+          .sticky-library-note-card-footer {
+            margin-top: 10px;
+            display: flex;
+            width: 100%;
+            position: relative;
+            flex-direction: row;
+
+            .sticky-library-note-card-footer-date {
+              color: #aaaaaa;
+              font-weight: 600;
+              font-size: 8pt;
+              padding-right: 50px;
+            }
+
+
+          }
+        }
+      }
+
+      .sticky-library-note-card-add {
+        width: 120px;
+        p {
+          font-size: 20pt;
+          font-weight: 300;
+        }
+        span {
+          font-size: 8pt;
+          font-weight: 400;
+        }
+      }
+    }
+
+  }
+
+  .sticky-library-environment {
+    .sticky-library-environment-content {
+      padding: 20px;
+      .sticky-library-modal {
+        border-radius: 6px;
+        padding: 15px;
+        height: 100%;
+        max-height: 100%;
+        .sticky-library-modal-header {
+          padding-bottom: 10px;
+
+          .sticky-library-modal-header-title-index {
+            font-size: 14pt;
+          }
+          .sticky-library-modal-header-title {
+            font-size: 14pt;
+            border-bottom: 1px solid $noteAccentColor !important;
+          }
+
+          .sticky-library-modal-header-close {
+            height: 30px;
+            width: 30px;
+            margin: 5px 0 5px 5px;
+            span {
+              font-size: 10pt;
+            }
+          }
+        }
+        .sticky-library-modal-content {
+          .sticky-library-modal-content-card {
+            padding: 10px;
+            textarea {
+              width: 100%;
+              flex: 1;
+              max-height: 100%;
+              max-width: 100%;
+              resize: none;
+              color: #000000;
+              background: transparent;
+              border: none;
+              font-size: 11pt;
+              font-weight: 300;
+              line-height: 1.3;
+              outline: none;
+              white-space: pre-wrap;
+              overflow-y: auto;
+            }
+            textarea:hover, textarea:active, textarea:focus {
+              outline: none;
+            }
+          }
+        }
+        .sticky-library-modal-footer {
+          padding-top: 10px;
+
+          .sticky-library-modal-footer-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            .sticky-library-modal-info-field {
+              font-size: 8pt;
+              color: rgba(0, 0, 0, 0.5);
+              font-weight: 700;
+              margin-bottom: 3px;
+            }
+          }
+
+
+          .sticky-library-button-container {
+            display: flex;
+            flex-direction: column !important;
+            align-items: flex-end;
+
+
+            .sticky-library-button {
+              margin-left: 0;
+              margin-bottom: 10px;
+              font-weight: 400;
+              font-size: 12pt;
+              background: transparent;
+              cursor: pointer;
+              border-radius: 4px;
+              padding: 5px 10px;
+            }
+          }
+        }
+
+
+
+      }
+    }
+  }
+}
+
+
+
+
+$alertMargin : 2%;
+#customAlertContainer{
+  position: fixed;
+  z-index: 1051;
+  right: $alertMargin;
+  top: $alertMargin;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+
+
+  .customAlert{
+    box-shadow: $shadowHover;
+    padding: 15px 15px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 10pt;
+    font-family: 'Raleway','Open Sans','Arial', sans-serif;
+    font-weight: 500;
+    text-align: center;
+
+
+
+    .warnContainer{
+      position: absolute;
+      top: 0;
+      left:0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+
+      i{
+        line-height: 0;
+        color: #ffffff;
+        font-size:17pt;
+      }
+    }
+
+  }
+}
+
+
+#customAlertSuccess{
+  background: $colorPrimary;
+  margin-bottom: 10px;
+}
+#customAlertFailure{
+  background: $red;
+  padding: 15px 15px 15px 35px !important;
+}
+
+
+
+
+@media all and (max-width: 992px) {
+
+  #customAlertContainer {
+    position: fixed;
+    right: auto;
+    margin: 0 auto;
+    top: 10px;
+    width: 100%;
+    padding: 0 15px;
+    max-width: 400px;
+  }
+}

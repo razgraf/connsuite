@@ -1,0 +1,178 @@
+@import "../../../base/config";
+.background{
+  width: 100%;
+  display: none;
+  flex-direction: column;
+}
+body{
+  min-height:100vh;min-width: 300px; display: block; height: 100%;
+  background: $backgroundColor;
+  width: 100%;
+  background-size: cover;
+
+}
+.sectionHeading{
+  font-size: 13pt;
+  color: $colorPrimary;
+  padding: 20px 0 5px;
+}
+
+#mainContentContainer {
+  background: #ffffff;
+  display: flex;
+  padding: 20px 60px 40px 60px;
+  flex-direction: column;
+  border-top-left-radius: 5px; border-top-right-radius: 5px;
+  position: relative;
+  min-height: 90vh; }
+
+
+
+
+.rightFormTitle{
+  font-size: 13pt;
+  color: #000;
+  margin-bottom: 15px;
+}
+
+
+.rightFormInput {
+  color: #000000;
+  font-family: $fontSecondaryBold;
+  font-size: 15pt;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  outline: none;
+  border: none; }
+
+.rightFormInput::-webkit-input-placeholder {
+  color: #eee; }
+
+.rightFormInput::-moz-placeholder {
+  color: #eee; }
+
+.rightFormInput:-ms-input-placeholder {
+  color: #eee; }
+
+
+
+.articleCoverImage{
+  width: 100%;
+  height: 425px;
+
+
+  /* <- missing semi-colon */
+  background: no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+}
+
+.articleCoverOverlay{
+  position: absolute;
+  width: 100%;
+  height: 425px;
+ // @extend .gradient85;
+
+  top:$toolbarHeight;
+
+}
+#articleCoverContainer{
+  width: 104%;
+  height:400px;
+
+  margin-left: -10px;
+  margin-right: -10px;
+  background: #ffffff
+}
+#blurHider{
+  width: 100%;
+  background: #f3f8fa;
+  position: absolute;
+  top:500px;
+  height: 80px;
+  z-index: 20;
+}
+
+#articleTitle{
+  font-size: 25pt;
+  font-family: $fontSecondaryBold;
+  color: #000000;
+}
+
+@media all and (max-width: 1000px) {
+  .articleCoverOverlay{
+    top: $toolbarHeightMobile;
+  }
+  #mainContentContainer {
+    padding: 20px 15px;
+    border: 0;
+  }
+
+  .articleCoverImage{
+    height: 225px;
+  }
+  #articleCoverContainer{
+    height: 200px;
+  }
+  #blurHider{
+    top: 300px;
+  }
+  #articleTitle{
+    font-size: 17pt;
+  }
+}
+
+
+#topProfilePictureOuterContainer{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 120px;
+  width: 120px;
+}
+#topProfilePictureOutput{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #f5f5f5;
+
+}
+
+
+.articleImageContainer{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.articleImageElement{
+  border-radius: 10px;
+  max-width: 100%;
+}
+
+
+blockquote {
+  background: #f9f9f9;
+  border-left: 5px solid $colorPrimary;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+blockquote p {
+  display: inline;
+}
