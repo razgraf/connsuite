@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useMachine } from "@xstate/react";
 import { useToasts } from "react-toast-notifications";
 import { networkCreateX, networkEditX, networkRemoveX } from "../../machines";
-import { pages, sagas } from "../../constants";
+import { pages, sagas, redux } from "../../constants";
 import { NetworkRequest } from "../../requests";
 import { useDataListMachine } from "./atoms";
 
@@ -57,6 +57,7 @@ function networkEditActions({ auth, dispatch, toast, router, reducer }) {
         onDismiss: () => {
           router.push(pages.portfolio.root);
           const username = _.attempt(() => auth.user.usernames.find(item => item.isPrimary === true).value);
+          dispatch({ type: redux.COVER_CLOSE });
           dispatch({ type: sagas.NETWORKS_LIST, payload: { auth, user: { username: !_.isError(username) ? username : null } } });
         },
       });

@@ -172,6 +172,7 @@ const CardLeft = styled.div`
   justify-content: center;
   height: 100%;
   padding: 0 calc(${props => props.theme.sizes.edge} * 2.5);
+  min-width: 150px;
   @media ${props => props.theme.medias.medium} {
     padding: 0 calc(${props => props.theme.sizes.edge} * 1.5);
   }
@@ -217,12 +218,11 @@ const CardMain = styled.div`
 const CardMainTitle = styled.p`
   min-height: 25px;
   margin: 0 0 10px 0;
-  text-align: center;
+  text-align: left;
   font-size: 18pt;
   font-weight: 300;
   font-family: ${props => props.theme.fonts.primary};
   color: ${props => props.theme.colors.dark};
-  white-space: nowrap;
   overflow: hidden;
   @media ${props => props.theme.medias.medium} {
     font-size: 14pt;
@@ -233,7 +233,7 @@ const CardMainUsername = styled.p`
   margin: 0;
   font-size: 11pt;
   font-weight: 300;
-  text-align: center;
+  text-align: left;
   min-height: 20px;
   font-family: ${props => props.theme.fonts.primary};
   color: ${props => props.theme.colors.grayBlueDark};

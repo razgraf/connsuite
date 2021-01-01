@@ -191,7 +191,7 @@ export default class NetworkRepository extends BaseRepository<Network> {
   private async _updateInternal(holder: Network, payload: Request.NetworkCreateInternal): Promise<Network | null> {
     const network = await NetworkModel.findByIdAndUpdate(holder._id, {
       title: payload.title,
-      username: payload.title,
+      username: payload.username,
       description: payload.description,
     });
 
@@ -221,7 +221,7 @@ export default class NetworkRepository extends BaseRepository<Network> {
    */
 
   private async _createInternal(payload: Request.NetworkCreateInternal): Promise<Network> {
-    const specimen = _.cloneDeep(payload);
+    const specimen: any = _.cloneDeep(payload);
 
     delete specimen.externalId;
     delete specimen.icon;
@@ -241,7 +241,7 @@ export default class NetworkRepository extends BaseRepository<Network> {
   }
 
   private async _createExternal(payload: Request.NetworkCreateExternal): Promise<Network> {
-    const specimen = _.cloneDeep(payload);
+    const specimen: any = _.cloneDeep(payload);
 
     delete specimen.title;
     delete specimen.url;
