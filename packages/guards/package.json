@@ -8,7 +8,7 @@
   "typings": "./dist/index.d.ts",
   "dependencies": {
     "lodash": "^4.17.15",
-    "validator": "^13.0.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.152",
